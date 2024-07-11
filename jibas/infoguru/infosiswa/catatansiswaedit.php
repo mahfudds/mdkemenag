@@ -4,9 +4,9 @@
  * Jaringan Informasi Bersama Antar Sekolah
  * 
  * @version: 2.6.0 (January 14, 2012)
- * @notes: 
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -63,13 +63,11 @@ if (isset($_REQUEST['simpan'])){
 }
 OpenDb();
 $res=QueryDb("SELECT * FROM jbsvcr.catatansiswa WHERE replid='$replid'");
-$rw=@mysqli_fetch_array($res);
-$tanggal = RegularDateFormat($rw['tanggal']);
-$judul = $rw['judul'];
-$catatan = $rw['catatan'];
-$idkategori = $rw['kategori'];
-$nilai = $rw['nilai'];
-$sifat = $rw['sifat'];
+$rw=@mysql_fetch_array($res);
+$tanggal = RegularDateFormat($rw[tanggal]);
+$judul = $rw[judul];
+$catatan = $rw[catatan];
+$idkategori = $rw[kategori];
 CloseDb();
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -129,10 +127,10 @@ function validate(){
 	OpenDb();
 	$sql = "SELECT * FROM jbsvcr.catatankategori WHERE aktif=1 ORDER BY replid";
 	$result = QueryDb($sql);
-	if (@mysqli_num_rows($result) > 0){
+	if (@mysql_num_rows($result) > 0){
 	$cnt=1;
-	while ($row=@mysqli_fetch_array($result)){
-		echo "<option value='".$row['replid']."'".StringIsSelected($row['replid'],$idkategori).">".$row['kategori']."</option>";
+	while ($row=@mysql_fetch_array($result)){
+		echo "<option value='".$row[replid]."'".StringIsSelected($row[replid],$idkategori).">".$row[kategori]."</option>";
 	}
 	} else {
 		echo "<option value=''>Tidak ada kategori</option>";
@@ -150,27 +148,6 @@ function validate(){
     <td><strong>Judul </strong></td>
     <td><input name="judul" type="text" id="judul" size="35" maxlength="254" value="<?=$judul?>" /></td>
   </tr>
-    <tr>
-        <td><strong>Nilai </strong></td>
-        <td>
-            <select name="nilai" id="nilai" style="font-size: 14px; height: 24px; width: 40px;">
-                <option value="1" <?php if ($nilai == 1) echo "selected"; else echo ""; ?>>1</option>
-                <option value="2" <?php if ($nilai == 2) echo "selected"; else echo ""; ?>>2</option>
-                <option value="3" <?php if ($nilai == 3) echo "selected"; else echo ""; ?>>3</option>
-                <option value="4" <?php if ($nilai == 4) echo "selected"; else echo ""; ?>>4</option>
-                <option value="5" <?php if ($nilai == 5) echo "selected"; else echo ""; ?>>5</option>
-            </select>&nbsp;dari 5
-        </td>
-    </tr>
-    <tr>
-        <td><strong>Sifat </strong></td>
-        <td>
-            <select name="sifat" id="sifat" style="font-size: 14px; height: 24px; width: 320px;">
-                <option value="0" <?php if ($sifat == 0) echo "selected"; else echo ""; ?>>PUBLIC (bisa dilihat Guru lainnya)</option>
-                <option value="1" <?php if ($sifat == 1) echo "selected"; else echo ""; ?>>PRIVATE (hanya untuk sendiri)</option>
-            </select>
-        </td>
-    </tr>
   <tr>
     <td colspan="2" align="left"><strong>Catatan </strong>
       <div align="center"><br />

@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -215,8 +215,8 @@ function change_baris() {
         <td><strong>Proses Penerimaan &nbsp;</strong></td>
         <td><?	$sql = "SELECT replid,proses FROM prosespenerimaansiswa WHERE aktif=1 AND departemen='$departemen'";				
 				$result = QueryDb($sql);
-				if (@mysqli_num_rows($result)>0){
-					$row = mysqli_fetch_array($result);
+				if (@mysql_num_rows($result)>0){
+					$row = mysql_fetch_array($result);
 					$proses = $row['replid'];
 				} 
 			?>
@@ -227,14 +227,14 @@ OpenDb();
 if ($proses!="") {
 	$sql_tot = "SELECT replid,kelompok,kapasitas,keterangan FROM kelompokcalonsiswa WHERE idproses='$proses'";
 	$result_tot = QueryDb($sql_tot);
-	$total = ceil(mysqli_num_rows($result_tot)/(int)$varbaris);
-	$jumlah = mysqli_num_rows($result_tot);
+	$total = ceil(mysql_num_rows($result_tot)/(int)$varbaris);
+	$jumlah = mysql_num_rows($result_tot);
 						
 	$sql = "SELECT replid,kelompok,kapasitas,keterangan FROM kelompokcalonsiswa WHERE idproses='$proses' ORDER BY $urut $urutan LIMIT ".(int)$page*(int)$varbaris.",$varbaris"; 						
 	$akhir = ceil($jumlah/5)*5;
 	  
 	$result = QueryDb($sql);
-	if (@mysqli_num_rows($result) > 0) {
+	if (@mysql_num_rows($result) > 0) {
 ?>
         <input type="hidden" name="total" id="total" value="<?=$total?>"/>
         <td align="right"><a href="#" onclick="refresh()"><img src="../images/ico/refresh.png" border="0" onmouseover="showhint('Refresh!', this, event, '50px')"/>&nbsp;Refresh</a>&nbsp;&nbsp; <a href="JavaScript:cetak('<?=$urut?>','<?=$urutan?>')"><img src="../images/ico/print.png" border="0" onmouseover="showhint('Cetak!', this, event, '50px')"/>&nbsp;Cetak</a>&nbsp;&nbsp;
@@ -263,7 +263,7 @@ if ($proses!="") {
 		else 
 			$i = (int)$page*(int)$varbaris;
 			
-		while ($row = @mysqli_fetch_array($result)) {
+		while ($row = @mysql_fetch_array($result)) {
 	?>
       <tr>
         <td height="25" align="center"><?=++$i?></td>
@@ -272,7 +272,7 @@ if ($proses!="") {
         <td height="25" align="center">
 		<?	$sql1 = "SELECT COUNT(*) FROM calonsiswa WHERE idkelompok='$row[replid]' AND aktif = 1";
 			$result1 = QueryDb($sql1);
-			$row1 = @mysqli_fetch_row($result1);
+			$row1 = @mysql_fetch_row($result1);
 			echo $row1[0];
 			if ($row1[0] > 0 ) {
 		?>  

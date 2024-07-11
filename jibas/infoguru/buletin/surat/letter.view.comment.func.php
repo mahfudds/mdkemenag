@@ -9,9 +9,9 @@ function GetMaxCommentId()
              ORDER BY replid DESC
              LIMIT 1";
     $res = QueryDb($sql);
-    if (mysqli_num_rows($res) > 0)
+    if (mysql_num_rows($res) > 0)
     {
-        $row = mysqli_fetch_row($res);
+        $row = mysql_fetch_row($res);
         return $row[0];
     }
     
@@ -22,9 +22,9 @@ function GetOwnerName($ownerid)
 {
     $sql = "SELECT nama FROM jbssdm.pegawai WHERE nip = '$ownerid'";
     $res = QueryDb($sql);
-    if (mysqli_num_rows($res) > 0)
+    if (mysql_num_rows($res) > 0)
     {
-        $row = mysqli_fetch_row($res);
+        $row = mysql_fetch_row($res);
         return $row[0];
     }
     else
@@ -87,10 +87,10 @@ function ShowPrevComment()
                    $sqlLimit";
     
     $res = QueryDb($sql);
-    if (mysqli_num_rows($res) == 0)
+    if (mysql_num_rows($res) == 0)
         return;
     
-    while($row = mysqli_fetch_array($res))
+    while($row = mysql_fetch_array($res))
     {
         $replid = $row['replid'];
         $ownerid = $row['nip'];
@@ -162,10 +162,10 @@ function ShowComment()
                    $sqlLimit";
 
     $res = QueryDb($sql);
-    if (mysqli_num_rows($res) == 0)
+    if (mysql_num_rows($res) == 0)
         return;
     
-    while($row = mysqli_fetch_array($res))
+    while($row = mysql_fetch_array($res))
     {
         $replid = $row['replid'];
         $ownerid = $row['nip'];

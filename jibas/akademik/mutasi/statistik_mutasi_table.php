@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -100,19 +100,19 @@ function tampil(replid) {
 $sql1="SELECT * FROM jbsakad.jenismutasi ORDER BY replid";
 $result1=QueryDb($sql1);
 $cnt=1;
-	while ($row1=@mysqli_fetch_array($result1)){
+	while ($row1=@mysql_fetch_array($result1)){
 	$sql2="SELECT COUNT(*) FROM jbsakad.mutasisiswa m,jbsakad.siswa s,jbsakad.kelas k,jbsakad.tahunajaran ta,jbsakad.tingkat ti WHERE s.idkelas=k.replid AND k.idtahunajaran=ta.replid AND k.idtingkat=ti.replid AND ti.departemen='$departemen' AND ta.departemen='$departemen' AND s.statusmutasi='$row1[replid]' AND m.jenismutasi='$row1[replid]' AND s.statusmutasi=m.jenismutasi AND m.nis=s.nis";
 	$result2=QueryDb($sql2);
-	$row2=@mysqli_fetch_row($result2);
+	$row2=@mysql_fetch_row($result2);
 
 ?>
-<tr><td><?=$cnt?></td><td><?=$row1['jenismutasi']?></td><td><?=$row2[0]?>&nbsp;siswa</td><td><img onClick="detail1('<?=$departemen?>','<?=$tahunawal?>','<?=$tahunakhir?>','<?=$row1['replid']?>')" src="../images/ico/lihat.png"></td></tr>
+<tr><td><?=$cnt?></td><td><?=$row1[jenismutasi]?></td><td><?=$row2[0]?>&nbsp;siswa</td><td><img onClick="detail1('<?=$departemen?>','<?=$tahunawal?>','<?=$tahunakhir?>','<?=$row1[replid]?>')" src="../images/ico/lihat.png"></td></tr>
 <?
 $sql3="SELECT COUNT(*),YEAR(m.tglmutasi) FROM mutasisiswa m,siswa s,kelas k,tingkat ti,tahunajaran ta WHERE m.jenismutasi='$row1[replid]' AND YEAR(m.tglmutasi)<='$tahunakhir' AND YEAR(m.tglmutasi)>='$tahunawal' AND m.nis=s.nis AND k.idtahunajaran=ta.replid AND k.idtingkat=ti.replid AND s.idkelas=k.replid AND ta.departemen='$departemen' AND ti.departemen='$departemen' GROUP BY YEAR(m.tglmutasi)";
 $result3=QueryDb($sql3);
-while ($row3=@mysqli_fetch_row($result3)){
+while ($row3=@mysql_fetch_row($result3)){
 ?>
-<tr><td>&nbsp;</td><td>-&nbsp;<?=$row3[1]?></td><td><?=$row3[0]?>&nbsp;siswa</td><td><img  onClick="detail2('<?=$departemen?>','<?=$row3[1]?>','<?=$row1['replid']?>')" src="../images/ico/lihat.png"></td></tr>
+<tr><td>&nbsp;</td><td>-&nbsp;<?=$row3[1]?></td><td><?=$row3[0]?>&nbsp;siswa</td><td><img  onClick="detail2('<?=$departemen?>','<?=$row3[1]?>','<?=$row1[replid]?>')" src="../images/ico/lihat.png"></td></tr>
 <?
 }
 $cnt++;

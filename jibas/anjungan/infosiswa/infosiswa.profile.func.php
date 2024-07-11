@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -69,7 +69,7 @@ function ShowAgamaCombo($selAgama)
 	$res = QueryDB($sql);
     
     echo "<select name='is_agama' id='is_agama' class='inputbox'>";
-	while ($row = mysqli_fetch_array($res))
+	while ($row = mysql_fetch_array($res))
     {
         $sel = $selAgama == $row['agama'] ? "selected" : "";
 		echo "<option value='" . $row['agama'] . "' $sel>" . $row['agama'] . "</option>";
@@ -85,7 +85,7 @@ function ShowSukuCombo($selSuku)
 	$res = QueryDB($sql);
     
     echo "<select name='is_suku' id='is_suku' class='inputbox'>";
-	while ($row = mysqli_fetch_array($res))
+	while ($row = mysql_fetch_array($res))
     {
         $sel = $selSuku == $row['suku'] ? "selected" : "";
 		echo "<option value='" . $row['suku'] . "' $sel>" . $row['suku'] . "</option>";
@@ -101,7 +101,7 @@ function ShowStatusCombo($selStatus)
 	$res = QueryDB($sql);
     
     echo "<select name='is_status' id='is_status' class='inputbox'>";
-	while ($row = mysqli_fetch_array($res))
+	while ($row = mysql_fetch_array($res))
     {
         $sel = $selStatus == $row['status'] ? "selected" : "";
 		echo "<option value='" . $row['status'] . "' $sel >" . $row['status'] . "</option>";
@@ -117,7 +117,7 @@ function ShowKondisiCombo($selKondisi)
 	$res = QueryDB($sql);
     
     echo "<select name='is_kondisi' id='is_kondisi' class='inputbox'>";
-	while ($row = mysqli_fetch_array($res))
+	while ($row = mysql_fetch_array($res))
     {
         $sel = $selKondisi == $row['kondisi'] ? "selected" : "";
 		echo "<option value='" . $row['kondisi'] . "' $sel >" . $row['kondisi'] . "</option>";
@@ -153,7 +153,7 @@ function ShowAsalSekolahCombo($jenjang, $sekolah)
              WHERE departemen = '$jenjang'
              ORDER BY sekolah ASC";
 	$res = QueryDB($sql);
-    $ndata = mysqli_num_rows($res);
+    $ndata = mysql_num_rows($res);
     
     if ($ndata == 0)
     {
@@ -164,7 +164,7 @@ function ShowAsalSekolahCombo($jenjang, $sekolah)
     else
     {
         echo "<select name='is_sekolah' id='is_sekolah' class='inputbox' onchange='is_changeAsalSekolah()'>";
-        while($row = mysqli_fetch_row($res))
+        while($row = mysql_fetch_row($res))
         {
             echo "<option value='" . $row[0] . "' " . StringIsSelected($row[0], $sekolah) . ">" . $row[0] . "</option>";
         }
@@ -193,7 +193,7 @@ function ShowPendidikanCombo($id, $selPendidikan)
 	$res = QueryDB($sql);
     
     echo "<select name='$id' id='$id' class='inputbox'>";
-	while ($row = mysqli_fetch_row($res))
+	while ($row = mysql_fetch_row($res))
     {
         $sel = ($selPendidikan == $row[0]) ? "selected" : "";
 		echo "<option value='" . $row[0] . "' $sel>" . $row[0] . "</option>";
@@ -209,7 +209,7 @@ function ShowPekerjaanCombo($id, $selPekerjaan)
 	$res = QueryDB($sql);
     
     echo "<select name='$id' id='$id' class='inputbox'>";
-	while ($row = mysqli_fetch_row($res))
+	while ($row = mysql_fetch_row($res))
     {
         $sel = ($selPekerjaan == $row[0]) ? "selected" : "";
 		echo "<option value='" . $row[0] . "' $sel>" . $row[0] . "</option>";

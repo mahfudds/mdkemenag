@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -116,8 +116,8 @@ if (isset($_REQUEST['tglakhir']))
         <td height="20">Tahun Ajaran</td>
     <?  $sql_get_ta="SELECT tahunajaran FROM jbsakad.tahunajaran WHERE replid='$tahunajaran'";
         $result_get_ta=QueryDb($sql_get_ta);
-        $row_get_ta=@mysqli_fetch_array($result_get_ta);?>
-        <td height="20">:&nbsp;<?=$row_get_ta['tahunajaran']?></td>
+        $row_get_ta=@mysql_fetch_array($result_get_ta);?>
+        <td height="20">:&nbsp;<?=$row_get_ta[tahunajaran]?></td>
     </tr>
     <tr>
         <td width="6%" height="20">NIS</td>
@@ -127,19 +127,19 @@ if (isset($_REQUEST['tglakhir']))
         <td height="20">Nama</td>
 <?      $sql_get_nama="SELECT nama FROM jbsakad.siswa WHERE nis='$nis'";
 	    $result_get_nama=QueryDb($sql_get_nama);
-	    $row_get_nama=@mysqli_fetch_array($result_get_nama);?>
-	    <td height="20">:&nbsp;<?=$row_get_nama['nama']?></td>
+	    $row_get_nama=@mysql_fetch_array($result_get_nama);?>
+	    <td height="20">:&nbsp;<?=$row_get_nama[nama]?></td>
     </tr>
     <tr>
         <td height="20">Kelas/Semester&nbsp;</td>
 <?      $sql_get_kls="SELECT kelas FROM jbsakad.kelas WHERE replid='$kelas'";
         $result_get_kls=QueryDb($sql_get_kls);
-        $row_get_kls=@mysqli_fetch_array($result_get_kls);
+        $row_get_kls=@mysql_fetch_array($result_get_kls);
 	
         $sql_get_sem="SELECT semester FROM jbsakad.semester WHERE replid='$semester'";
         $result_get_sem=QueryDb($sql_get_sem);
-        $row_get_sem=@mysqli_fetch_array($result_get_sem);?>
-        <td height="20">:&nbsp;<?=$row_get_kls['kelas']."/".$row_get_sem['semester']?></td>
+        $row_get_sem=@mysql_fetch_array($result_get_sem);?>
+        <td height="20">:&nbsp;<?=$row_get_kls[kelas]."/".$row_get_sem[semester]?></td>
     </tr>
 </table>
 

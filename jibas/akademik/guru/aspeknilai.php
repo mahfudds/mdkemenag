@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -121,7 +121,7 @@ function setAktif(replid, newAktif, title)
 	$sql = "SELECT replid, dasarpenilaian, keterangan, aktif 
 			  FROM dasarpenilaian";
 	$result = QueryDb($sql);
-	if (@mysqli_num_rows($result) > 0)
+	if (@mysql_num_rows($result) > 0)
 	{
 	?>
     <table border="0" cellpadding="0" cellspacing="0" width="95%" align="center">
@@ -146,7 +146,7 @@ function setAktif(replid, newAktif, title)
     </tr>
 <? 	
 	$cnt = 0;
-	while ($row = mysqli_fetch_row($result)) {
+	while ($row = mysql_fetch_row($result)) {
 	    $isAktif = $row[3];
 	    $imAktif = $isAktif ? "../images/ico/aktif.png" : "../images/ico/nonaktif.png";
         $tiAktif = $isAktif ? "Ubah menjadi non aktif" : "Ubah menjadi aktif";

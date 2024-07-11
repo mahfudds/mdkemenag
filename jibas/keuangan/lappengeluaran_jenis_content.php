@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ $idpengeluaran = $_REQUEST['idpengeluaran'];
 OpenDb();
 $sql = "SELECT nama FROM datapengeluaran WHERE replid = '$idpengeluaran'";
 $result = QueryDb($sql);
-$row = mysqli_fetch_row($result);
+$row = mysql_fetch_row($result);
 $nama = $row[0];
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -108,7 +108,7 @@ function excel() {
 	$result = QueryDb($sql);
 	$cnt = 0;
 	$total = 0;
-	while ($row = mysqli_fetch_array($result)) {
+	while ($row = mysql_fetch_array($result)) {
 		
 		if ($row['jenispemohon'] == 1) {
 			$idpemohon = $row['nip'];
@@ -124,7 +124,7 @@ function excel() {
 			$jenisinfo = "pemohon lain";
 		}
 		$result2 = QueryDb($sql);
-		$row2 = mysqli_fetch_row($result2);
+		$row2 = mysql_fetch_row($result2);
 		$namapemohon = $row2[0];
 		
 		$total += $row['jumlah'];

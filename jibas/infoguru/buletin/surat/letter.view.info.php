@@ -11,7 +11,7 @@ $sql = "SELECT *, IF(s.jenis = 'IN', 'MASUK', 'KELUAR') AS fjenis, DATE_FORMAT(s
          WHERE s.idkategori = k.replid 
            AND s.replid = '$idsurat'";
 $res = QueryDb($sql);
-$row = mysqli_fetch_array($res);
+$row = mysql_fetch_array($res);
 
 ?>
 <table border='0' cellpadding='5' width='100%'>
@@ -95,7 +95,7 @@ if ($row['fjenis'] == "MASUK")
              WHERE src.idsumber = s.replid
                AND src.idsurat = '$idsurat'";
     $res = QueryDb($sql);
-    $row = mysqli_fetch_array($res);
+    $row = mysql_fetch_array($res);
 ?>
     <br>
     <font style='font-family: arial; font-size: 14px; font-weight: bold;'>SUMBER</font><br>
@@ -120,7 +120,7 @@ if ($row['fjenis'] == "MASUK")
                  ORDER BY k.kelompok";
         $res = QueryDb($sql);
         $kelompok = "";
-        while($row = mysqli_fetch_row($res))
+        while($row = mysql_fetch_row($res))
         {
             if ($kelompok != "")
                 $kelompok .= ", ";
@@ -141,7 +141,7 @@ if ($row['fjenis'] == "MASUK")
                  ORDER BY p.nama";
         $res = QueryDb($sql);
         $nama = "";
-        while($row = mysqli_fetch_row($res))
+        while($row = mysql_fetch_row($res))
         {
             if ($nama != "")
                 $nama .= ", ";
@@ -162,7 +162,7 @@ if ($row['fjenis'] == "MASUK")
                  ORDER BY p.nama";
         $res = QueryDb($sql);
         $nama = "";
-        while($row = mysqli_fetch_row($res))
+        while($row = mysql_fetch_row($res))
         {
             if ($nama != "")
                 $nama .= ", ";
@@ -182,7 +182,7 @@ else
              WHERE dst.idtujuan = t.replid
                AND dst.idsurat = '$idsurat'";
     $res = QueryDb($sql);
-    $row = mysqli_fetch_array($res);
+    $row = mysql_fetch_array($res);
 ?>
     <br>
     <font style='font-family: arial; font-size: 14px; font-weight: bold;'>TUJUAN SURAT</font><br>
@@ -207,7 +207,7 @@ else
                  ORDER BY k.kelompok";
         $res = QueryDb($sql);
         $kelompok = "";
-        while($row = mysqli_fetch_row($res))
+        while($row = mysql_fetch_row($res))
         {
             if ($kelompok != "")
                 $kelompok .= ", ";
@@ -228,7 +228,7 @@ else
                  ORDER BY p.nama";
         $res = QueryDb($sql);
         $nama = "";
-        while($row = mysqli_fetch_row($res))
+        while($row = mysql_fetch_row($res))
         {
             if ($nama != "")
                 $nama .= ", ";
@@ -249,7 +249,7 @@ else
                  ORDER BY p.nama";
         $res = QueryDb($sql);
         $nama = "";
-        while($row = mysqli_fetch_row($res))
+        while($row = mysql_fetch_row($res))
         {
             if ($nama != "")
                 $nama .= ", ";

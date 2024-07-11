@@ -1,0 +1,90 @@
+-- Query Error on 21-Jan-2024 15:54:58 --------
+ SCRIPT > /jibas/anjungan/psb/psb.php
+ QUERY  > Tidak dapat membuka database jbsakad
+ ERRNO  > 1049
+ ERROR  > Unknown database 'jbsakad'
+
+-- Query Error on 21-Jan-2024 15:55:01 --------
+ SCRIPT > /jibas/anjungan/psb/psb.php
+ QUERY  > Tidak dapat membuka database jbsakad
+ ERRNO  > 1049
+ ERROR  > Unknown database 'jbsakad'
+
+-- Query Error on 21-Jan-2024 15:55:07 --------
+ SCRIPT > /jibas/anjungan/psb/psb.php
+ QUERY  > Tidak dapat membuka database jbsakad
+ ERRNO  > 1049
+ ERROR  > Unknown database 'jbsakad'
+
+-- Query Error on 21-Jan-2024 15:55:15 --------
+ SCRIPT > /jibas/anjungan/psb/psb.php
+ QUERY  > Tidak dapat membuka database jbsakad
+ ERRNO  > 1049
+ ERROR  > Unknown database 'jbsakad'
+
+-- Query Error on 21-Jan-2024 15:55:23 --------
+ SCRIPT > /jibas/anjungan/psb/psb.php
+ QUERY  > Tidak dapat membuka database jbsakad
+ ERRNO  > 1049
+ ERROR  > Unknown database 'jbsakad'
+
+-- Query Error on 21-Jan-2024 15:55:28 --------
+ SCRIPT > /jibas/anjungan/psb/psb.daftar.php
+ QUERY  > Tidak dapat membuka database jbsakad
+ ERRNO  > 1049
+ ERROR  > Unknown database 'jbsakad'
+
+-- Query Error on 21-Jan-2024 15:55:29 --------
+ SCRIPT > /jibas/anjungan/psb/psb.status.php
+ QUERY  > Tidak dapat membuka database jbsakad
+ ERRNO  > 1049
+ ERROR  > Unknown database 'jbsakad'
+
+-- Query Error on 21-Jan-2024 15:56:39 --------
+ SCRIPT > /jibas/anjungan/psb/psb.php
+ QUERY  > Tidak dapat membuka database jbsakad
+ ERRNO  > 1049
+ ERROR  > Unknown database 'jbsakad'
+
+-- Query Error on 21-Jan-2024 15:56:40 --------
+ SCRIPT > /jibas/anjungan/psb/psb.php
+ QUERY  > Tidak dapat membuka database jbsakad
+ ERRNO  > 1049
+ ERROR  > Unknown database 'jbsakad'
+
+-- Query Error on 21-Jan-2024 15:56:41 --------
+ SCRIPT > /jibas/anjungan/psb/psb.daftar.php
+ QUERY  > Tidak dapat membuka database jbsakad
+ ERRNO  > 1049
+ ERROR  > Unknown database 'jbsakad'
+
+-- Query Error on 21-Jan-2024 15:57:32 --------
+ SCRIPT > /jibas/anjungan/psb/psb.php
+ QUERY  > Tidak dapat membuka database jbsakad
+ ERRNO  > 1049
+ ERROR  > Unknown database 'jbsakad'
+
+-- Query Error on 21-Jan-2024 15:57:34 --------
+ SCRIPT > /jibas/anjungan/psb/psb.php
+ QUERY  > Tidak dapat membuka database jbsakad
+ ERRNO  > 1049
+ ERROR  > Unknown database 'jbsakad'
+
+-- Query Error on 21-Jan-2024 15:57:35 --------
+ SCRIPT > /jibas/anjungan/psb/psb.daftar.php
+ QUERY  > Tidak dapat membuka database jbsakad
+ ERRNO  > 1049
+ ERROR  > Unknown database 'jbsakad'
+
+-- Query Error on 21-Jan-2024 15:57:49 --------
+ SCRIPT > /jibas/anjungan/psb/psb.php
+ QUERY  > Tidak dapat membuka database jbsakad
+ ERRNO  > 1049
+ ERROR  > Unknown database 'jbsakad'
+
+-- Query Error on 21-Jan-2024 15:57:59 --------
+ SCRIPT > /jibas/anjungan/psb/psb.php
+ QUERY  > Tidak dapat membuka database jbsakad
+ ERRNO  > 1049
+ ERROR  > Unknown database 'jbsakad'
+

@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  *
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@ function ShowCbDepartemen($default)
     $res = QueryDb($sql);
 
     $ret = "<select id='departemen' name='departemen' style='width: 200px;' onchange='changeDept()'>";
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         $selected = $default == $row[0] ? "selected" : "";
         $ret .= "<option value='$row[0]' $selected>$row[0]</option>";
@@ -69,7 +69,7 @@ function ShowCbPelajaran($dept, $default)
     $res = QueryDb($sql);
 
     $ret = "<select id='pelajaran' name='pelajaran' style='width: 250px;' onchange='changePel()'>";
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         $selected = $default == $row[0] ? "selected" : "";
         $ret .= "<option value='$row[0]' $selected>$row[1]</option>";
@@ -100,7 +100,7 @@ function ShowCbChannel($idPel, $default)
     $res = QueryDb($sql);
 
     $ret = "<select id='channel' name='channel' style='width: 250px;' onchange='changeChannel()'>";
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         $selected = $default == $row[0] ? "selected" : "";
         $ret .= "<option value='$row[0]' $selected>$row[1]</option>";

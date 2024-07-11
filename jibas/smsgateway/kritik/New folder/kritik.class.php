@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ class Kritik{
                     <?
                     for ($i=1; $i<=12; $i++){
 						if ($Month=='')
-							$Month = date('m');
+							$Month = date(m);
                         ?>
                         <option value="<?=$i?>" <?=StringIsSelected($i,$Month)?>><?=$LMonth[$i-1]?></option>
                         <?
@@ -45,9 +45,9 @@ class Kritik{
                 <td style="padding-right:2px">
                 <select id="Year" class="Cmb" onchange="ChgCmb()">
                     <?
-                    for ($i=G_START_YEAR; $i<=date('Y'); $i++){
+                    for ($i=G_START_YEAR; $i<=date(Y); $i++){
                         if ($Year=='')
-							$Year = date('Y');
+							$Year = date(Y);
 						?>
                         <option value="<?=$i?>" <?=StringIsSelected($i,$Year)?>><?=$i?></option>
                         <?
@@ -84,10 +84,10 @@ class Kritik{
 		  $ID  = "";
 		  $sql = "SELECT replid,senddate,sender,`from`,`type`,message FROM kritiksaran WHERE YEAR(senddate)='$Year' AND MONTH(senddate)='$Month' AND `type`='$type' ORDER BY replid DESC";
 		  $res = QueryDb($sql);
-		  $num = @mysqli_num_rows($res);
+		  $num = @mysql_num_rows($res);
 		  if ($num>0){
 		  $cnt=1;
-		  while ($row = @mysqli_fetch_row($res)){
+		  while ($row = @mysql_fetch_row($res)){
 		  if ($ID=="")
 		  	  $ID = $row[0];
 		  else		

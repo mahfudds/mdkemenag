@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  *
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -111,14 +111,14 @@ $dept = isset($_REQUEST["dept"]) ? $_REQUEST["dept"] : "";
                 $sql = "SELECT departemen FROM jbsakad.departemen WHERE aktif = 1 ORDER BY urutan";
                 $res = QueryDb($sql);
 
-                while($row = mysqli_fetch_row($res))
+                while($row = mysql_fetch_row($res))
                 {
                     $no += 1;
 
                     $pesan = "";
                     $sql = "SELECT pesan FROM jbsfina.formatpesanpg WHERE departemen = '$row[0]' AND kelompok = 'TAGIHAN'";
                     $res2 = QueryDb($sql);
-                    if ($row2 = mysqli_fetch_row($res2))
+                    if ($row2 = mysql_fetch_row($res2))
                     {
                         $pesan = $row2[0];
                     }
@@ -164,14 +164,14 @@ $dept = isset($_REQUEST["dept"]) ? $_REQUEST["dept"] : "";
                 $sql = "SELECT departemen FROM jbsakad.departemen WHERE aktif = 1 ORDER BY urutan";
                 $res = QueryDb($sql);
 
-                while($row = mysqli_fetch_row($res))
+                while($row = mysql_fetch_row($res))
                 {
                     $no += 1;
 
                     $pesan = "";
                     $sql = "SELECT pesan FROM jbsfina.formatpesanpg WHERE departemen = '$row[0]' AND kelompok = 'PEMBAYARAN'";
                     $res2 = QueryDb($sql);
-                    if ($row2 = mysqli_fetch_row($res2))
+                    if ($row2 = mysql_fetch_row($res2))
                     {
                         $pesan = $row2[0];
                     }

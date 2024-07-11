@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,20 +30,20 @@ require_once('../inc/getheader.php');
 OpenDb();
 
 $departemen='yayasan';
-$kriteria = $_REQUEST['kriteria'];
-$noanggota = $_REQUEST['noanggota'];
-$nama = $_REQUEST['nama'];
+$kriteria = $_REQUEST[kriteria];
+$noanggota = $_REQUEST[noanggota];
+$nama = $_REQUEST[nama];
 $sqlDate = "SELECT DAY(now()),MONTH(now()),YEAR(now())";
 $resultDate = QueryDb($sqlDate);
-$rDate = @mysqli_fetch_row($resultDate);
+$rDate = @mysql_fetch_row($resultDate);
 
 $tglAwal = $rDate[0]."-".$rDate[1]."-".$rDate[2];
-if (isset($_REQUEST['tglAwal']))
-	$tglAwal = $_REQUEST['tglAwal'];
+if (isset($_REQUEST[tglAwal]))
+	$tglAwal = $_REQUEST[tglAwal];
 
 $tglAkhir = $rDate[0]."-".$rDate[1]."-".$rDate[2];	
-if (isset($_REQUEST['tglAkhir']))
-	$tglAkhir = $_REQUEST['tglAkhir'];
+if (isset($_REQUEST[tglAkhir]))
+	$tglAkhir = $_REQUEST[tglAkhir];
 	
 if ($kriteria == 'all' || $kriteria == '')
 {
@@ -95,7 +95,7 @@ elseif ($kriteria == 'nis')
 <?
 $sql = "SELECT DATE_FORMAT(now(),'%Y-%m-%d')";
 $result = QueryDb($sql);
-$row = @mysqli_fetch_row($result);
+$row = @mysql_fetch_row($result);
 $now = $row[0];
 
 if ($kriteria=='all' || $kriteria=='')
@@ -128,7 +128,7 @@ else
 			 ORDER BY tglpinjam";
 			 
 $result = QueryDb($sql);
-$num = @mysqli_num_rows($result);			 
+$num = @mysql_num_rows($result);			 
 ?>
 <table width="100%" border="1" cellspacing="0" cellpadding="5" class="tab" id="table">
 <tr height="30">
@@ -143,7 +143,7 @@ $num = @mysqli_num_rows($result);
   if ($num>0)
   {
 	$cnt = 0;
-	while ($row=@mysqli_fetch_array($result))
+	while ($row=@mysql_fetch_array($result))
 	{
 	  $cnt += 1;
 	  
@@ -171,7 +171,7 @@ $num = @mysqli_num_rows($result);
 				   WHERE noregistrasi = '$idanggota'";
 	  }
 	  $res3 = QueryDb($sql);
-	  $row3 = mysqli_fetch_row($res3);
+	  $row3 = mysql_fetch_row($res3);
 	  $namaanggota = $row3[0];
 	  
 	  $sql = "SELECT judul
@@ -179,24 +179,24 @@ $num = @mysqli_num_rows($result);
 			   WHERE d.pustaka = p.replid
 				 AND d.kodepustaka = '$row[kodepustaka]'";
 	  $res = QueryDb($sql);
-	  $r = @mysqli_fetch_row($res);
+	  $r = @mysql_fetch_row($res);
 	  $judul = $r[0];
 	  
 	  $color = '#000000';
 	  $weight = '';
 	  $alt = 'OK';
 	  $img = '<img src="../img/ico/Valid.png" width="16" height="16" title='.$alt.' />';
-	  if ($row['tglkembali']<=$now)
+	  if ($row[tglkembali]<=$now)
 	  {
-		if ($row['tglkembali']==$now)
+		if ($row[tglkembali]==$now)
 		{
 		  $alt = 'Hari&nbsp;ini&nbsp;batas&nbsp;pengembalian&nbsp;terakhir';
 		  $color='#cb6e01';
 		  $weight='font-weight:bold';
 		}
-		elseif ($row['tglkembali']<$now)
+		elseif ($row[tglkembali]<$now)
 		{
-		  $diff = @mysqli_fetch_row(QueryDb("SELECT DATEDIFF('".$now."','".$row['tglkembali']."')"));
+		  $diff = @mysql_fetch_row(QueryDb("SELECT DATEDIFF('".$now."','".$row[tglkembali]."')"));
 		  $alt = 'Terlambat&nbsp;'.$diff[0].'&nbsp;hari';
 		  $color='red';
 		  $weight='font-weight:bold';
@@ -205,10 +205,10 @@ $num = @mysqli_num_rows($result);
 	  }  ?>
 	  <tr height="25" style="color:<?=$color?>; <?=$weight?>">
 		<td align="center"><?=$cnt?></td>
-		<td align="center"><?=LongDateFormat($row['tglpinjam'])?></td>
-		<td align="center"><?=LongDateFormat($row['tglkembali'])?></td>
+		<td align="center"><?=LongDateFormat($row[tglpinjam])?></td>
+		<td align="center"><?=LongDateFormat($row[tglkembali])?></td>
 		<td align="left"><?=$idanggota?><br><?=$namaanggota?></td>
-		<td align="left"><?=$row['kodepustaka'] . "<br>$judul" ?></td>
+		<td align="left"><?=$row[kodepustaka] . "<br>$judul" ?></td>
 		<td align="center"><?=$diff[0]?></td>
 	  </tr>
 <?  } //while

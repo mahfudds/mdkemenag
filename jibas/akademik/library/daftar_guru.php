@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -87,11 +87,11 @@ $pelajaran = $_REQUEST['pelajaran'];
         $sql_pel="SELECT * FROM jbsakad.pelajaran pel WHERE pel.aktif=1 $sql_tambahdep ORDER BY pel.nama";
     
         $result_pel=QueryDb($sql_pel);
-        while ($row_pel=@mysqli_fetch_array($result_pel)){
+        while ($row_pel=@mysql_fetch_array($result_pel)){
             
         ?>
-    <option value="<?=$row_pel['replid']?>" <?=StringIsSelected($pelajaran,$row_pel['replid'])?>>
-      <?=$row_pel['nama']?>
+    <option value="<?=$row_pel[replid]?>" <?=StringIsSelected($pelajaran,$row_pel[replid])?>>
+      <?=$row_pel[nama]?>
       </option>
     <?
         }
@@ -112,7 +112,7 @@ $pelajaran = $_REQUEST['pelajaran'];
 		$sql = "SELECT p.nip, p.nama, pel.replid, pel.departemen FROM jbssdm.pegawai p, jbsakad.guru g, jbsakad.pelajaran pel, jbsakad.departemen d WHERE g.nip=p.nip AND g.idpelajaran=pel.replid AND pel.departemen = d.departemen AND g.aktif = 1 $sql_tambahpel $sql_tambahdep GROUP BY p.nip ORDER BY p.nama";
 		
 		$result = QueryDb($sql);
-		if (@mysqli_num_rows($result)>0){
+		if (@mysql_num_rows($result)>0){
 			
 		?>
 		
@@ -129,7 +129,7 @@ $pelajaran = $_REQUEST['pelajaran'];
 		<?
 		
 		$cnt = 0;
-		while($row = @mysqli_fetch_row($result)) {
+		while($row = @mysql_fetch_row($result)) { 
 			if ($sql_tambahdep == "") {
 				unset($depart);
 				unset($ajar);
@@ -137,7 +137,7 @@ $pelajaran = $_REQUEST['pelajaran'];
 				$sql1 = "SELECT pel.departemen, pel.replid FROM pelajaran pel, departemen d, guru g WHERE g.idpelajaran = pel.replid AND g.nip = '$row[0]' AND pel.departemen = d.departemen GROUP BY pel.departemen ORDER BY d.urutan, pel.nama";
 				$result1 = QueryDb($sql1);
 				$i = 0;
-				while ($row1=mysqli_fetch_array($result1)) {
+				while ($row1=mysql_fetch_array($result1)) {									
 					$depart[$i] = $row1['departemen'];
 					$ajar[$i] =$row1['replid']; 	
 					$i++;
@@ -176,7 +176,7 @@ $pelajaran = $_REQUEST['pelajaran'];
 			$sql="SELECT * FROM jbsakad.pelajaran WHERE replid = $pelajaran";
 			
 			$result=QueryDb($sql);
-			$row = mysqli_fetch_array($result);
+			$row = mysql_fetch_array($result);
 		?> 		
         Tambah data guru yang akan mengajar pelajaran <?=$row['nama']?> pada departemen <?=$departemen?> di menu Pendataan Guru pada bagian Guru & Pelajaran. </b></font>
         <? } ?>

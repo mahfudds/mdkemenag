@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,21 +45,21 @@ if ($iddasar=="12"){
 		$query4 = "SELECT COUNT(*) As Jum FROM jbsakad.calonsiswa s, jbsakad.prosespenerimaansiswa a WHERE a.replid=s.idproses  AND s.aktif = '1' AND s.penghasilanayah+s.penghasilanibu>=5000000 $kondisi";
 	
 $result1 = QueryDb($query1);
-$row1 = @mysqli_fetch_array($result1);
-$j1 = $row1['Jum'];
+$row1 = @mysql_fetch_array($result1);
+$j1 = $row1[Jum];
 
 
 $result2 = QueryDb($query2);
-$row2 = @mysqli_fetch_array($result2);
-$j2 = $row2['Jum'];
+$row2 = @mysql_fetch_array($result2);
+$j2 = $row2[Jum];
 
 $result3 = QueryDb($query3);
-$row3 = @mysqli_fetch_array($result3);
-$j3 = $row3['Jum'];
+$row3 = @mysql_fetch_array($result3);
+$j3 = $row3[Jum];
 
 $result4 = QueryDb($query4);
-$row4 = @mysqli_fetch_array($result4);
-$j4 = $row4['Jum'];
+$row4 = @mysql_fetch_array($result4);
+$j4 = $row4[Jum];
 
 
 $sum = $j1 + $j2 +$j3 + $j4;
@@ -150,8 +150,8 @@ $query1 = "SELECT COUNT(s.replid) As Jum, YEAR(now())-YEAR(s.tgllahir) As usia F
 	if ($iddasar!="12"){
 	//7/31/2008$titlenya="Statistik Calon Siswa Aktif Berdasarkan Penghasilan Orang Tua";
 	$result1 = QueryDb($query1);
-	$num = @mysqli_num_rows($result1);
-	while ($row1 = @mysqli_fetch_row($result1)) {
+	$num = @mysql_num_rows($result1);
+	while ($row1 = @mysql_fetch_row($result1)) {
 	$data[] = $row1[0];
 	$leg[] = $row1[1];
     $color = array('red','black','green','blue','gray','white');

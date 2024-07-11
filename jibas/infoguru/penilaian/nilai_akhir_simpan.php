@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -67,7 +67,7 @@ $sql = "SELECT idpelajaran, idjenisujian
 		FROM jbsakad.aturannhb 
 		WHERE replid = '$idaturan'";
 $res = QueryDb($sql);
-$row = mysqli_fetch_array($res);
+$row = mysql_fetch_array($res);
 $jenis = $row['idjenisujian'];
 $pelajaran = $row['idpelajaran'];
 	
@@ -77,7 +77,7 @@ $sql = "SELECT nis
 		ORDER BY nama ASC ";
 $result_get_nis_siswa = QueryDb($sql);
 
-while ($success && ($row_get_nis_siswa = @mysqli_fetch_array($result_get_nis_siswa)))
+while ($success && ($row_get_nis_siswa = @mysql_fetch_array($result_get_nis_siswa)))
 {
 	$nis = $row_get_nis_siswa['nis'];
 	
@@ -91,20 +91,20 @@ while ($success && ($row_get_nis_siswa = @mysqli_fetch_array($result_get_nis_sis
 		$ujian_culip = 0;
 		$nilai = 0.0;
 		$bobot = 0.0;
-		while ($row_get_ujian = @mysqli_fetch_array($result_get_ujian))
+		while ($row_get_ujian = @mysql_fetch_array($result_get_ujian))
 		{	
 			$idujian = $row_get_ujian['replid'];
 			
 			//Ambil bobot
 			$sql = "SELECT bobot FROM jbsakad.bobotnau WHERE idujian = '$idujian'";
 			$result_get_bobot = QueryDb($sql);
-			$row_get_bobot = @mysqli_fetch_array($result_get_bobot);
+			$row_get_bobot = @mysql_fetch_array($result_get_bobot);
 			$b = (float)$row_get_bobot['bobot'];
 			
 			//Ambil nilai ujian
 			$sql = "SELECT nilaiujian FROM jbsakad.nilaiujian WHERE idujian = '$idujian' AND nis = '$nis'";
 			$result_get_nilai = QueryDb($sql);
-			$row_get_nilai = @mysqli_fetch_array($result_get_nilai);
+			$row_get_nilai = @mysql_fetch_array($result_get_nilai);
 			$nu = (float)$row_get_nilai['nilaiujian'];
 			
 			//Hitung NA
@@ -119,9 +119,9 @@ while ($success && ($row_get_nis_siswa = @mysqli_fetch_array($result_get_nis_sis
 				 WHERE nis = '$nis' AND idkelas = '$idkelas' AND idsemester ='$idsemester' AND idaturan = '$idaturan'";
 		$result_nau = QueryDb($sql);
 	
-		if (mysqli_num_rows($result_nau) > 0) 
+		if (mysql_num_rows($result_nau) > 0) 
 		{	
-			$row_nau = mysqli_fetch_row($result_nau);
+			$row_nau = mysql_fetch_row($result_nau);
 			$id_nau  = $row_nau[1];
 			
 			$sql_insert_nau = "UPDATE jbsakad.nau SET nilaiAU = '$ratabulat' WHERE replid = '$id_nau'";

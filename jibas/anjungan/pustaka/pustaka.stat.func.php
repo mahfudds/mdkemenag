@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ function ShowCbPustaka()
     $res = QueryDb($sql);
     
     echo "<select id='ptkastat_perpus' name='ptkastat_perpus' class='inputbox' onchange='ptkastat_perpus_change()'>\r\n";
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         echo "<option value='$row[0]'>$row[1]</option>\r\n";
     }
@@ -45,7 +45,7 @@ function ShowCbBulan()
                    YEAR(DATE_SUB(NOW(), INTERVAL 30 DAY)),
                    MONTH(NOW()), YEAR(NOW())";
     $res = QueryDb($sql);
-    $row = mysqli_fetch_row($res);
+    $row = mysql_fetch_row($res);
     $bln1 = $row[0];
     $thn1 = $row[1];
     $bln2 = $row[2];
@@ -117,7 +117,7 @@ function ShowStatistics($perpus, $bln1, $thn1, $bln2, $thn2, $jum)
 			 LIMIT $jum";
     $res = QueryDb($sql);
     
-    if (mysqli_num_rows($res) == 0)
+    if (mysql_num_rows($res) == 0)
     {
         echo "<br><br><center><i>Tidak ada data</i></center>";
         return;
@@ -135,7 +135,7 @@ function ShowStatistics($perpus, $bln1, $thn1, $bln2, $thn2, $jum)
 	</tr>
 <?
     $cnt = 0;
-    while ($row = @mysqli_fetch_array($res))
+    while ($row = @mysql_fetch_array($res))
 	{
         $idpustaka = $row['replid'];
         
@@ -174,13 +174,13 @@ function ShowDetailPustaka($cnt, $idpustaka)
               FROM jbsperpus.pustaka
              WHERE replid = '$idpustaka'";
     $res = QueryDb($sql);
-    if (mysqli_num_rows($res) == 0)
+    if (mysql_num_rows($res) == 0)
     {
         echo "-";
         return;
     }
     
-    $row = mysqli_fetch_array($res);
+    $row = mysql_fetch_array($res);
     echo "<font style='color: #444;'><strong>Kata Kunci:</strong></font><br>";
     echo $row['keyword'];
     echo "<br><br>";

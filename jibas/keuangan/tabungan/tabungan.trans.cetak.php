@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,7 +42,7 @@ OpenDb();
 
 $sql = "SELECT departemen FROM tahunbuku WHERE replid='$idtahunbuku'"; 	
 $result = QueryDb($sql);    
-$row = mysqli_fetch_row($result);	
+$row = mysql_fetch_row($result);	
 $departemen = $row[0];
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -69,7 +69,7 @@ $departemen = $row[0];
     <td><strong>: 
 <?	$sql = "SELECT departemen FROM tahunbuku WHERE replid='$idtahunbuku'"; 	
 	$result = QueryDb($sql);    
-	$row = mysqli_fetch_row($result);	
+	$row = mysql_fetch_row($result);	
 	echo  $row[0]; ?>
     </strong></td>
 </tr>
@@ -78,7 +78,7 @@ $departemen = $row[0];
     <td><strong>:
 <?	$sql = "SELECT tahunbuku FROM tahunbuku WHERE replid='$idtahunbuku'"; 	
 	$result = QueryDb($sql);    
-	$row = mysqli_fetch_row($result);
+	$row = mysql_fetch_row($result);
 	echo  $row[0]; ?>
     </strong></td>
 </tr>
@@ -87,7 +87,7 @@ $departemen = $row[0];
     <td><strong>:
 <?	$sql = "SELECT nama FROM datatabungan WHERE replid = '$idtabungan'"; 			
 	$result = QueryDb($sql);    
-	$row = mysqli_fetch_row($result);
+	$row = mysql_fetch_row($result);
 	echo  $row[0]; ?>
     </strong></td>
 </tr>
@@ -100,14 +100,14 @@ $sql = "SELECT s.replid, nama, telponsiswa as telpon, hpsiswa as hp, kelas, alam
 		 WHERE s.idkelas = k.replid AND nis = '$nis' AND t.replid = k.idtingkat";
 
 $result = QueryDb($sql);
-if (mysqli_num_rows($result) == 0) 
+if (mysql_num_rows($result) == 0) 
 {
 	CloseDb();
 	exit();
 }
 else 
 {
-	$row = mysqli_fetch_array($result);
+	$row = mysql_fetch_array($result);
 	$replid = $row['replid'];
 	$nama = $row['nama'];
 	$telpon = $row['telpon'];
@@ -168,14 +168,14 @@ else
     {
         echo "<tr height='100'><td colspan='7' align='center' valign='middle'><i>Belum ada data tabungan</i></td></tr>";
     }
-    else if (mysqli_num_rows($result) == 0)
+    else if (mysql_num_rows($result) == 0)
     {
         echo "";
     }
     else
     {
         $cnt = 0;
-        while ($row = mysqli_fetch_array($result))
+        while ($row = mysql_fetch_array($result))
         {
             $kredit = (int) $row['kredit'];
             $bgcolor = $kredit != 0 ? "#E0F3FF" : "#F9F6EA";

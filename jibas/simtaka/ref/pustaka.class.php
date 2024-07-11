@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
 <?
 class CPustaka{
 	function OnStart(){
-		$op=$_REQUEST['op'];
+		$op=$_REQUEST[op];
 		if ($op=="del"){
 			$sql = "DELETE FROM perpustakaan WHERE replid='$_REQUEST[id]'";
 			QueryDb($sql);
@@ -41,7 +41,7 @@ class CPustaka{
 	{
 		$sql = "SELECT * FROM perpustakaan ORDER BY nama";
 		$result = QueryDb($sql);
-		$num = @mysqli_num_rows($result);
+		$num = @mysql_num_rows($result);
 		?>
 		<link href="../sty/style.css" rel="stylesheet" type="text/css">
         <div class="funct">
@@ -67,29 +67,29 @@ class CPustaka{
 		  if ($num>0)
 		  {
 		  	  $cnt=1;	
-			  while ($row=@mysqli_fetch_array($result))
+			  while ($row=@mysql_fetch_array($result))
 			  {
-					$dep = (strlen(trim($row['departemen'])) == 0) ? "Semua Departemen" : $row['departemen'];
+					$dep = (strlen(trim($row['departemen'])) == 0) ? "Semua Departemen" : $row[departemen];
 					
-					$num_judul = @mysqli_num_rows(QueryDb("SELECT * FROM pustaka p, daftarpustaka d WHERE d.perpustakaan='$row[replid]' AND p.replid=d.pustaka GROUP BY d.pustaka"));
-					$num_pustaka = @mysqli_fetch_row(QueryDb("SELECT COUNT(d.replid) FROM pustaka p, daftarpustaka d WHERE d.pustaka=p.replid AND d.perpustakaan='$row[replid]'"));
+					$num_judul = @mysql_num_rows(QueryDb("SELECT * FROM pustaka p, daftarpustaka d WHERE d.perpustakaan='$row[replid]' AND p.replid=d.pustaka GROUP BY d.pustaka"));
+					$num_pustaka = @mysql_fetch_row(QueryDb("SELECT COUNT(d.replid) FROM pustaka p, daftarpustaka d WHERE d.pustaka=p.replid AND d.perpustakaan='$row[replid]'"));
 			  ?>
 			  <tr>
 			    <td width="19" align="center"><?=$cnt?></td>
-				<td height="25">&nbsp;<?=$row['nama']?></td>
+				<td height="25">&nbsp;<?=$row[nama]?></td>
 				<td height="25">&nbsp;<?=$dep?></td>
 				<td height="25" align="center">&nbsp;<?=$num_judul?>
                 <? if ($num_judul!=0){ ?>
-                    &nbsp;<img src="../img/ico/lihat.png" style="cursor:pointer" onclick="ViewByTitle('<?=$row['replid']?>')" />
+                    &nbsp;<img src="../img/ico/lihat.png" style="cursor:pointer" onclick="ViewByTitle('<?=$row[replid]?>')" />
                 <? } ?>                </td>
 				<td height="25" align="center">&nbsp;<?=(int)$num_pustaka[0]?></td>
-				<td height="25">&nbsp;<?=$row['keterangan']?></td>
+				<td height="25">&nbsp;<?=$row[keterangan]?></td>
 				<? if(IsAdmin()){ ?>
 				<td height="25" align="center">
-					<a href="javascript:ubah('<?=$row['replid']?>')">
+					<a href="javascript:ubah('<?=$row[replid]?>')">
 					<img src="../img/ico/ubah.png" width="16" height="16" border="0">
 					</a>&nbsp;
-					<a href="javascript:hapus('<?=$row['replid']?>')">
+					<a href="javascript:hapus('<?=$row[replid]?>')">
 					<img src="../img/ico/hapus.png" border="0">
 					</a>
 				</td>

@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,7 +38,7 @@ $sql = "SELECT *, j.keterangan AS ket, k.kelas, p.nama, t.replid AS tahun, t.tah
           FROM jadwal j, jbssdm.pegawai p, jbsakad.tahunajaran t, kelas k 
 		 WHERE j.replid = '$replid' AND j.nipguru = p.nip AND k.replid = j.idkelas AND k.idtahunajaran = t.replid";
 $result = QueryDb($sql);
-$row = mysqli_fetch_array($result);
+$row = mysql_fetch_array($result);
 $pelajaran = $row['idpelajaran'];
 $departemen = $row['departemen'];
 $info = $row['infojadwal'];
@@ -87,7 +87,7 @@ if (strlen($nip) > 0)
 {
 	$sql = "SELECT nama FROM jbssdm.pegawai WHERE nip='$nip'";	
 	$res = QueryDb($sql);
-	$row = mysqli_fetch_row($res);
+	$row = mysql_fetch_row($res);
 	$namasel = $row[0];
 	$nipsel = $nip;
 }
@@ -104,14 +104,14 @@ if (isset($_REQUEST['Simpan']))
 	OpenDb();
 	$sql = "SELECT replid FROM infojadwal WHERE aktif=1";
 	$res = QueryDb($sql);
-	$num = mysqli_num_rows($res);
+	$num = mysql_num_rows($res);
 	if ($num>0){
 		$dayname = array("", "Senin", "Selasa", "Rabu", "Kamis", "Jum'at", "Sabtu", "Minggu");
 		
 		$sql = "SELECT replid FROM infojadwal WHERE aktif=1";
 		$res = QueryDb($sql);
 		$idinfo_aktif = "";
-		while($row = mysqli_fetch_row($res))
+		while($row = mysql_fetch_row($res))
 		{
 			if (strlen($idinfo_aktif) > 0)
 				$idinfo_aktif .= "','";
@@ -141,10 +141,10 @@ if (isset($_REQUEST['Simpan']))
 				   AND ($sqljam)";
 		$res = QueryDb($sql);
 		
-		if (mysqli_num_rows($res) > 0) 
+		if (mysql_num_rows($res) > 0) 
 		{
 			$ket = "";
-			while ($row = mysqli_fetch_array($res))
+			while ($row = mysql_fetch_array($res))
 			{
 				if (strlen($ket) > 0)
 					$ket .= "\\r\\n";
@@ -177,9 +177,9 @@ if (isset($_REQUEST['Simpan']))
 			$res = QueryDb($sql);
 			$ket = "";
 			
-			if (mysqli_num_rows($res) > 0)
+			if (mysql_num_rows($res) > 0)
 			{
-				while ($row = mysqli_fetch_array($res))
+				while ($row = mysql_fetch_array($res))
 				{
 					if (strlen($ket) > 0)
 						$ket .= "\\r\\n";
@@ -194,13 +194,13 @@ if (isset($_REQUEST['Simpan']))
 		{
 			$sql1 = "SELECT replid, TIME_FORMAT(jam1, '%H:%i') AS jam1 FROM jam WHERE departemen = '$departemen' AND jamke = '$jam'";	
 			$result1 = QueryDb($sql1);
-			$row1 = mysqli_fetch_array($result1);
+			$row1 = mysql_fetch_array($result1);
 			$rep1 = $row1['replid'];
 			$jm1 = $row1['jam1'];
 			
 			$sql2 = "SELECT replid, TIME_FORMAT(jam2, '%H:%i') AS jam2 FROM jam WHERE departemen = '$departemen' AND jamke = '$jam2'";	
 			$result2 = QueryDb($sql2);
-			$row2 = mysqli_fetch_array($result2);
+			$row2 = mysql_fetch_array($result2);
 			$rep2 = $row2['replid'];
 			$jm2 = $row2['jam2'];
 			
@@ -368,7 +368,7 @@ function changepel()
 		$sql = "SELECT replid,nama FROM pelajaran WHERE departemen = '$departemen' AND aktif=1 ORDER BY nama";
 		$result = QueryDb($sql);
 		CloseDb();
-		while ($row = @mysqli_fetch_array($result)) {
+		while ($row = @mysql_fetch_array($result)) {
 			if ($pelajaran == "") 				
 				$pelajaran = $row['replid'];			
 		?>

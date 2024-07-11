@@ -4,9 +4,9 @@
  * Jaringan Informasi Bersama Antar Sekolah
  *
  * @version: 15 (January 02, 2019)
- * @notes: 
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -81,7 +81,7 @@ function showSelectPelajaran($bulan, $tahun, $jenis)
 
     $select = "<select id='cbe_cbPelajaran' class='inputbox' style='width: 180px' onchange='cbe_changePelajaran()'>";
     $res = QueryDb($sql);
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         $select .= "<option value='$row[0]'>$row[1]</option>";
     }
@@ -110,7 +110,7 @@ function showRekapUjian($bulan, $tahun, $jenis, $idpelajaran)
 
     $lsId = array();
     $res = QueryDb($sql);
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         $lsId[] = array($row[0], $row[1]);
     }
@@ -130,7 +130,7 @@ function showRekapUjian($bulan, $tahun, $jenis, $idpelajaran)
                   FROM jbscbe.ujian u 
                  WHERE u.id = $id";
         $res = QueryDb($sql);
-        while($row = mysqli_fetch_row($res))
+        while($row = mysql_fetch_row($res))
         {
             $lsIdUjian[] = array($row[0], $row[1], $row[2], $tglUjian);
         }
@@ -166,7 +166,7 @@ function showRekapUjian($bulan, $tahun, $jenis, $idpelajaran)
                    AND nis = '$nis'
                    AND idujianremed IS NOT NULL";
         $res = QueryDb($sql);
-        if ($row = mysqli_fetch_row($res))
+        if ($row = mysql_fetch_row($res))
             $haveRemed = $row[0] > 0;
 
         $sifatUjian = 0; // 0 Umum 1 Tertutup
@@ -175,7 +175,7 @@ function showRekapUjian($bulan, $tahun, $jenis, $idpelajaran)
                  WHERE u.idpengujian = p.id
                    AND u.id = $idUjian";
         $res = QueryDb($sql);
-        if ($row = mysqli_fetch_row($res))
+        if ($row = mysql_fetch_row($res))
             $sifatUjian = $row[0];
 
         $skalanilai = 10;
@@ -186,7 +186,7 @@ function showRekapUjian($bulan, $tahun, $jenis, $idpelajaran)
                   FROM jbscbe.ujian
                  WHERE id = $idUjianInUjianSerta";
         $res = QueryDb($sql);
-        if ($row = mysqli_fetch_row($res))
+        if ($row = mysql_fetch_row($res))
         {
             $skalanilai = $row[0];
             $nilaikkm = $row[1];
@@ -224,10 +224,10 @@ function showRekapUjian($bulan, $tahun, $jenis, $idpelajaran)
         $sql .= " ORDER BY u.tanggal DESC";
 
         $res = QueryDb($sql);
-        if (mysqli_num_rows($res) == 0)
+        if (mysql_num_rows($res) == 0)
             continue;
 
-        while($row = mysqli_fetch_array($res))
+        while($row = mysql_fetch_array($res))
         {
             $no += 1;
 

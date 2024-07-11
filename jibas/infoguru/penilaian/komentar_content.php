@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -95,8 +95,8 @@ $sql = "SELECT k.komentar, k.replid, k.predikat
 		   WHERE k.nis='$nis' AND i.replid=k.idinfo AND i.idpelajaran='$pelajaran' 
 		     AND i.idsemester='$semester' AND i.idkelas='$kelas'";
 $result_get_comment = QueryDb($sql);
-$row_get_comment = @mysqli_fetch_row($result_get_comment);
-$ada_get_comment = @mysqli_num_rows($result_get_comment);
+$row_get_comment = @mysql_fetch_row($result_get_comment);
+$ada_get_comment = @mysql_num_rows($result_get_comment);
 ?>
 <form name="frm_komentar" id="frm_komentar" action="komentar_content.php" method="POST">
 <table width="100%" border="0" height="100%">
@@ -127,7 +127,7 @@ $ada_get_comment = @mysqli_num_rows($result_get_comment);
 			  <?
 			$sql_get_nama="SELECT nama FROM jbsakad.siswa WHERE nis='$nis'";
 			$result_get_nama=QueryDb($sql_get_nama);
-			$row_get_nama=@mysqli_fetch_array($result_get_nama);
+			$row_get_nama=@mysql_fetch_array($result_get_nama);
 			echo $row_get_nama['nama'];
 			?>
 			</strong></td>
@@ -162,7 +162,7 @@ $ada_get_comment = @mysqli_num_rows($result_get_comment);
 			   AND a.dasarpenilaian = d.dasarpenilaian";
 	$res = QueryDb($sql);
 	$i = 0;
-	while($row = mysqli_fetch_row($res))
+	while($row = mysql_fetch_row($res))
 	{
 		$aspek[$i++] = array($row[0], $row[1]);
 	} ?>
@@ -194,9 +194,9 @@ $ada_get_comment = @mysqli_num_rows($result_get_comment);
 				   AND n.idaturan = a.replid 	   
 				   AND a.dasarpenilaian = '$asp'";
 		$res = QueryDb($sql);
-		if (mysqli_num_rows($res) > 0)
+		if (mysql_num_rows($res) > 0)
 		{
-			$row = mysqli_fetch_row($res);
+			$row = mysql_fetch_row($res);
 			$na = $row[0];
 			$nh = $row[1];
 		}

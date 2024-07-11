@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,13 +26,12 @@ require_once("../include/db_functions.php");
 //require_once("../include/errorhandler.php");
 OpenDb();
 $op="";
-if (isset($_REQUEST['op']))
-	$op = $_REQUEST['op'];
-if ($op=="EraseGroup")
-{
+if (isset($_REQUEST[op]))
+	$op = $_REQUEST[op];
+if ($op=="EraseGroup"){
 	$sql = "DELETE FROM jbsfina.groupbarang WHERE replid='$_REQUEST[idgroup]'";
-	$result = QueryDb($sql);
-	$MYSQL_ERRNO = mysqli_errno($mysqlconnection);
+	$result = mysql_query($sql);
+	$MYSQL_ERRNO = mysql_errno();
 	if ($MYSQL_ERRNO>0){
 	?>
     <script language="javascript">
@@ -46,8 +45,8 @@ if ($op=="EraseGroup")
 
 if ($op=="EraseKelompok"){
 	$sql = "DELETE FROM jbsfina.kelompokbarang WHERE replid='$_REQUEST[idkelompok]'";
-	$result = QueryDb($sql);
-	$MYSQL_ERRNO = mysqli_errno($mysqlconnection);
+	$result = mysql_query($sql);
+	$MYSQL_ERRNO = mysql_errno();
 	if ($MYSQL_ERRNO>0){
 	?>
     <script language="javascript">
@@ -64,7 +63,7 @@ function getNSubDir($idroot) {
 	
 	$sql = "SELECT count(*) FROM jbsfina.kelompokbarang WHERE idgroup='$idroot'";
 	$result = QueryDb($sql);
-	$row = mysqli_fetch_row($result);
+	$row = mysql_fetch_row($result);
 	return $row[0];
 }
 
@@ -138,12 +137,12 @@ function SelectKelompok(idkelompok){
 <?
 $sql = "SELECT replid,namagroup FROM jbsfina.groupbarang ORDER BY namagroup";
 $result = QueryDb($sql);
-$num = @mysqli_num_rows($result);
+$num = @mysql_num_rows($result);
 if ($num>0){
 ?>
 <ul class='mktree' id='tree1'>
 <?
-while ($row = @mysqli_fetch_row($result)){
+while ($row = @mysql_fetch_row($result)){
 $class="liOpen";
 if (getNSubDir($row[0])==0)
 	$class="liClose";
@@ -152,10 +151,10 @@ if (getNSubDir($row[0])==0)
 <?
 $sql2 = "SELECT replid,kelompok FROM jbsfina.kelompokbarang WHERE idgroup='$row[0]'"; 
 $result2 = QueryDb($sql2);
-$num2 = @mysqli_num_rows($result2);
+$num2 = @mysql_num_rows($result2);
 if ($num2>0){
 echo  "<ul>";
-while ($row2 = @mysqli_fetch_row($result2)){
+while ($row2 = @mysql_fetch_row($result2)){
 ?>
 <li class="liOpen" id="liOpen<?=$row2[0]?>" onMouseOver="Hover('liOpen<?=$row2[0]?>','1')" onMouseOut="Hover('liOpen<?=$row2[0]?>','0')" onClick="SelectKelompok('<?=$row2[0]?>')">
 <!--<span >-->

@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  *
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -140,7 +140,7 @@ function ShowTagihanSiswa($nis, $nama, $bulan, $tahun)
                AND t.tahun = '$tahun'
              ORDER BY t.replid DESC";
     $res = QueryDb($sql);
-    $nTagihan = mysqli_num_rows($res);
+    $nTagihan = mysql_num_rows($res);
 
     if ($nTagihan == 0)
     {
@@ -149,7 +149,7 @@ function ShowTagihanSiswa($nis, $nama, $bulan, $tahun)
     }
 
     echo "<table id='tabTagihanInfo' border='1' cellpadding='2' cellspacing='0' style='width: 390px; border: 1px solid #ddd; background-color: #ffffff;'>";
-    while($row = mysqli_fetch_array($res))
+    while($row = mysql_fetch_array($res))
     {
         $idTagihanInfo = $row["replid"];
         $noTagihan = $row["notagihan"];
@@ -184,7 +184,7 @@ function SearchTagihan()
     $res = QueryDb($sql);
 
     echo "<table id='tabTagihanInfo' border='1' cellpadding='2' cellspacing='0' style='width: 390px; border: 1px solid #ddd; background-color: #ffffff;'>";
-    while($row = mysqli_fetch_array($res))
+    while($row = mysql_fetch_array($res))
     {
         $nis = $row["nis"];
         $nama = $row["nama"];

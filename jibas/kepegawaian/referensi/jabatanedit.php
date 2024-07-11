@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *  
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -80,7 +80,7 @@ OpenDb();
 
 $sql = "SELECT singkatan, jabatan, satker, eselon FROM jabatan WHERE replid=$id";
 $result = QueryDb($sql);
-$row = mysqli_fetch_row($result);
+$row = mysql_fetch_row($result);
 $sing = $row[0];
 $jab  = $row[1];
 $sat  = $row[2];
@@ -106,7 +106,7 @@ $eselon = $row[3];
     <select name="cbEselon" id="cbEselon" onKeyPress="return focusNext('txSingkatan', event)" onChange="CheckEselon()">
 <?	$sql = "SELECT eselon FROM eselon ORDER BY urutan";
 	$result = QueryDb($sql);
-	while ($row = mysqli_fetch_row($result)) { ?>    
+	while ($row = mysql_fetch_row($result)) { ?>    
     	<option value="<?=$row[0]?>" <?=StringIsSelected($row[0], $eselon)?> ><?=$row[0]?></option>
 <?	} ?>    
     </select>&nbsp;
@@ -121,7 +121,7 @@ $eselon = $row[3];
     <select name="cbSatKer" id="cbSatKer" <?=$disabled?>>
 <? 		 $sql = "SELECT satker, nama FROM satker";
 		 $result = QueryDb($sql);
-		 while ($row = mysqli_fetch_row($result)) { ?>
+		 while ($row = mysql_fetch_row($result)) { ?>
          	<option value="<?=$row[0]?>" <?=StringIsSelected($sat, $row[0])?> ><?=$row[1]?></option>
 
 <?		 } ?>        

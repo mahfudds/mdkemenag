@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -154,7 +154,7 @@ function change_urut(urut,urutan) {
 	$sql = "SELECT DISTINCT s.nis, s.nama, l.nama, DAY(p.tanggal), MONTH(p.tanggal), YEAR(p.tanggal), pp.statushadir, pp.catatan, s.telponsiswa, s.hpsiswa, s.namaayah, s.telponortu, s.hportu, k.kelas FROM siswa s, presensipelajaran p, ppsiswa pp, pelajaran l, kelas k, tingkat t WHERE pp.idpp = p.replid AND s.idkelas = k.replid AND p.idsemester = '$semester' AND pp.nis = s.nis AND k.idtingkat = t.replid $filter1 $filter2 AND p.tanggal BETWEEN '$tglawal' AND '$tglakhir' AND p.idpelajaran = l.replid AND pp.statushadir <> 0 ORDER BY $urut $urutan";
 	//echo $sql;
 	$result = QueryDb($sql);			 
-	$jum_hadir = mysqli_num_rows($result);
+	$jum_hadir = mysql_num_rows($result);
 	if ($jum_hadir > 0) { 
 	?>  
      	<table width="100%" border="0" align="center">
@@ -189,7 +189,7 @@ function change_urut(urut,urutan) {
 		</tr>
 		<? 
 		$cnt = 0;
-		while ($row = @mysqli_fetch_row($result)) {	
+		while ($row = @mysql_fetch_row($result)) {	
 			switch ($row[6]){
 				case 1 : $st="Ijin";
 				break;

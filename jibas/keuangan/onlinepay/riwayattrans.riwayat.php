@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  *
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -91,7 +91,7 @@ if (!isset($_REQUEST["stidpgtrans"]))
     $nData = 0;
     $stIdPgTrans = "";
     $res = QueryDb($sql);
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         $nData++;
 
@@ -142,7 +142,7 @@ $nPage = ceil($nData / $nRowPerPage);
 <tr>
     <td>
 <?php
-        $sql = "SELECT DISTINCT p.replid, p.nis, s.nama AS namasiswa, p.bankno, b.bank, p.nomor, p.jenis,
+        $sql = "SELECT p.replid, p.nis, s.nama AS namasiswa, p.bankno, b.bank, p.nomor, p.jenis,
                        DATE_FORMAT(p.waktu, '%d %b %Y<br>%H:%i') AS fwaktu, DATE_FORMAT(p.tanggal, '%d %b %Y') AS ftanggal,
                        p.idpetugas, p.petugas, p.ketver, p.transaksi, p.paymentid
                   FROM jbsfina.pgtrans p
@@ -166,7 +166,7 @@ $nPage = ceil($nData / $nRowPerPage);
 <?php
         $res = QueryDb($sql);
         $cnt = ($page - 1) * $nRowPerPage;
-        while($row = mysqli_fetch_array($res))
+        while($row = mysql_fetch_array($res))
         {
             $cnt += 1;
             $idPgTrans = $row['replid'];
@@ -176,7 +176,7 @@ $nPage = ceil($nData / $nRowPerPage);
                      WHERE idpgtrans = $idPgTrans
                        AND kategori <> 'LB'";
             $res2 = QueryDb($sql);
-            $row2 = mysqli_fetch_row($res2);
+            $row2 = mysql_fetch_row($res2);
             $jTransaksi = $row2[0];
             $rpTransaksi = FormatRupiah($jTransaksi);
 
@@ -185,7 +185,7 @@ $nPage = ceil($nData / $nRowPerPage);
                      WHERE idpgtrans = $idPgTrans
                        AND kategori = 'LB'";
             $res2 = QueryDb($sql);
-            $row2 = mysqli_fetch_row($res2);
+            $row2 = mysql_fetch_row($res2);
             $jLebih = $row2[0];
 
             $jenis = $row["jenis"];
@@ -199,7 +199,7 @@ $nPage = ceil($nData / $nRowPerPage);
                          WHERE tsi.idtagihanset = ts.replid
                            AND tsi.notagihan = '$row[nomor]'";
                 $res2 = QueryDb($sql);
-                if ($row2 = mysqli_fetch_row($res2))
+                if ($row2 = mysql_fetch_row($res2))
                     $nomorTs = $row2[0];
             }
 
@@ -231,7 +231,7 @@ $nPage = ceil($nData / $nRowPerPage);
                      ORDER BY kelompok;";
             $res2 = QueryDb($sql);
             $stNoJurnal = "";
-            while($row2 = mysqli_fetch_array($res2))
+            while($row2 = mysql_fetch_array($res2))
             {
                 $kategori = $row2["kategori"];
 

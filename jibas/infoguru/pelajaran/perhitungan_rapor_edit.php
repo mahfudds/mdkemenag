@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -52,7 +52,7 @@ $sql = "SELECT j.departemen, j.nama, p.nip, p.nama, t.tingkat
 			WHERE g.nip=p.nip AND g.idpelajaran = j.replid AND t.departemen = j.departemen 
 			  AND t.replid = '$id_tingkat' AND j.replid = '$id_pelajaran' AND g.nip = '".SI_USER_ID()."'"; 
 $result = QueryDb($sql);
-$row = @mysqli_fetch_row($result);
+$row = @mysql_fetch_row($result);
 $departemen = $row[0];
 $pelajaran = $row[1];
 $guru = $row[2].' - '.$row[3];
@@ -60,7 +60,7 @@ $tingkat = $row[4];
 
 $sql = "SELECT keterangan FROM dasarpenilaian WHERE dasarpenilaian = '$aspek'";
 $result = QueryDb($sql);
-$row = @mysqli_fetch_row($result);
+$row = @mysql_fetch_row($result);
 $aspekket = $row[0];
 
 $ERROR_MSG = "";
@@ -216,13 +216,13 @@ function validate()
 		
 		$result = QueryDb($sql);
 
-		$num = mysqli_num_rows($result);
+		$num = mysql_num_rows($result);
 		$i = 1;
-		while ($row = @mysqli_fetch_row($result)) {
+		while ($row = @mysql_fetch_row($result)) {
 			
 			$sql1 = "SELECT a.bobot, j.jenisujian, a.replid FROM aturannhb a, jenisujian j WHERE a.idpelajaran = '$id_pelajaran' AND a.nipguru = '".SI_USER_ID()."' AND a.idtingkat = '$id_tingkat' AND a.dasarpenilaian = '$aspek' AND a.idjenisujian = '$row[0]' AND a.idjenisujian = j.replid"; 
 			$result1 = QueryDb($sql1);
-			$row1 = @mysqli_fetch_row($result1);
+			$row1 = @mysql_fetch_row($result1);
 		
 		?>		
 		<tr>
@@ -256,7 +256,6 @@ function validate()
     	</script>
 	</td>
 </tr>
-<!--
 <tr>
 	<td colspan="2" height="25" width="100%" align="left" valign="top" style="border-width:1px; border-style:dashed; border-color:#03F; background-color:#CFF">
     	<strong>Centang jenis pengujian yang sesuai dengan aspek penilaian yang dipilih.<br>Kemudian berikan bobot nilainya.<br/>
@@ -265,7 +264,6 @@ function validate()
 									  </strong>
 	</td>
 </tr>
-//-->
 <tr>
 	<td colspan="2" align="center">
     <input type="submit" name="Simpan" id="Simpan" value="Simpan" class="but" />&nbsp;

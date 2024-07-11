@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  *
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -78,7 +78,7 @@ OpenDb();
                              ORDER BY replid DESC";
                     $result = QueryDb($sql);
                     $useactive = ($tahunajaran == 0) ? true : false;
-                    while($row = @mysqli_fetch_array($result))
+                    while($row = @mysql_fetch_array($result))
                     {
                         $act = ($row['aktif'] == 1) ? "(A)" : "";
 
@@ -111,7 +111,7 @@ OpenDb();
                                    AND aktif = 1 
                                  ORDER BY urutan";
                         $result = QueryDb($sql);
-                        while ($row = @mysqli_fetch_array($result))
+                        while ($row = @mysql_fetch_array($result))
                         {
                             if ($tingkat == 0)
                                 $tingkat = $row['replid']; ?>
@@ -126,7 +126,7 @@ OpenDb();
                                   AND aktif = 1 
                                 ORDER BY kelas";
                         $result=QueryDb($sql);
-                        while ($row = @mysqli_fetch_array($result))
+                        while ($row = @mysql_fetch_array($result))
                         {
                             if ($kelas == 0)
                                 $kelas = $row['replid']; ?>
@@ -143,7 +143,7 @@ OpenDb();
                                  ORDER BY replid DESC";
                         $result = QueryDb($sql);
                         $useactive = ($semester == 0) ? true : false;
-                        while($row = @mysqli_fetch_array($result))
+                        while($row = @mysql_fetch_array($result))
                         {
                             $act = ($row["aktif"] == 1) ? "(A)" : "";
                             $sel = "";
@@ -176,7 +176,7 @@ OpenDb();
                                    AND u.idkelas = '$kelas'
                                    AND u.idsemester = '$semester'";
                         $result = QueryDb($sql);
-                        while($row = mysqli_fetch_array($result))
+                        while($row = mysql_fetch_array($result))
                         { ?>
                             <option value="<?=$row['idpelajaran']?>"><?=$row['nama']?></option>
 <?		                } ?>

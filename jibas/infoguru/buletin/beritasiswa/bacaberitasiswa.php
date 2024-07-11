@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,20 +35,20 @@ OpenDb();
 
 $sql_berita="SELECT YEAR(tanggal) as thn,MONTH(tanggal) as bln,DAY(tanggal) as tgl,replid as replid,judul as judul,abstrak as abstrak ,isi as berita,idpengirim FROM jbsvcr.beritasiswa WHERE replid='$replid'";
 $result_berita=QueryDb($sql_berita);
-$row_berita=@mysqli_fetch_array($result_berita);
+$row_berita=@mysql_fetch_array($result_berita);
 $sql_getnama="SELECT nama FROM jbsakad.siswa WHERE nis='$row_berita[idpengirim]'";
 $result_getnama=QueryDb($sql_getnama);
-if (@mysqli_num_rows($result_getnama)>0)
+if (@mysql_num_rows($result_getnama)>0)
 {
-	$row_getnama=@mysqli_fetch_array($result_getnama);
-	$nama=$row_getnama['nama'];
+	$row_getnama=@mysql_fetch_array($result_getnama);
+	$nama=$row_getnama[nama];
 }
 else
 {
 	$sql_getnama2="SELECT nama FROM jbssdm.pegawai WHERE nip='$row_berita[idpengirim]'";	
 	$result_getnama2=QueryDb($sql_getnama2);
-	$row_getnama2=@mysqli_fetch_array($result_getnama2);
-	$nama=$row_getnama2['nama'];
+	$row_getnama2=@mysql_fetch_array($result_getnama2);
+	$nama=$row_getnama2[nama];
 }
 CloseDb();
 $namabulan = array("Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","Nopember","Desember");	

@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -224,7 +224,7 @@ function ByeWin() {
 			$sql = "SELECT replid,tahunajaran,aktif FROM tahunajaran where departemen='$departemen' ORDER BY aktif DESC, replid DESC";
 			$result = QueryDb($sql);
 			CloseDb();
-			while ($row = @mysqli_fetch_array($result)) {
+			while ($row = @mysql_fetch_array($result)) {
 				if ($tahunajaran == "") 
 					$tahunajaran = $row['replid'];
 				if ($row['aktif']) 
@@ -244,7 +244,7 @@ function ByeWin() {
 	$sql = "SELECT i.deskripsi, i.aktif, i.replid FROM jbsakad.infojadwal i, jbsakad.tahunajaran t WHERE t.departemen ='$departemen' AND i.idtahunajaran = '$tahunajaran' AND i.idtahunajaran = t.replid ORDER BY $urut $urutan";
 	
 	$result = QueryDb($sql);
-	if (@mysqli_num_rows($result) > 0) {
+	if (@mysql_num_rows($result) > 0) {
 ?>
         <td align="right">
         	<a href="#" onClick="document.location.reload()"><img src="../images/ico/refresh.png" border="0" onMouseOver="showhint('Refresh!', this, event, '80px')">&nbsp;Refresh</a>&nbsp;&nbsp;
@@ -266,7 +266,7 @@ function ByeWin() {
 	</tr>
     <?
 	$cnt=1;
-	while ($row = @mysqli_fetch_array($result)) {				
+	while ($row = @mysql_fetch_array($result)) {				
 		$replid=$row['replid'];
 	?>
     <tr height="25">

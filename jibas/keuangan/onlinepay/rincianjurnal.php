@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  *
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -88,10 +88,10 @@ for($i = 0; $i < count($lsJurnal); $i++)
               FROM jbsfina.jurnal
              WHERE nokas = '$noJurnal'";
     $res = QueryDb($sql);
-    if (mysqli_num_rows($res) == 0)
+    if (mysql_num_rows($res) == 0)
         continue;
 
-    $row = mysqli_fetch_array($res);
+    $row = mysql_fetch_array($res);
     $idJurnal = $row["replid"];
     echo "<tr>";
     echo "<td style='background-color: #efefef' align='center' valign='top' rowspan='2'>$no</td>";
@@ -108,7 +108,7 @@ for($i = 0; $i < count($lsJurnal); $i++)
              WHERE jd.koderek = rk.kode
                AND idjurnal = $idJurnal";
     $res2 = QueryDb($sql);
-    while($row2 = mysqli_fetch_array($res2))
+    while($row2 = mysql_fetch_array($res2))
     {
         echo "<tr>";
         echo "<td width='50' align='center'>$row2[koderek]</td>";

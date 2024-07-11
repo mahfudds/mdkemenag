@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -54,7 +54,7 @@ OpenDb();
 $sql = "SELECT s.replid,s.nis,s.nama,s.asalsekolah,s.tmplahir,DATE_FORMAT(s.tgllahir,'%d %M %Y') as tgllahir,s.status,t.tingkat,k.kelas,s.aktif,s.nisn from jbsakad.siswa s, jbsakad.kelas k, jbsakad.tingkat t WHERE s.".$jenis." LIKE '%$cari%' AND k.replid=s.idkelas AND k.idtingkat=t.replid AND t.departemen='$departemen' ORDER BY $urut $urutan";
 $result=QueryDb($sql);
 
-if (@mysqli_num_rows($result)<>0){
+if (@mysql_num_rows($result)<>0){
 ?>
 <html>
 <head>
@@ -107,16 +107,16 @@ Data Siswa
 </tr>
 <?
 	$cnt=1;
-	while ($row_siswa=@mysqli_fetch_array($result)){
+	while ($row_siswa=@mysql_fetch_array($result)){
 	?>
 	<tr height="25">
 	<td width="3" align="center"><?=$cnt?></td>
-	<td align="left"><?=$row_siswa['nis']?></td>
-	<td align="left"><?=$row_siswa['nisn']?></td>
-	<td align="left"><?=$row_siswa['nama']?></td>
-	<td align="left"><?=$row_siswa['tmplahir']?>, <?=LongDateFormat($row_siswa['tgllahir'])?></td>
-	<td align="center"><?=$row_siswa['tingkat']?></td>
-	<td align="center"><?=$row_siswa['kelas']?></td>
+	<td align="left"><?=$row_siswa[nis]?></td>
+	<td align="left"><?=$row_siswa[nisn]?></td>
+	<td align="left"><?=$row_siswa[nama]?></td>
+	<td align="left"><?=$row_siswa[tmplahir]?>, <?=LongDateFormat($row_siswa[tgllahir])?></td>
+	<td align="center"><?=$row_siswa[tingkat]?></td>
+	<td align="center"><?=$row_siswa[kelas]?></td>
 	<td align="center"><?
 		if ($row_siswa['aktif']==1){
 			echo "Aktif";
@@ -125,15 +125,15 @@ Data Siswa
 			if ($row_siswa['alumni']==1){
 				$sql_get_al="SELECT DATE_FORMAT(a.tgllulus, '%d %M %Y') as tgllulus FROM jbsakad.alumni a WHERE a.nis='$row_siswa[nis]'";	
 				$res_get_al=QueryDb($sql_get_al);
-				$row_get_al=@mysqli_fetch_array($res_get_al);
-				echo "<br><a style='cursor:pointer;' title='Lulus Tgl: ".$row_get_al['tgllulus']."'><u>[Alumnus]</u></a>";
+				$row_get_al=@mysql_fetch_array($res_get_al);
+				echo "<br><a style='cursor:pointer;' title='Lulus Tgl: ".$row_get_al[tgllulus]."'><u>[Alumnus]</u></a>";
 			}
 			if ($row_siswa['statusmutasi']!=NULL){
 				$sql_get_mut="SELECT DATE_FORMAT(m.tglmutasi, '%d %M %Y') as tglmutasi,j.jenismutasi FROM jbsakad.jenismutasi j, jbsakad.mutasisiswa m WHERE j.replid='$row_siswa[statusmutasi]' AND m.nis='$row_siswa[nis]' AND j.replid=m.jenismutasi";	
 				$res_get_mut=QueryDb($sql_get_mut);
-				$row_get_mut=@mysqli_fetch_array($res_get_mut);
+				$row_get_mut=@mysql_fetch_array($res_get_mut);
 				//echo "<br><a href=\"NULL\" onmouseover=\"showhint('".$row_get_mut[jenismutasi]."<br>".$row_get_mut['tglmutasi']."', this, event, '50px')\"><u>[Termutasi]</u></a>";
-				echo "<br><a style='cursor:pointer;' title='".$row_get_mut['jenismutasi']."\n Tgl : ".$row_get_mut['tglmutasi']."'><u>[Termutasi]</u></a>";
+				echo "<br><a style='cursor:pointer;' title='".$row_get_mut[jenismutasi]."\n Tgl : ".$row_get_mut['tglmutasi']."'><u>[Termutasi]</u></a>";
 			}
 		}
 		?></td>

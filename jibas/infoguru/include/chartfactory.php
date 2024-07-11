@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *  
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,11 +23,11 @@
 <?
 require_once("config.php");
 require_once("rupiah.php");
-require_once("../library/class/jpgraph.php");
-require_once("../library/class/jpgraph_pie.php");
-require_once("../library/class/jpgraph_pie3d.php");
-require_once("../library/class/jpgraph_bar.php");
-require_once("../library/class/jpgraph_line.php");
+require_once("class/jpgraph.php");
+require_once("class/jpgraph_pie.php");
+require_once("class/jpgraph_pie3d.php");
+require_once("class/jpgraph_bar.php");
+require_once("class/jpgraph_line.php");
 
 class ChartFactory {
 	var $bulan = array('Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agt','Sep','Okt','Nop','Des');
@@ -55,7 +55,7 @@ class ChartFactory {
 	function SqlData($sql, $btit, $ptit, $xti, $yti) {
 		OpenDb();
 		$result = QueryDb($sql);
-		while ($row = mysqli_fetch_row($result))
+		while ($row = mysql_fetch_row($result))
 		{
 			$this->xdata[] = $row[0];
 			$this->ydata[] = $row[1];
@@ -68,14 +68,8 @@ class ChartFactory {
 		$this->ytitle = $yti;
 	}
 
-	function DrawBarChart()
-    {
-        if ($this->xdata == null)
-            return;
-
-        if ($this->ydata == null)
-            return;
-		//if ( (count($this->xdata) == 0) || (count($this->ydata) == 0) ) return;
+	function DrawBarChart() {
+		if ( (count($this->xdata) == 0) || (count($this->ydata) == 0) ) return;
 		
 		//Buat grafik
 		$graph = new Graph(550,300,"auto");

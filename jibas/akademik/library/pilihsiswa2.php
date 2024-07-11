@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -142,7 +142,7 @@ openDB();
 				$result_dep = QueryDb($query_dep);
 		
 				$i=0;
-				while($row_dep = @mysqli_fetch_array($result_dep)){
+				while($row_dep = @mysql_fetch_array($result_dep)){
 				  if($departemen == ""){
 						$departemen = $row_dep[departemen];
 						$sel[$i] = "selected";
@@ -159,7 +159,7 @@ openDB();
 						 "WHERE tahunajaran.departemen = '$departemen' ".
 						 "AND tahunajaran.aktif = '1'";
             $result_thn = QueryDb($query_thn);
-			$row_thn = @mysqli_fetch_array($result_thn);
+			$row_thn = @mysql_fetch_array($result_thn);
 			$rep = $row_thn[replid];
 				?>
 				</select></td>
@@ -176,7 +176,7 @@ openDB();
 					$result_tkt = QueryDb($query_tkt);
 
 					$i=0;
-					while($row_tkt = mysqli_fetch_array($result_tkt)){
+					while($row_tkt = mysql_fetch_array($result_tkt)){
 						if($tingkat == ""){
 							$tingkat = $row_tkt[replid];
 							$sel[$i] = "selected";
@@ -201,7 +201,7 @@ openDB();
 							 "AND kelas.idtingkat = '$tingkat' AND idtahunajaran = '$row_thn[replid]' ORDER BY kelas.kelas ASC";
 				$result_kls = QueryDb($query_kls);
 				$i=0;
-				while($row_kls = mysqli_fetch_array($result_kls)){
+				while($row_kls = mysql_fetch_array($result_kls)){
 					if($kelas == $row_kls[replid]){
 						$sel[$i] = "selected";
 					}else{
@@ -244,7 +244,7 @@ if ((isset($_POST["cari"]))){
 						<td class='header' align='center'>NIS</td>
 						<td class='header'>Nama</td>
 	<?
-	$jml_data = @mysqli_num_rows($result_sis);
+	$jml_data = @mysql_num_rows($result_sis);
 	
 	if($jml_data == "0"){
 		echo "<tr>
@@ -254,7 +254,7 @@ if ((isset($_POST["cari"]))){
 	}else{
 	
 	$cnt = 0;
-	while($row = @mysqli_fetch_array($result_sis)){
+	while($row = @mysql_fetch_array($result_sis)){
 	?>
 		
 	<tr <?="bgcolor=#".($cnt%2?"ffffff":"EAECEE").""; ?>>

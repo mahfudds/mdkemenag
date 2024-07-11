@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,21 +26,21 @@ require_once('../inc/config.php');
 require_once('../inc/rupiah.php');
 require_once('../inc/db_functions.php');
 require_once('../lib/GetHeaderCetak.php');
-$perpustakaan	= $_REQUEST['perpustakaan'];
-$from			= $_REQUEST['from'];
-$to				= $_REQUEST['to'];
-$limit			= $_REQUEST['limit'];
+$perpustakaan	= $_REQUEST[perpustakaan];
+$from			= $_REQUEST[from];
+$to				= $_REQUEST[to];
+$limit			= $_REQUEST[limit];
 OpenDb();
 if ($perpustakaan!='-1') {
 	$sql 	= "SELECT nama FROM perpustakaan WHERE replid='$perpustakaan'";
 	$result = QueryDb($sql);
-	$row 	= @mysqli_fetch_row($result);
+	$row 	= @mysql_fetch_row($result);
 	$nama	= $row[0];
 } else {
 	$nama = "<i>Semua</i>";
 }
-$from	= explode('-',$from);
-$to		= explode('-',$to);
+$from	= split('-',$from);
+$to		= split('-',$to);
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -108,9 +108,9 @@ $to		= explode('-',$to);
             <td height="25" align="center" class="header">Anggota</td>
             <td height="25" align="center" class="header">Jumlah</td>
           </tr>
-          <? if (@mysqli_num_rows($result)>0) { ?>
+          <? if (@mysql_num_rows($result)>0) { ?>
           <? $cnt=1; ?>
-          <? while ($row = @mysqli_fetch_row($result)) { ?>
+          <? while ($row = @mysql_fetch_row($result)) { ?>
           <? 
             $idanggota = $row[1];
             $NamaAnggota = GetMemberName($idanggota);
@@ -141,21 +141,21 @@ window.print();
 function GetMemberName($idanggota){
 	$sql1 = "SELECT nama FROM ".get_db_name('akad').".siswa WHERE nis='$idanggota'";
 	$result1 = QueryDb($sql1);
-	if (@mysqli_num_rows($result1)>0){
-		$row1 = @mysqli_fetch_array($result1);
-		return $row1['nama'];
+	if (@mysql_num_rows($result1)>0){
+		$row1 = @mysql_fetch_array($result1);
+		return $row1[nama];
 	} else {
 		$sql2 = "SELECT nama FROM ".get_db_name('sdm').".pegawai WHERE nip='$idanggota'";
 		$result2 = QueryDb($sql2);
-		if (@mysqli_num_rows($result2)>0){
-			$row2 = @mysqli_fetch_array($result2);
-			return $row2['nama'];
+		if (@mysql_num_rows($result2)>0){
+			$row2 = @mysql_fetch_array($result2);
+			return $row2[nama];
 		} else {
 			$sql3 = "SELECT nama FROM anggota WHERE noregistrasi='$idanggota'";
 			$result3 = QueryDb($sql3);
-			if (@mysqli_num_rows($result3)>0){
-				$row3 = @mysqli_fetch_array($result3);
-				return $row3['nama'];
+			if (@mysql_num_rows($result3)>0){
+				$row3 = @mysql_fetch_array($result3);
+				return $row3[nama];
 			} else {
 				return "Tanpa Nama";
 			}

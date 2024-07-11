@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,25 +26,25 @@ class CStat
 	function OnStart()
 	{
 		$this->Limit=10;
-		if (isset($_REQUEST['Limit']))
-			$this->Limit = $_REQUEST['Limit'];
+		if (isset($_REQUEST[Limit]))
+			$this->Limit = $_REQUEST[Limit];
 			
-		$this->perpustakaan = $_REQUEST['perpustakaan'];
+		$this->perpustakaan = $_REQUEST[perpustakaan];
 		$this->BlnAwal = date('m');
-		if (isset($_REQUEST['BlnAwal']))
-			$this->BlnAwal = $_REQUEST['BlnAwal'];
+		if (isset($_REQUEST[BlnAwal]))
+			$this->BlnAwal = $_REQUEST[BlnAwal];
 			
 		$this->ThnAwal = date('Y');
-		if (isset($_REQUEST['ThnAwal']))
-			$this->ThnAwal = $_REQUEST['ThnAwal'];
+		if (isset($_REQUEST[ThnAwal]))
+			$this->ThnAwal = $_REQUEST[ThnAwal];
 			
 		$this->BlnAkhir = date('m');
-		if (isset($_REQUEST['BlnAkhir']))
-			$this->BlnAkhir = $_REQUEST['BlnAkhir'];
+		if (isset($_REQUEST[BlnAkhir]))
+			$this->BlnAkhir = $_REQUEST[BlnAkhir];
 			
 		$this->ThnAkhir = date('Y');
-		if (isset($_REQUEST['ThnAkhir']))
-			$this->ThnAkhir = $_REQUEST['ThnAkhir'];
+		if (isset($_REQUEST[ThnAkhir]))
+			$this->ThnAkhir = $_REQUEST[ThnAkhir];
 	}
 	
 	function reload_page()
@@ -82,7 +82,7 @@ class CStat
 				echo "<option value='-1' ".IntIsSelected('-1',$this->perpustakaan).">(Semua)</option>";
 			}
 			
-			while ($row = @mysqli_fetch_row($result))
+			while ($row = @mysql_fetch_row($result))
 			{
 				if ($this->perpustakaan=="")
 					$this->perpustakaan = $row[0];		?>
@@ -111,7 +111,7 @@ class CStat
                 <tr>
                     <td>Bulan</td>
                     <td width="*">
-<?						$yearnow = date('Y');	?>
+<?						$yearnow = date(Y);	?>
                         <table width="100%" border="0" cellspacing="0" cellpadding="1">
                         <tr>
                             <td>
@@ -188,7 +188,7 @@ class CStat
         </tr>
         <tr>
             <td colspan="2" valign="top">
-<? 				if (isset($_REQUEST['ShowState']))
+<? 				if (isset($_REQUEST[ShowState]))
 				{
 					echo $this->ShowStatistik();
 				}
@@ -224,7 +224,7 @@ class CStat
 		$key = $this->ThnAwal."-".$this->BlnAwal."-01,".$this->ThnAkhir."-".$this->BlnAkhir."-31"; ?>
 		
 		<table width="100%" border="0" cellspacing="2" cellpadding="2">
-<? 		if (@mysqli_num_rows($result)>0)
+<? 		if (@mysql_num_rows($result)>0)
 		{ ?>
         <tr>
 		    <td colspan="2" align="center" valign="top"><a href="javascript:Cetak()"><img src="../img/ico/print1.png" width="16" height="16" border="0" />&nbsp;Cetak</a></td>
@@ -250,9 +250,9 @@ class CStat
 						<td width='15%' align="center" class="header">Jumlah</td>
 						<td width='15%' align="center" class="header">&nbsp;</td>
 					</tr>
-<? 					if (@mysqli_num_rows($result)>0)
+<? 					if (@mysql_num_rows($result)>0)
 					{
-						while ($row = @mysqli_fetch_row($result))
+						while ($row = @mysql_fetch_row($result))
 						{ 
 							$this->idanggota = $row[1];
 							$this->jenisanggota = $row[2];
@@ -310,7 +310,7 @@ class CStat
 					 WHERE noregistrasi = '$this->idanggota'";
 		}
 		$res = QueryDb($sql);
-		$row = mysqli_fetch_row($res);
+		$row = mysql_fetch_row($res);
 		$namaanggota = $row[0];
 		
 		return $namaanggota;

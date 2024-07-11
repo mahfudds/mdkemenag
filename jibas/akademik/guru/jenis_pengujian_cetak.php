@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ OpenDb();
 $sql = "SELECT j.replid,j.jenisujian,j.idpelajaran,j.keterangan,p.replid,p.nama,p.departemen,j.info1 FROM jenisujian j, pelajaran p WHERE j.idpelajaran = '$id' AND p.replid=j.idpelajaran ";   
 $result = QueryDb($sql);
 $cnt = 0;
-$row = @mysqli_fetch_row($result);
+$row = @mysql_fetch_row($result);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -72,7 +72,7 @@ Departemen : <?=$row[6]?>
 		$sql = "SELECT j.replid,j.jenisujian,j.idpelajaran,j.keterangan,p.replid,p.nama,p.departemen,j.info1 FROM jenisujian j, pelajaran p WHERE j.idpelajaran = '$id' AND j.idpelajaran = p.replid ORDER BY j.jenisujian";   
 		$result = QueryDb($sql);
 		$cnt = 0;
-		while ($row = @mysqli_fetch_row($result)) {
+		while ($row = @mysql_fetch_row($result)) {
 		?>
     <tr>   	
        	<td align="center"><?=++$cnt ?></td>

@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,7 +48,7 @@ $sql = "SELECT p.nama, p.replid AS pelajaran, a.dasarpenilaian, j.jenisujian, j.
           FROM jbsakad.aturannhb a, jbsakad.pelajaran p, jenisujian j, dasarpenilaian dp 
 		 WHERE a.dasarpenilaian = dp.dasarpenilaian AND a.replid='$idaturan' AND p.replid = a.idpelajaran AND a.idjenisujian = j.replid";
 $result = QueryDb($sql);
-$row = @mysqli_fetch_array($result);
+$row = @mysql_fetch_array($result);
 $namapel = $row['nama'];
 $pelajaran = $row['pelajaran'];
 $aspek = $row['dasarpenilaian'];
@@ -114,7 +114,7 @@ elseif ($op == "bwe24sssd2p24237lwi0234")
 	
 	$sql = "SELECT nis FROM jbsakad.siswa WHERE idkelas='$kelas' AND aktif=1";
 	$ressis = QueryDb($sql);
-	while($success && ($rowsis = mysqli_fetch_row($ressis)))
+	while($success && ($rowsis = mysql_fetch_row($ressis)))
 	{
 		$nis = $rowsis[0];
 		HitungRataSiswa($kelas, $semester, $idaturan, $nis, $success);
@@ -122,7 +122,7 @@ elseif ($op == "bwe24sssd2p24237lwi0234")
 	
 	$sql = "SELECT replid FROM jbsakad.ujian WHERE idkelas='$kelas' AND idsemester='$semester' AND idaturan='$idaturan'";
 	$resuj = QueryDb($sql);
-	while($success && ($rowuj = mysqli_fetch_row($resuj)))
+	while($success && ($rowuj = mysql_fetch_row($resuj)))
 	{
 		$iduj = $rowuj[0];
 		HitungRataKelasUjian($kelas, $semester, $idaturan, $iduj, $success);
@@ -312,8 +312,8 @@ function focusNext(elemName, evt)
 						FROM jbsakad.ujian u 
 					   WHERE u.idaturan='$idaturan' AND u.idkelas='$kelas' AND u.idsemester='$semester' ORDER by u.tanggal ASC";
     $result_cek_ujian = QueryDb($sql_cek_ujian);		
-	$jumlahujian = @mysqli_num_rows($result_cek_ujian);
-	if (mysqli_num_rows($result_cek_ujian) > 0) 
+	$jumlahujian = @mysql_num_rows($result_cek_ujian);
+	if (mysql_num_rows($result_cek_ujian) > 0) 
 	{ ?>
             
             <td align="right">
@@ -334,12 +334,12 @@ function focusNext(elemName, evt)
 		<?
        
         $i=1;
-        while ($row_cek_ujian=@mysqli_fetch_array($result_cek_ujian)){
+        while ($row_cek_ujian=@mysql_fetch_array($result_cek_ujian)){
 			$sql_get_rpp_name = "SELECT rpp FROM rpp WHERE replid='$row_cek_ujian[idrpp]'";
-			if (!empty($row_cek_ujian['idrpp'])) {
+			if (!empty($row_cek_ujian[idrpp])) {
 				$res_get_rpp_name = QueryDb($sql_get_rpp_name);
-				$rpp = @mysqli_fetch_array($res_get_rpp_name);
-				$namarpp = $rpp['rpp'];
+				$rpp = @mysql_fetch_array($res_get_rpp_name);
+				$namarpp = $rpp[rpp];
 			} else {
 				$namarpp = "Tanpa RPP";
 			}
@@ -364,8 +364,8 @@ function focusNext(elemName, evt)
 	<? $sql_get_nau_per_kelas="SELECT nilaiAU,keterangan FROM jbsakad.nau WHERE idkelas='$kelas' AND idsemester='$semester' AND idaturan='$idaturan'";
         	//echo $sql_get_nau_per_kelas;
 		$result_get_nau_per_kelas=QueryDb($sql_get_nau_per_kelas);
-		if (@mysqli_num_rows($result_get_nau_per_kelas)<>0){           
-			$manual=@mysqli_num_rows($result_get_nau_per_kelas);
+		if (@mysql_num_rows($result_get_nau_per_kelas)<>0){           
+			$manual=@mysql_num_rows($result_get_ket_nau_per_kelas);
 			if (SI_USER_LEVEL() != $SI_USER_STAFF) 
 			{	?>	
             	<br /><a href="JavaScript:hapus_nau()"><img src="../images/ico/hapus.png" border="0" onMouseOver="showhint('Hapus Nilai Akhir Ujian!', this, event, '100px')" /></a>&nbsp;
@@ -376,25 +376,25 @@ function focusNext(elemName, evt)
 <?      $sql_siswa = "SELECT * FROM jbsakad.siswa WHERE idkelas='$kelas' AND aktif=1 ORDER BY nama ASC";
         $result_siswa = QueryDb($sql_siswa);
         $cnt = 1;
-        $jumsiswa = mysqli_num_rows($result_siswa);
-        while ($row_siswa=@mysqli_fetch_array($result_siswa))
+        $jumsiswa = mysql_num_rows($result_siswa);
+        while ($row_siswa=@mysql_fetch_array($result_siswa))
 		{
             $nilai = 0;	?>
   		<tr height="25">
             <td align="center"><?=$cnt?></td>
             <td align="center"><?=$row_siswa['nis']?></td>
-            <td><a href="#" onMouseOver="showhint('Lihat Detail Siswa!', this, event, '80px')"  onClick="newWindow('../library/detail_siswa.php?replid=<?=$row_siswa['replid']?>', 'DetailSiswa','660','657','resizable=1,scrollbars=1,status=0,toolbar=0')"><?=$row_siswa['nama']?></a></td>
+            <td><a href="#" onMouseOver="showhint('Lihat Detail Siswa!', this, event, '80px')"  onClick="newWindow('../library/detail_siswa.php?replid=<?=$row_siswa[replid]?>', 'DetailSiswa','660','657','resizable=1,scrollbars=1,status=0,toolbar=0')"><?=$row_siswa['nama']?></a></td>
           
 		<? 	for ($j=1;$j<=count($idujian);$j++) { ?>
             <td align="center">							
 			<?	$sql_cek_nilai_ujian="SELECT * FROM jbsakad.nilaiujian WHERE idujian='$idujian[$j]' AND nis='$row_siswa[nis]'";
                 $result_cek_nilai_ujian=QueryDb($sql_cek_nilai_ujian);
-               	if (@mysqli_num_rows($result_cek_nilai_ujian)>0){
-                    $row_cek_nilai_ujian=@mysqli_fetch_array($result_cek_nilai_ujian);
+               	if (@mysql_num_rows($result_cek_nilai_ujian)>0){
+                    $row_cek_nilai_ujian=@mysql_fetch_array($result_cek_nilai_ujian);
                 	$nilaiujian[$j] = $nilaiujian[$j]+$row_cek_nilai_ujian['nilaiujian'];					
                 	$nilai = $nilai+$row_cek_nilai_ujian['nilaiujian'];  ?>
 					<a href="JavaScript:ubah_nilai(<?=$row_cek_nilai_ujian['replid']?>)" onMouseOver="showhint('Ubah Nilai Ujian!', this, event, '80px')"><?=$row_cek_nilai_ujian['nilaiujian']?></a>          
-            <?		if ($row_cek_nilai_ujian['keterangan']<>"")
+            <?		if ($row_cek_nilai_ujian[keterangan]<>"")
                         echo "<strong><font color='blue'>)*</font></strong>";
                 	} else {   ?>         	
                     	<a href="JavaScript:tambah_nilai(<?=$idujian[$j]?>,'<?=$row_siswa['nis']?>')"><img src="../images/ico/tambah.png" border="0" onMouseOver="showhint('Tambah Nilai Ujian!', this, event, '80px')" /></a>
@@ -410,9 +410,9 @@ function focusNext(elemName, evt)
 		
 			//echo $sql_get_nau_per_nis;			
 			$result_get_nau_per_nis=QueryDb($sql_get_nau_per_nis);
-			if (mysqli_num_rows($result_get_nau_per_nis) > 0) 
+			if (mysql_num_rows($result_get_nau_per_nis) > 0) 
 			{
-				$row_get_nau_per_nis=@mysqli_fetch_array($result_get_nau_per_nis);
+				$row_get_nau_per_nis=@mysql_fetch_array($result_get_nau_per_nis);
 				if ($row_get_nau_per_nis['nilaiAU'] <> 0) 
 				{ 	?>
             		<a href="Javascript:ubah_nau('<?=$row_get_nau_per_nis['replid']?>')" onMouseOver="showhint('Ubah Nilai Akhir Ujian!', this, event, '80px')" ><?=$row_get_nau_per_nis['nilaiAU']?></a>            
@@ -424,7 +424,7 @@ function focusNext(elemName, evt)
 				if ($row_get_nau_per_nis['keterangan']<>"")
 					echo "<font color='#067900'>)*</font>";
 				//echo $row_get_nau_per_nis['info1'];
-				if ($row_get_nau_per_nis['info1']=='1')
+				if ($row_get_nau_per_nis[info1]=='1')
 					echo "&nbsp;<font color='blue'>)*</font>";
 			} ?>
             </td>
@@ -448,8 +448,8 @@ function focusNext(elemName, evt)
 		
 		//echo $sql_get_nau_per_nis;			
 		$result_get_nau_per_nis=QueryDb($sql_get_nau_per_nis);
-		if (mysqli_num_rows($result_get_nau_per_nis) > 0) {
-			$row = mysqli_fetch_row($result_get_nau_per_nis);     
+		if (mysql_num_rows($result_get_nau_per_nis) > 0) {
+			$row = mysql_fetch_row($result_get_nau_per_nis);     
 			echo round($row[0],2);
      	} ?>        
             </td>
@@ -495,16 +495,16 @@ function focusNext(elemName, evt)
 							  WHERE u.idaturan = '$idaturan' AND u.idkelas = '$kelas' AND u.idsemester = '$semester' 
 							  ORDER by u.tanggal ASC";
 			$result_cek_ujian = QueryDb($sql_cek_ujian);
-			$jumujian = mysqli_num_rows($result_cek_ujian);
+			$jumujian = mysql_num_rows($result_cek_ujian);
 			$ibobot = 1;
-			while ($row_cek_ujian = @mysqli_fetch_array($result_cek_ujian))
+			while ($row_cek_ujian = @mysql_fetch_array($result_cek_ujian))
 			{
 				if (!empty($row_cek_ujian['idrpp'])) 
 				{
 					$sql_get_rpp_name = "SELECT rpp FROM rpp WHERE replid = '$row_cek_ujian[idrpp]'";
 					$res_get_rpp_name = QueryDb($sql_get_rpp_name);
-					$rpp = @mysqli_fetch_array($res_get_rpp_name);
-					$namarpp = $rpp['rpp'];
+					$rpp = @mysql_fetch_array($res_get_rpp_name);
+					$namarpp = $rpp[rpp];
 				} 
 				else 
 				{
@@ -513,10 +513,10 @@ function focusNext(elemName, evt)
 				
 				$sql_get_bobotnya = "SELECT b.replid, b.bobot FROM jbsakad.bobotnau b WHERE b.idujian='$row_cek_ujian[replid]'";								
 				$result_get_bobotnya = QueryDb($sql_get_bobotnya);
-				$nilai_bobotnya = @mysqli_fetch_array($result_get_bobotnya);	?>
+				$nilai_bobotnya = @mysql_fetch_array($result_get_bobotnya);	?>
 	    		<tr height="25">
 					<td width="10%" height="25">
-<? 				if (mysqli_num_rows($result_get_bobotnya) > 0) 
+<? 				if (mysql_num_rows($result_get_bobotnya) > 0) 
 				{ ?>
 					<input <?=$dis?> type="checkbox" name="<?='jenisujian'.$ibobot ?>" id="<?='jenisujian'.$ibobot ?>" 
                      value="1" checked  onKeyPress="return focusNext('bobot<?=$ibobot?>',event)">				

@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -86,7 +86,7 @@ if ($idtingkat == -1) {
 //echo  "$sql<br>";
 $result = QueryDb($sql);
 $nisstr = "";
-while($row = mysqli_fetch_row($result)) {
+while($row = mysql_fetch_row($result)) {
 	if (strlen($nisstr) > 0)
 		$nisstr = $nisstr . ",";
 	$nisstr = $nisstr . "'" . $row[0] . "'";
@@ -101,14 +101,14 @@ if (strlen($nisstr) == 0) {
 $sql = "SELECT MAX(jumlah) FROM (SELECT nis, count(replid) AS jumlah FROM penerimaaniuran WHERE nis IN ($nisstr) GROUP BY nis) AS X";
 //echo  "$sql<br>";
 $result = QueryDb($sql);
-$row = mysqli_fetch_row($result);
+$row = mysql_fetch_row($result);
 $max_n_cicilan = $row[0];
 $table_width = 810 + $max_n_cicilan * 90;
 
 //Dapatkan namapenerimaan
 $sql = "SELECT nama, departemen FROM datapenerimaan WHERE replid='$idpenerimaan'";
 $result = QueryDb($sql);
-$row = mysqli_fetch_row($result);
+$row = mysql_fetch_row($result);
 $namapenerimaan = $row[0];
 $departemen = $row[1];
 
@@ -118,13 +118,13 @@ if ($idtingkat <> -1) {
 	if ($idkelas <> -1) {
 		$sql = "SELECT tingkat, kelas FROM jbsakad.kelas k, jbsakad.tingkat t WHERE k.replid = '$idkelas' AND k.idtingkat = t.replid AND t.replid = '$idtingkat'";
 		$result = QueryDb($sql);
-		$row = mysqli_fetch_row($result);
+		$row = mysql_fetch_row($result);
 		$namatingkat = $row[0]." - ";
 		$namakelas = $row[1];	
 	} else {
 		$sql = "SELECT tingkat FROM jbsakad.tingkat t WHERE t.replid = '$idtingkat'";
 		$result = QueryDb($sql);
-		$row = mysqli_fetch_row($result);
+		$row = mysql_fetch_row($result);
 		$namatingkat = $row[0];
 	}
 } else {
@@ -188,7 +188,7 @@ $cnt = 0;
 $totalbiayaall = 0;
 $totalbayarall = 0;
 
-while ($row = mysqli_fetch_array($result)) {
+while ($row = mysql_fetch_array($result)) {
 	$bg1="#ffffff";
 	if ($cnt==0 || $cnt%2==0)
 		$bg1="#fcffd3";
@@ -210,7 +210,7 @@ while ($row = mysqli_fetch_array($result)) {
 <?	$sql = "SELECT count(*) FROM penerimaaniuran WHERE nis = '$nis' AND idpenerimaan = '$idpenerimaan'";
 	//echo  "$sql<br>";
 	$result2 = QueryDb($sql);
-	$row2 = mysqli_fetch_row($result2);
+	$row2 = mysql_fetch_row($result2);
 	$nbayar = $row2[0];
 	$nblank = $max_n_cicilan - $nbayar;
 	$totalbayar = 0;
@@ -219,7 +219,7 @@ while ($row = mysqli_fetch_array($result)) {
 		$sql = "SELECT date_format(tanggal, '%d-%b-%y'), jumlah FROM penerimaaniuran WHERE nis = '$nis' AND idpenerimaan = '$idpenerimaan' ORDER BY tanggal";
 		$result2 = QueryDb($sql);
 		$x=0;
-		while ($row2 = mysqli_fetch_row($result2)) {
+		while ($row2 = mysql_fetch_row($result2)) {
 			$bg2=$bg1;
 			if ($x%2==0 || $x==0)
 				$bg2="#d3fffd";
@@ -248,7 +248,7 @@ while ($row = mysqli_fetch_array($result)) {
       <font size="2" face="Arial">
       <?	$sql = "SELECT max(datediff('$tanggal', tanggal)) FROM penerimaaniuran WHERE nis = '$nis' AND idpenerimaan = '$idpenerimaan'";
 	$result2 = QueryDb($sql);
-	$row2 = mysqli_fetch_row($result2);
+	$row2 = mysql_fetch_row($result2);
 	echo  $row2[0]; ?>    
     </font></td>
     <td align="right"><font size="2" face="Arial">

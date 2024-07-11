@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,13 +25,13 @@ class CAktivitasAdd{
 	function OnStart(){
 		$sqlDate = "SELECT DATE_FORMAT(now(),'%Y-%m-%d'),DATE_FORMAT(now(),'%H:%i:%s')";
 		$resultDate = QueryDb($sqlDate);
-		$rowDate = @mysqli_fetch_row($resultDate);
+		$rowDate = @mysql_fetch_row($resultDate);
 		$this->tglInput = $rowDate[0];		
 		$timeInput = $rowDate[1];
-		if (isset($_REQUEST['simpan'])){
-			$perpustakaan = trim(addslashes($_REQUEST['perpustakaan']));
-			$tanggal = trim(addslashes($_REQUEST['tglInput']));
-			$aktivitas = CQ($_REQUEST['aktivitas']);
+		if (isset($_REQUEST[simpan])){
+			$perpustakaan = trim(addslashes($_REQUEST[perpustakaan]));
+			$tanggal = trim(addslashes($_REQUEST[tglInput]));
+			$aktivitas = CQ($_REQUEST[aktivitas]);
 			$sql = "INSERT INTO aktivitas SET perpustakaan='$perpustakaan',tanggal='".MysqlDateFormat($tanggal)." ".$timeInput."',aktivitas='$aktivitas'";
 			$result = QueryDb($sql);
 			if ($result)
@@ -80,7 +80,7 @@ class CAktivitasAdd{
 		<?
 	}
 	function GetPerpus(){
-		$this->perpustakaan = $_REQUEST['perpustakaan'];
+		$this->perpustakaan = $_REQUEST[perpustakaan];
 		if (SI_USER_LEVEL()==2){
 			$sql = "SELECT replid,nama FROM perpustakaan WHERE replid=".SI_USER_IDPERPUS()." ORDER BY nama";
 		} else {
@@ -91,7 +91,7 @@ class CAktivitasAdd{
 		<link href="../sty/style.css" rel="stylesheet" type="text/css" />
 		<select name="perpustakaan" id="perpustakaan" class="cmbfrm"  >
 		<?
-		while ($row = @mysqli_fetch_row($result)){
+		while ($row = @mysql_fetch_row($result)){
 		if ($this->perpustakaan=="")
 			$this->perpustakaan = $row[0];	
 		

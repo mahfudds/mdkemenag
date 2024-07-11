@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,11 +45,11 @@ $nip=$_REQUEST["nip"];
 			  <?
 			  $sql_jenispengujian="SELECT * FROM jbsakad.aturannhb WHERE idtingkat='$tingkat' AND idpelajaran='$pelajaran' AND aktif=1 AND dasarpenilaian='$dasar_penilaian' AND nipguru='$nip'";
 			  $result_jenispengujian=QueryDb($sql_jenispengujian);
-			   if (@mysqli_num_rows($result_jenispengujian)>0){
-			  while ($row_jenispengujian=@mysqli_fetch_array($result_jenispengujian)){
+			   if (@mysql_num_rows($result_jenispengujian)>0){
+			  while ($row_jenispengujian=@mysql_fetch_array($result_jenispengujian)){
 				$sql_jenisuji="SELECT jenisujian FROM jbsakad.jenisujian WHERE replid='$row_jenispengujian[idjenisujian]'";
 				$result_jenisuji=QueryDb($sql_jenisuji);
-				$row_jenisuji=@mysqli_fetch_array($result_jenisuji);
+				$row_jenisuji=@mysql_fetch_array($result_jenisuji);
 				?>
     		    <option value="<?=urlencode($row_jenispengujian['replid'])?>" <? //IntIsSelected($row['replid'], $kelas) ?>>
    		        <?=$row_jenisuji['jenisujian']?>

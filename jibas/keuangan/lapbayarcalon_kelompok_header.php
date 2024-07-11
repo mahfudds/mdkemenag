@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -163,7 +163,7 @@ function focusNext(elemName, evt) {
     	</select>        
    <?	$sql = "SELECT replid FROM tahunbuku WHERE departemen='$departemen' AND aktif=1";
 		$res = QueryDb($sql);
-		$row = @mysqli_fetch_row($res);
+		$row = @mysql_fetch_row($res);
 		$idtahunbuku = $row[0];
 		//$idtahunbuku = FetchSingle($sql);
 		?>
@@ -180,7 +180,7 @@ function focusNext(elemName, evt) {
 			
             $result=QueryDb($sql);
 			
-            while ($row=@mysqli_fetch_array($result)){
+            while ($row=@mysql_fetch_array($result)){
         ?> 
             <option value="<?=$row['replid']?>" <?=IntIsSelected($row['replid'], $kelompok)?>><?=$row['kelompok']?></option>
         <? 	} ?> 
@@ -201,7 +201,7 @@ function focusNext(elemName, evt) {
         <select name="idkategori" id="idkategori" style="width:188px;" onchange="change_kate()" onkeypress="return focusNext('idpenerimaan', event)">
         <?  $sql = "SELECT kode, kategori FROM kategoripenerimaan WHERE kode IN ('CSWJB','CSSKR') ORDER BY urutan";
             $result = QueryDb($sql);
-            while ($row = mysqli_fetch_array($result)) {
+            while ($row = mysql_fetch_array($result)) {
                 if ($idkategori == "")
                     $idkategori = $row['kode']  ?>
                 <option value="<?=$row['kode'] ?>" <?=StringIsSelected($idkategori, $row['kode']) ?> > <?=$row['kategori'] ?></option>
@@ -210,7 +210,7 @@ function focusNext(elemName, evt) {
         <select name="idpenerimaan" id="idpenerimaan" style="width:175px;" onchange="change_penerimaan()" onkeypress="return focusNext('tampil', event)">
         <?  $sql = "SELECT replid, nama FROM datapenerimaan WHERE aktif = 1 AND idkategori = '$idkategori' AND departemen = '$departemen' ORDER BY replid DESC";
             $result = QueryDb($sql);
-            while ($row = mysqli_fetch_array($result)) {
+            while ($row = mysql_fetch_array($result)) {
                 if ($idpenerimaan == 0) 
                     $idpenerimaan = $row['replid'];  ?>
                 <option value="<?=$row['replid'] ?>" <?=IntIsSelected($row['id'], $idpenerimaan) ?> > <?=$row['nama'] ?></option>

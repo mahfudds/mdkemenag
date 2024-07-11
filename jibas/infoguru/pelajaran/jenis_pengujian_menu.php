@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -93,7 +93,7 @@ function pilih(id,nama_dep,nama_pel) {
 <?	OpenDb();
 	$sql = "SELECT pel.replid as replid,pel.nama as nama,pel.departemen as departemen FROM pelajaran pel,guru g WHERE pel.departemen = '$departemen' AND pel.aktif=1 AND g.nip='".SI_USER_ID()."' AND g.idpelajaran=pel.replid ORDER BY pel.nama";
 	$result = QueryDb($sql);
-	if (@mysqli_num_rows($result)>0){
+	if (@mysql_num_rows($result)>0){
 ?>
 	<table class="tab" id="table" border="1" cellpadding="2" style="border-collapse:collapse" cellspacing="2" width="100%" align="left" bordercolor="#000000">
     <!-- TABLE CONTENT -->
@@ -106,7 +106,7 @@ function pilih(id,nama_dep,nama_pel) {
      <?
 		
 		$cnt = 0;
-		while ($row = @mysqli_fetch_array($result)) {
+		while ($row = @mysql_fetch_array($result)) {
 	?>
     <tr height="25" onClick="pilih('<?=$row[0]?>','<?=$row[2]?>','<?=$row[1]?>')" style="cursor:pointer;">   	
        	<td align="center"><?=++$cnt ?></td>

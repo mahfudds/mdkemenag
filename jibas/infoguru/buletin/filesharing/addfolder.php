@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,12 +36,12 @@ OpenDb();
 
 $sql = "SELECT dirfullpath FROM jbsvcr.dirshare WHERE idroot = 0";
 $result = QueryDb($sql);
-$row = mysqli_fetch_row($result);
+$row = mysql_fetch_row($result);
 $rootname = $row[0];
 
 $sql = "SELECT dirfullpath FROM jbsvcr.dirshare WHERE replid = '$iddir'";
 $result = QueryDb($sql);
-$row = mysqli_fetch_row($result);
+$row = mysql_fetch_row($result);
 $dfullpath = $row[0];
 $fullpath = str_replace($rootname, "", $dfullpath);
 
@@ -52,8 +52,8 @@ $ERROR_MSG = "";
 $FileShareDir = "$FILESHARE_UPLOAD_DIR/fileshare/";
 if (isset($_REQUEST['Simpan']))
 {
-	$rootfolder_db = trim($_REQUEST['fullpath']);
-	$dir_db = $rootfolder_db . $_REQUEST['folder'] . "/";
+	$rootfolder_db = trim($_REQUEST[fullpath]);
+	$dir_db = $rootfolder_db . $_REQUEST[folder] . "/";
 	$dir_real = str_replace($rootname, $FileShareDir, $dir_db);
 		
 	if (!file_exists($dir_real))

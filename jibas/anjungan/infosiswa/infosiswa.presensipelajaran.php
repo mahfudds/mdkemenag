@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,10 +44,10 @@ do
 		  	  FROM riwayatdeptsiswa
 			 WHERE nis='$check_nis'";
 	$result = QueryDb($sql);
-	$nrow = mysqli_num_rows($result);
+	$nrow = mysql_num_rows($result);
 	if ($nrow > 0)
 	{
-		$row = mysqli_fetch_array($result);
+		$row = mysql_fetch_array($result);
 		$dep[] = array($row['departemen'], $check_nis);
 		
 		if (strlen($row['nislama']) > 0)
@@ -66,7 +66,7 @@ $sql_ajaran = "SELECT DISTINCT(t.replid), t.tahunajaran
 				ORDER BY t.replid DESC";
 $result_ajaran = QueryDb($sql_ajaran);
 $k = 0;
-while ($row_ajaran = @mysqli_fetch_array($result_ajaran))
+while ($row_ajaran = @mysql_fetch_array($result_ajaran))
 {
 	$ajaran[$k] = array($row_ajaran['replid'], $row_ajaran['tahunajaran']);
 	$k++;
@@ -77,7 +77,7 @@ $sql_kls = "SELECT DISTINCT(r.idkelas), k.kelas, t.tingkat, k.idtahunajaran
 			 WHERE r.nis = '$nis' AND r.idkelas = k.replid AND k.idtingkat = t.replid ";
 $result_kls = QueryDb($sql_kls);
 $j = 0;
-while ($row_kls = @mysqli_fetch_array($result_kls))
+while ($row_kls = @mysql_fetch_array($result_kls))
 {
 	$kls[$j] = array($row_kls['idkelas'], $row_kls['kelas'], $row_kls['tingkat'], $row_kls['idtahunajaran']);
 	$j++;
@@ -142,7 +142,7 @@ if (isset($_REQUEST['kelas']))
 <? if ($kelas<> "" ) { 
 		$sql = "SELECT tglmulai, tglakhir FROM tahunajaran WHERE replid = $tahunajaran";
 		$result = QueryDb($sql);
-		$row = mysqli_fetch_array($result);
+		$row = mysql_fetch_array($result);
 		$tglawal = $row['tglmulai'];
 		$tglakhir = $row['tglakhir'];
 		
@@ -155,7 +155,7 @@ if (isset($_REQUEST['kelas']))
 				  GROUP BY blnthn
 				  ORDER BY YEAR(tanggal), MONTH(tanggal)";
 		$result1 = QueryDb($sql1);      	
-        $num = mysqli_num_rows($result1);
+        $num = mysql_num_rows($result1);
 		echo "<input type='hidden' name='num' id='num' value=$num>";
 		if ($num > 0) {
 ?>
@@ -172,7 +172,7 @@ if (isset($_REQUEST['kelas']))
             // sample data array
             $data = array();
     
-            while($row1 = mysqli_fetch_row($result1)) {
+            while($row1 = mysql_fetch_row($result1)) {
                 $data[] = array($row1[1],$row1[2],$row1[3],$row1[4],$row1[5]);
                 $legend_x[] = $row1[0];			
             }
@@ -204,7 +204,7 @@ if (isset($_REQUEST['kelas']))
 			<? 
             
             $result2 = QueryDb($sql1);
-            while ($row2 = @mysqli_fetch_row($result2)) {		
+            while ($row2 = @mysql_fetch_row($result2)) {		
                  $waktu = explode(" ",$row2[0]);
             ?>	
             <tr height="25">        			

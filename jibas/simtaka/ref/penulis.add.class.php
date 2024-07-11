@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,10 +23,10 @@
 <?
 class CPenulisAdd{
 	function OnStart(){
-		if (isset($_REQUEST['simpan'])){
+		if (isset($_REQUEST[simpan])){
 			$sql = "SELECT kode FROM penulis WHERE kode='$_REQUEST[kode]' ";
 			$result = QueryDb($sql);
-			$num = @mysqli_num_rows($result);
+			$num = @mysql_num_rows($result);
 			if ($num>0){
 				$this->exist();
 			} else {
@@ -35,9 +35,9 @@ class CPenulisAdd{
 				if ($result){
 					$sql = "SELECT replid FROM penulis ORDER BY replid DESC LIMIT 1";
 					$result = QueryDb($sql);
-					$row = @mysqli_fetch_row($result);
+					$row = @mysql_fetch_row($result);
 					
-					$this->success($_REQUEST['flag'],$row[0]);
+					$this->success($_REQUEST[flag],$row[0]);
 				}
 			}
 		}
@@ -71,7 +71,7 @@ class CPenulisAdd{
 	function add(){
 		?>
         <form name="addpenulis" onSubmit="return validate()">
-		<input name="flag" type="hidden" class="inputtxt" id="flag" value="<?=$_REQUEST['flag']?>" >
+		<input name="flag" type="hidden" class="inputtxt" id="flag" value="<?=$_REQUEST[flag]?>" >
 		<table width="100%" border="0" cellspacing="2" cellpadding="2">
           <tr>
             <td colspan="2" align="left">

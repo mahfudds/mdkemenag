@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  *
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -107,7 +107,7 @@ if (!isset($_REQUEST{"stcuridpgtrans"}))
                AND ($tglQl) AND ($penQl)";
     $res = QueryDb($sql);
 
-    while ($row = mysqli_fetch_row($res))
+    while ($row = mysql_fetch_row($res))
     {
         if ($stCurIdPgTrans != "") $stCurIdPgTrans .= ",";
         $stCurIdPgTrans .= $row[0];
@@ -216,7 +216,7 @@ for($i = 0; $i < $nData; $i++)
 
         $no = ($page - 1) * $nRowPerPage;
         $res = QueryDb($sql);
-        while ($row = mysqli_fetch_array($res))
+        while ($row = mysql_fetch_array($res))
         {
             $idPgTrans = $row["replid"];
 
@@ -228,7 +228,7 @@ for($i = 0; $i < $nData; $i++)
                          WHERE tsi.idtagihanset = ts.replid
                            AND tsi.notagihan = '$row[nomor]'";
                 $res2 = QueryDb($sql);
-                if ($row2 = mysqli_fetch_row($res2))
+                if ($row2 = mysql_fetch_row($res2))
                     $nomorTs = $row2[0];
             }
 
@@ -260,7 +260,7 @@ for($i = 0; $i < $nData; $i++)
                      WHERE pd.idpgtrans = $idPgTrans
                        AND ($penQl)";
             $res2 = QueryDb($sql);
-            while($row2 = mysqli_fetch_array($res2))
+            while($row2 = mysql_fetch_array($res2))
             {
                 $kategori = $row2["kategori"];
 
@@ -297,7 +297,7 @@ for($i = 0; $i < $nData; $i++)
                        AND p.replid IN ($stIdPgTrans)
                        AND ($tglQl) AND ($penQl)";
             $res = QueryDb($sql);
-            $row = mysqli_fetch_row($res);
+            $row = mysql_fetch_row($res);
             $total = $row[0];
             $rp = FormatRupiah($total);
 

@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -57,20 +57,20 @@ if ($op=="34983xihxf084bzux834hx8x7x93"){
 		$sql1 = "SELECT replid FROM jbsvcr.pesanterkirim WHERE idpesan=(SELECT p.replid as replid FROM jbsvcr.pesan p, jbsvcr.tujuanpesan t WHERE t.idpesan=p.replid AND t.replid='".$msg[$x]."')";
 		//echo $sql1;
 		$res1 = QueryDb($sql1);
-		$exist = @mysqli_num_rows($res1);
+		$exist = @mysql_num_rows($res1);
 		if ($exist==0)
 		{	//Kalo gak ada, hapus semua...........
 			$sql3 = "SELECT p.replid as replid FROM jbsvcr.pesan p, jbsvcr.tujuanpesan t WHERE t.idpesan=p.replid AND t.replid='$msg[$x]'";
 			$res3 = QueryDb($sql3);
-			$row3 = @mysqli_fetch_array($res3);
-			$idpesan = $row3['replid'];
+			$row3 = @mysql_fetch_array($res3);
+			$idpesan = $row3[replid];
 
 			$sql4 = "DELETE FROM jbsvcr.tujuanpesan WHERE replid=".$msg[$x];
 			QueryDb($sql4);
 
 			$sql5 = "SELECT * FROM jbsvcr.tujuanpesan WHERE idpesan=(SELECT p.replid as replid FROM jbsvcr.pesan p, jbsvcr.tujuanpesan t WHERE t.idpesan=p.replid AND t.replid='".$msg[$x]."') AND replid<>'$msg[$x]'";
 			$res5 = QueryDb($sql5);
-			if (@mysqli_num_rows($res5)==0){
+			if (@mysql_num_rows($res5)==0){
 			$sql6 = "DELETE FROM jbsvcr.pesan WHERE replid='$idpesan'";
 			QueryDb($sql6);
 			}
@@ -92,7 +92,7 @@ if ($op=="baca"){
 	CloseDb();
 	?>
 	<script language="javascript">
-		document.location.href="pesanbaca.php?replid=<?=$_REQUEST['replid']?>&page=<?=$page?>";
+		document.location.href="pesanbaca.php?replid=<?=$_REQUEST[replid]?>&page=<?=$page?>";
 	</script>
 	<?
 	
@@ -232,7 +232,7 @@ function loadawal()
   <? OpenDb();
   $sql_tot="SELECT * FROM jbsvcr.tujuanpesan t, jbsvcr.pesan p WHERE t.idpenerima='".SI_USER_ID()."' AND t.idpesan=p.replid AND t.aktif=1";
   $result_tot=QueryDb($sql_tot);
-  $total = ceil(mysqli_num_rows($result_tot)/(int)$varbaris);
+  $total = ceil(mysql_num_rows($result_tot)/(int)$varbaris);
   CloseDb();
 	?>
 	<td scope="row" align="left">
@@ -287,7 +287,7 @@ function loadawal()
 				  ORDER BY t.baru DESC, pg.tanggalpesan DESC, pg.replid
 				   DESC LIMIT ".(int)$page*(int)$varbaris.",$varbaris";
 	 $result1 = QueryDb($sql1);
-	 if (@mysqli_num_rows($result1) > 0)
+	 if (@mysql_num_rows($result1) > 0)
 	 {
 	   $clrcnt=1;
 	   if ($page==0)
@@ -298,14 +298,14 @@ function loadawal()
 		{
 		    $cnt=(int)$page*(int)$varbaris+1;
 		}
-		$numpesan=@mysqli_num_rows($result1);
+		$numpesan=@mysql_num_rows($result1);
 		$count=1;
   
-		while ($row1=@mysqli_fetch_array($result1))
+		while ($row1=@mysql_fetch_array($result1))
 		{
 			 $depan="";
 			 $belakang="";
-		  	 if ($row1['baru']==1)
+		  	 if ($row1[baru]==1)
 			 {
 				$depan="<strong>";
 				$belakang="</strong>";
@@ -320,7 +320,7 @@ function loadawal()
 				  <td align="center">
 					 <input type="checkbox" onClick="chg('<?=$count?>')" name="cekpesan<?=$count?>" id="cekpesan<?=$count?>"/>
 					 <input type="hidden" name="delete<?=$count?>" id="delete<?=$count?>"/>
-					 <input type="hidden" name="rep<?=$count?>" id="rep<?=$count?>" value="<?=$row1['replid']?>"/>
+					 <input type="hidden" name="rep<?=$count?>" id="rep<?=$count?>" value="<?=$row1[replid]?>"/>
 				  </td>
 				  <td align="left">
 				  <? if ($row1['baru']==1) { ?>
@@ -335,20 +335,20 @@ function loadawal()
 				  </td>
 				  <td>
 					 <?=$depan?>
-				  <? if ($row1['nis']!="")
+				  <? if ($row1[nis]!="")
 					  {
 						  $r_sis=QueryDb("SELECT nis,nama FROM jbsakad.siswa WHERE nis='$row1[nis]'");
-						  $row_sis=@mysqli_fetch_array($r_sis);
-						  $id=$row_sis['nis'];
-						  $nm=$row_sis['nama'];
+						  $row_sis=@mysql_fetch_array($r_sis);
+						  $id=$row_sis[nis];
+						  $nm=$row_sis[nama];
 						  $gol=" [Siswa]";
 					  }
-					  if ($row1['idguru']!="")
+					  if ($row1[idguru]!="")
 					  {
 						  $r_gr=QueryDb("SELECT nip,nama FROM jbssdm.pegawai WHERE nip='$row1[idguru]'");
-						  $row_gr=@mysqli_fetch_array($r_gr);
-						  $id=$row_gr['nip'];
-						  $nm=$row_gr['nama'];
+						  $row_gr=@mysql_fetch_array($r_gr);
+						  $id=$row_gr[nip];
+						  $nm=$row_gr[nama];
 						  $gol=" [Guru]";
 					  }
 					  echo $id."-".$nm."&nbsp;&nbsp;".$gol;

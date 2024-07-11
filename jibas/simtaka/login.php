@@ -1,12 +1,17 @@
+<?php
+// Redirect to the root
+header("Location: /");
+exit(); // Ensure that no other code is executed after the redirect
+?>
 <?
 /**[N]**
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -106,7 +111,7 @@ function InputHover(txt,id,state){
 
 $(document).ready(function () {
     $(document).bgStretcher({
-        images: ['../images/background15.jpg'], imageWidth: 1680, imageHeight: 1050
+        images: ['../images/background07.jpg'], imageWidth: 1680, imageHeight: 1050
     });
 });
 </script>

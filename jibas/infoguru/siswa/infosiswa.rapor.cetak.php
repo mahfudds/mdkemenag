@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@ OpenDb();
 $sql = "SELECT t.departemen, a.tahunajaran, k.kelas, t.tingkat, s.nama, a.tglmulai, a.tglakhir FROM tahunajaran a, kelas k, tingkat t, siswa s WHERE k.idtingkat = t.replid AND k.idtahunajaran = a.replid AND k.replid = '$kelas' AND s.nis = '$nis'";  
 
 $result = QueryDB($sql);	
-$row = mysqli_fetch_array($result);
+$row = mysql_fetch_array($result);
 $tglmulai = $row['tglmulai'];
 $tglakhir = $row['tglakhir'];
 $nama = $row['nama'];
@@ -51,7 +51,7 @@ $kls = $row['kelas'];
 $sql = "SELECT replid FROM semester WHERE departemen = '$departemen' AND aktif=1";  
 
 $result = QueryDB($sql);	
-$row = mysqli_fetch_array($result);
+$row = mysql_fetch_array($result);
 $semester = $row[replid];
 */
 
@@ -157,7 +157,7 @@ function ShowKomentar()
         $komentar = "";
         $predikat = "";
         $nilaiExist = false;
-        if ($row2 = mysqli_fetch_row($res2))
+        if ($row2 = mysql_fetch_row($res2))
         {
             $nilaiExist = true;
             $komentar = $row2[0];
@@ -190,7 +190,7 @@ function ShowRapor()
 			   AND a.dasarpenilaian = d.dasarpenilaian
 			   AND d.aktif = 1";
 	$res = QueryDb($sql);
-	$naspek = mysqli_num_rows($res); 
+	$naspek = mysql_num_rows($res); 
 	
 
     ShowRaporColumn();
@@ -228,7 +228,7 @@ function ShowRaporDeskripsi()
                AND d.aktif = 1";
     $res = QueryDb($sql);
     $i = 0;
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         $aspekarr[$i++] = array($row[0], $row[1]);
     }
@@ -254,7 +254,7 @@ function ShowRaporDeskripsi()
     $respel = QueryDb($sql);
     $previdkpel = 0;
     $no = 0;
-    while($rowpel = mysqli_fetch_row($respel))
+    while($rowpel = mysql_fetch_row($respel))
     {
         $no += 1;
         $idpel = $rowpel[0];
@@ -292,9 +292,9 @@ function ShowRaporDeskripsi()
                    AND n.idaturan = a.replid 	   
                    AND a.dasarpenilaian = '$asp'";
             $res = QueryDb($sql);
-            if (mysqli_num_rows($res) > 0)
+            if (mysql_num_rows($res) > 0)
             {
-                $row = mysqli_fetch_row($res);
+                $row = mysql_fetch_row($res);
                 $komentar = $row[2];
             }
 
@@ -326,7 +326,7 @@ function ShowRaporColumn()
 
     $res = QueryDb($sql);
     $i = 0;
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         $aspekarr[$i++] = array($row[0], $row[1]);
     }
@@ -361,7 +361,7 @@ function ShowRaporColumn()
         $respel = QueryDb($sql);
         $previdkpel = 0;
         $no = 0;
-        while($rowpel = mysqli_fetch_row($respel))
+        while($rowpel = mysql_fetch_row($respel))
         {
             $no += 1;
 
@@ -385,7 +385,7 @@ function ShowRaporColumn()
                        AND idsemester = $semester
                        AND idkelas = $kelas";
             $res = QueryDb($sql);
-            $row = mysqli_fetch_row($res);
+            $row = mysql_fetch_row($res);
             $nilaimin = $row[0];
 
             echo "<tr height='30'>";
@@ -411,9 +411,9 @@ function ShowRaporColumn()
                    AND n.idaturan = a.replid 	   
                    AND a.dasarpenilaian = '$asp'";
                 $res = QueryDb($sql);
-                if (mysqli_num_rows($res) > 0)
+                if (mysql_num_rows($res) > 0)
                 {
-                    $row = mysqli_fetch_row($res);
+                    $row = mysql_fetch_row($res);
                     $na = $row[0];
                     $nh = $row[1];
                     $komentar = $row[2];
@@ -457,7 +457,7 @@ function ShowRaporRow()
          GROUP BY pel.nama";    
     $res = QueryDb($sql);
     $i = 0;
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         $pelarr[$i++] = array($row[0], $row[1]);
     }
@@ -473,7 +473,7 @@ function ShowRaporRow()
                   AND idsemester = '$semester'
                   AND idkelas = '$kelas'";
         $res = QueryDb($sql);
-        $row = mysqli_fetch_row($res);
+        $row = mysql_fetch_row($res);
         $nilaimin = $row[0];
         
         $sql = "SELECT DISTINCT a.dasarpenilaian, d.keterangan 
@@ -488,7 +488,7 @@ function ShowRaporRow()
         $res = QueryDb($sql);				 
         $aspekarr = array();				 
         $j = 0;
-        while($row = mysqli_fetch_row($res))
+        while($row = mysql_fetch_row($res))
         {
             $na = "";
             $nh = "";
@@ -504,9 +504,9 @@ function ShowRaporRow()
                        AND n.idaturan = a.replid 	   
                        AND a.dasarpenilaian = '$asp'";
             $res2 = QueryDb($sql);
-            if (mysqli_num_rows($res2) > 0)
+            if (mysql_num_rows($res2) > 0)
             {
-                $row2 = mysqli_fetch_row($res2);
+                $row2 = mysql_fetch_row($res2);
                 $na = $row2[0];
                 $nh = $row2[1];
             }

@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,30 +31,30 @@ define('IN_CB', true);
 registerImageKey('code', 'BCGcode39');
 
 OpenDb();
-$replid=$_REQUEST['replid'];
+$replid=$_REQUEST[replid];
 
-$perpustakaan=$_REQUEST['perpustakaan'];
+$perpustakaan=$_REQUEST[perpustakaan];
 if ($perpustakaan!="")
 	$filter = " AND perpustakaan='$perpustakaan'";	
 if ($perpustakaan=="-1")
 	$filter = "";	
 $sql = "SELECT judul FROM pustaka WHERE replid='$replid'";
 $result = QueryDb($sql);
-$row = @mysqli_fetch_array($result);
-$judul = $row['judul'];
+$row = @mysql_fetch_array($result);
+$judul = $row[judul];
 
 if ($filter!=""){
 	$sql = "SELECT nama FROM perpustakaan WHERE replid='$perpustakaan'";
 	$result = QueryDb($sql);
-	$row = @mysqli_fetch_array($result);
-	$nama = $row['nama'];
+	$row = @mysql_fetch_array($result);
+	$nama = $row[nama];
 } else {
 	$nama = "<i>(Semua)</i>";
 }
 $sql = "SELECT kodepustaka, info1 FROM daftarpustaka WHERE pustaka='$replid' $filter";
 //echo $sql;
 $result = QueryDb($sql);
-$jum = @mysqli_num_rows($result);
+$jum = @mysql_num_rows($result);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -85,7 +85,7 @@ $jum = @mysqli_num_rows($result);
             </div><br />
 <? 			$i = 1;
 			$cellcnt = 1;
-			while($row = @mysqli_fetch_row($result))
+			while($row = @mysql_fetch_row($result))
 			{
 				if ($cellcnt == 1 || $cellcnt % 9 == 1)
 					echo "<table border='0' width='99%' cellspacing='0' cellpadding='5'>";
@@ -93,7 +93,7 @@ $jum = @mysqli_num_rows($result);
                 if ($i == 1 || $i % 3 == 1)
                     echo "<tr>";
 						
-				$kode = explode('/',$row[0]);
+				$kode = split('/',$row[0]);
 				$barcode = $row[1];	?>
                 
 				<td width="33%" align="center" >

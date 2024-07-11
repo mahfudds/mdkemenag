@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -129,11 +129,11 @@ class PengumumanAjax
 			}
 			$sql .= "  ORDER BY nama";	
 			$res = QueryDb($sql);
-			$num = @mysqli_num_rows($res);
+			$num = @mysql_num_rows($res);
 			if ($num>0)
 			{
 				$cnt=1;
-				while ($row = @mysqli_fetch_array($res))
+				while ($row = @mysql_fetch_array($res))
 				{
 					$hp = trim($row['hpsiswa']);
 					if (strlen($hp) < 7)
@@ -203,11 +203,11 @@ class PengumumanAjax
 		
 		//echo "$sql";
 		$res = QueryDb($sql);
-		$num = @mysqli_num_rows($res);
+		$num = @mysql_num_rows($res);
 		if ($num > 0)
 		{
 			$cnt = 1;
-			while ($row = @mysqli_fetch_array($res))
+			while ($row = @mysql_fetch_array($res))
 			{
 				$hp = trim($row['hpsiswa']);
 				if (strlen($hp) < 7)
@@ -278,11 +278,11 @@ class PengumumanAjax
 		
 		//echo "$sql";
 		$res = QueryDb($sql);
-		$num = @mysqli_num_rows($res);
+		$num = @mysql_num_rows($res);
 		if ($num > 0)
 		{
 			$cnt = 1;
-			while ($row = @mysqli_fetch_array($res))
+			while ($row = @mysql_fetch_array($res))
 			{
 				$n = 0;  
 				$hparr = array();
@@ -376,11 +376,11 @@ class PengumumanAjax
 			$sql .= " ORDER BY nama";
 			//echo $sql;
 			$res = QueryDb($sql);
-			$num = @mysqli_num_rows($res);
+			$num = @mysql_num_rows($res);
 			if ($num>0)
 			{
 				$cnt = 1;
-				while ($row = @mysqli_fetch_array($res))
+				while ($row = @mysql_fetch_array($res))
 				{
 					$n = 0;
 					$hparr = array();
@@ -459,7 +459,7 @@ class PengumumanAjax
 				   AND ti.departemen='$dep'
 				 ORDER BY k.kelas"; 
 		$res = QueryDb($sql);
-		while ($row = @mysqli_fetch_row($res))
+		while ($row = @mysql_fetch_row($res))
 		{
 			if ($kls == "")
 				$kls = $row[0];	?>
@@ -482,7 +482,7 @@ class PengumumanAjax
 				   AND aktif = 1
 				 ORDER BY proses"; 
 		$res = QueryDb($sql);
-		while ($row = @mysqli_fetch_row($res))
+		while ($row = @mysql_fetch_row($res))
 		{	?>
             <option value="<?=$row[0]?>"><?=$row[1]?></option>
 <?		}	?>
@@ -502,7 +502,7 @@ class PengumumanAjax
 		  	     WHERE idproses = '$proses'
 				 ORDER BY kelompok"; 
         $res = QueryDb($sql);
-		while ($row = @mysqli_fetch_row($res))
+		while ($row = @mysql_fetch_row($res))
         {	?>
             <option value="<?=$row[0]?>"><?=$row[1]?></option>
 <?		}	?>
@@ -525,7 +525,7 @@ class PengumumanAjax
 						   "WHERE k.aktif=1 AND ta.aktif=1 AND ti.aktif=1 AND k.idtahunajaran=ta.replid AND k.idtingkat=ti.replid ".
 						   "AND ta.departemen='$dep' AND ti.departemen='$dep' ORDER BY k.kelas"; 
 					$res = QueryDb($sql);
-					while ($row = @mysqli_fetch_row($res)){
+					while ($row = @mysql_fetch_row($res)){
 						if ($kls=="")
 							$kls=$row[0];
 					?>
@@ -572,7 +572,7 @@ class PengumumanAjax
 						<?
 							$sql = "SELECT bagian FROM $db_name_sdm.bagianpegawai";
 							$res = QueryDb($sql);
-							while ($row = @mysqli_fetch_row($res)){
+							while ($row = @mysql_fetch_row($res)){
 							?>
 						<option value="<?=$row[0]?>" <?=StringIsSelected($row[0],$bag)?>><?=$row[0]?></option>
 						<?
@@ -622,10 +622,10 @@ class PengumumanAjax
 				else
 					$sql = "SELECT * FROM $db_name_sdm.pegawai WHERE bagian='$bag' ORDER BY nama";
 				$res = QueryDb($sql);
-				$num = @mysqli_num_rows($res);
+				$num = @mysql_num_rows($res);
 				if ($num>0){
 					$cnt=1;
-					while ($row = @mysqli_fetch_array($res)){
+					while ($row = @mysql_fetch_array($res)){
 			  ?>
 			  <tr>
 				<td align="center" class="td"><?=$cnt?></td>
@@ -677,7 +677,7 @@ class PengumumanAjax
                             <?
                             $sql = "SELECT departemen FROM $db_name_akad.departemen WHERE aktif=1 ORDER BY urutan";
                             $res = QueryDb($sql);
-                            while ($row = @mysqli_fetch_row($res)){
+                            while ($row = @mysql_fetch_row($res)){
                             if ($dep=="")
                                 $dep=$row[0];
                             ?>
@@ -693,7 +693,7 @@ class PengumumanAjax
                             <?
                             $sql = "SELECT replid,tingkat FROM $db_name_akad.tingkat WHERE aktif=1 AND departemen='$dep'";
                             $res = QueryDb($sql);
-                            while ($row = @mysqli_fetch_row($res)){
+                            while ($row = @mysql_fetch_row($res)){
                             if ($tkt=="")
                                 $tkt=$row[0];
                             ?>
@@ -711,7 +711,7 @@ class PengumumanAjax
                             <?
                             $sql = "SELECT replid,tahunajaran FROM $db_name_akad.tahunajaran WHERE aktif=1 AND departemen='$dep'";
                             $res = QueryDb($sql);
-                            while ($row = @mysqli_fetch_row($res)){
+                            while ($row = @mysql_fetch_row($res)){
                             if ($thn=="")
                                 $thn=$row[0];
                             ?>
@@ -727,7 +727,7 @@ class PengumumanAjax
                             <?
                             $sql = "SELECT replid,kelas FROM $db_name_akad.kelas WHERE aktif=1 AND idtahunajaran='$thn' AND idtingkat='$tkt' ";
                             $res = QueryDb($sql);
-                            while ($row = @mysqli_fetch_row($res)){
+                            while ($row = @mysql_fetch_row($res)){
                             if ($kls=="")
                                 $kls=$row[0];
                             ?>
@@ -776,10 +776,10 @@ class PengumumanAjax
               <?
                 $sql = "SELECT * FROM $db_name_akad.siswa WHERE aktif=1 AND idkelas='$kls' ORDER BY nama";
                 $res = QueryDb($sql);
-                $num = @mysqli_num_rows($res);
+                $num = @mysql_num_rows($res);
                 if ($num>0){
                     $cnt=1;
-                    while ($row = @mysqli_fetch_array($res)){
+                    while ($row = @mysql_fetch_array($res)){
               ?>
               <tr>
                 <td align="center" class="td"><?=$cnt?></td>
@@ -848,10 +848,10 @@ class PengumumanAjax
 			}
 			//echo $sql;
 			$res = QueryDb($sql);
-			$num = @mysqli_num_rows($res);
+			$num = @mysql_num_rows($res);
 			if ($num>0){
 				$cnt=1;
-				while ($row = @mysqli_fetch_array($res)){
+				while ($row = @mysql_fetch_array($res)){
 		  ?>
 		  <tr>
 			<td align="center" class="td"><?=$cnt?></td>

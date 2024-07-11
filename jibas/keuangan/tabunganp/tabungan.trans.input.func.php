@@ -4,9 +4,9 @@
  * Jaringan Informasi Bersama Antar Sekolah
  * 
  * @version: 23.0 (November 12, 2020)
- * @notes: 
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ function FetchDataPegawai()
         
     $sql = "SELECT replid, nip, nama, bagian, handphone FROM jbssdm.pegawai WHERE nip = '$nip'";
     $result = QueryDb($sql);
-    if (mysqli_num_rows($result) == 0) 
+    if (mysql_num_rows($result) == 0) 
     {
         // tidak ditemukan data siswa, aplikasi keluar!
         CloseDb();
@@ -35,7 +35,7 @@ function FetchDataPegawai()
     } 
     else 
     {
-        $row = mysqli_fetch_array($result);
+        $row = mysql_fetch_array($result);
         $replid = $row['replid'];
         $nama = $row['nama'];
         $telpon = $row['telpon'];
@@ -52,7 +52,7 @@ function FetchDataTabungan()
     
     $sql = "SELECT nama, rekkas, info2 FROM datatabunganp WHERE replid = '$idtabungan'";
     $result = QueryDb($sql);
-    $row = mysqli_fetch_row($result);
+    $row = mysql_fetch_row($result);
     $namatabungan = $row[0];
     $defrekkas = $row[1];  // Default Rekening Kas
     $smsinfo = (int)$row[2];

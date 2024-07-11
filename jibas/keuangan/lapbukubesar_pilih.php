@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -83,7 +83,7 @@ function cetak() {
 		$sql = "SELECT r.nama, r.kode, sum(jd.debet), sum(jd.kredit) FROM jurnal j, jurnaldetail jd, rekakun r WHERE j.replid = jd.idjurnal AND j.idtahunbuku = '$idtahunbuku' AND j.tanggal BETWEEN '$tanggal1' AND '$tanggal2' AND  jd.koderek = r.kode GROUP BY r.nama, r.kode ORDER BY r.kode";
 		
 	$result = QueryDb($sql);
-	if (mysqli_num_rows($result) > 0) {
+	if (mysql_num_rows($result) > 0) {
 ?>
     <table border="0" cellpadding="0" cellspacing="0" width="95%" align="center">
     <!-- TABLE TITLE -->
@@ -106,7 +106,7 @@ function cetak() {
 	$cnt = 0;
 	$totaldebet = 0;
 	$totalkredit = 0;
-	while($row = mysqli_fetch_row($result)) {
+	while($row = mysql_fetch_row($result)) {
 		$totaldebet += $row[2];
 		$totalkredit += $row[3];
 ?>

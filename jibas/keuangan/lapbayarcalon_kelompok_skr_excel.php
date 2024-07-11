@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,7 +53,7 @@ if (isset($_REQUEST['kelompok']))
 OpenDb();
 $sql = "SELECT departemen FROM datapenerimaan WHERE replid='$idpenerimaan'";
 $result = QueryDb($sql);
-$r = @mysqli_fetch_array($result);
+$r = @mysql_fetch_array($result);
 $departemen = $r[departemen];	
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -83,13 +83,13 @@ else
 									  AND p.idcalon = s.replid AND s.idkelompok = '$kelompok' AND p.idpenerimaan = '$idpenerimaan' GROUP BY s.replid) as X)";
 	
 $result = QueryDb($sql);
-$row = mysqli_fetch_row($result);
+$row = mysql_fetch_row($result);
 $max_n_bayar = $row[0];
 $table_width = 520 + $max_n_bayar * 100;
 
 $sql = "SELECT nama FROM datapenerimaan WHERE replid = '$idpenerimaan'";
 $result = QueryDb($sql);
-$row = mysqli_fetch_row($result);
+$row = mysql_fetch_row($result);
 $namapenerimaan = $row[0];
 ?>
 <center><font size="4" face="Arial"><strong>LAPORAN PEMBAYARAN IURAN SUKARELA CALON SISWA</strong></font><br /> 
@@ -140,7 +140,7 @@ else
 $result = QueryDb($sql);
 $cnt = 0;
 $totalall = 0;
-while ($row = mysqli_fetch_array($result)) {
+while ($row = mysql_fetch_array($result)) {
 	$bg1="#ffffff";
 	if ($cnt==0 || $cnt%2==0)
 		$bg1="#fcffd3"; 
@@ -165,12 +165,12 @@ while ($row = mysqli_fetch_array($result)) {
 				 WHERE p.idjurnal = j.replid AND j.idtahunbuku = '$idtahunbuku' 
 				   AND idcalon = '$replid' AND idpenerimaan = '$idpenerimaan'";
 		$result2 = QueryDb($sql);
-		$nbayar = mysqli_num_rows($result2);
+		$nbayar = mysql_num_rows($result2);
 		$nblank = $max_n_bayar - $nbayar;
 		
 		$totalbayar = 0;
 		$x=0;
-		while ($row2 = mysqli_fetch_array($result2)) {
+		while ($row2 = mysql_fetch_array($result2)) {
 			$bg2=$bg1;
 			if ($x%2==0 || $x==0)
 				$bg2="#d3fffd";

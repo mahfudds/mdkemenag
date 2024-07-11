@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@ OpenDb();
                      WHERE aktif=1
                      ORDER BY urutan";
             $res = QueryDb($sql);
-            while ($row = @mysqli_fetch_row($res))
+            while ($row = @mysql_fetch_row($res))
             {
                 if ($dep == "")
 					$dep = $row[0];	?>
@@ -58,7 +58,7 @@ OpenDb();
                        AND aktif = 1
                      ORDER BY proses"; 
             $res = QueryDb($sql);
-			while ($row = @mysqli_fetch_row($res))
+			while ($row = @mysql_fetch_row($res))
             {
 				if ($proses == "")
 					$proses = $row[0];	?>
@@ -75,7 +75,7 @@ OpenDb();
 					 WHERE idproses = '$proses'
                      ORDER BY kelompok"; 
             $res = QueryDb($sql);
-			while ($row = @mysqli_fetch_row($res))
+			while ($row = @mysql_fetch_row($res))
             {
 				if ($kelompok == "")
 					$kelompok = $row[0];	?>
@@ -141,11 +141,11 @@ OpenDb();
                AND idkelompok='$kelompok'
              ORDER BY nama";
 	$res = QueryDb($sql);
-	$num = @mysqli_num_rows($res);
+	$num = @mysql_num_rows($res);
 	if ($num > 0)
 	{
 		$cnt = 1;
-		while ($row = @mysqli_fetch_array($res))
+		while ($row = @mysql_fetch_array($res))
 		{
 			$hp = trim($row['hpsiswa']);
 			if (strlen($hp) < 7)

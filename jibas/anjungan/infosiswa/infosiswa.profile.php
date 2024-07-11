@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,14 +39,14 @@ $sql = "SELECT *
 	      FROM jbsakad.siswa
 		 WHERE nis = '$nis'";
 $res = QueryDb($sql);
-$row = mysqli_fetch_array($res);
+$row = mysql_fetch_array($res);
 $asalsekolah = $row['asalsekolah'];
 
 $sql = "SELECT departemen
           FROM jbsakad.asalsekolah
          WHERE sekolah = '$asalsekolah'";
 $res2 = QueryDb($sql);
-$row2 = mysqli_fetch_array($res2);
+$row2 = mysql_fetch_array($res2);
 $jenjangsekolah = $row2['departemen'];
 
 $sql = "SELECT departemen 
@@ -54,7 +54,7 @@ $sql = "SELECT departemen
          WHERE s.idangkatan = a.replid
            AND s.nis = '$nis'";
 $res2 = QueryDb($sql);
-$row2 = mysqli_fetch_array($res2);
+$row2 = mysql_fetch_array($res2);
 $departemen = $row2['departemen'];
 ?>
 <script language="javascript" src="infosiswa/infosiswa.profile.js"></script>
@@ -144,7 +144,7 @@ $departemen = $row2['departemen'];
         $bln = date('n');
         $tgl = date('j');
         
-        $date = explode("-", $row['tgllahir']);
+        $date = split("-", $row['tgllahir']);
         if (count($date) == 3)
         {
             $thn = $date[0];
@@ -454,7 +454,7 @@ $departemen = $row2['departemen'];
         $bln = date('n');
         $tgl = date('j');
         
-        $date = explode("-", $row['tgllahirayah']);
+        $date = split("-", $row['tgllahirayah']);
         if (count($date) == 3)
         {
             $thn = $date[0];
@@ -472,7 +472,7 @@ $departemen = $row2['departemen'];
         $bln = date('n');
         $tgl = date('j');
         
-        $date = explode("-", $row['tgllahiribu']);
+        $date = split("-", $row['tgllahiribu']);
         if (count($date) == 3)
         {
             $thn = $date[0];
@@ -682,7 +682,7 @@ $departemen = $row2['departemen'];
              ORDER BY urutan";
     $res = QueryDb($sql);
     $idtambahan = "";
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         $replid = $row[0];
         $kolom = $row[1];
@@ -697,7 +697,7 @@ $departemen = $row2['departemen'];
         {
             $sql = "SELECT replid, teks FROM tambahandatasiswa WHERE nis = '$nis' AND idtambahan = '$replid'";
             $res2 = QueryDb($sql);
-            if ($row2 = mysqli_fetch_row($res2))
+            if ($row2 = mysql_fetch_row($res2))
             {
                 $replid_data = $row2[0];
                 $data = $row2[1];
@@ -707,7 +707,7 @@ $departemen = $row2['departemen'];
         {
             $sql = "SELECT replid, filename FROM tambahandatasiswa WHERE nis = '$nis' AND idtambahan = '$replid'";
             $res2 = QueryDb($sql);
-            if ($row2 = mysqli_fetch_row($res2))
+            if ($row2 = mysql_fetch_row($res2))
             {
                 $replid_data = $row2[0];
                 $filename = $row2[1];
@@ -723,7 +723,7 @@ $departemen = $row2['departemen'];
         {
             $sql = "SELECT replid, teks FROM tambahandatasiswa WHERE nis = '$nis' AND idtambahan = '$replid'";
             $res2 = QueryDb($sql);
-            if ($row2 = mysqli_fetch_row($res2))
+            if ($row2 = mysql_fetch_row($res2))
             {
                 $replid_data = $row2[0];
                 $data = $row2[1];
@@ -737,10 +737,10 @@ $departemen = $row2['departemen'];
             $res2 = QueryDb($sql);
 
             $arrList = array();
-            if (mysqli_num_rows($res2) == 0)
+            if (mysql_num_rows($res2) == 0)
                 $arrList[] = "-";
 
-            while($row2 = mysqli_fetch_row($res2))
+            while($row2 = mysql_fetch_row($res2))
             {
                 $arrList[] = $row2[0];
             }

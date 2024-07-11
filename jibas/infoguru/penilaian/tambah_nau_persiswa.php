@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@ $query = "SELECT s.nama, s.nis, j.jenisujian FROM nau n, siswa s, jenisujian j, 
 //$query = "SELECT s.nama, s.nis, j.jenisujian, round(SUM(b.bobot*nu.nilaiujian)/SUM(b.bobot),2) as nilai FROM nau n, siswa s, jenisujian j, ujian u, nilaiujian nu, bobotnau b WHERE n.replid = $replid AND n.nis = s.nis AND n.idjenis = j.replid AND b.idujian = u.replid AND u.idkelas = n.idkelas AND u.idsemester = n.idsemester AND u.idaturan = n.idaturan AND nu.idujian = u.replid AND nu.nis = n.nis GROUP BY nu.nis";
 
 $result = QueryDb($query);
-$row = @mysqli_fetch_array($result);
+$row = @mysql_fetch_array($result);
 $nis = $row['nis'];
 $nama = $row['nama'];
 $jenis = $row['jenisujian'];
@@ -49,7 +49,7 @@ $jenis = $row['jenisujian'];
 if ($tipe == "otomatis") {
 	$sql  = "SELECT round(SUM(b.bobot*nu.nilaiujian)/SUM(b.bobot),2) as nilai FROM nau n, ujian u, bobotnau b, nilaiujian nu WHERE n.replid = '$replid' AND b.idujian = u.replid AND u.idkelas = n.idkelas AND u.idsemester = n.idsemester AND u.idaturan = n.idaturan AND nu.idujian = u.replid AND nu.nis = '$nis' AND n.nis = '$nis'";
 	$result1 = QueryDb($sql);
-	$row1 = @mysqli_fetch_array($result1);
+	$row1 = @mysql_fetch_array($result1);
 	$nilai = 0;
 	if ($row1['nilai']) 
 		$nilai = $row1['nilai'];	
@@ -173,7 +173,7 @@ function focusNext(elemName, evt) {
 			$sql="SELECT b.replid, b.bobot, u.tanggal FROM bobotnau b, ujian u, nau n WHERE b.idujian=u.replid AND u.idkelas=n.idkelas AND u.idsemester=n.idsemester AND u.idaturan=n.idaturan AND n.replid = '$replid'  ORDER by u.tanggal ASC";								
 			$result=QueryDb($sql);
 			$cnt = 0;
-			while ($row=@mysqli_fetch_array($result)){										
+			while ($row=@mysql_fetch_array($result)){										
 		?>
     		<tr>
 				<td width="85%" height="25">

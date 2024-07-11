@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,7 +38,7 @@ if ($id <> "") {
 	$sql = "SELECT DAY(tanggal1) AS tgl1, MONTH(tanggal1) AS bln, YEAR(tanggal1) AS th, DAY(tanggal2) AS tgl2, hariaktif FROM presensiharian WHERE replid = '$id'";
 	$result = QueryDb($sql);
 	CloseDb();
-	$row = mysqli_fetch_array($result);
+	$row = mysql_fetch_array($result);
 	$tgl1 = $row['tgl1'];
 	$tgl2 = $row['tgl2'];
 	$bln = $row['bln'];
@@ -71,7 +71,7 @@ if (isset($_REQUEST['hariaktif']))
 OpenDb();
 $sql = "SELECT t.tahunajaran, t.tglmulai, t.tglakhir, k.kelas FROM tahunajaran t, kelas k WHERE k.idtahunajaran = t.replid AND k.replid = '$kelas'"; 
 $result = QueryDb($sql);
-$row = mysqli_fetch_row($result);
+$row = mysql_fetch_row($result);
 $awal = explode('-',$row[1]);
 $akhir = explode('-',$row[2]);
 $tanggal1 = $awal[2];
@@ -130,7 +130,7 @@ if ($op == "xm8r389xemx23xb2378e23") {
 	QueryDb($sql);
 	
 	
-	if(mysqli_affected_rows($mysqlconnection) > 0) {
+	if(mysql_affected_rows() > 0) {
 	?>
     <script language="JavaScript">
         
@@ -152,8 +152,8 @@ function jumhari($tgl1, $tgl2) {
 	$sql = "SELECT DATEDIFF('$tgl2', '$tgl1')+1";
 	$result = QueryDb($sql);
 	
-	$row = mysqli_fetch_row($result);
-	$GLOBALS['hari'] = $row[0];
+	$row = mysql_fetch_row($result);
+	$GLOBALS[hari] = $row[0];
 	$waktu = $row[0];
 	//echo "<input type='hidden' name='hari' id='hari' value=$waktu />";
 	return true;
@@ -473,7 +473,7 @@ function focusNext(elemName, evt) {
 	
 	$result = QueryDb($sql);		
 	$cnt = 1;
-	$jum = @mysqli_num_rows($result);
+	$jum = @mysql_num_rows($result);
 
 	if ($jum > 0) {
 ?>
@@ -551,7 +551,7 @@ function focusNext(elemName, evt) {
         
 		<? 
 		$aktif = 1;
-		while ($row = @mysqli_fetch_array($result)) {		
+		while ($row = @mysql_fetch_array($result)) {		
 			$hadir = 0;
 			$ijin = 0;
 			$sakit = 0;
@@ -572,8 +572,8 @@ function focusNext(elemName, evt) {
 			if ($id <> "") {						
 				$sql1 = "SELECT * FROM phsiswa WHERE idpresensi = '$id' AND nis='$row[nis]'";
 				$result1 = QueryDb($sql1);
-				$row1 = mysqli_fetch_array($result1);
-				if (mysqli_num_rows($result1) > 0) {
+				$row1 = mysql_fetch_array($result1);
+				if (mysql_num_rows($result1) > 0) {
 					$hadir = $row1['hadir'];
 					$ijin = $row1['ijin'];
 					$sakit = $row1['sakit'];
@@ -595,11 +595,11 @@ function focusNext(elemName, evt) {
         <tr height="25"> 
         	     			
 		<? if ($row['idkelas'] <> $kelas) { ?>
-        	<td align="center" onMouseOver="showhint('Kelas tetap di <?=$row['kelas']?>', this, event, '80px')">
+        	<td align="center" onMouseOver="showhint('Kelas tetap di <?=$row[kelas]?>', this, event, '80px')">
             <font color="#FF0000"><?=$cnt?></font></td>  
-            <td align="center" onMouseOver="showhint('Kelas tetap di <?=$row['kelas']?>', this, event, '80px')">
+            <td align="center" onMouseOver="showhint('Kelas tetap di <?=$row[kelas]?>', this, event, '80px')">
             <font color="#FF0000"><?=$row['nis']?></font></td>
-            <td onMouseOver="showhint('Kelas tetap di <?=$row['kelas']?>', this, event, '80px')">
+            <td onMouseOver="showhint('Kelas tetap di <?=$row[kelas]?>', this, event, '80px')">
             <font color="#FF0000"><?=$row['nama']?></font></td>			
 		<? } else if ($row['aktif'] == 0) { ?>			
             <td align="center" onMouseOver="showhint('Status siswa tidak aktif lagi!', this, event, '80px')">

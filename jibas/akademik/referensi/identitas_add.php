@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ require_once('../include/theme.php');
 require_once('../include/config.php');
 require_once('../include/db_functions.php');
 require_once('../cek.php');
-$departemen = $_REQUEST['departemen'];
+$departemen = $_REQUEST[departemen];
 $title = "Sekolah";
 if ($departemen=='yayasan')
 	$title = "";
@@ -36,7 +36,7 @@ if (isset($_REQUEST['Simpan'])) {
 	OpenDb();
 		$sql1="SELECT * FROM jbsumum.identitas WHERE departemen='$departemen'";
 		$result1=QueryDb($sql1);
-		$row1 = mysqli_fetch_array($result1);
+		$row1 = mysql_fetch_array($result1);
 		$nama = CQ($_REQUEST['nama']);
 		$situs = CQ($_REQUEST['situs']);
 		$email = CQ($_REQUEST['email']);
@@ -48,7 +48,7 @@ if (isset($_REQUEST['Simpan'])) {
 		$tlp4 = CQ($_REQUEST['tlp4']);
 		$fax1 = CQ($_REQUEST['fax1']);
 		$fax2 = CQ($_REQUEST['fax2']);
-		if (mysqli_num_rows($result1) > 0) {
+		if (mysql_num_rows($result1) > 0) {
 			$sql = "UPDATE jbsumum.identitas SET nama='$nama', situs='$situs', email='$email', alamat1='$alamat1', alamat2='$alamat2', telp1='$tlp1', telp2='$tlp2', telp3='$tlp3', telp4='$tlp4', fax1='$fax1', fax2='$fax2' WHERE departemen = '$departemen'";
 		} else {
 			$sql = "INSERT INTO jbsumum.identitas SET nama='$nama', situs='$situs', email='$email', alamat1='$alamat1', alamat2='$alamat2', telp1='$tlp1', telp2='$tlp2', telp3='$tlp3', telp4='$tlp4', fax1='$fax1', fax2='$fax2', departemen='$departemen'";

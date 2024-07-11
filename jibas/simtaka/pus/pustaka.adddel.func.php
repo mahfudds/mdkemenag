@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ function GetTitle()
               FROM pustaka
              WHERE replid = '$idpustaka'";
     $res = QueryDb($sql);
-    $row = mysqli_fetch_row($res);
+    $row = mysql_fetch_row($res);
     
     return $row[0];
 }
@@ -59,7 +59,7 @@ function ShowDelLink($iddp, $kodepustaka, $rowno)
               FROM jbsperpus.pinjam
              WHERE kodepustaka = '$kodepustaka'";
     $res = QueryDb($sql);
-    $row = mysqli_fetch_row($res);
+    $row = mysql_fetch_row($res);
     $npinjam = $row[0];
     
     if ($npinjam == 0)
@@ -79,7 +79,7 @@ function ShowList()
              ORDER BY dp.kodepustaka";
     $res = QueryDb($sql);
     $cnt = 0;
-    while($row = mysqli_fetch_array($res))
+    while($row = mysql_fetch_array($res))
     {
         $iddp = $row['replid'];
         $aktif = $row['aktif'];
@@ -98,9 +98,9 @@ function ShowList()
                       FROM pinjam
                      WHERE kodepustaka = '$kodepustaka'";
             $res2 = QueryDb($sql);
-            if (mysqli_num_rows($res2) > 0)
+            if (mysql_num_rows($res2) > 0)
             {
-                $row2 = mysqli_fetch_array($res2);
+                $row2 = mysql_fetch_array($res2);
                 $jenisanggota = $row2['info1'];
                 if ($jenisanggota == "siswa")
                 {
@@ -127,7 +127,7 @@ function ShowList()
                              WHERE noregistrasi = '$idanggota'";
                 }
                 $res3 = QueryDb($sql);
-                $row3 = mysqli_fetch_row($res3);
+                $row3 = mysql_fetch_row($res3);
                 $namaanggota = $row3[0];
                 
                 $keterangan = "($jenisanggota) $idanggota - $namaanggota<br><i>Tgl Pinjam: " . $row2['tglpinjam'] . ", Tgl Kembali: " . $row2['tglkembali'] . "</i>";

@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -116,7 +116,7 @@ if (!isset($_POST['simpan'])) {
         </tr>
         <tr>
             <td>Login</td><td class="td">
-            <input type="text" size="40" name="nip" readonly value="<?=$_GET['nip'] ?>" class="disabled" onClick="caripegawai()">&nbsp;
+            <input type="text" size="40" name="nip" readonly value="<?=$_GET[nip] ?>" class="disabled" onClick="caripegawai()">&nbsp;
             <a href="#null" onClick="caripegawai()"><img src="../images/ico/cari.png" border="0" onMouseOver="showhint('Cari pegawai',
             this, event, '100px')"></a>
             <img src="../images/ico/hapus.png" border="0" onClick="clear_nip();" onMouseOver="showhint('Kosongkan NIP dan Nama',
@@ -125,22 +125,22 @@ if (!isset($_POST['simpan'])) {
         </tr>
         <tr>
             <td>Nama</td><td class="td">
-            <input type="text" size="50" name="nama" readonly value="<?=$_GET['nama']?>" class="disabled" onClick="caripegawai()">
+            <input type="text" size="50" name="nama" readonly value="<?=$_GET[nama]?>" class="disabled" onClick="caripegawai()">
             </td>
         </tr>
         <?
         $sql_cek = "SELECT * FROM jbsuser.login WHERE login = '$_GET[nip]'";
         $res_cek = QueryDb($sql_cek);
-        $jum_cek = @mysqli_num_rows($res_cek);
-		$row_cek = @mysqli_fetch_array($res_cek);
+        $jum_cek = @mysql_num_rows($res_cek);
+		$row_cek = @mysql_fetch_array($res_cek);
 		$query_cek2 = "SELECT * FROM jbsuser.hakakses WHERE login = '$_GET[nip]' AND modul='INFOGURU'";
         $result_cek2 = QueryDb($query_cek2);
-        $num_cek2 = @mysqli_num_rows($result_cek2);
-		$row_cek2 = @mysqli_fetch_array($result_cek2);
+        $num_cek2 = @mysql_num_rows($result_cek2);
+		$row_cek2 = @mysql_fetch_array($result_cek2);
         if($jum_cek == 0) {
             $dis = "";
         }else {
-			$status_user=$row_cek2['tingkat'];
+			$status_user=$row_cek2[tingkat];
             $dis = "disabled='disabled' class='disabled' value='********'";
         }
         ?>
@@ -171,15 +171,15 @@ if (!isset($_POST['simpan'])) {
 } else {
     $query_cek = "SELECT * FROM jbsuser.login WHERE login = '$_POST[nip]'";
     $result_cek = QueryDb($query_cek);
-    $num_cek = @mysqli_num_rows($result_cek);
+    $num_cek = @mysql_num_rows($result_cek);
     //echo $query_cek;
 	//exit;
     $query_c = "SELECT * FROM jbsuser.hakakses WHERE login = '$_POST[nip]' AND modul = 'INFOGURU'";
     $result_c = QueryDb($query_c);
-    $num_c = @mysqli_num_rows($result_c);
+    $num_c = @mysql_num_rows($result_c);
 	
 		
-	$pass=md5($_POST['password']);
+	$pass=md5($_POST[password]);
 	$tingkat=1;
 	if ($tingkat==1){
 	//Kalo manajer

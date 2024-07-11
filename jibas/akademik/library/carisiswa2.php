@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -121,7 +121,7 @@ openDB();
 					$result_dep = QueryDb($query_dep);
 				
 				$i = 0;
-				while($row_dep = @mysqli_fetch_array($result_dep)){
+				while($row_dep = @mysql_fetch_array($result_dep)){
 					if($departemen == $row_dep[departemen]){
 						$sel[$i] = "selected";
 					}else{
@@ -175,7 +175,7 @@ if ((isset($_POST["cari"]))){
 	}
 	
 	//echo $selectSQL;
-	$result_sis = QueryDb($selectSQL) or die (mysqli_error());
+	$result_sis = QueryDb($selectSQL) or die (mysql_error());
 	?>
 	<p><table border='1' cellspacing='0' cellpadding='0' bordercolor='#5A7594' width='100%'>
 			<tr>
@@ -186,7 +186,7 @@ if ((isset($_POST["cari"]))){
 						<td class='header'>Nama</td>
 						<td class='header'>Kelas</td>	
 	<?
-	$jml_data = @mysqli_num_rows($result_sis);
+	$jml_data = @mysql_num_rows($result_sis);
 	
 	if($jml_data=="0"){
 		?>
@@ -197,7 +197,7 @@ if ((isset($_POST["cari"]))){
 	}else{
 	
 	$cnt = 0;
-	while($row = @mysqli_fetch_array($result_sis)){
+	while($row = @mysql_fetch_array($result_sis)){
 	?>
 	<tr <?="bgcolor=#".($cnt%2?"ffffff":"EAECEE").""; ?>>
 		<td class='data'><input type="hidden" name="nis<?=$cnt; ?>" value="<?=$row[nis]; ?>">

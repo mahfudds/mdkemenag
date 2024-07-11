@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,19 +23,19 @@
 <?
 class CPustaka{
 	function OnStart(){
-		$op=$_REQUEST['op'];
+		$op=$_REQUEST[op];
 		if ($op=="Gtytc6yt665476d6"){
 			$sql = "DELETE FROM daftarpustaka WHERE pustaka='$_REQUEST[replid]'";
 			QueryDb($sql);
 			$sql = "DELETE FROM pustaka WHERE replid='$_REQUEST[replid]'";
 			QueryDb($sql);
 		}
-		if (isset($_REQUEST['simpan']))
+		if (isset($_REQUEST[simpan]))
 			$this->save();
 		$this->numlines = 15;
 		$this->page = 0;
-		if (isset($_REQUEST['page'])) {
-			$this->page = $_REQUEST['page'];
+		if (isset($_REQUEST[page])) {
+			$this->page = $_REQUEST[page];
 		}
 	}
 	function reload_page(){
@@ -53,7 +53,7 @@ class CPustaka{
 		<?
     }
 	function GetPerpus(){
-		$this->perpustakaan = $_REQUEST['perpustakaan'];
+		$this->perpustakaan = $_REQUEST[perpustakaan];
 		if (SI_USER_LEVEL()==2){
 			$sql = "SELECT replid,nama FROM perpustakaan WHERE replid='".SI_USER_IDPERPUS()."' ORDER BY nama";
 		} else {
@@ -67,7 +67,7 @@ class CPustaka{
 		if (SI_USER_LEVEL()!=2){
 			echo "<option value='-1' ".IntIsSelected('-1',$this->perpustakaan).">(Semua)</option>";
 		}
-		while ($row = @mysqli_fetch_row($result)){
+		while ($row = @mysql_fetch_row($result)){
 		if ($this->perpustakaan=="")
 			$this->perpustakaan = $row[0];	
 		?>
@@ -81,7 +81,7 @@ class CPustaka{
 	
 	function Get_Kategori_Content($kat)
 	{
-		$this->keywords = $_REQUEST['keywords'];
+		$this->keywords = $_REQUEST[keywords];
 		
 		if ($kat == "rak")
 			$ob = "rak";
@@ -92,16 +92,16 @@ class CPustaka{
 		$result = QueryDb($sql); ?>
 		<select name="keywords" class="cmbfrm" id="keywords" onchange="chg_key()">
 			<?
-			while ($row = @mysqli_fetch_array($result)){
+			while ($row = @mysql_fetch_array($result)){
 				if ($this->keywords=="")
-					$this->keywords=$row['replid'];
+					$this->keywords=$row[replid];
 			?>
-          	<option value="<?=$row['replid']?>" <?=StringIsSelected($this->keywords,$row['replid'])?> >
+          	<option value="<?=$row[replid]?>" <?=StringIsSelected($this->keywords,$row[replid])?> >
 				<?
 				if ($kat!="rak")
-					echo $row['kode']." - ".$row['nama'];
+					echo $row[kode]." - ".$row[nama];
 				else
-					echo $row['rak'];
+					echo $row[rak];
 				?>
         	</option>
             <?
@@ -111,8 +111,8 @@ class CPustaka{
 		<?
     }
     function Content(){
-		$this->keywords = $_REQUEST['keywords'];
-		$this->kategori = $_REQUEST['kategori'];
+		$this->keywords = $_REQUEST[keywords];
+		$this->kategori = $_REQUEST[kategori];
 		if ($this->kategori=="")
 			$this->kategori = "judul";	
 		?>
@@ -160,7 +160,7 @@ class CPustaka{
  			<a href="javascript:document.location.reload()"><img src="../img/ico/refresh.png" width="16" height="16" border="0" />&nbsp;Refresh</a>&nbsp;&nbsp;<a href="javascript:cetak('XX')"><img src="../img/ico/print1.png" border="0" />&nbsp;Cetak</a>
         </div><br />
         <?
-		if (isset($_REQUEST['cari'])){
+		if (isset($_REQUEST[cari])){
 		?>
         <table width="100%" border="1" cellspacing="0" cellpadding="4" id="table">
           <tr class="header" height="30">
@@ -179,8 +179,8 @@ class CPustaka{
 		  if ($this->perpustakaan!='-1')
 			$filter2=" AND d.perpustakaan=".$this->perpustakaan;
 
-		  $kategori = $_REQUEST['kategori'];
-		  $keywords = $_REQUEST['keywords'];
+		  $kategori = $_REQUEST[kategori];	
+		  $keywords = $_REQUEST[keywords];
 		  $filter = "";
 		  if ($kategori=='judul')
 			  $filter = "AND p.judul LIKE '%$keywords%' ";
@@ -212,31 +212,31 @@ class CPustaka{
 		  }
 		  //echo $sql1;
 		  $result = QueryDb($sql1);
-		  //$pagenum = @mysqli_num_rows($result);
-		  $pagenum = ceil(mysqli_num_rows($result)/(int)$this->numlines);
+		  //$pagenum = @mysql_num_rows($result);
+		  $pagenum = ceil(mysql_num_rows($result)/(int)$this->numlines);
 
 		  $result = QueryDb($sql2);
-		  $num = @mysqli_num_rows($result);
+		  $num = @mysql_num_rows($result);
 		  if ($num>0){
 			  $cnt=1;
-			  while ($row = @mysqli_fetch_row($result))
+			  while ($row = @mysql_fetch_row($result))
 			  {
 				$kode = "";
 				$katalog = "";
 				$sql = "SELECT kode, nama FROM katalog WHERE replid = $row[2]";
 				$res = QueryDb($sql);
-				if (mysqli_num_rows($res) > 0)
+				if (mysql_num_rows($res) > 0)
 				{
-					$row2 = mysqli_fetch_row($res);
+					$row2 = mysql_fetch_row($res);
 					$kode = $row2[0];
 					$katalog = $row2[1];
 				}
 				
-				$rdipinjam = @mysqli_num_rows(QueryDb("SELECT * FROM daftarpustaka d WHERE d.pustaka='$row[0]' $filter2 AND d.status=0"));
-				$rtersedia = @mysqli_num_rows(QueryDb("SELECT * FROM daftarpustaka d WHERE d.pustaka='$row[0]' $filter2 AND d.status=1"));
+				$rdipinjam = @mysql_num_rows(QueryDb("SELECT * FROM daftarpustaka d WHERE d.pustaka='$row[0]' $filter2 AND d.status=0"));
+				$rtersedia = @mysql_num_rows(QueryDb("SELECT * FROM daftarpustaka d WHERE d.pustaka='$row[0]' $filter2 AND d.status=1"));
 			  //echo "SELECT * FROM daftarpustaka d WHERE d.pustaka=$row[0] AND d.perpustakaan=".$this->perpustakaan." AND d.status=0"."<br>";
-			  //$rdipinjam = @mysqli_num_rows(QueryDb("SELECT * FROM daftarpustaka d WHERE d.pustaka=$row[0] AND d.perpustakaan=".$this->perpustakaan." AND d.status=0"));
-			  //$rtersedia = @mysqli_num_rows(QueryDb("SELECT * FROM daftarpustaka d WHERE d.pustaka=$row[0] AND d.perpustakaan=".$this->perpustakaan." AND d.status=1"));
+			  //$rdipinjam = @mysql_num_rows(QueryDb("SELECT * FROM daftarpustaka d WHERE d.pustaka=$row[0] AND d.perpustakaan=".$this->perpustakaan." AND d.status=0"));
+			  //$rtersedia = @mysql_num_rows(QueryDb("SELECT * FROM daftarpustaka d WHERE d.pustaka=$row[0] AND d.perpustakaan=".$this->perpustakaan." AND d.status=1"));
 			  ?>
 			  <tr height='25'>
 				<td align="center"><?=$cnt?></td>
@@ -337,7 +337,7 @@ class CPustaka{
 	function CountPustaka(){
 		$sql = "SELECT * FROM perpustakaan ORDER BY nama";
 		$result = QueryDb($sql);
-		$num = @mysqli_num_rows($result);
+		$num = @mysql_num_rows($result);
 		return $num;
 	}
 }

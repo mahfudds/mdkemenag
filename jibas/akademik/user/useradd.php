@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,11 +42,11 @@ if (isset($_REQUEST['simpan'])) {
   	//cek apakah sudah ada account yang sama di SIMAKA
 	$query_c = "SELECT * FROM jbsuser.hakakses WHERE login = '$_REQUEST[nip]' AND tingkat = $tingkat AND modul = 'SIMAKA' $sql_dep";
 	$result_c = QueryDb($query_c);
-    $num_c = @mysqli_num_rows($result_c);
+    $num_c = @mysql_num_rows($result_c);
 	
 	$query_cek = "SELECT * FROM jbsuser.login WHERE login = '$_REQUEST[nip]'";
 	$result_cek = QueryDb($query_cek);
-    $num_cek = @mysqli_num_rows($result_cek);
+    $num_cek = @mysql_num_rows($result_cek);
 	
 	
 		

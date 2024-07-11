@@ -131,7 +131,7 @@ class LogTicks extends Ticks{
     private $ticklabels_pos = array();
     //---------------
     // CONSTRUCTOR
-    function __construct() {
+    function LogTicks() {
     }
     //---------------
     // PUBLIC METHODS

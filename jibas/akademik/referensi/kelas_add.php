@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,7 +53,7 @@ if (isset($_REQUEST['Simpan'])) {
 	//$sql_cek = "SELECT * FROM kelas WHERE kelas = '$_REQUEST[kelas]'";
 	$result_cek = QueryDb($sql_cek);
 	
-	if (@mysqli_num_rows($result_cek) > 0) {
+	if (@mysql_num_rows($result_cek) > 0) {
 		CloseDb();
 		$ERROR_MSG = "Kelas ".$kelas." sudah digunakan!";
 	} else {
@@ -71,11 +71,11 @@ if (isset($_REQUEST['Simpan'])) {
 OpenDb();
 $sql_get_namatahunajaran = "SELECT tahunajaran FROM jbsakad.tahunajaran WHERE replid = '$tahunajaran'";
 $result_get_namatahunajaran = QueryDb($sql_get_namatahunajaran);	
-$row_get_namatahunajaran =@mysqli_fetch_array($result_get_namatahunajaran);
+$row_get_namatahunajaran =@mysql_fetch_array($result_get_namatahunajaran);
 
 $sql_get_namatingkat = "SELECT tingkat FROM jbsakad.tingkat WHERE replid = '$tingkat'";
 $result_get_namatingkat = QueryDb($sql_get_namatingkat);
-$row_get_namatingkat =@mysqli_fetch_array($result_get_namatingkat);
+$row_get_namatingkat =@mysql_fetch_array($result_get_namatingkat);
 CloseDb();
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

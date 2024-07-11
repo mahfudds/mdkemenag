@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  *
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ function LoadValue()
 
     $sql = "SELECT * FROM jbsfina.paymenttabungan WHERE replid = $idPt";
     $res = QueryDb($sql);
-    if ($row = mysqli_fetch_array($res))
+    if ($row = mysql_fetch_array($res))
     {
         $idTabungan = $row['idtabungan'];
         $rekKasVendor = $row['rekkasvendor'];
@@ -47,7 +47,7 @@ function LoadValue()
                AND p.jenis = 2
              LIMIT 1  ";
     $res = QueryDb($sql);
-    $isReadOnly = mysqli_num_rows($res) > 0;
+    $isReadOnly = mysql_num_rows($res) > 0;
 }
 
 function ShowSelectTabunganSiswa()
@@ -62,7 +62,7 @@ function ShowSelectTabunganSiswa()
     $readOnly = $isReadOnly ? "disabled" : "";
 
     echo "<select id='tabungan' name='tabungan' style='width: 250px;' $readOnly>";
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         $sel = $idTabungan == $row[0] ? "selected" : "";
         echo "<option value='$row[0]' $sel>$row[1]</option>";
@@ -80,7 +80,7 @@ function ShowSelectRekVendor($kategori, $nama, $defValue)
     $readOnly = $isReadOnly ? "disabled" : "";
 
     echo "<select id='$nama' name='$nama' style='width: 250px' $readOnly>";
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         $sel = $row[0] == $defValue ? "selected" : "";
         echo "<option value='$row[0]' $sel>$row[0] $row[1]</option>";

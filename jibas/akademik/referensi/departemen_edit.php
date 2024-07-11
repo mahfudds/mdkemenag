@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,13 +43,13 @@ if (isset($_REQUEST['Simpan']))
 	$sql1 = "SELECT * FROM departemen WHERE urutan = '$_REQUEST[urutan]' AND replid <> '$replid'";
 	$result1 = QueryDb($sql1);
 	
-	if (mysqli_num_rows($result) > 0)
+	if (mysql_num_rows($result) > 0) 
 	{
 		CloseDb();
 		$ERROR_MSG = "Departemen $_REQUEST[departemen] sudah digunakan!";
 		$cek = 0;	
 	} 
-	else if (mysqli_num_rows($result1) > 0)
+	else if (mysql_num_rows($result1) > 0) 
 	{
 		CloseDb();
 		$ERROR_MSG = "Urutan $_REQUEST[urutan] sudah digunakan!";
@@ -93,7 +93,7 @@ $sql = "SELECT d.departemen,d.nipkepsek,p.nama,d.urutan,d.keterangan
 		WHERE d.nipkepsek = p.nip AND d.replid = '$replid'"; 
 
 $result = QueryDb($sql);
-$row = mysqli_fetch_row($result);
+$row = mysql_fetch_row($result);
 $departemen = $row[0];
 $nipkepsek = $row[1];
 $namakepsek = $row[2];

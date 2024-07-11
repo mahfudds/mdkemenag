@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,7 +45,7 @@ OpenDb();
 $sql = "SELECT p.nama, t.tahunajaran, t.departemen FROM jbssdm.pegawai p, jbsakad.tahunajaran t WHERE nip = '$nip' AND t.replid = '$tahunajaran'" ;   
 $result = QueryDB($sql);
 
-$row = mysqli_fetch_array($result);
+$row = mysql_fetch_array($result);
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -101,7 +101,7 @@ $row = mysqli_fetch_array($result);
 	$sql = "SELECT DAY(p.tanggal), MONTH(p.tanggal), YEAR(p.tanggal), p.jam, k.kelas, l.nama, s.status, p.keterlambatan, p.jumlahjam, p.materi, p.keterangan, p.replid FROM presensipelajaran p, kelas k, pelajaran l, statusguru s WHERE p.idkelas = k.replid AND p.idpelajaran = l.replid AND p.gurupelajaran = '$nip' AND p.tanggal BETWEEN '$tglawal' AND '$tglakhir' AND p.jenisguru = s.replid AND k.idtahunajaran = '$tahunajaran' ORDER BY $urut $urutan";
 	
 	$result = QueryDb($sql);			 
-	$jum_hadir = mysqli_num_rows($result);
+	$jum_hadir = mysql_num_rows($result);
 	if ($jum_hadir > 0) { 
 ?>      
     <table class="tab" id="table" border="1" cellpadding="2" style="border-collapse:collapse" cellspacing="2" width="100%" align="left">
@@ -119,7 +119,7 @@ $row = mysqli_fetch_array($result);
     </tr>
 <?		
 	$cnt = 0;
-	while ($row = mysqli_fetch_row($result)) { ?>
+	while ($row = mysql_fetch_row($result)) { ?>
     <tr height="25" valign="middle">    	
     	<td align="center"><span class="style7"><?=++$cnt?></span></td>
 		<td align="center"><span class="style7"><?=$row[0].'-'.$row[1].'-'.substr($row[2],2,2)?></span></td>
@@ -145,12 +145,12 @@ $row = mysqli_fetch_array($result);
 <? 	OpenDb();	
 	$sql = "SELECT replid, status FROM statusguru ORDER BY status" ;
 	$result = QueryDb($sql);	
-	while ($row = @mysqli_fetch_array($result)) {
+	while ($row = @mysql_fetch_array($result)) {
 		$replid = $row['replid'];
 		
 		$sql1 = "SELECT COUNT(*), SUM(p.jumlahjam) FROM presensipelajaran p, pelajaran l, kelas k WHERE p.gurupelajaran = '$nip' AND tanggal BETWEEN '$tglawal' AND '$tglakhir' AND jenisguru = '$replid' AND p.idpelajaran = l.replid AND p.idkelas = k.replid AND k.idtahunajaran = '$tahunajaran' ";
 		$result1 = QueryDb($sql1);	
-		$row1 = @mysqli_fetch_row($result1);
+		$row1 = @mysql_fetch_row($result1);
 ?>
 	<tr height="25" valign="middle">	
     	<td><span class="style7"><strong><?=$row['status']?></strong></span></td>

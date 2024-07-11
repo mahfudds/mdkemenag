@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ $sql = "SELECT k.kelas AS namakelas, s.semester AS namasemester, a.tahunajaran,
 		 WHERE k.replid = $kelas AND s.replid = $semester AND  k.idtahunajaran = a.replid AND l.replid = n.idpelajaran 
 		   AND t.replid = k.idtingkat AND n.replid = $idaturan AND n.idjenisujian = j.replid AND p.nip = '$nip'";
 $result = QueryDb($sql);
-$row = mysqli_fetch_array($result);
+$row = mysql_fetch_array($result);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -53,7 +53,7 @@ $row = mysqli_fetch_array($result);
 <body>
 <table border="0" cellpadding="10" cellpadding="5" width="780" align="left">
 <tr><td align="left" valign="top">
-<?=getHeader($row['dep'])?>
+<?=getHeader($row[dep])?>
 <center>
   <font size="4"><strong>FORM PENGISIAN NILAI AKHIR SISWA</strong></font><br />
  </center><br /><br />
@@ -94,7 +94,7 @@ $row = mysqli_fetch_array($result);
 				   ORDER by tanggal ASC";
     $result_nhb_PK = QueryDb($sql_nhb_PK);
     $cntujian=1;
-    while ($row_nhb_PK = @mysqli_fetch_array($result_nhb_PK))
+    while ($row_nhb_PK = @mysql_fetch_array($result_nhb_PK))
 	{
         $idujian[$cntujian] = $row_nhb_PK['replid'];
 		$tgl = explode("-",$row_nhb_PK['tanggal']); ?>
@@ -114,7 +114,7 @@ $row = mysqli_fetch_array($result);
 					 ORDER BY nama";
     $result_get_nis=QueryDb($sql_get_nis);
     $cntsiswa=1;
-    while ($row_get_nis=@mysqli_fetch_row($result_get_nis))
+    while ($row_get_nis=@mysql_fetch_row($result_get_nis))
 	{
         $nilai = 0;
         $tanda = "";
@@ -128,9 +128,9 @@ $row = mysqli_fetch_array($result);
         for ($i=1;$i<=count($idujian);$i++) {				
             $sql_get_nilai="SELECT n.nilaiujian FROM jbsakad.nilaiujian n WHERE n.nis='$row_get_nis[0]' AND idujian = $idujian[$i]";
             $result_get_nilai=QueryDb($sql_get_nilai);
-            $row_get_nilai = mysqli_fetch_array($result_get_nilai);
-            echo "<td align='center'>".$row_get_nilai['nilaiujian']."</td>";
-            $nilai = $nilai+$row_get_nilai['nilaiujian'];
+            $row_get_nilai = mysql_fetch_array($result_get_nilai);
+            echo "<td align='center'>".$row_get_nilai[nilaiujian]."</td>";
+            $nilai = $nilai+$row_get_nilai[nilaiujian];
         }
     ?>
         <td align="center"><?=round($nilai/count($idujian),2)?>

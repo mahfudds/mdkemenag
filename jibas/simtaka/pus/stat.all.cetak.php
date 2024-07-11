@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,24 +27,24 @@ require_once('../inc/rupiah.php');
 require_once('../inc/db_functions.php');
 require_once('../lib/GetHeaderCetak.php');
 
-$perpustakaan	= $_REQUEST['perpustakaan'];
-$from			= $_REQUEST['from'];
-$to				= $_REQUEST['to'];
+$perpustakaan	= $_REQUEST[perpustakaan];
+$from			= $_REQUEST[from];
+$to				= $_REQUEST[to];
 
 OpenDb();
 if ($perpustakaan!='-1')
 {
 	$sql 	= "SELECT nama FROM perpustakaan WHERE replid='$perpustakaan'";
 	$result = QueryDb($sql);
-	$row 	= @mysqli_fetch_row($result);
+	$row 	= @mysql_fetch_row($result);
 	$nama	= $row[0];
 }
 else
 {
 	$nama = "<i>Semua</i>";
 }
-$from	= explode('-',$from);
-$to		= explode('-',$to);
+$from	= split('-',$from);
+$to		= split('-',$to);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -112,10 +112,10 @@ $to		= explode('-',$to);
 				 ORDER BY p.tglpinjam ASC";		
 		$result = QueryDb($sql);
 		
-		if (@mysqli_num_rows($result)>0)
+		if (@mysql_num_rows($result)>0)
 		{
 			$cnt=1;
-			while ($row = @mysqli_fetch_row($result))
+			while ($row = @mysql_fetch_row($result))
 			{  
 				$bulan = $row[1];
 				$tahun = $row[2];  ?>

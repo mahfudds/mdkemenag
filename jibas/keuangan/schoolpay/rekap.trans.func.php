@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  *
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ function ShowCbVendor()
     $res = QueryDb($sql);
 
     echo "<select id='vendor' name='vendor' onchange='clearReport()' style='width: 250px'>";
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         echo "<option value='$row[0]'>$row[1]</option>";
     }
@@ -43,7 +43,7 @@ function ShowSelectTanggal1()
                    MONTH(DATE_SUB(NOW(), INTERVAL 7 DAY)),
                    DAY(DATE_SUB(NOW(), INTERVAL 7 DAY))";
     $res = QueryDb($sql);
-    $row = mysqli_fetch_row($res);
+    $row = mysql_fetch_row($res);
     $tahun = $row[0];
     $bulan = $row[1];
     $tanggal = $row[2];
@@ -82,7 +82,7 @@ function ShowSelectTanggal2()
                    MONTH(NOW()),
                    DAY(NOW())";
     $res = QueryDb($sql);
-    $row = mysqli_fetch_row($res);
+    $row = mysql_fetch_row($res);
     $tahun = $row[0];
     $bulan = $row[1];
     $tanggal = $row[2];
@@ -152,7 +152,7 @@ function ShowRekapTransReport($showMenu)
     $res = QueryDb($sql);
 
     $lsUser = array();
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         $userId = $row[0];
         $tingkat = $row[1];
@@ -176,7 +176,7 @@ function ShowRekapTransReport($showMenu)
     $res = QueryDb($sql);
 
     $lsTanggal = array();
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         $lsTanggal[] = array($row[0], $row[1]);
     }
@@ -232,7 +232,7 @@ function ShowRekapTransReport($showMenu)
                        AND userid = '$userId'
                        AND tanggal = '$tanggal'";
             $res = QueryDb($sql);
-            if ($row = mysqli_fetch_row($res))
+            if ($row = mysql_fetch_row($res))
             {
                 $jumlah = $row[0];
                 $rp = FormatRupiah($row[0]);

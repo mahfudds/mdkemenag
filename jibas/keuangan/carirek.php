@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -147,7 +147,7 @@ function change_urut(urut,urutan)
 			OpenDb();
 			$sql = "SELECT * FROM katerekakun ORDER BY urutan";
 			$result = QueryDb($sql);
-			while ($row = mysqli_fetch_array($result))
+			while ($row = mysql_fetch_array($result))
 			{
 				if ($kategori == "")
 					$kategori = $row['kategori']; ?>
@@ -173,15 +173,15 @@ function change_urut(urut,urutan)
 <?	OpenDb();
 	$sql_tot = "SELECT * FROM rekakun WHERE kategori='$kategori' ORDER BY kode";
 	$result_tot = QueryDb($sql_tot);
-	$total = ceil(mysqli_num_rows($result_tot)/(int)$varbaris);
-	$jumlah = mysqli_num_rows($result_tot);
+	$total = ceil(mysql_num_rows($result_tot)/(int)$varbaris);
+	$jumlah = mysql_num_rows($result_tot);
 	$akhir = ceil($jumlah/5)*5;
 	
 	$sql = "SELECT * FROM rekakun WHERE kategori='$kategori' ORDER BY $urut $urutan "; 	
 	$result = QueryDb($sql);
-	if (mysqli_num_rows($result) > 0)
+	if (mysql_num_rows($result) > 0)
 	{
-		$tot = mysqli_num_rows($result); ?>
+		$tot = mysql_num_rows($result); ?>
 		<br />
 		<table class="tab" id="table" border="1" style="border-collapse:collapse" width="100%" align="left" bordercolor="#000000">
 		<tr height="30" align="center" class="header">
@@ -196,7 +196,7 @@ function change_urut(urut,urutan)
 		else 
 			$no = (int)$page*(int)$varbaris;
 		
-		while ($row = mysqli_fetch_array($result))
+		while ($row = mysql_fetch_array($result))
 		{ ?>
 			<tr onclick="pilih('<?=$row['kode'] ?>','<?=$row['nama'] ?>')">
 				<td align="center"><?=++$no ?></td>

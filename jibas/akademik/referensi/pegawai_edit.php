@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ OpenDb();
 $replid = $_REQUEST["replid"];
 $sql_pegawai = "SELECT * FROM jbssdm.pegawai WHERE replid = '$replid'";
 $result_pegawai = QueryDb($sql_pegawai);
-$row_pegawai = @mysqli_fetch_array($result_pegawai);
+$row_pegawai = @mysql_fetch_array($result_pegawai);
 
 $bagian = $row_pegawai['bagian'];
 $nip = $row_pegawai['nip'];
@@ -133,7 +133,7 @@ if (isset($_REQUEST['simpan']))
 	
 	$query_cek = "SELECT * FROM jbssdm.pegawai WHERE nip = '$nip' AND replid <> '$replid'";
 	$result_cek = QueryDb($query_cek);
-	$num_cek = @mysqli_num_rows($result_cek);
+	$num_cek = @mysql_num_rows($result_cek);
 	if($num_cek > 0) 
 	{
 		$ERROR_MSG = "NIP ".$nip." sudah digunakan!";
@@ -528,7 +528,7 @@ function change_bln() {
       
         $sql_bagian="SELECT bagian FROM jbssdm.bagianpegawai ORDER BY urutan ASC";
         $result_bagian=QueryDb($sql_bagian);
-        while ($row_bagian=@mysqli_fetch_array($result_bagian)){
+        while ($row_bagian=@mysql_fetch_array($result_bagian)){
       	?>
         <option value="<?=$row_bagian['bagian']?>" <?=StringIsSelected($row_bagian['bagian'],$bagian)?>>            
         <?=$row_bagian['bagian']?></option>
@@ -605,10 +605,10 @@ function change_bln() {
         <option value="">[Pilih Agama]</option>
         <?
         $query_a="select agama from jbsumum.agama order by urutan asc " ;
-        $result_a=QueryDb($query_a) ;
-        while($row_a=mysqli_fetch_array($result_a)) 	{
+        $result_a=QueryDb($query_a) or (mysql_error()) ;
+        while($row_a=mysql_fetch_array($result_a)) 	{
         ?>
-        <option value="<?=$row_a['agama']?>"<?=StringIsSelected($agama,$row_a['agama'])?> ><?=$row_a['agama']?>
+        <option value="<?=$row_a[agama]?>"<?=StringIsSelected($agama,$row_a[agama])?> ><?=$row_a[agama]?>
         </option>
         <? } ?>
         </select>
@@ -623,10 +623,10 @@ function change_bln() {
         <option value="">[Pilih Suku]</option>
         <?
         $query_s="select suku from jbsumum.suku order by urutan asc " ;
-        $result_s=QueryDb($query_s);
-        while($row_s=mysqli_fetch_array($result_s)) {
+        $result_s=QueryDb($query_s) or (mysql_error()) ;
+        while($row_s=mysql_fetch_array($result_s)) {
         ?>
-        <option value=<?=$row_s['suku']?> <?=StringIsSelected($suku,$row_s['suku'])?>><?=$row_s['suku']?></option>
+        <option value=<?=$row_s[suku]?> <?=StringIsSelected($suku,$row_s[suku])?>><?=$row_s[suku]?></option>
         <? } ?>
         </select>
         <? if (SI_USER_LEVEL() != $SI_USER_STAFF) { ?>

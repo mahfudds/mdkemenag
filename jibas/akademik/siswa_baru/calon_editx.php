@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ $sql="SELECT c.nopendaftaran, c.nama, c.panggilan, c.tahunmasuk, c.idproses, c.i
 
 $result=QueryDB($sql);
 CloseDb();
-$row_siswa = mysqli_fetch_array($result); 
+$row_siswa = mysql_fetch_array($result); 
 
 $departemen = $row_siswa['departemen'];
 $proses=$row_siswa['proses'];
@@ -51,7 +51,7 @@ $thnlahir = (int)$row_siswa['tahun'];
 $query = "SELECT urutan FROM jbsakad.departemen WHERE departemen = '$departemen'";	
 $hasil = QueryDb($query);	
 CloseDb();
-$row = mysqli_fetch_array($hasil);
+$row = mysql_fetch_array($hasil);
 $urutan = $row['urutan'];
 */
 
@@ -60,7 +60,7 @@ if ($row_siswa['asalsekolah'] <> NULL) {
 	$query = "SELECT departemen FROM asalsekolah WHERE sekolah = '$row_siswa[asalsekolah]'";
 	$hasil = QueryDb($query);	
 	CloseDb();
-	$row = mysqli_fetch_array($hasil);
+	$row = mysql_fetch_array($hasil);
 	$dep_asal = $row['departemen'];
 	$sekolah = $row_siswa['asalsekolah'];
 } else {	
@@ -772,7 +772,7 @@ function focusNext(elemName, evt) {
     		<td><div id="InfoProses">
             <?	$sql = "SELECT replid,proses FROM prosespenerimaansiswa WHERE aktif=1 AND departemen='$departemen'";				
 				$result = QueryDb($sql);				
-				$row = mysqli_fetch_array($result);
+				$row = mysql_fetch_array($result);
 				$proses = $row['replid'];
 			?>
             <input type="text" name="nama_proses" id="nama_proses" style="width:240px;" class="disabled" value="<?=$row['proses']?>" readonly />
@@ -788,13 +788,13 @@ function focusNext(elemName, evt) {
 				$sql = "SELECT replid,kelompok,kapasitas FROM kelompokcalonsiswa WHERE idproses = $proses ORDER BY kelompok";
 				$result = QueryDb($sql);
 				
-				while ($row = @mysqli_fetch_array($result)) {
+				while ($row = @mysql_fetch_array($result)) {
 					if ($kelompok == "")
 						$kelompok = $row['replid'];
 										
 					$sql1 = "SELECT COUNT(replid) FROM calonsiswa WHERE idkelompok = $row[replid]";
 					$result1 = QueryDb($sql1);				
-					$row1 = mysqli_fetch_row($result1);
+					$row1 = mysql_fetch_row($result1);
 					
 			?>
     			<option value="<?=urlencode($row['replid'])?>" <?=IntIsSelected($row['replid'], $kelompok)?> ><?=$row['kelompok'].', kapasitas: '.$row['kapasitas'] .', terisi: '.$row1[0]?>
@@ -816,7 +816,7 @@ function focusNext(elemName, evt) {
 				$sql = "SELECT keterangan FROM kelompokcalonsiswa WHERE replid = $kelompok";
 				$result = QueryDb($sql);
 				CloseDb();
-				$row = @mysqli_fetch_array($result);			
+				$row = @mysql_fetch_array($result);			
 			?>
               <textarea name="keterangan" id="keterangan" rows="2" cols="60" readonly style="background-color:#E5F7FF" ><?=$row['keterangan'] ?>
               </textarea>
@@ -904,7 +904,7 @@ function focusNext(elemName, evt) {
 			OpenDb();
 			$sql_agama="SELECT replid,agama,urutan FROM jbsumum.agama ORDER BY urutan";
 			$result_agama=QueryDB($sql_agama);
-			while ($row_agama = mysqli_fetch_array($result_agama)) {
+			while ($row_agama = mysql_fetch_array($result_agama)) {
 			?>
 			<option value="<?=$row_agama['agama']?>" <?=StringIsSelected($row_agama['agama'], $row_siswa['agama'])?>><?=$row_agama['agama']?></option>
 			<?
@@ -929,7 +929,7 @@ function focusNext(elemName, evt) {
 			OpenDb();
 			$sql_suku="SELECT suku,urutan,replid FROM jbsumum.suku ORDER BY urutan";
 			$result_suku=QueryDB($sql_suku);
-			while ($row_suku = mysqli_fetch_array($result_suku)) {				
+			while ($row_suku = mysql_fetch_array($result_suku)) {				
 			?>
 			<option value="<?=$row_suku['suku']?>" <?=StringIsSelected($row_suku['suku'], $row_siswa['suku'])?>><?=$row_suku['suku']?></option>
 			<?
@@ -953,7 +953,7 @@ function focusNext(elemName, evt) {
 			OpenDb();
 			$sql_status="SELECT replid,status,urutan FROM jbsakad.statussiswa ORDER BY urutan";
 			$result_status=QueryDB($sql_status);
-			while ($row_status = mysqli_fetch_array($result_status)) {
+			while ($row_status = mysql_fetch_array($result_status)) {
 			?>
 			<option value="<?=$row_status['status']?>" <?=StringIsSelected($row_status['status'], $row_siswa['status'])?>><?=$row_status['status']?></option>
 			<?
@@ -977,7 +977,7 @@ function focusNext(elemName, evt) {
 			OpenDb();
 			$sql_kondisi="SELECT kondisi,urutan FROM jbsakad.kondisisiswa ORDER BY urutan";
 			$result_kondisi=QueryDB($sql_kondisi);
-			while ($row_kondisi = mysqli_fetch_array($result_kondisi)) {
+			while ($row_kondisi = mysql_fetch_array($result_kondisi)) {
 			?>
                 <option value="<?=$row_kondisi['kondisi']?>" <?=StringIsSelected($row_kondisi['kondisi'], $row_siswa['kondisi'])?>>
                   <?=$row_kondisi['kondisi']?>
@@ -1049,11 +1049,11 @@ function focusNext(elemName, evt) {
 			OpenDb();
 			$sql_departemen="SELECT departemen,urutan FROM jbsakad.departemen WHERE departemen <> '$departemen' ORDER BY urutan";			
 			$result_departemen=QueryDB($sql_departemen);
-			//$row_departemen = @mysqli_fetch_array($result_departemen);
+			//$row_departemen = @mysql_fetch_array($result_departemen);
 			//$dep_asal = $row_departemen['departemen'];
 			//if ($dep_asal == "") 
 			//	$dep_asal = $row_departemen['departemen'];
-			while ($row_departemen = mysqli_fetch_array($result_departemen)) {			
+			while ($row_departemen = mysql_fetch_array($result_departemen)) {			
 							
 			?>
 			<option value="<?=$row_departemen['departemen']?>" <?=StringIsSelected($row_departemen['departemen'], $dep_asal)?>><?=$row_departemen['departemen']?></option>
@@ -1070,7 +1070,7 @@ function focusNext(elemName, evt) {
 			OpenDb();
 			$sql_sekolah="SELECT sekolah FROM jbsakad.asalsekolah WHERE departemen='$dep_asal' ORDER BY sekolah";
 			$result_sekolah=QueryDB($sql_sekolah);
-			while ($row_sekolah = mysqli_fetch_array($result_sekolah)) {
+			while ($row_sekolah = mysql_fetch_array($result_sekolah)) {
 				 //if ($sekolah=="")
             		//$sekolah=$row_sekolah['sekolah'];
 			?>
@@ -1168,7 +1168,7 @@ function focusNext(elemName, evt) {
 			OpenDb();
 			$sql_pend_ayah="SELECT pendidikan FROM jbsumum.tingkatpendidikan ORDER BY pendidikan";
 			$result_pend_ayah=QueryDB($sql_pend_ayah);
-			while ($row_pend_ayah = mysqli_fetch_array($result_pend_ayah)) {
+			while ($row_pend_ayah = mysql_fetch_array($result_pend_ayah)) {
 			?>
       		<option value="<?=$row_pend_ayah['pendidikan']?>" <?=StringIsSelected($row_pend_ayah['pendidikan'], $row_siswa['pendidikanayah'])?>><?=$row_pend_ayah['pendidikan']?></option>
       		<?
@@ -1184,7 +1184,7 @@ function focusNext(elemName, evt) {
 			OpenDb();
 			$sql_pend_ibu="SELECT pendidikan FROM jbsumum.tingkatpendidikan ORDER BY pendidikan";
 			$result_pend_ibu=QueryDB($sql_pend_ibu);
-			while ($row_pend_ibu = mysqli_fetch_array($result_pend_ibu)) {
+			while ($row_pend_ibu = mysql_fetch_array($result_pend_ibu)) {
 			?>
       		<option value="<?=$row_pend_ibu['pendidikan']?>" <?=StringIsSelected($row_pend_ibu['pendidikan'], $row_siswa['pendidikanibu'])?>><?=$row_pend_ibu['pendidikan']?></option>
       		<?
@@ -1208,7 +1208,7 @@ function focusNext(elemName, evt) {
 			OpenDb();
 			$sql_kerja_ayah="SELECT pekerjaan FROM jbsumum.jenispekerjaan ORDER BY pekerjaan";
 			$result_kerja_ayah=QueryDB($sql_kerja_ayah);
-			while ($row_kerja_ayah = mysqli_fetch_array($result_kerja_ayah)) {
+			while ($row_kerja_ayah = mysql_fetch_array($result_kerja_ayah)) {
 			?>
       		<option value="<?=$row_kerja_ayah['pekerjaan']?>" <?=StringIsSelected($row_kerja_ayah['pekerjaan'], $row_siswa['pekerjaanayah'])?>><?=$row_kerja_ayah['pekerjaan']?></option>
       		<?
@@ -1224,7 +1224,7 @@ function focusNext(elemName, evt) {
 			OpenDb();
 			$sql_kerja_ibu="SELECT pekerjaan FROM jbsumum.jenispekerjaan ORDER BY pekerjaan";
 			$result_kerja_ibu=QueryDB($sql_kerja_ibu);
-			while ($row_kerja_ibu = mysqli_fetch_array($result_kerja_ibu)) {
+			while ($row_kerja_ibu = mysql_fetch_array($result_kerja_ibu)) {
 			?>
       		<option value="<?=$row_kerja_ibu['pekerjaan']?>" <?=StringIsSelected($row_kerja_ibu['pekerjaan'], $row_siswa['pekerjaanibu'])?>><?=$row_kerja_ibu['pekerjaan']?></option>
       		<?

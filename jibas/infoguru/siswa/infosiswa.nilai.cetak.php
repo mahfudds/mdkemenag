@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@ $kelas = $_REQUEST['kelas'];
 OpenDb();
 $sql = "SELECT departemen FROM pelajaran WHERE replid='$pelajaran'";
 $result = QueryDb($sql);
-$row = @mysqli_fetch_row($result);
+$row = @mysql_fetch_row($result);
 $departemen = $row[0];
 CloseDb();
 ?>
@@ -67,7 +67,7 @@ CloseDb();
                 <? 	OpenDb();
                     $sql = "SELECT * FROM semester WHERE replid = '$semester'";
                     $result = QueryDb($sql);
-                    $row = mysqli_fetch_array($result);
+                    $row = mysql_fetch_array($result);
                     
                 ?>	
                 <font color="#000000" size="2" class="nav_title"><b>Departemen </b></font>
@@ -76,7 +76,7 @@ CloseDb();
                 <td width="5%" valign="top"><? 	OpenDb();
                     $sql = "SELECT * FROM semester WHERE replid = '$semester'";
                     $result = QueryDb($sql);
-                    $row = mysqli_fetch_array($result);
+                    $row = mysql_fetch_array($result);
                     
                 ?>	
                 <font color="#000000" size="2" class="nav_title"><b>Semester </b></font>
@@ -89,7 +89,7 @@ CloseDb();
                     $sql = "SELECT * FROM tahunajaran WHERE replid = '$tahunajaran'";
                     $result = QueryDb($sql);
                    
-                    $row = mysqli_fetch_array($result);
+                    $row = mysql_fetch_array($result);
                     
                 ?>	
                 <font color="#000000" size="2" class="nav_title"><b>Tahun&nbsp;Ajaran </b></font>
@@ -98,7 +98,7 @@ CloseDb();
                 <td valign="top"><? 	OpenDb();
                     $sql = "SELECT * FROM kelas WHERE replid = '$kelas'";
                     $result = QueryDb($sql);
-                    $row = mysqli_fetch_array($result);
+                    $row = mysql_fetch_array($result);
                     
                 ?>	
                 <font color="#000000" size="2" class="nav_title"><b>Kelas </b></font>
@@ -112,7 +112,7 @@ CloseDb();
                     //echo $sql;
 					$result = QueryDb($sql);
                    
-                    $row = mysqli_fetch_array($result);
+                    $row = mysql_fetch_array($result);
                     
                 ?>	
                 <font color="#000000" size="2" class="nav_title"><b>Pelajaran </b></font>                </td>
@@ -120,7 +120,7 @@ CloseDb();
               <td valign="top"><? 	OpenDb();
                     $sql = "SELECT * FROM siswa WHERE nis = '$nis'";
                     $result = QueryDb($sql);
-                    $row = mysqli_fetch_array($result);
+                    $row = mysql_fetch_array($result);
                     
                 ?>	
                 <font color="#000000" size="2" class="nav_title"><b>Siswa </b></font>
@@ -135,8 +135,8 @@ CloseDb();
                     "GROUP BY j.jenisujian";
                     //echo $sql;
                     $result = QueryDb($sql);
-                    if (mysqli_num_rows($result) > 0) { //2
-                    while($row = @mysqli_fetch_array($result)){	//1		
+                    if (mysql_num_rows($result) > 0) { //2
+                    while($row = @mysql_fetch_array($result)){	//1		
                 ?>
                 <tr>
                     <td colspan="2"><fieldset><legend><span class="news_title2"><?=$row['jenisujian']?></span></legend>
@@ -146,7 +146,7 @@ CloseDb();
                         "ORDER BY u.tanggal";
                         $result1 = QueryDb($sql1);
                         
-                        if (@mysqli_num_rows($result1) > 0){
+                        if (@mysql_num_rows($result1) > 0){
                     ?>
                         <table border="1" width="100%" id="table19" class="tab" >
                             <tr class="header" align="center" height="30">		
@@ -158,10 +158,10 @@ CloseDb();
                             <?	
                                 $sql2 = "SELECT AVG(n.nilaiujian) as rata FROM ujian u, pelajaran p, nilaiujian n WHERE u.idpelajaran = p.replid AND u.idkelas = '$kelas' AND u.idpelajaran = '$pelajaran' AND u.idsemester = '".$semester."' AND u.idjenis = '$row[replid]' AND u.replid = n.idujian AND n.nis = '$nis' ";
                                 $result2 = QueryDb($sql2);	
-                                $row2 = @mysqli_fetch_array($result2);
-                                $rata = $row2['rata'];
+                                $row2 = @mysql_fetch_array($result2);
+                                $rata = $row2[rata];
                                 $cnt = 1;
-                                while($row1 = @mysqli_fetch_array($result1)){			
+                                while($row1 = @mysql_fetch_array($result1)){			
                             ?>
                             <tr>        			
                                 <td width="5" height="25" align="center"><?=$cnt?></td>

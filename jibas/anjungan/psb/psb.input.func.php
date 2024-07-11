@@ -4,9 +4,9 @@
  * Jaringan Informasi Bersama Antar Sekolah
  * 
  * @version: 3.11 (May 02, 2018)
- * @notes: 
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ function ShowDepartemenCombo()
     $res = QueryDB($sql);
     
     echo "<select name='psb_departemen' id='psb_departemen' $isDisabled class='inputbox' onchange='psb_changeDepartemen()'>";
-	while ($row = mysqli_fetch_row($res))
+	while ($row = mysql_fetch_row($res))
     {
         if ($selDept == "")
             $selDept = $row[0];
@@ -55,7 +55,7 @@ function ShowPenerimaanCombo($selDept)
                AND departemen='$selDept'";
     $res = QueryDB($sql);
     
-    if (mysqli_num_rows($res) == 0)
+    if (mysql_num_rows($res) == 0)
     {
         echo "<input type='hidden' name='psb_proses' id='psb_proses' value='-1'>";
         echo "<em>Belum ada data proses penerimaan</em>";
@@ -63,7 +63,7 @@ function ShowPenerimaanCombo($selDept)
     else
     {
         echo "<select name='psb_proses' id='psb_proses' $isDisabled class='inputbox' onchange='psb_changeProses()'>";
-        while ($row = mysqli_fetch_row($res))
+        while ($row = mysql_fetch_row($res))
         {
             if ($selProses == "")
                 $selProses = $row[0];
@@ -84,7 +84,7 @@ function ShowKelompokCombo($selProses)
              ORDER BY kelompok";
     $res = QueryDB($sql);
     
-    if (mysqli_num_rows($res) == 0)
+    if (mysql_num_rows($res) == 0)
     {
         echo "<input type='hidden' name='psb_kelompok' id='psb_kelompok' value='-1'>";
         echo "<em>Belum ada data kelompok penerimaan</em>";
@@ -92,7 +92,7 @@ function ShowKelompokCombo($selProses)
     else
     {
         echo "<select name='psb_kelompok' id='psb_kelompok' $isDisabled class='inputbox'>";
-        while ($row = mysqli_fetch_row($res))
+        while ($row = mysql_fetch_row($res))
         {
             $sql = "SELECT COUNT(replid)
                       FROM jbsakad.calonsiswa
@@ -156,7 +156,7 @@ function ShowAgamaCombo()
 	$res = QueryDB($sql);
     
     echo "<select name='psb_agama' id='psb_agama' class='inputbox' $isDisabled>";
-	while ($row = mysqli_fetch_array($res))
+	while ($row = mysql_fetch_array($res))
     {
 		echo "<option value='" . $row['agama'] . "' >" . $row['agama'] . "</option>";
 	}
@@ -173,7 +173,7 @@ function ShowSukuCombo()
 	$res = QueryDB($sql);
     
     echo "<select name='psb_suku' id='psb_suku' class='inputbox' $isDisabled>";
-	while ($row = mysqli_fetch_array($res))
+	while ($row = mysql_fetch_array($res))
     {
 		echo "<option value='" . $row['suku'] . "' >" . $row['suku'] . "</option>";
 	}
@@ -190,7 +190,7 @@ function ShowStatusCombo()
 	$res = QueryDB($sql);
     
     echo "<select name='psb_status' id='psb_status' class='inputbox' $isDisabled>";
-	while ($row = mysqli_fetch_array($res))
+	while ($row = mysql_fetch_array($res))
     {
 		echo "<option value='" . $row['status'] . "' >" . $row['status'] . "</option>";
 	}
@@ -207,7 +207,7 @@ function ShowKondisiCombo()
 	$res = QueryDB($sql);
     
     echo "<select name='psb_kondisi' id='psb_kondisi' class='inputbox' $isDisabled>";
-	while ($row = mysqli_fetch_array($res))
+	while ($row = mysql_fetch_array($res))
     {
 		echo "<option value='" . $row['kondisi'] . "' >" . $row['kondisi'] . "</option>";
 	}
@@ -248,7 +248,7 @@ function ShowAsalSekolahCombo($jenjang)
              WHERE departemen = '$jenjang'
              ORDER BY sekolah ASC";
 	$res = QueryDB($sql);
-    $ndata = mysqli_num_rows($res);
+    $ndata = mysql_num_rows($res);
     
     if ($ndata == 0)
     {
@@ -259,7 +259,7 @@ function ShowAsalSekolahCombo($jenjang)
     else
     {
         echo "<select name='psb_sekolah' id='psb_sekolah' class='inputbox' onchange='psb_changeAsalSekolah()' $isDisabled>";
-        while($row = mysqli_fetch_row($res))
+        while($row = mysql_fetch_row($res))
         {
             echo "<option value='" . $row[0] . "'>" . $row[0] . "</option>";
         }
@@ -292,7 +292,7 @@ function ShowPendidikanCombo($id)
 	$res = QueryDB($sql);
     
     echo "<select name='$id' id='$id' class='inputbox' $isDisabled>";
-	while ($row = mysqli_fetch_row($res))
+	while ($row = mysql_fetch_row($res))
     {
 		echo "<option value='" . $row[0] . "' >" . $row[0] . "</option>";
 	}
@@ -309,7 +309,7 @@ function ShowPekerjaanCombo($id)
 	$res = QueryDB($sql);
     
     echo "<select name='$id' id='$id' class='inputbox' $isDisabled>";
-	while ($row = mysqli_fetch_row($res))
+	while ($row = mysql_fetch_row($res))
     {
 		echo "<option value='" . $row[0] . "' >" . $row[0] . "</option>";
 	}
@@ -343,7 +343,7 @@ function ShowSumbangan($proses)
                   FROM jbsakad.settingpsb
                  WHERE idproses = '$proses'";
 		$res = QueryDb($sql);
-		$row = mysqli_fetch_array($res);
+		$row = mysql_fetch_array($res);
 		
 		$kdsum1 = $row['kdsum1']; 
 		$kdsum2 = $row['kdsum2'];  ?>
@@ -397,7 +397,7 @@ function ShowTambahanData($selDept)
                  ORDER BY urutan";
         $res = QueryDb($sql);
         $idtambahan = "";
-        while($row = mysqli_fetch_row($res))
+        while($row = mysql_fetch_row($res))
         {
             $replid = $row[0];
             $kolom = $row[1];
@@ -418,10 +418,10 @@ function ShowTambahanData($selDept)
                 $res2 = QueryDb($sql);
 
                 $arrList = array();
-                if (mysqli_num_rows($res2) == 0)
+                if (mysql_num_rows($res2) == 0)
                     $arrList[] = "-";
 
-                while($row2 = mysqli_fetch_row($res2))
+                while($row2 = mysql_fetch_row($res2))
                 {
                     $arrList[] = $row2[0];
                 }
@@ -488,7 +488,7 @@ function ShowNilaiUjian($proses)
                   FROM jbsakad.settingpsb
                  WHERE idproses = '$proses'";
 		$res = QueryDb($sql);
-        $row = mysqli_fetch_array($res);
+        $row = mysql_fetch_array($res);
         
         for($n = 1; $n <= 10; $n++)
         {

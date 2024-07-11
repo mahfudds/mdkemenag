@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -69,7 +69,7 @@ OpenDb();
    		 	<?
 			$sql = "SELECT replid,proses,aktif FROM jbsakad.prosespenerimaansiswa WHERE departemen='$departemen' ORDER BY aktif DESC, replid DESC";				
 			$result = QueryDb($sql);
-			while ($row = @mysqli_fetch_array($result)) {
+			while ($row = @mysql_fetch_array($result)) {
 				if ($proses == "") 
 					$proses = $row['replid'];
 				if ($row['aktif']) 
@@ -90,7 +90,7 @@ OpenDb();
 	<?	if ($proses <> "") {
 			$sql = "SELECT replid,kelompok,kapasitas FROM jbsakad.kelompokcalonsiswa WHERE idproses = '$proses' ORDER BY kelompok";
             $result=QueryDb($sql);
-            while ($row=@mysqli_fetch_array($result)){
+            while ($row=@mysql_fetch_array($result)){
                 if ($kelompok=="")
                     $kelompok=$row['replid'];
         ?> 
@@ -111,7 +111,7 @@ if ($kelompok <> "" && $proses <> "") {
 	$sql = "SELECT c.nopendaftaran,c.nama,c.replid FROM jbsakad.calonsiswa c, jbsakad.kelompokcalonsiswa k, jbsakad.prosespenerimaansiswa p WHERE c.idproses = '$proses' AND c.idkelompok = '$kelompok' AND k.idproses = p.replid AND c.idproses = p.replid AND c.idkelompok = k.replid AND c.aktif = 1 ORDER BY $urut2 $urutan2 ";	
 	$result = QueryDb($sql);
 	
-	if (mysqli_num_rows($result) > 0) {
+	if (mysql_num_rows($result) > 0) {
 ?>
 	<table width="100%" id="table" class="tab" align="center" border="1" bordercolor="#000000">
 	<tr height="30" align="center" class="header">
@@ -121,7 +121,7 @@ if ($kelompok <> "" && $proses <> "") {
 	</tr>
 <?
 	$cnt = 1;
-	while($row = mysqli_fetch_row($result)) { 
+	while($row = mysql_fetch_row($result)) { 
 ?>
 	<tr height="25" onClick="pilih('<?=$row[2]?>')" style="cursor:pointer"  id="calonpilih<?=$cnt?>">
 		<td align="center" ><?=$cnt ?></td>

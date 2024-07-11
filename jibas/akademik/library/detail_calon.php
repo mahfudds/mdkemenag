@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,7 +44,7 @@ $sql = "SELECT c.nopendaftaran, c.nama, c.panggilan, c.tahunmasuk, c.idproses, c
 		 WHERE c.replid=$replid AND p.replid = c.idproses AND k.replid = c.idkelompok AND p.replid = k.idproses";
 
 $result=QueryDB($sql);
-$row_siswa = mysqli_fetch_array($result);
+$row_siswa = mysql_fetch_array($result); 
 
 
 ?>
@@ -483,7 +483,7 @@ $sql = "SELECT ds.replid, ds.idtambahan, td.kolom, ds.jenis, ds.teks, ds.filenam
          ORDER BY td.urutan  ";
 
 $res = QueryDb($sql);
-$ntambahandata = mysqli_num_rows($res);
+$ntambahandata = mysql_num_rows($res);
 
 if ($ntambahandata > 0)
 {
@@ -504,7 +504,7 @@ if ($ntambahandata > 0)
 <?php
             $no = 46;
             $first = true;
-            while ($row = mysqli_fetch_array($res)) {
+            while ($row = mysql_fetch_array($res)) {
                 $no += 1;
                 $replid = $row['replid'];
                 $kolom = $row['kolom'];

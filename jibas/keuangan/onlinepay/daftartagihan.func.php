@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  *
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -76,7 +76,7 @@ function ShowTagihanSet()
              ORDER BY tanggalbuat DESC";
     $res = QueryDb($sql);
 
-    $nData = mysqli_num_rows($res);
+    $nData = mysql_num_rows($res);
     if ($nData == 0)
     {
         echo "<br><br>tidak ditemukan data tagihan";
@@ -85,7 +85,7 @@ function ShowTagihanSet()
 
     $no = 0;
     echo "<table id='tabTagihanSet' border='1' cellpadding='2' cellspacing='0' style='width: 390px; border: 1px solid #999; border-collapse: collapse; background-color: #ffffff;'>";
-    while($row = mysqli_fetch_array($res))
+    while($row = mysql_fetch_array($res))
     {
         $no += 1;
         $idTagihanSet = $row["replid"];
@@ -95,7 +95,7 @@ function ShowTagihanSet()
                  WHERE idtagihanset = $idTagihanSet
                    AND status = 0";
         $res2 = QueryDb($sql);
-        $row2 = mysqli_fetch_row($res2);
+        $row2 = mysql_fetch_row($res2);
         $nBelum = $row2[0];
 
         $sql = "SELECT COUNT(replid)
@@ -103,7 +103,7 @@ function ShowTagihanSet()
                  WHERE idtagihanset = $idTagihanSet
                    AND status = 1";
         $res2 = QueryDb($sql);
-        $row2 = mysqli_fetch_row($res2);
+        $row2 = mysql_fetch_row($res2);
         $nKonfirmasi = $row2[0];
 
         $sql = "SELECT COUNT(replid)
@@ -111,7 +111,7 @@ function ShowTagihanSet()
                  WHERE idtagihanset = $idTagihanSet
                    AND status = 2";
         $res2 = QueryDb($sql);
-        $row2 = mysqli_fetch_row($res2);
+        $row2 = mysql_fetch_row($res2);
         $nSelesai = $row2[0];
 
         echo "<tr>";
@@ -165,7 +165,7 @@ function DaftarTagihanInfo()
               FROM jbsfina.tagihansiswainfo
              WHERE idtagihanset = $idTagihanSet";
     $res = QueryDb($sql);
-    $row = mysqli_fetch_row($res);
+    $row = mysql_fetch_row($res);
     $nData = $row[0];
     if ($nData == 0)
     {
@@ -185,7 +185,7 @@ function DaftarTagihanInfo()
     $sql .= " ORDER BY s.nama
               LIMIT $limitStart, $rowPerPage";
     $res = QueryDb($sql);
-    $nTagihan = mysqli_num_rows($res);
+    $nTagihan = mysql_num_rows($res);
 
     echo "<input type='hidden' id='idtagihanset' value='$idTagihanSet'>";
     echo "<table border='0' cellpadding='2' cellspacing='0' width='98%'>";
@@ -228,7 +228,7 @@ function DaftarTagihanInfo()
 
     echo "<table id='tabTagihanInfo' border='1' cellpadding='2' cellspacing='0' style='width: 390px; border: 1px solid #efefef; border-collapse: collapse; background-color: #ffffff;'>";
     $nSiswa = 0;
-    while($row = mysqli_fetch_array($res))
+    while($row = mysql_fetch_array($res))
     {
         $nSiswa += 1;
 
@@ -274,7 +274,7 @@ function ShowPrepareBatchNotif()
              WHERE departemen = '$departemen'
                AND kelompok = 'TAGIHAN'";
     $res = QueryDb($sql);
-    if ($row = mysqli_fetch_row($res))
+    if ($row = mysql_fetch_row($res))
     {
         $pesanNotifikasiTagihan = $row[0];
     }
@@ -343,7 +343,7 @@ function SendBatchNotif()
         $count = 0;
 
         $res = QueryDbEx($sql);
-        while($row = mysqli_fetch_array($res))
+        while($row = mysql_fetch_array($res))
         {
             $count += 1;
 
@@ -396,13 +396,13 @@ function DaftarTagihanData()
               LEFT JOIN jbssdm.pegawai p ON ts.petugas = p.nama
              WHERE t.replid = $idTagihanInfo";
     $res = QueryDb($sql);
-    if (mysqli_num_rows($res) == 0)
+    if (mysql_num_rows($res) == 0)
     {
         echo "Tidak ditemukan data tagihan";
         return;
     }
 
-    $row = mysqli_fetch_array($res);
+    $row = mysql_fetch_array($res);
     $departemen = $row["departemen"];
     $stIuran = $row["stiuran"];
     $bulan = $row["bulan"];
@@ -475,7 +475,7 @@ function DaftarTagihanData()
              WHERE notagihan = '$noTagihan'";
     $res = QueryDb($sql);
     $no = 0;
-    while($row = mysqli_fetch_array($res))
+    while($row = mysql_fetch_array($res))
     {
         $no += 1;
 
@@ -536,7 +536,7 @@ function DaftarTagihanData()
              WHERE departemen = '$departemen'
                AND kelompok = 'TAGIHAN'";
     $res = QueryDb($sql);
-    if ($row = mysqli_fetch_row($res))
+    if ($row = mysql_fetch_row($res))
     {
         $pesanNotifikasiTagihan = $row[0];
     }
@@ -586,7 +586,7 @@ function HapusTagihanData()
                   FROM jbsfina.tagihansiswadata 
                  WHERE notagihan = '$noTagihan'";
         $res = QueryDbEx($sql);
-        if ($row = mysqli_fetch_row($res))
+        if ($row = mysql_fetch_row($res))
             $jumlah = $row[0];
 
         $sql = "UPDATE jbsfina.tagihansiswainfo
@@ -641,7 +641,7 @@ function HapusTagihanSet()
                  WHERE idtagihanset = $idTagihanSet
                    AND status = 1";
         $res2 = QueryDb($sql);
-        $row2 = mysqli_fetch_row($res2);
+        $row2 = mysql_fetch_row($res2);
         $nKonfirmasi = $row2[0];
 
         $sql = "SELECT COUNT(replid)
@@ -649,7 +649,7 @@ function HapusTagihanSet()
                  WHERE idtagihanset = $idTagihanSet
                    AND status = 2";
         $res2 = QueryDb($sql);
-        $row2 = mysqli_fetch_row($res2);
+        $row2 = mysql_fetch_row($res2);
         $nSelesai = $row2[0];
 
         if ($nKonfirmasi != 0 || $nSelesai != 0)

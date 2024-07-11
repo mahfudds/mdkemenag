@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,7 +51,7 @@ $sql = "SELECT t.departemen, t.tingkat, s.semester, p.nama FROM tingkat t, semes
 //echo $sql;
 $result = QueryDb($sql);
 CloseDb();
-$row = mysqli_fetch_array($result);
+$row = mysql_fetch_array($result);
 $departemen = $row['departemen'];
 $namatingkat = $row['tingkat'];
 $namasemester = $row['semester'];
@@ -110,7 +110,7 @@ $namapelajaran = $row['nama'];
 	$sql = "SELECT replid, koderpp, rpp, deskripsi, aktif FROM rpp WHERE idtingkat='$tingkat' AND idsemester='$semester' AND idpelajaran='$pelajaran' ORDER BY $urut $urutan"; 
 	$result = QueryDb($sql);
 	$cnt = 0;
-	while ($row = mysqli_fetch_array($result)) { ?>
+	while ($row = mysql_fetch_array($result)) { ?>
     <tr height="25">    	
     	<td align="center" ><?=++$cnt ?></td>
         <td><?=$row['koderpp'] ?></td>        

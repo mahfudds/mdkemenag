@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  *
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,29 +43,24 @@ function ShowSelectDepartemen()
     echo "</select>";
 }
 
-function ShowBankSaldo()
+function ShowBankSaldo($showMenu)
 {
     global $departemen;
 
-    $sql = "SELECT DISTINCT b.bank, bs.bankno
+    $sql = "SELECT b.bank, bs.bankno, SUM(bs.saldo) AS saldo
               FROM jbsfina.bank b, jbsfina.banksaldo bs
              WHERE b.bankno = bs.bankno";
     if ($departemen != "ALL")
         $sql .= " AND bs.departemen = '$departemen'";
-    $sql .= " ORDER BY b.bank";
+    $sql .= " GROUP BY b.bank, bs.bankno";
 
     $res = QueryDb($sql);
-    if (mysqli_num_rows($res) == 0)
+    if (mysql_num_rows($res) == 0)
     {
         echo "<br>Belum ada saldo bank";
         return;
     }
 
-    $lsBank = array();
-    while($row = mysqli_fetch_row($res))
-    {
-        $lsBank[] = array($row[0], $row[1]);
-    }
 
     echo "<a href='#' onclick='cetakSaldo()'><img src='../images/ico/print.png' border='0'>&nbsp;cetak</a>&nbsp;&nbsp;";
     echo "<a href='#' onclick='excelSaldo()'><img src='../images/ico/excel.png' border='0'>&nbsp;excel</a>&nbsp;&nbsp;&nbsp;&nbsp;";
@@ -77,28 +72,13 @@ function ShowBankSaldo()
     echo "<td class='header' align='center' width='175'>Bank</td>";
     echo "<td class='header' align='center' width='175'>Saldo</td>";
     echo "</tr>";
-
-    for($i = 0; $i < count($lsBank); $i++)
+    while($row = mysql_fetch_array($res))
     {
-        $bank = $lsBank[$i][0];
-        $bankNo = $lsBank[$i][1];
-
-        $sql = "SELECT SUM(saldo)
-                  FROM jbsfina.banksaldo
-                 WHERE bankno = '$bankNo'";
-        if ($departemen != "ALL")
-            $sql .= " AND departemen = '$departemen'";
-        $res = QueryDb($sql);
-        $saldo = 0;
-        if (mysqli_num_rows($res) > 0)
-        {
-            $row = mysqli_fetch_row($res);
-            $saldo = $row[0];
-        }
+        $saldo = $row["saldo"];
         $rp = FormatRupiah($saldo);
 
-        echo "<tr style='cursor: pointer;' onclick='showRincianSaldo(\"$bank\",\"$bankNo\")'>";
-        echo "<td><strong>$bank</strong><br><i>$bankNo</i></td>";
+        echo "<tr style='cursor: pointer;' onclick='showRincianSaldo(\"$row[bank]\",\"$row[bankno]\")'>";
+        echo "<td><strong>$row[bank]</strong><br><i>$row[bankno]</i></td>";
         echo "<td align='right'><span style='font-weight: bold; font-size: 13px;'>$rp</span></td>";
         echo "</tr>";
     }
@@ -121,7 +101,7 @@ function ShowRincianSaldo()
     $sql .= " ORDER BY kelompok";
 
     $res = QueryDb($sql);
-    if (mysqli_num_rows($res) == 0)
+    if (mysql_num_rows($res) == 0)
     {
         echo "Tidak ditemukan rincian saldo";
         return;
@@ -147,7 +127,7 @@ function ShowRincianSaldo()
 
     $total = 0;
     $no = 0;
-    while($row = mysqli_fetch_array($res))
+    while($row = mysql_fetch_array($res))
     {
         $no += 1;
 

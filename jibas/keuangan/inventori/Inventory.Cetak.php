@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -62,7 +62,7 @@ OpenDb();
     <td><strong>:
 <?	$sql = "SELECT kelompok FROM jbsfina.kelompokbarang WHERE replid='$idkelompok'";
     $result = QueryDb($sql);
-    $row = @mysqli_fetch_row($result);
+    $row = @mysql_fetch_row($result);
     $namakelompok = $row[0];
 	echo  $namakelompok; ?>
     </strong>
@@ -74,34 +74,34 @@ OpenDb();
 <?
 $sql = "SELECT * FROM jbsfina.barang WHERE idkelompok='$idkelompok'";
 $result = QueryDb($sql);
-$num = @mysqli_num_rows($result);
-$total = ceil(mysqli_num_rows($result)/(int)$varkolom);
+$num = @mysql_num_rows($result);
+$total = ceil(mysql_num_rows($result)/(int)$varkolom);
 if ($num > 0)
 {   ?>
     <table width="100%" border="0" cellspacing="2" cellpadding="2">
 <?
     $cnt=1;
-    while ($row = @mysqli_fetch_array($result))
+    while ($row = @mysql_fetch_array($result))
     {
     	if ($cnt==1 || $cnt%(int)$varkolom==1)
             echo "<tr>";
 	
-        $jumlah = (int)$row['jumlah'];
-        $satuan = $row['satuan'];
-        $harga = (int)$row['info1'];
+        $jumlah = (int)$row[jumlah];
+        $satuan = $row[satuan];
+        $harga = (int)$row[info1];
         $total = $jumlah * $harga;	
     ?>
     <td valign="top" align="center">
-        <div id="div<?=$row['replid']?>" style="padding:5px; width:200px; margin:5px; border:2px solid #eaf4ff; cursor:default">
+        <div id="div<?=$row[replid]?>" style="padding:5px; width:200px; margin:5px; border:2px solid #eaf4ff; cursor:default">
         <div align="left">
-            <span style="font-family:Arial; font-size:14px; font-weight:bold; color:#990000"><?=$row['kode']?></span><br />
-            <span style="font-family:Arial; font-size:12px; font-weight:bold; color:#006600; cursor:pointer"><?=$row['nama']?></span><br />
+            <span style="font-family:Arial; font-size:14px; font-weight:bold; color:#990000"><?=$row[kode]?></span><br />
+            <span style="font-family:Arial; font-size:12px; font-weight:bold; color:#006600; cursor:pointer"><?=$row[nama]?></span><br />
         </div>
-        <img src="gambar.php?table=jbsfina.barang&replid=<?=$row['replid']?>"  style="padding:2px" />
+        <img src="gambar.php?table=jbsfina.barang&replid=<?=$row[replid]?>"  style="padding:2px" />
         <div align="left">
             Jumlah: <?=$jumlah?>&nbsp;<?=$satuan?>&nbsp;@<?=FormatRupiah($harga)?><br />
             Total: <?=FormatRupiah($total)?><br>
-            Tanggal: <?=substr($row['tglperolehan'],8,2)."-".substr($row['tglperolehan'],5,2)."-".substr($row['tglperolehan'],0,4)?><br />
+            Tanggal: <?=substr($row[tglperolehan],8,2)."-".substr($row[tglperolehan],5,2)."-".substr($row[tglperolehan],0,4)?><br />
         </div>
         </div>
     </td>

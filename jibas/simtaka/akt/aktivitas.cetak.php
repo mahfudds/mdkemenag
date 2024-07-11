@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,8 +28,8 @@ require_once('../inc/db_functions.php');
 require_once('../lib/GetHeaderCetak.php');
 OpenDb();
 $departemen='yayasan';
-$tglAwal = $_REQUEST['tglAwal'];
-$tglAkhir = $_REQUEST['tglAkhir'];
+$tglAwal = $_REQUEST[tglAwal];
+$tglAkhir = $_REQUEST[tglAkhir];
 $title = "<tr><td width='20'>Periode</td><td>&nbsp;:&nbsp;$tglAwal s.d. $tglAkhir</td></tr>";	
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -55,7 +55,7 @@ $title = "<tr><td width='20'>Periode</td><td>&nbsp;:&nbsp;$tglAwal s.d. $tglAkhi
 		<?
 		$sql = "SELECT * FROM aktivitas WHERE tanggal BETWEEN '".MysqlDateFormat($tglAwal)." 00:00:00' AND '".MysqlDateFormat($tglAkhir)." 23:59:59' ORDER BY tanggal DESC";
 		$result = QueryDb($sql);
-		$num = @mysqli_num_rows($result);
+		$num = @mysql_num_rows($result);
 		?>
 		<link href="../sty/style.css" rel="stylesheet" type="text/css">
         <table width="100%" border="1" cellspacing="0" cellpadding="0" class="tab" id="table">
@@ -68,13 +68,13 @@ $title = "<tr><td width='20'>Periode</td><td>&nbsp;:&nbsp;$tglAwal s.d. $tglAkhi
           <?
 		  if ($num>0){
 		  	  $cnt=0;	
-			  while ($row=@mysqli_fetch_array($result)){
+			  while ($row=@mysql_fetch_array($result)){
 			  ?>
 			  <tr>
 				<td width="50" height="25" align="center"><?=++$cnt?></td>
-				<td width="150" height="25" align="left">&nbsp;<?=substr($row['tanggal'],8,2)."-".substr($row['tanggal'],5,2)."-".substr($row['tanggal'],0,4)." ".substr($row['tanggal'],11,8)?></td>
+				<td width="150" height="25" align="left">&nbsp;<?=substr($row[tanggal],8,2)."-".substr($row[tanggal],5,2)."-".substr($row[tanggal],0,4)." ".substr($row[tanggal],11,8)?></td>
 				<td height="25" align="left">
-			    <div align="justify"><?=chg_p_to_div(stripslashes($row['aktivitas']))?></div>                </td>
+			    <div align="justify"><?=chg_p_to_div(stripslashes($row[aktivitas]))?></div>                </td>
 				<? if (IsAdmin()) { ?>
 				<? } ?>
 			  </tr>

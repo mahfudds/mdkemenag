@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -104,8 +104,8 @@ function cetak() {
 	$sql = "SELECT DISTINCT(s.nis), s.nama FROM presensipelajaran p, ppsiswa pp, siswa s WHERE pp.nis = s.nis AND pp.idpp = p.replid AND p.idkelas = '$kelas' AND p.idsemester = '$semester' AND p.idpelajaran = '$pelajaran' AND p.tanggal BETWEEN '$tglawal' AND '$tglakhir' ORDER BY s.nama, p.tanggal ";	
 	
 	$result = QueryDb($sql);			 
-	$field = mysqli_num_fields($result);
-	$jum = mysqli_num_rows($result);
+	$field = mysql_num_fields($result);
+	$jum = mysql_num_rows($result);
 	
 	if ($jum > 0) { 
 	?> 
@@ -128,7 +128,7 @@ function cetak() {
 		</tr>
 		<? 
 		$cnt = 0;
-		while ($row = @mysqli_fetch_row($result)) {		
+		while ($row = @mysql_fetch_row($result)) {		
     		
 		?>	
         <tr height="25">        			

@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,22 +25,22 @@ require_once('../include/config.php');
 require_once('../include/db_functions.php');
 require_once('../include/common.php');
 require_once("../include/theme.php");
-$pelajaran=$_REQUEST['pelajaran'];
-$kelas=$_REQUEST['kelas'];
-$nis=$_REQUEST['nis'];
-$departemen=$_REQUEST['departemen'];
+$pelajaran=$_REQUEST[pelajaran];
+$kelas=$_REQUEST[kelas];
+$nis=$_REQUEST[nis];
+$departemen=$_REQUEST[departemen];
 
 OpenDb();
 $sql_sem = "SELECT * FROM semester WHERE departemen = '$departemen'";
 $result_sem = QueryDb($sql_sem);
 $i = 0;
-while ($row_sem = @mysqli_fetch_array($result_sem)) {
+while ($row_sem = @mysql_fetch_array($result_sem)) {
 	$sem[$i] = array($row_sem['replid'],$row_sem['semester']);
 	$i++;
 }
 $sql_pel = "SELECT nama FROM pelajaran WHERE replid = '$pelajaran'";
 $result_pel = QueryDb($sql_pel);
-$row_pel = @mysqli_fetch_array($result_pel);
+$row_pel = @mysql_fetch_array($result_pel);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -143,7 +143,7 @@ function cetak(semester) {
             <?	$sql = "SELECT j.replid, j.jenisujian FROM jenisujian j WHERE j.idpelajaran = '$pelajaran' GROUP BY j.jenisujian";
                 //echo $sql;
                 $result = QueryDb($sql);
-                while($row = @mysqli_fetch_array($result)){			
+                while($row = @mysql_fetch_array($result)){			
             ?>
                     <tr>
                         <td colspan="2">
@@ -161,12 +161,12 @@ function cetak(semester) {
                     $result1 = QueryDb($sql1);
                     $sql2 = "SELECT AVG(n.nilaiujian) as rata FROM ujian u, pelajaran p, nilaiujian n WHERE u.idpelajaran = p.replid AND u.idkelas = '$kelas' AND u.idpelajaran = '$pelajaran' AND u.idsemester = '".$sem[$k][0]."' AND u.idjenis = '$row[replid]' AND u.replid = n.idujian AND n.nis = '$nis' ";
                     $result2 = QueryDb($sql2);
-                    $row2 = @mysqli_fetch_array($result2);
-                    $rata = $row2['rata'];
+                    $row2 = @mysql_fetch_array($result2);
+                    $rata = $row2[rata];
                   
                     $cnt = 1;
-                    if (@mysqli_num_rows($result1)>0){
-                        while($row1 = @mysqli_fetch_array($result1)){			
+                    if (@mysql_num_rows($result1)>0){
+                        while($row1 = @mysql_fetch_array($result1)){			
                  ?>
                         <tr>        			
                             <td height="25" align="center"><?=$cnt?></td>

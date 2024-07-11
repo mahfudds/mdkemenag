@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ if ($petugas != "ALL")
     $sql .= " AND t.petugas = '$petugas'";
     
 $res = QueryDb($sql);
-while($row = mysqli_fetch_row($res))
+while($row = mysql_fetch_row($res))
 {
     $lsTab[] = array($row[0], $row[1], $row[2]);
 }
@@ -44,7 +44,7 @@ if ($petugas != "ALL")
     $sql .= " AND t.petugas = '$petugas'";
 
 $res = QueryDb($sql);
-while($row = mysqli_fetch_row($res))
+while($row = mysql_fetch_row($res))
 {
     $lsTab[] = array($row[0], $row[1], $row[2]);
 }
@@ -90,7 +90,7 @@ for($i = 0; $i < count($lsTab); $i++)
         $sql .= " AND petugas = '$petugas'";
  
     $res = QueryDb($sql);
-    if($row = mysqli_fetch_row($res))
+    if($row = mysql_fetch_row($res))
     {
         $jumtarik = $row[0];
         $jumsetor = $row[1];

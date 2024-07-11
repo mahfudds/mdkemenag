@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ $sql = "SELECT k.kelas AS namakelas, s.semester AS namasemester, a.tahunajaran, 
 		 WHERE k.replid = '$kelas' AND s.replid = '$semester' AND  k.idtahunajaran = a.replid 
 		   AND t.replid = k.idtingkat AND l.replid = '$pelajaran' AND p.nip = '$nip'";
 $result = QueryDb($sql);
-$rowinfo = mysqli_fetch_array($result);
+$rowinfo = mysql_fetch_array($result);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -93,7 +93,7 @@ $sql = "SELECT DISTINCT a.dasarpenilaian, d.keterangan
 		   AND a.idpelajaran = '$pelajaran' AND a.dasarpenilaian = d.dasarpenilaian";
   
 $resaspek = QueryDb($sql);
-while($rowaspek = mysqli_fetch_row($resaspek))
+while($rowaspek = mysql_fetch_row($resaspek))
 {
 	$aspek = $rowaspek[0];  
 	$aspekket = $rowaspek[1];  
@@ -104,7 +104,7 @@ while($rowaspek = mysqli_fetch_row($resaspek))
 			 WHERE a.nipguru = '$nip' AND a.idtingkat = k.idtingkat AND k.replid = '$kelas' 
 			   AND a.idpelajaran = '$pelajaran' AND a.dasarpenilaian = '$aspek' AND a.aktif = 1";
 	$res = QueryDb($sql);
-	$row = @mysqli_fetch_row($res);
+	$row = @mysql_fetch_row($res);
 	$bobot_PK = $row[0];
 	$jum_nhb = $row[1];
 
@@ -116,7 +116,7 @@ while($rowaspek = mysqli_fetch_row($resaspek))
 			   AND a.idjenisujian = j.replid AND a.aktif = 1 
 		  ORDER BY a.replid"; 
 	$result_get_aturan_PK = QueryDb($sql);
-	$jum_PK = @mysqli_num_rows($result_get_aturan_PK);	?>
+	$jum_PK = @mysql_num_rows($result_get_aturan_PK);	?>
     
     <Strong>Aspek Penilaian: <?=$aspekket?></Strong>
     <table width="100%" border="1" class="tab" id="table" bordercolor="#000000">  
@@ -130,7 +130,7 @@ while($rowaspek = mysqli_fetch_row($resaspek))
     <tr height="15" class="header" align="center">
 	<?	$i = 0;
 		$ujian = array();
-		while ($row_PK = @mysqli_fetch_array($result_get_aturan_PK)) 
+		while ($row_PK = @mysql_fetch_array($result_get_aturan_PK)) 
 		{			
             $ujian[$i++] = array($row_PK['replid'], $row_PK['bobot'], $row_PK['idjenisujian'], $aspek);  ?>
     		<td width="8%" class="headerlong">
@@ -149,8 +149,8 @@ while($rowaspek = mysqli_fetch_row($resaspek))
 		  ORDER BY nama";
   	$res_siswa = QueryDb($sql);
   	$cnt = 1;
-	$total = mysqli_num_rows($res_siswa);
-  	while ($row_siswa = @mysqli_fetch_array($res_siswa)) 
+	$total = mysql_num_rows($res_siswa);
+  	while ($row_siswa = @mysql_fetch_array($res_siswa)) 
 	{ ?>
   	<tr height="25">
     	<td align="center"><?=$cnt?></td>
@@ -165,7 +165,7 @@ while($rowaspek = mysqli_fetch_row($resaspek))
 				       AND n.idjenis = '$value[2]' AND n.idaturan = a.replid 
 					   AND a.replid = '$value[0]'";
 			$res = QueryDb($sql);
-			$row = @mysqli_fetch_array($res);
+			$row = @mysql_fetch_array($res);
 			echo "<td align='center'>" . $row['nilaiujian'] . "</td>";
 		}  	?>
 	   	<td align="center">&nbsp;</td>

@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,7 +51,7 @@ $sql = "SELECT p.nis, s.nama, p.idjurnal, p.jumlah, date_format(p.tanggal, '%d-%
 		  FROM penerimaaniuran p, jbsakad.siswa s, datapenerimaan pn 
 		 WHERE p.replid = '$idpembayaran' AND p.nis = s.nis AND p.idpenerimaan = pn.replid";
 $result = QueryDb($sql);
-$row = mysqli_fetch_array($result);
+$row = mysql_fetch_array($result);
 $nis = $row['nis'];
 $nama = $row['nama'];
 $idjurnal = $row['idjurnal'];
@@ -140,7 +140,7 @@ if (1 == (int)$_REQUEST['issubmit'])
 		          FROM jbsfina.paymenttrans
 		         WHERE idpenerimaaniuran = $idpembayaran";
         $res = QueryDb($sql);
-        if ($row = mysqli_fetch_row($res))
+        if ($row = mysql_fetch_row($res))
         {
             $paymentExist = $row[0] > 0;
         }
@@ -160,7 +160,7 @@ if (1 == (int)$_REQUEST['issubmit'])
                      WHERE p.idpenerimaaniuran = $idpembayaran";
             $res = QueryDb($sql, $success);
 
-            $row = mysqli_fetch_array($res);
+            $row = mysql_fetch_array($res);
             $idDataTabungan = $row["iddatatabungan"];
             $idJurnalTabungan = $row["idjurnaltabcust"];
             $idTabungan = $row["idtabungan"];
@@ -176,14 +176,14 @@ if (1 == (int)$_REQUEST['issubmit'])
                      WHERE nis = '$nis'
                        AND idtabungan = '$idDataTabungan'";
             $res = QueryDb($sql);
-            $row = mysqli_fetch_row($res);
+            $row = mysql_fetch_row($res);
             $jSaldo = $row[0];
 
             $sql = "SELECT debet
                       FROM jbsfina.tabungan
                      WHERE replid = $idTabungan";
             $res = QueryDb($sql);
-            $row = mysqli_fetch_row($res);
+            $row = mysql_fetch_row($res);
             $debetAwal = (int)$row[0];
         }
 
@@ -419,7 +419,7 @@ function focusNext(elemName, evt)
                          WHERE kategori = 'HARTA'
                          ORDER BY nama";        
                 $res = QueryDb($sql);
-                while($row = mysqli_fetch_row($res))
+                while($row = mysql_fetch_row($res))
                 {
                     $sel = $row[0] == $defrekkas ? "selected" : "";
                     echo "<option value='$row[0]' $sel>$row[0] $row[1]</option>";

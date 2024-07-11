@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -71,14 +71,10 @@ else if ($op == "xm8r389xemx23xb2378e23")
 {
     $sql = "SELECT nopendaftaran FROM calonsiswa WHERE replid = '$_REQUEST[replid]'";
     $res = QueryDb($sql);
-    $row = mysqli_fetch_row($res);
+    $row = mysql_fetch_row($res);
     $no = $row[0];
 
     $sql = "DELETE FROM tambahandatacalon WHERE nopendaftaran = '$no'";
-    QueryDb($sql);
-
-    // --- v31 - 2025-05-26
-    $sql = "DELETE FROM riwayatfoto WHERE nic = '$no'";
     QueryDb($sql);
 
 	$sql = "DELETE FROM calonsiswa WHERE replid = '$_REQUEST[replid]'"; 	
@@ -264,8 +260,8 @@ function change_baris() {
 		   "AND c.idproses = p.replid AND c.idkelompok = k.replid ORDER BY $urut $urutan ";
 	
 	$result_tot = QueryDb($sql_tot);
-	$total=ceil(mysqli_num_rows($result_tot)/(int)$varbaris);
-	$jumlah = mysqli_num_rows($result_tot);
+	$total=ceil(mysql_num_rows($result_tot)/(int)$varbaris);
+	$jumlah = mysql_num_rows($result_tot);
 	$akhir = ceil($jumlah/5)*5;
 	
 	$sql = "SELECT nopendaftaran,nama,c.sum1,c.sum2,c.ujian1,c.ujian2,c.ujian3,c.ujian4,c.ujian5,c.ujian6,c.ujian7,c.ujian8,c.ujian9,c.ujian10,". 
@@ -276,14 +272,14 @@ function change_baris() {
 	
 	$result = QueryDb($sql);
 	
-	if (@mysqli_num_rows($result)>0)
+	if (@mysql_num_rows($result)>0)
 	{ 
 		$sql1 = "SELECT COUNT(c.replid) AS isi FROM calonsiswa c WHERE c.idkelompok = '$kelompok' AND c.idproses = '$proses' AND c.aktif = 1";	
 		$sql2 = "SELECT kapasitas, keterangan FROM kelompokcalonsiswa k WHERE k.idproses = '$proses' AND k.replid = '$kelompok'";
 		$result1 = QueryDb($sql1);
 		$result2 = QueryDb($sql2);
-		$row1 = @mysqli_fetch_array($result1);
-		$row2 = @mysqli_fetch_array($result2);
+		$row1 = @mysql_fetch_array($result1);
+		$row2 = @mysql_fetch_array($result2);
 		$kapasitas = $row2['kapasitas'];
 		$isi = $row1['isi'];
 		
@@ -343,14 +339,14 @@ function change_baris() {
 	</tr>
 <?		$sqlset = "SELECT COUNT(replid) FROM settingpsb WHERE idproses = $proses";
 		$resset = QueryDb($sqlset);
-		$rowset = mysqli_fetch_row($resset);
+		$rowset = mysql_fetch_row($resset);
 		$ndata = $rowset[0];
 		
 		if ($ndata > 0)
 		{
 			$sqlset = "SELECT * FROM settingpsb WHERE idproses = $proses";
 			$resset = QueryDb($sqlset);
-			$rowset = mysqli_fetch_array($resset);
+			$rowset = mysql_fetch_array($resset);
 			
 			$kdsum1 = $rowset['kdsum1']; //$nmsum1 = $rowset['nmsum1'];
 			$kdsum2 = $rowset['kdsum2']; //$nmsum2 = $rowset['nmsum2'];
@@ -385,7 +381,7 @@ function change_baris() {
 		else 
 			$cnt = (int)$page*(int)$varbaris+1;
 		
-		while ($row = @mysqli_fetch_array($result)) 
+		while ($row = @mysql_fetch_array($result)) 
 		{
 			$siswa = "";
 			$pjg = "80px";
@@ -393,7 +389,7 @@ function change_baris() {
 			{
 				$sql3 = "SELECT nis FROM jbsakad.siswa WHERE replid = '$row[replidsiswa]'";
 				$result3 = QueryDb($sql3);
-				$row3 = @mysqli_fetch_array($result3);
+				$row3 = @mysql_fetch_array($result3);
 				$siswa = "<br>NIS Siswa: <b>".$row3['nis']."</b>";
 				$pjg = "125px";
 			}

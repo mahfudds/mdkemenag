@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,9 +33,9 @@ $departemen=$_POST['departemen'];
   OpenDb();
 	$sql_tingkat = "SELECT replid,tingkat FROM tingkat where departemen='$departemen' AND aktif = 1 ";
 	$result_tingkat = QueryDb($sql_tingkat);
-	while ($row_tingkat = mysqli_fetch_array($result_tingkat)) {
+	while ($row_tingkat = mysql_fetch_array($result_tingkat)) {
 ?>
-  <option value="<?=$row_tingkat['replid']?>" <?=StringIsSelected($row_tingkat['departemen'], $departemen) ?>><?=$row_tingkat['tingkat']?></option>
+  <option value="<?=$row_tingkat[replid]?>" <?=StringIsSelected($row_tingkat['departemen'], $departemen) ?>><?=$row_tingkat['tingkat']?></option>
   
   
   <?

@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ if (isset($_REQUEST['tahun']))
 if (($bulan == "") || ($tahun == "")) {
 	$sql = "SELECT MONTH(NOW()), YEAR(NOW())";
 	$result = QueryDb($sql);
-	$row = mysqli_fetch_row($result);
+	$row = mysql_fetch_row($result);
 	$bulan = $row[0];
 	$tahun = $row[1];
 };	
@@ -48,7 +48,7 @@ if (($bulan == "") || ($tahun == "")) {
 $tmp = $tahun."-".$bulan."-1";
 $sql = "SELECT DAYOFWEEK('$tmp')";
 $result = QueryDb($sql);
-$row = mysqli_fetch_row($result);
+$row = mysql_fetch_row($result);
 $first_weekday_this_month = $row[0];
 
 if ($bulan == 12) {
@@ -73,13 +73,13 @@ if ($bulan == 1) {
 }	
 $sql = "SELECT DAY(LAST_DAY('$tmp'))";
 $result = QueryDb($sql);
-$row = mysqli_fetch_row($result);
+$row = mysql_fetch_row($result);
 $last_day_last_month = $row[0];
 
 $now = $tahun . "-" . $bulan . "-1";
 $sql = "SELECT DAY(LAST_DAY('$now'))";
 $result = QueryDb($sql);
-$row = mysqli_fetch_row($result);
+$row = mysql_fetch_row($result);
 $last_day_this_month = $row[0];
 
 $nweek = 0;
@@ -254,7 +254,7 @@ for ($i = 0; $i < count($cal); $i++) {
 			
 		$sql = "SELECT COUNT(*) FROM jbsvcr.agenda WHERE tanggal='$tanggal' AND idguru='".SI_USER_ID()."'";
 		$result = QueryDb($sql);
-		$row = mysqli_fetch_row($result);
+		$row = mysql_fetch_row($result);
 		$njadwal = $row[0];
 		if ($njadwal>0 && ($bln == $bulan) && ($thn == $tahun)) {
 			echo "<sub><font style='background-color:#fda700'><strong>&nbsp;".$njadwal."&nbsp;</strong></font></sub>";

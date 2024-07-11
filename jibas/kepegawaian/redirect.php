@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *  
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,10 +33,10 @@ require_once('include/db_functions.php');
 
 OpenDb();
     
-$username = trim($_POST['username']);
+$username = trim($_POST[username]);
 if ($username == "jibas")
 	$username = "landlord";
-$password = trim($_POST['password']);
+$password = trim($_POST[password]);
 
 $username = str_replace("'", "\'", $username);
 $username = str_replace("--", " ", $username);
@@ -50,8 +50,8 @@ if ($username == "'landlord'")
 {
 	$sql_la = "SELECT password FROM jbsuser.landlord";
 	$result_la = QueryDb($sql_la);
-	$row_la = @mysqli_fetch_array($result_la);
-	if (md5($password) == $row_la['password'])
+	$row_la = @mysql_fetch_array($result_la);
+	if (md5($password) == $row_la[password])
 	{
 		$_SESSION['login'] = "landlord";
 		$_SESSION['tingkatsimpeg'] = 0;
@@ -69,8 +69,8 @@ else
 			 WHERE l.login = p.nip 
 			   AND l.login = $username";
 	$result = QueryDb($sql);
-	$row = mysqli_fetch_array($result);
-	$jum = mysqli_num_rows($result);
+	$row = mysql_fetch_array($result);
+	$jum = mysql_num_rows($result);
 	if ($jum > 0)
 	{
 		if ($row['aktif'] == 0)
@@ -88,9 +88,9 @@ else
 						FROM jbsuser.login 
 					   WHERE login = $username  
 					     AND password='".md5($password)."'";
-			$result = QueryDb($query) or die(mysqli_error());
-			$row = mysqli_fetch_array($result);
-			$num = mysqli_num_rows($result);
+			$result = QueryDb($query) or die(mysql_error());
+			$row = mysql_fetch_array($result);
+			$num = mysql_num_rows($result);
 			if($num != 0)
 			{
 				$query2 = "SELECT h.departemen as departemen, h.tingkat as tingkat, p.nama as nama, h.theme as tema
@@ -100,8 +100,8 @@ else
 							  AND h.modul='SIMPEG'
 							  AND p.aktif=1";
 				$result2 = QueryDb($query2);
-				$row2 = mysqli_fetch_array($result2);
-				$num2 = mysqli_num_rows($result2);
+				$row2 = mysql_fetch_array($result2);
+				$num2 = mysql_num_rows($result2);
 				
 				if ($num2 > 0)
 				{
@@ -109,7 +109,7 @@ else
 					$_SESSION['namasimpeg'] = $row2['nama'];
 					$_SESSION['tingkatsimpeg'] = $row2['tingkat'];
 					$_SESSION['temasimpeg'] = $row2['tema'];
-					if ($row2['tingkat'] == 2)
+					if ($row2[tingkat] == 2)
 						$_SESSION['departemensimpeg'] = $row2['departemen'];
 					else
 						$_SESSION['departemensimpeg'] = "ALL";

@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ if (isset($_REQUEST['Simpan'])) {
 	OpenDb();
 	$sql = "SELECT * FROM jenisujian WHERE jenisujian = '".CQ($_REQUEST['jenisujianbaru'])."' AND replid<>'$replid' AND idpelajaran = '$_REQUEST[idpelajaran]' AND info1='$_REQUEST[singkatan]'";
 	$result = QueryDb($sql);
-	if (mysqli_num_rows($result) > 0) {
+	if (mysql_num_rows($result) > 0) {
 		$jenisujian=$_REQUEST['jenisujianbaru'];
 		CloseDb();
 		$ERROR_MSG = "Jenis Ujian $jenisujian sudah digunakan!";
@@ -58,7 +58,7 @@ OpenDb();
 
 $sql = "SELECT j.replid,j.jenisujian,j.idpelajaran,j.keterangan,p.replid,p.nama,p.departemen,j.info1 FROM jenisujian j, pelajaran p WHERE j.replid = '$replid' AND j.idpelajaran = p.replid";   
 $result = QueryDb($sql);
-$row = mysqli_fetch_row($result);
+$row = mysql_fetch_row($result);
 $jenisujian = $row[1];
 if (isset($_REQUEST['jenisujian']))
 	$jenisujian = $_REQUEST['jenisujian'];
@@ -153,7 +153,6 @@ function focusNext(elemName, evt) {
 	<td>
     	<textarea name="keterangan" id="keterangan" rows="3" cols="45" onKeyPress="return focusNext('Simpan', event)"><?=$keterangan ?></textarea>    </td>
 </tr>
-    <!--
 <tr>
 	<td colspan="2" height="25" width="100%" align="left" valign="top" style="border-width:1px; border-style:dashed; border-color:#03F; background-color:#CFF">				      
 	<strong>Anda hanya perlu mengisikan nama jenis pengujian dan singkatannya. Penamaan jenis pengujian juga ditambahkan dengan kriteria/aspek penilaiannya. </strong><br />
@@ -162,7 +161,6 @@ function focusNext(elemName, evt) {
 	  <font color="Blue">Contoh yang benar : UAS Praktek, UAS Pemahaman Konsep</font></strong>
 	</td>
 </tr>
--->
 <tr>
 	<td colspan="2" align="center">
     <input type="submit" name="Simpan" id="Simpan" value="Simpan" class="but" />&nbsp;

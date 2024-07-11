@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,7 +48,7 @@ $sql = "SELECT p.nama, p.replid AS pelajaran, a.dasarpenilaian, j.jenisujian, j.
 		 WHERE a.dasarpenilaian = dp.dasarpenilaian AND a.replid='$idaturan' AND p.replid = a.idpelajaran AND a.idjenisujian = j.replid";
 $result = QueryDb($sql);
 
-$row = @mysqli_fetch_array($result);
+$row = @mysql_fetch_array($result);
 $namapel = $row['nama'];
 $pelajaran = $row['pelajaran'];
 $aspek = $row['dasarpenilaian'];
@@ -101,7 +101,7 @@ $jenis = $row['replid'];
 						FROM jbsakad.ujian u 
 					   WHERE u.idaturan='$idaturan' AND u.idkelas='$kelas' AND u.idsemester='$semester' ORDER by u.tanggal ASC";
     $result_cek_ujian = QueryDb($sql_cek_ujian);		
-	$jumlahujian = @mysqli_num_rows($result_cek_ujian); ?>            
+	$jumlahujian = @mysql_num_rows($result_cek_ujian); ?>            
   		</tr>
         </table>
         <br />
@@ -113,12 +113,12 @@ $jenis = $row['replid'];
     <?
        
         $i=1;
-        while ($row_cek_ujian=@mysqli_fetch_array($result_cek_ujian)){
+        while ($row_cek_ujian=@mysql_fetch_array($result_cek_ujian)){
 			$sql_get_rpp_name = "SELECT rpp FROM rpp WHERE replid='$row_cek_ujian[idrpp]'";
-			if (!empty($row_cek_ujian['idrpp'])) {
+			if (!empty($row_cek_ujian[idrpp])) {
 				$res_get_rpp_name = QueryDb($sql_get_rpp_name);
-				$rpp = @mysqli_fetch_array($res_get_rpp_name);
-				$namarpp = $rpp['rpp'];
+				$rpp = @mysql_fetch_array($res_get_rpp_name);
+				$namarpp = $rpp[rpp];
 			} else {
 				$namarpp = "Tanpa RPP";
 			}
@@ -142,8 +142,8 @@ $jenis = $row['replid'];
   $sql_siswa="SELECT * FROM jbsakad.siswa WHERE idkelas='$kelas' AND aktif=1 ORDER BY nama ASC";
   $result_siswa=QueryDb($sql_siswa);
   $cnt=1;
-  $jumsiswa = mysqli_num_rows($result_siswa);
-  while ($row_siswa=@mysqli_fetch_array($result_siswa)){
+  $jumsiswa = mysql_num_rows($result_siswa);
+  while ($row_siswa=@mysql_fetch_array($result_siswa)){
   		$nilai = 0;	
   ?>
   <tr>
@@ -155,13 +155,13 @@ $jenis = $row['replid'];
 			<?	$sql_cek_nilai_ujian="SELECT * FROM jbsakad.nilaiujian WHERE idujian='$idujian[$j]' AND nis='$row_siswa[nis]'";
                 $result_cek_nilai_ujian=QueryDb($sql_cek_nilai_ujian);
                	
-                    $row_cek_nilai_ujian=@mysqli_fetch_array($result_cek_nilai_ujian);
+                    $row_cek_nilai_ujian=@mysql_fetch_array($result_cek_nilai_ujian);
                 	$nilaiujian[$j] = $nilaiujian[$j]+$row_cek_nilai_ujian['nilaiujian'];					
                 	$nilai = $nilai+$row_cek_nilai_ujian['nilaiujian'];
                 
                  
                     echo $row_cek_nilai_ujian['nilaiujian'];
-					if ($row_cek_nilai_ujian['keterangan']<>"")
+					if ($row_cek_nilai_ujian[keterangan]<>"")
                         echo "<strong><font color='blue'>)*</font></strong>";               
 				
 			?>
@@ -174,11 +174,11 @@ $jenis = $row['replid'];
 		
 			//echo $sql_get_nau_per_nis;			
 			$result_get_nau_per_nis=QueryDb($sql_get_nau_per_nis);
-			if (mysqli_num_rows($result_get_nau_per_nis) > 0) {
-				$row_get_nau_per_nis=@mysqli_fetch_array($result_get_nau_per_nis);
+			if (mysql_num_rows($result_get_nau_per_nis) > 0) {
+				$row_get_nau_per_nis=@mysql_fetch_array($result_get_nau_per_nis);
 				
 				echo $row_get_nau_per_nis['nilaiAU'];
-				if ($row_get_nau_per_nis['keterangan']<>"")
+				if ($row_get_nau_per_nis[keterangan]<>"")
 					echo "<font color='#067900'><strong>)*</strong></font>";
 			} ?>
             </td>
@@ -202,8 +202,8 @@ $jenis = $row['replid'];
 		
 		//echo $sql_get_nau_per_nis;			
 		$result_get_nau_per_nis=QueryDb($sql_get_nau_per_nis);
-		if (mysqli_num_rows($result_get_nau_per_nis) > 0) {
-			$row = mysqli_fetch_row($result_get_nau_per_nis);     
+		if (mysql_num_rows($result_get_nau_per_nis) > 0) {
+			$row = mysql_fetch_row($result_get_nau_per_nis);     
 			echo round($row[0],2);
      	} ?>        
             </td>
@@ -231,15 +231,15 @@ $jenis = $row['replid'];
      	<?
 			$sql_cek_ujian="SELECT * FROM jbsakad.ujian WHERE idkelas='$kelas' AND idsemester='$semester' AND idaturan='$idaturan' ORDER by tanggal ASC";			
 			$result_cek_ujian=QueryDb($sql_cek_ujian);
-			$jumujian = mysqli_num_rows($result_cek_ujian);
+			$jumujian = mysql_num_rows($result_cek_ujian);
 			$ibobot=1;
 			
-			while ($row_cek_ujian=@mysqli_fetch_array($result_cek_ujian)){
+			while ($row_cek_ujian=@mysql_fetch_array($result_cek_ujian)){
 				$sql_get_bobotnya="SELECT b.replid, b.bobot FROM jbsakad.bobotnau b WHERE b.idujian='$row_cek_ujian[replid]'";								
 				$result_get_bobotnya=QueryDb($sql_get_bobotnya);
-				$nilai_bobotnya=@mysqli_fetch_array($result_get_bobotnya);
+				$nilai_bobotnya=@mysql_fetch_array($result_get_bobotnya);
 		?>
-    		<? 	if (mysqli_num_rows($result_get_bobotnya) > 0) { ?>
+    		<? 	if (mysql_num_rows($result_get_bobotnya) > 0) { ?>
             <tr>
 				<td width="85%" height="25">
             

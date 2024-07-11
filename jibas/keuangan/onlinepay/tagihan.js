@@ -32,7 +32,6 @@ checkIuran = function(state)
 changeDep = function ()
 {
     var dept = $("#departemen").val();
-    fetchTahunBuku(dept);
     fetchTingkat(dept);
     fetchIuran(dept);
 };
@@ -43,23 +42,6 @@ changeTingkat = function ()
     var idTingkat = $("#tingkat").val();
 
     fetchKelas(dept, idTingkat);
-};
-
-fetchTahunBuku = function (dept)
-{
-    $.ajax({
-        url: "tagihan.ajax.php",
-        method: "POST",
-        data: "op=fetchtahunbuku&dept=" + dept,
-        success: function (data)
-        {
-            $("#divtahunbuku").html(data);
-        },
-        error: function(xhr)
-        {
-            alert(xhr.responseText);
-        }
-    })
 };
 
 fetchIuran = function (dept)
@@ -119,7 +101,6 @@ fetchKelas = function (dept, idTingkat)
 createInvoice = function ()
 {
     if (!$("#departemen").length) return;
-    if (!$("#tahunbuku").length) return;
     if (!$("#tingkat").length) return;
     if (!$("#nkelas").length) return;
     if ($("#nkelas").val() === 0) return;
@@ -195,8 +176,6 @@ createInvoice = function ()
     var request = new RequestFactory();
     request.add("op", "createinvoice");
     request.add("dept", $("#departemen").val());
-    request.add("idtahunbuku", $("#tahunbuku").val());
-    request.add("tahunbuku", $("#tahunbuku option:selected").text());
     request.add("idtingkat", $("#tingkat").val());
     request.add("tingkat", $("#tingkat option:selected").text());
     request.add("idkelas", stIdKelas);

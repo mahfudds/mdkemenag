@@ -44,7 +44,7 @@ define('__DEBUG',false);
 //===================================================
 // CLASS WindrosePlotScale
 //===================================================
-class WindrosePlotScale extends stdClass {
+class WindrosePlotScale {
     private $iMax,$iDelta=5;
     private $iNumCirc=3;
     public $iMaxNum=0;
@@ -382,7 +382,7 @@ define('RANGE_DISCRETE',1);
 //===================================================
 // CLASS WindrosePlot
 //===================================================
-class WindrosePlot extends stdClass {
+class WindrosePlot {
     private $iAntiAlias=true;
     private $iData=array();
     public $iX=0.5,$iY=0.5;
@@ -570,7 +570,7 @@ class WindrosePlot extends stdClass {
         $this->iCircGridWeight = 1;
     }
 
-    function _ThickCircle($aImg,$aXC,$aYC,$aRad,$aWeight,$aColor) {
+    function _ThickCircle($aImg,$aXC,$aYC,$aRad,$aWeight=2,$aColor) {
 
         $aImg->SetColor($aColor);
         $aRad *= 2 ;

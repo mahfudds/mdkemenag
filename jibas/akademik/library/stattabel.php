@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -54,7 +54,7 @@ $column2="";
 if ($column2=="")
 	$column2="Jumlah";
 if ($key == 2) {
-	$info = explode("-", $keyword);
+	$info = split("-", $keyword);
 	$thn1 = $info[0];
 	$thn2 = $info[1];
 
@@ -62,7 +62,7 @@ if ($key == 2) {
 	$sql = "SELECT YEAR(tanggal) AS tahun, COUNT(*),YEAR(tanggal) as tahun2 FROM aktanikahgab WHERE status=1 AND (YEAR(tanggal) >= $thn1 AND YEAR(tanggal) <= $thn2) GROUP BY tahun ORDER BY tanggal ";	
 	//echo $sql;	
 } else {
-	$info = explode("-", $keyword);
+	$info = split("-", $keyword);
 	$thn1 = $info[1] . "-" . $info[0] . "-1";
 	$thn2 = $info[3] . "-" . $info[2] . "-31";
 	
@@ -106,21 +106,21 @@ if ($key == 7 || $key == 8 || $key == 9 || $key == 10 || $key == 11) {
 	}
 }
 if ($key == 12) {
-	$info = explode("-", $keyword);
+	$info = split("-", $keyword);
 	$thn1 = $info[1];
 	$thn2 = $info[3];
 	$column = "Tahun";
 	$sql = "SELECT DATE_FORMAT(tanggal, '%Y') AS tahun, COUNT(*) as jum,tanggal as ref FROM wakaf WHERE YEAR(tanggal) BETWEEN '$thn1' AND '$thn2' GROUP BY tahun ORDER BY tanggal ";	
 }
 if ($key == 13) {
-	$info = explode("-", $keyword);
+	$info = split("-", $keyword);
 	$thn1 = $info[1] . "-" . $info[0] . "-1";
 	$thn2 = $info[3] . "-" . $info[2] . "-31";
 	$column = "Bulan";
 	$sql = "SELECT DATE_FORMAT(tanggal, '%M %Y') AS bulan, COUNT(*) as jum,tanggal as ref FROM wakaf WHERE tanggal BETWEEN '$thn1' AND '$thn2' GROUP BY bulan ORDER BY tanggal ";	
 }
 if ($key == 14) {
-	$info = explode("-", $keyword);
+	$info = split("-", $keyword);
 	$thn1 = $info[1];
 	$thn2 = $info[3];
 	$column = "Tahun";
@@ -128,7 +128,7 @@ if ($key == 14) {
 	$sql = "SELECT DATE_FORMAT(tanggal, '%Y') AS tahun, SUM(nilai) as nilai,tanggal as ref FROM wakaf WHERE YEAR(tanggal) BETWEEN '$thn1' AND '$thn2' GROUP BY tahun ORDER BY tanggal ";	
 }
 if ($key == 15) {
-	$info = explode("-", $keyword);
+	$info = split("-", $keyword);
 	$thn1 = $info[1] . "-" . $info[0] . "-1";
 	$thn2 = $info[3] . "-" . $info[2] . "-31";
 	$column = "Bulan";
@@ -146,7 +146,7 @@ if ($key == 15) {
 <?
 OpenDb();
 $result = QueryDb($sql);
-while ($row = mysqli_fetch_row($result)) {
+while ($row = mysql_fetch_row($result)) {
 ?>
 <tr height="20">
 	<td align="center" valign="top"><?=++$cnt?></td>

@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -102,10 +102,10 @@ function show_detail(lap)
 	 $sql = "SELECT * FROM auditinfo WHERE info1 IS NULL";
 	 $res = QueryDb($sql);
 	 
-	 if (mysqli_num_rows($res) > 0)
+	 if (mysql_num_rows($res) > 0)
 	 	  set_time_limit(1000);
 		
-	 while ($row = mysqli_fetch_array($res))
+	 while ($row = mysql_fetch_array($res))
 	 {
 		 $id = $row['replid'];
 		 $table = $row['sumber'];
@@ -135,9 +135,9 @@ function show_detail(lap)
 		   $sql = "SELECT $idsumber";			
 			
 		 $res2 = QueryDb($sql);
-		 if (mysqli_num_rows($res2) > 0)
+		 if (mysql_num_rows($res2) > 0)
 		 {
-			 $row2 = mysqli_fetch_row($res2);
+			 $row2 = mysql_fetch_row($res2);
 			 $idjurnal = $row2[0];
 			 
 			 $sql = "UPDATE auditinfo SET info1='$idjurnal' WHERE replid='$id'";
@@ -162,7 +162,7 @@ function show_detail(lap)
 
     $result = QueryDb($sql);
 
-    if (mysqli_num_rows($result) > 0) 
+    if (mysql_num_rows($result) > 0) 
 	{
 	    ?>
 
@@ -173,7 +173,7 @@ function show_detail(lap)
         <td class="header" width="10%">Jumlah</td>
     </tr>
 <?  $cnt = 0;
-    while($row = mysqli_fetch_row($result)) 
+    while($row = mysql_fetch_row($result)) 
 	 { 
         switch($row[0]) 
 		{	

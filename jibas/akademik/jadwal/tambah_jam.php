@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -68,14 +68,14 @@ if (isset($_REQUEST['simpan'])) {
 	OpenDb();
 	$sql = "SELECT * FROM jam WHERE jamke = $jamke AND departemen = '$departemen'";
 	$result = QueryDb($sql);
-	if (mysqli_num_rows($result) > 0) {
+	if (mysql_num_rows($result) > 0) {
 		CloseDb();
 		$ERROR_MSG = "Urutan jam ke ".$jamke." sudah digunakan!";		
 	} else {
 		if ($jamke_asli==$jamke){		
 			$sql_jam_sebelumnya="SELECT replid as replidsebelumnya, jamke as jamkesebelumnya, HOUR(jam2) As jamakhirsebelumnya, MINUTE(jam2) As menitakhirsebelumnya FROM jbsakad.jam WHERE departemen='$departemen' AND jamke<'$jamke' ORDER BY jamke DESC LIMIT 1";
 			$result_jam_sebelumnya=QueryDb($sql_jam_sebelumnya);
-			$row_jam_sebelumnya=@mysqli_fetch_array($result_jam_sebelumnya);
+			$row_jam_sebelumnya=@mysql_fetch_array($result_jam_sebelumnya);
 			$jum_sebelumnya=((int)$row_jam_sebelumnya['jamakhirsebelumnya']*60)+(int)$row_jam_sebelumnya['menitakhirsebelumnya'];
 			if ($jum_awal<$jum_sebelumnya){			
 				$ERROR_MSG = "Jam mulai tidak boleh berpotongan dengan jam akhir urutan sebelumnya!";				
@@ -97,12 +97,12 @@ if (isset($_REQUEST['simpan'])) {
 			//kalo jamkenya brubah
 			$sql_jam_sebelumnya="SELECT replid as replidsebelumnya, jamke as jamkesebelumnya, HOUR(jam2) As jamakhirsebelumnya, MINUTE(jam2) As menitakhirsebelumnya FROM jbsakad.jam WHERE departemen='$departemen' AND jamke<'$jamke' ORDER BY jamke DESC LIMIT 1";
 			$result_jam_sebelumnya=QueryDb($sql_jam_sebelumnya);				
-			$row_jam_sebelumnya=@mysqli_fetch_array($result_jam_sebelumnya);
+			$row_jam_sebelumnya=@mysql_fetch_array($result_jam_sebelumnya);
 			$jum_sebelumnya=((int)$row_jam_sebelumnya['jamakhirsebelumnya']*60)+(int)$row_jam_sebelumnya['menitakhirsebelumnya'];			
 			
 			$sql_jam_sesudahnya="SELECT replid as replidsesudahnya, jamke as jamkesesudahnya, HOUR(jam1) As jamawalsesudahnya, MINUTE(jam1) As menitawalsesudahnya FROM jbsakad.jam WHERE departemen='$departemen' AND jamke>'$jamke' ORDER BY jamke ASC LIMIT 1";
 			$result_jam_sesudahnya=QueryDb($sql_jam_sesudahnya);
-			$row_jam_sesudahnya=@mysqli_fetch_array($result_jam_sesudahnya);
+			$row_jam_sesudahnya=@mysql_fetch_array($result_jam_sesudahnya);
 			$jum_sesudahnya=((int)$row_jam_sesudahnya['jamawalsesudahnya']*60)+(int)$row_jam_sesudahnya['menitawalsesudahnya'];
 			
 			if ($jum_awal < $jum_sebelumnya ){
@@ -134,7 +134,7 @@ if (isset($_REQUEST['simpan'])) {
 OpenDb();
 $sql_ambil_jamke_terakhir="SELECT jamke, departemen FROM jbsakad.jam WHERE departemen='$departemen' ORDER BY jamke DESC LIMIT 1";
 $result_ambil_jamke_terakhir=QueryDb($sql_ambil_jamke_terakhir);
-$row_ambil_jamke_terakhir=@mysqli_fetch_array($result_ambil_jamke_terakhir);
+$row_ambil_jamke_terakhir=@mysql_fetch_array($result_ambil_jamke_terakhir);
 
 if (!isset($jamke)) 
 	$jamke = (int)$row_ambil_jamke_terakhir['jamke']+1;
@@ -298,7 +298,7 @@ function panggil(elem){
     <tr>
     	<td width="40%"><strong>Jam ke</strong></td>        
         <td><input type="text" name="jamke" id="jamke" value="<?=$jamke; ?>"  size="2" maxlength="2" onKeyPress="return focusNext('jamb1baru', event)" onFocus="panggil('jamke')"> 
-            <input type="hidden" name="jamke_asli" id="jamke_asli" value="<?=(int)$row_ambil_jamke_terakhir['jamke']+1; ?>">
+            <input type="hidden" name="jamke_asli" id="jamke_asli" value="<?=(int)$row_ambil_jamke_terakhir[jamke]+1; ?>">
         </td>
     </tr>
     <tr>

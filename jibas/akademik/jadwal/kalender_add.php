@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,7 +45,7 @@ if (isset($_REQUEST['Simpan']))
 							  WHERE kalender = '$kalender'
 							    AND departemen = '$departemen'"; 
 	$result_simpan_cek = QueryDb($sql_simpan_cek);	
-	if (mysqli_num_rows($result_simpan_cek) > 0)
+	if (mysql_num_rows($result_simpan_cek) > 0)
 	{
 		CloseDb();
 		$ERROR_MSG = $kalender . " sudah digunakan!";
@@ -56,7 +56,7 @@ if (isset($_REQUEST['Simpan']))
 				    FROM jbsakad.kalenderakademik
 				   WHERE departemen = '$departemen'";
 		$res = QueryDb($sql);
-		$row = mysqli_fetch_row($res);
+		$row = mysql_fetch_row($res);
 		$aktif = (int)$row[0] == 0 ? 1 : 0;
 		
 		$sql_simpan = "INSERT INTO jbsakad.kalenderakademik
@@ -68,7 +68,7 @@ if (isset($_REQUEST['Simpan']))
 		{
 			$sql1 = "SELECT LAST_INSERT_ID()";
 			$result1 = QueryDb($sql1);
-			$row1 = mysqli_fetch_row($result1); 
+			$row1 = mysql_fetch_row($result1); 
 			?>
 			<script language="javascript">						
 				opener.refresh('<?=$row1[0]?>');				
@@ -87,10 +87,10 @@ $sql = "SELECT idtahunajaran
 			ORDER BY aktif DESC, replid DESC";
 $result = QueryDb($sql);
 CloseDb();
-if (mysqli_num_rows($result) > 0)
+if (mysql_num_rows($result) > 0)
 {
 	$filter = "";
-	while ($row = @mysqli_fetch_array($result))
+	while ($row = @mysql_fetch_array($result))
 	{
 		$filter .= " AND replid <> " . $row['idtahunajaran'];
 	}
@@ -166,7 +166,7 @@ function focusNext(elemName, evt)
 						ORDER BY aktif DESC, replid DESC";
 			$result = QueryDb($sql);
 			CloseDb();
-			while ($row = @mysqli_fetch_array($result))
+			while ($row = @mysql_fetch_array($result))
 			{
 				if ($tahunajaran == "") 
 					$tahunajaran = $row['replid'];
@@ -188,7 +188,7 @@ function focusNext(elemName, evt)
 			OpenDb();
 			$sql = "SELECT * FROM jbsakad.tahunajaran WHERE replid='$tahunajaran'";
 			$result = QueryDb($sql);
-			$row = mysqli_fetch_array($result);
+			$row = mysql_fetch_array($result);
 			$periode = TglTextLong($row['tglmulai']).' s/d '.TglTextLong($row['tglakhir']);
 			$aktif = $row['aktif'];
 		} 

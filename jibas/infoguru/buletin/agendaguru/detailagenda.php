@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ require_once('../../include/sessionchecker.php');
 OpenDb();
 $sql="SELECT * FROM jbsvcr.agenda WHERE replid='$_REQUEST[replid]'";
 $result=QueryDb($sql);
-$row=@mysqli_fetch_array($result);
+$row=@mysql_fetch_array($result);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -62,7 +62,7 @@ $row=@mysqli_fetch_array($result);
     <th width="100%"  align="center" valign="top" scope="row"><table width="350"  border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td width="40" height="69" style="background-image:url(../../images/agenda_01.jpg); background-repeat:no-repeat;">&nbsp;</td>
-    <td width="236" height="69" valign="bottom" style="background-image:url(../../images/agenda_03.jpg); background-repeat:repeat-x;"><div align="right"><span class="style1"><?=ShortDateFormat($row['tanggal'])?></span><br>
+    <td width="236" height="69" valign="bottom" style="background-image:url(../../images/agenda_03.jpg); background-repeat:repeat-x;"><div align="right"><span class="style1"><?=ShortDateFormat($row[tanggal])?></span><br>
         </div></td>
     <td width="42" height="69" style="background-image:url(../../images/agenda_04.jpg); background-repeat:no-repeat">&nbsp;</td>
     <td width="32" height="69" style="background-image:url(../../images/agenda_05.jpg); background-repeat:no-repeat">&nbsp;</td>

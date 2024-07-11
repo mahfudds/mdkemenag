@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,17 +29,17 @@ OpenDb();
 $oldnis = $_REQUEST['oldnis'];
 $sql = "SELECT replid, departemen, nislama FROM riwayatdeptsiswa WHERE nis = '$oldnis'";
 $result = QueryDb($sql);
-$row = @mysqli_fetch_array($result);
+$row = @mysql_fetch_array($result);
 $dep[0] = array($row['departemen'], $oldnis);
 if ($row['nislama'] <> "") {
 	$sql1 = "SELECT replid, departemen, nislama FROM riwayatdeptsiswa WHERE nis = '$row[nislama]'";
 	$result1 = QueryDb($sql1);
-	$row1 = @mysqli_fetch_array($result1);	
+	$row1 = @mysql_fetch_array($result1);	
 	$dep[1] = array($row1['departemen'], $row['nislama']);
 	if ($row1['nislama'] <> "") {				
 		$sql2 = "SELECT replid, departemen, nislama FROM riwayatdeptsiswa WHERE nis = '$row1[nislama]'";
 		$result2 = QueryDb($sql2);
-		$row2 = @mysqli_fetch_array($result2);					
+		$row2 = @mysql_fetch_array($result2);					
 		$dep[2] = array($row2['departemen'],$row1['nislama']) ;
 	}	
 }	
@@ -88,7 +88,7 @@ if (isset($_REQUEST['nis']))
 	<?
 	$sql = "SELECT DISTINCT(r.idkelas), k.kelas, t.tingkat, r.nis, t.replid FROM riwayatkelassiswa r, kelas k, tingkat t WHERE r.nis IN ($allnis) AND r.idkelas = k.replid AND k.idtingkat = t.replid";
 	$res = QueryDb($sql);
-	while ($row = @mysqli_fetch_row($res)){
+	while ($row = @mysql_fetch_row($res)){
 		if ($tkt=="")
 			$tkt = $row[4];
 		if ($kls=="")
@@ -113,7 +113,7 @@ if (isset($_REQUEST['nis']))
 <?
 $sql = "SELECT DISTINCT p.replid, n.nis, u.idkelas, p.nama FROM ujian u, pelajaran p, nilaiujian n WHERE u.idpelajaran = p.replid AND u.idkelas = '$kls' AND u.replid = n.idujian AND n.nis='$nis' ORDER BY p.nama";
 $res = QueryDb($sql);
-while ($row = @mysqli_fetch_row($res)){
+while ($row = @mysql_fetch_row($res)){
 	?>
     <tr>
     	<td height="20" class="td" style="cursor:pointer" onclick="parent.right.location.href='rataus.right.php?pel=<?=$row[0]?>&nis=<?=$nis?>&kls=<?=$kls?>&tkt=<?=$tkt?>'"><a target="right" href="rataus.right.php?pel=<?=$row[0]?>&nis=<?=$nis?>&kls=<?=$kls?>&tkt=<?=$tkt?>"><?=$row[3]?></a></td>

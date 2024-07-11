@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,14 +45,14 @@ $sql = "SELECT *
           FROM jbsvcr.notes
          WHERE replid = '$notesid'";
 $res = QueryDb($sql);
-if (mysqli_num_rows($res) == 0)
+if (mysql_num_rows($res) == 0)
 {
     CloseDb();
     
     echo "Tidak ditemukan notes!";
     exit();
 }
-$row = mysqli_fetch_array($res);
+$row = mysql_fetch_array($res);
 ?>
 <table border='0' cellpadding='2' cellspacing='0' width='98%'>
 <tr>
@@ -127,7 +127,7 @@ $row = mysqli_fetch_array($res);
         
         $n = 0;
         echo "<thead>";
-        while($row2 = mysqli_fetch_array($res2))
+        while($row2 = mysql_fetch_array($res2))
         {
             $file = $row2['location'] . "/" . $row2['filename'];
             $info = str_replace("'", "`", $row2['fileinfo']);
@@ -193,7 +193,7 @@ $row = mysqli_fetch_array($res);
         
         $n = 0;
         echo "<thead>";
-        while($row2 = mysqli_fetch_array($res2))
+        while($row2 = mysql_fetch_array($res2))
         {
             $n += 1; ?>
             <input type='hidden' id='not_edit_file_replid<?=$n?>' name='not_edit_file_replid<?=$n?>' value="<?=$row2['replid']?>">

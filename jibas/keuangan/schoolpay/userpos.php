@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  *
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -109,7 +109,7 @@ OpenDb();
                 $no = 0;
                 $sql = "SELECT * FROM jbsfina.userpos ORDER BY nama";
                 $res = QueryDb($sql);
-                while($row = mysqli_fetch_array($res))
+                while($row = mysql_fetch_array($res))
                 {
                     $userReplid = $row["replid"];
                     $userId = $row["userid"];
@@ -122,7 +122,7 @@ OpenDb();
                                AND vu.userid = '$userId'
                              ORDER BY v.nama";
                     $res2 = QueryDb($sql);
-                    while($row2 = mysqli_fetch_row($res2))
+                    while($row2 = mysql_fetch_row($res2))
                     {
                         $cnt += 1;
 
@@ -148,7 +148,7 @@ OpenDb();
                              ORDER BY ul.logtime DESC
                              LIMIT 1";
                     $res2 = QueryDb($sql);
-                    if ($row2 = mysqli_fetch_row($res2))
+                    if ($row2 = mysql_fetch_row($res2))
                         $lastLogin = "$row2[0]<br>IP: $row2[1]<br>DEV: $row2[2]<br>VENDOR: $row2[3]";
 
                     if (getLevel() != 2)

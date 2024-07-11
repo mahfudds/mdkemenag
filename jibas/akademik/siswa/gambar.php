@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,16 +28,16 @@ require_once('../include/common.php');
 require_once('../include/config.php');
 require_once('../include/db_functions.php');
 require_once('../library/departemen.php');
-$nis=$_REQUEST['nis'];
+$nis=$_REQUEST[nis];
 OpenDb();
 header("Content-type: image/jpeg");
 $query = "SELECT foto FROM jbsakad.siswa WHERE nis = '$nis'";
 $result = QueryDb($query);
-$num = @mysqli_num_rows($result);
-//while ($row = mysqli_fetch_array($result)) {
-  if ($row = mysqli_fetch_array($result)) {
-    if($row['foto']) {
-        echo $row['foto'];
+$num = @mysql_num_rows($result);
+//while ($row = mysql_fetch_array($result)) {
+  if ($row = mysql_fetch_array($result)) {
+    if($row[foto]) {
+        echo $row[foto];
     }else {
         $filename = "../images/ico/no_image.png";
            $handle = fopen($filename, "r");

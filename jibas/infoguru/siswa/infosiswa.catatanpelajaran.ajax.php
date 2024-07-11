@@ -4,9 +4,9 @@
  * Jaringan Informasi Bersama Antar Sekolah
  * 
  * @version: 2.6.0 (January 14, 2012)
- * @notes: 
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,8 +29,8 @@ require_once('../include/db_functions.php');
 
 $nis="";
 $pelajaran="";
-$nis=$_REQUEST['nis'];
-$pelajaran=$_REQUEST['pelajaran'];
+$nis=$_REQUEST[nis];
+$pelajaran=$_REQUEST[pelajaran];
 
 $bulan_pjg = array(1=>'Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember');
 
@@ -46,10 +46,10 @@ $res_pp=QueryDb($sql_pp);
     <td width="38%" align="center">Guru</td>
 </tr>
 <?
-if (@mysqli_num_rows($res_pp)>0)
+if (@mysql_num_rows($res_pp)>0)
 {
     $cnt=1;
-	while ($row_pp=@mysqli_fetch_array($res_pp))
+	while ($row_pp=@mysql_fetch_array($res_pp))
     {
     	$a="";
     	if ($cnt%2==0)
@@ -58,7 +58,7 @@ if (@mysqli_num_rows($res_pp)>0)
     <td align="center" rowspan="2"><?=$cnt?></td>
     <td align="center">
 	<?
-	switch ($row_pp['statushadir']){
+	switch ($row_pp[statushadir]){
 	case 0:
 		echo "Hadir";
 		break;
@@ -77,17 +77,17 @@ if (@mysqli_num_rows($res_pp)>0)
 	}
 	?>
 	</td>
-    <td><?=ShortDateFormat($row_pp['tanggal'])."-".$row_pp['jam']?></td>
-    <td>[<?=$row_pp['guru']?>]&nbsp;
+    <td><?=ShortDateFormat($row_pp[tanggal])."-".$row_pp[jam]?></td>
+    <td>[<?=$row_pp[guru]?>]&nbsp;
 	<?
 	$res_gr=QueryDb("SELECT nama FROM jbssdm.pegawai WHERE nip='$row_pp[guru]'");
-	$row_gr=@mysqli_fetch_array($res_gr);
-	echo $row_gr['nama'];
+	$row_gr=@mysql_fetch_array($res_gr);
+	echo $row_gr[nama];
 	?>
 	</td>
     </tr>
     <tr <?=$a?>>
-    <td colspan="3"><?=$row_pp['catatan']?></td>
+    <td colspan="3"><?=$row_pp[catatan]?></td>
   </tr>
   <?
   $cnt++;

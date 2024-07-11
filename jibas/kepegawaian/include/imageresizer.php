@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *  
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -96,7 +96,7 @@ function ResizeImage($foto, $newwidth, $newheight, $quality, $output)
 			imagepng($tmp, $output, $quality);
 		}
 		elseif ($type == "image/bmp")
-			imagebmp2($tmp, $output);
+			imagebmp($tmp, $output);	
 		else {
 			$type = explode("/", $foto['type']);
 			$tipe = (string)$type[1];
@@ -121,7 +121,7 @@ function ResizeImage($foto, $newwidth, $newheight, $quality, $output)
 				imagepng($tmp, $output, $quality);
 			}
 			elseif ($tipe == "bmp")
-				imagebmp2($tmp, $output);
+				imagebmp($tmp, $output);		
 		}
 	
 		imagedestroy($src);
@@ -219,7 +219,7 @@ function CropImage($foto, $widthandheight, $quality, $output, $automaticcrop = t
 			imagepng($tmp, $output, $quality);
 		}
 		elseif ($type == "image/bmp") {
-			imagebmp2($tmp, $output);
+			imagebmp($tmp, $output);	
 		}
 		else {
 			$type = explode("/", $foto['type']);
@@ -233,7 +233,7 @@ function CropImage($foto, $widthandheight, $quality, $output, $automaticcrop = t
 				imagepng($tmp, $output, $quality);
 			}
 			elseif ($tipe == "bmp")
-				imagebmp2($tmp, $output);
+				imagebmp($tmp, $output);	
 		}		
 
 	
@@ -248,8 +248,7 @@ function CropImage($foto, $widthandheight, $quality, $output, $automaticcrop = t
 		//$targ_w,$targ_h,$_REQUEST['img_w'],$_REQUEST['img_h']);
 }
 
-/*
-function imagebmp(&$img, $filename = false)
+function imagebmp(&$img, $filename = false) 
 { 
 	$wid = imagesx($img); 
 	$hei = imagesy($img); 
@@ -312,10 +311,8 @@ function imagebmp(&$img, $filename = false)
 			echo $wid_pad; 
 		} 
 	} 
-}
-*/
+} 
 
-/*
 function imagecreatefrombmp($filename) 
 { 
 	$f = fopen($filename, "rb"); 
@@ -357,7 +354,6 @@ function imagecreatefrombmp($filename)
 	 
 	return $img; 
 }     
-*/
 
 function dwordize($str) 
 { 

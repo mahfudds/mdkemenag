@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,7 +42,7 @@ function GetFileName()
                       FROM jbsakad.tingkat
                      WHERE replid = '$tingkat'";
             $res = QueryDb($sql);
-            $row = mysqli_fetch_row($res);
+            $row = mysql_fetch_row($res);
             
             $name .= "_T" . FormatName($row[0]);
         }
@@ -57,7 +57,7 @@ function GetFileName()
                       FROM jbsakad.kelas
                      WHERE replid = '$kelas'";
             $res = QueryDb($sql);
-            $row = mysqli_fetch_row($res);
+            $row = mysql_fetch_row($res);
             
             $name .= "_K" . FormatName($row[0]);
         }
@@ -128,7 +128,7 @@ function GetNisList(&$ndata)
         
         // Cek dulu apa NIS nya valid 
         $nisinfo = $_REQUEST['nisinfo'];
-        $temp = explode(",", $nisinfo);
+        $temp = split(",", $nisinfo);
         
         if (0 == count($temp))
         {
@@ -163,7 +163,7 @@ function GetNisList(&$ndata)
     $ndata = 0;
     $nisList = "";
     $res = QueryDb($sql);
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         if ($nisList != "")
             $nisList .= ",";
@@ -336,8 +336,8 @@ function SetHeader()
              WHERE departemen = '$departemen'";
 
 	$result = QueryDb($sql);
-    $num = @mysqli_num_rows($result);
-	$row = @mysqli_fetch_row($result);
+    $num = @mysql_num_rows($result);
+	$row = @mysql_fetch_row($result);
 	$replid  = $row[0];
 	$nama	 = $row[1];
 	$alamat1 = $row[2];
@@ -502,7 +502,7 @@ function SetInfoNilai()
     echo "<td width='8%' align='center'>&nbsp;</td>\r\n";
     echo "<td width='*' align='center'>Keterangan</td>\r\n";
     echo "</tr>";
-    if (mysqli_num_rows($res) == 0)
+    if (mysql_num_rows($res) == 0)
     {
         echo "<tr height='40'>\r\n";
         echo "<td colspan='8' align='center' valign='middle'>\r\n";
@@ -513,7 +513,7 @@ function SetInfoNilai()
     else
     {
         $no = 0;
-        while($row = mysqli_fetch_array($res))
+        while($row = mysql_fetch_array($res))
         {
             $no += 1;
             
@@ -586,7 +586,7 @@ function SetInfoKeuangan()
     echo "<td style='background-color: #ddd' align='left' colspan='6' valign='middle'><strong>Pembayaran Iuran Wajib</strong></td>\r\n";
     echo "</tr>\r\n";
     
-    if (mysqli_num_rows($res) == 0)
+    if (mysql_num_rows($res) == 0)
     {
         echo "<tr height='40'>\r\n";
         echo "<td colspan='6' align='center' valign='middle'>\r\n";
@@ -597,7 +597,7 @@ function SetInfoKeuangan()
     else
     {
         $no = 0;
-        while($row = mysqli_fetch_array($res))
+        while($row = mysql_fetch_array($res))
         {
             $no += 1;
             
@@ -608,7 +608,7 @@ function SetInfoKeuangan()
                       FROM jbsfina.penerimaanjtt
                      WHERE idbesarjtt = $row[idbesarjtt]";
             $res2 = QueryDb($sql);
-            $row2 = mysqli_fetch_row($res2);
+            $row2 = mysql_fetch_row($res2);
             $sisa = $row['besar'] - $row2[0];
             
             echo "<tr height='24'>\r\n";
@@ -643,7 +643,7 @@ function SetInfoKeuangan()
     echo "<td style='background-color: #ddd' align='left' colspan='6' valign='middle'><strong>Pembayaran Iuran Sukarela</strong></td>\r\n";
     echo "</tr>\r\n";
     
-    if (mysqli_num_rows($res) == 0)
+    if (mysql_num_rows($res) == 0)
     {
         echo "<tr height='40'>\r\n";
         echo "<td colspan='6' align='center' valign='middle'>\r\n";
@@ -654,7 +654,7 @@ function SetInfoKeuangan()
     else
     {
         $no = 0;
-        while($row = mysqli_fetch_array($res))
+        while($row = mysql_fetch_array($res))
         {
             $no += 1;
             
@@ -703,7 +703,7 @@ function SetInfoKeuangan()
               ORDER BY nama";
     $res = QueryDb($sql);
 
-    while($row = mysqli_fetch_array($res))
+    while($row = mysql_fetch_array($res))
     {
         $idTab = $row['idtabungan'];
         $nmTab = $row['nama'];
@@ -714,7 +714,7 @@ function SetInfoKeuangan()
                  WHERE idtabungan = '$idTab'
                    AND nis = '$nis'";
         $res2 = QueryDb($sql);
-        if ($row2 = mysqli_fetch_row($res2))
+        if ($row2 = mysql_fetch_row($res2))
         {
             $totsaldo = $row2[1] - $row2[0];
         }
@@ -726,7 +726,7 @@ function SetInfoKeuangan()
                    AND nis = '$nis'
                    AND tanggal < '$start'";
         $res2 = QueryDb($sql);
-        if ($row2 = mysqli_fetch_row($res2))
+        if ($row2 = mysql_fetch_row($res2))
         {
             $lastsaldo = $row2[1] - $row2[0];
         }
@@ -741,7 +741,7 @@ function SetInfoKeuangan()
                    AND nis = '$nis'
                    AND tanggal BETWEEN '$start' AND '$end'";
         $res2 = QueryDb($sql);
-        while($row2 = mysqli_fetch_array($res2))
+        while($row2 = mysql_fetch_array($res2))
         {
             if ($first)
             {
@@ -811,7 +811,7 @@ function SetInfoPresensi()
     echo "<td width='*' align='center'>Keterangan</td>\r\n";
     echo "</tr>\r\n";
     
-    if (mysqli_num_rows($res) == 0)
+    if (mysql_num_rows($res) == 0)
     {
         echo "<tr height='40'>\r\n";
         echo "<td colspan='6' align='center' valign='middle'>\r\n";
@@ -822,7 +822,7 @@ function SetInfoPresensi()
     else
     {
         $no = 0;
-        while($row = mysqli_fetch_array($res))
+        while($row = mysql_fetch_array($res))
         {
             $no += 1;
             $telat = 0 == (int)$row['info1'] ? "&nbsp" : $row['info1'] . " menit";
@@ -884,7 +884,7 @@ function SetInfoKegiatan()
     echo "<td width='*' align='center'>Keterangan</td>\r\n";
     echo "</tr>\r\n";
     
-    if (mysqli_num_rows($res) == 0)
+    if (mysql_num_rows($res) == 0)
     {
         echo "<tr height='40'>\r\n";
         echo "<td colspan='7' align='center' valign='middle'>\r\n";
@@ -895,7 +895,7 @@ function SetInfoKegiatan()
     else
     {
         $no = 0;
-        while($row = mysqli_fetch_array($res))
+        while($row = mysql_fetch_array($res))
         {
             $no += 1;
             $telat = 0 == (int)$row['info1'] ? "&nbsp" : $row['info1'] . " menit";
@@ -960,7 +960,7 @@ function SetNilaiCbe()
 
     $lsId = array();
     $res = QueryDb($sql);
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         $lsId[] = array($row[0], $row[1], $row[2], $row[3]);
     }
@@ -989,7 +989,7 @@ function SetNilaiCbe()
                   FROM jbscbe.ujian u 
                  WHERE u.id = $id";
         $res = QueryDb($sql);
-        while($row = mysqli_fetch_row($res))
+        while($row = mysql_fetch_row($res))
         {
             $lsIdUjian[] = array($row[0], $row[1], $row[2], $tglUjian, $idPelajaran, $pelajaran);
         }
@@ -1026,7 +1026,7 @@ function SetNilaiCbe()
                    AND nis = '$nis'
                    AND idujianremed IS NOT NULL";
         $res = QueryDb($sql);
-        if ($row = mysqli_fetch_row($res))
+        if ($row = mysql_fetch_row($res))
             $haveRemed = $row[0] > 0;
 
         $sifatUjian = 0; // 0 Umum 1 Tertutup
@@ -1035,7 +1035,7 @@ function SetNilaiCbe()
                  WHERE u.idpengujian = p.id
                    AND u.id = $idUjian";
         $res = QueryDb($sql);
-        if ($row = mysqli_fetch_row($res))
+        if ($row = mysql_fetch_row($res))
             $sifatUjian = $row[0];
 
         $skalanilai = 10;
@@ -1046,7 +1046,7 @@ function SetNilaiCbe()
                   FROM jbscbe.ujian
                  WHERE id = $idUjianInUjianSerta";
         $res = QueryDb($sql);
-        if ($row = mysqli_fetch_row($res))
+        if ($row = mysql_fetch_row($res))
         {
             $skalanilai = $row[0];
             $nilaikkm = $row[1];
@@ -1084,10 +1084,10 @@ function SetNilaiCbe()
         $sql .= " ORDER BY u.tanggal DESC";
 
         $res = QueryDb($sql);
-        if (mysqli_num_rows($res) == 0)
+        if (mysql_num_rows($res) == 0)
             continue;
 
-        while($row = mysqli_fetch_array($res))
+        while($row = mysql_fetch_array($res))
         {
             $no += 1;
 

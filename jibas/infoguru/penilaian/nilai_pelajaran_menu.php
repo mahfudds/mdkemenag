@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -67,7 +67,6 @@ function changePel()
     var idpelajaran = document.getElementById('pelajaran').value;
     var addr = "nilai_pelajaran_menu.php?departemen=<?=$departemen?>&tingkat=<?=$tingkat?>&semester=<?=$semester?>&kelas=<?=$kelas?>&nip=<?=$nip?>&idpelajaran="+idpelajaran;
     document.location.href = addr;
-    parent.nilai_pelajaran_content.location.href = "blank_nilai_pelajaran_content.php";
 }
 </script>
 </head>
@@ -88,7 +87,7 @@ $query_aturan = "SELECT DISTINCT g.idpelajaran, p.nama
 $arrpel = array();
 
 $res = QueryDb($query_aturan);
-while($row = mysqli_fetch_row($res))
+while($row = mysql_fetch_row($res))
 {
     $arrpel[] = array($row[0], $row[1]);
 }
@@ -136,7 +135,7 @@ $query_ap = "SELECT DISTINCT a.dasarpenilaian, dp.keterangan
 $result_ap = QueryDb($query_ap);
 
 $cnt = 0;
-while($row_ap = @mysqli_fetch_array($result_ap))
+while($row_ap = @mysql_fetch_array($result_ap))
 {
     $cnt++;	?>
     <table class="tab" id="table<?=$cnt?>" border="1" style="border-collapse:collapse; border-width: 1px;"
@@ -153,7 +152,7 @@ while($row_ap = @mysqli_fetch_array($result_ap))
 				    AND a.nipguru='$nip' 
 				  ORDER BY j.jenisujian";
         $result_jp = QueryDb($query_jp);
-        while($row_jp = @mysqli_fetch_row($result_jp))
+        while($row_jp = @mysql_fetch_row($result_jp))
         {	?>
             <tr>
                 <td height="22" style="cursor:pointer" onclick="klik('<?=$kelas?>','<?=$semester?>','<?=$row_jp[3]?>')" align="left">

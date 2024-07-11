@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  *
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -179,7 +179,7 @@ function SaveIuranWajibSiswa($no)
              WHERE idbesarjtt = '$idbesarjtt'";
     //echo "$sql<br>";
     $res = QueryDb($sql);
-    $row = mysqli_fetch_row($res);
+    $row = mysql_fetch_row($res);
     $terbayar = $row[0];
     $terdiskon = $row[1];
 
@@ -374,7 +374,7 @@ function SaveIuranWajibCalonSiswa($no)
               FROM jbsfina.penerimaanjttcalon
              WHERE idbesarjttcalon = '$idbesarjtt'";
     $res = QueryDb($sql);
-    $row = mysqli_fetch_row($res);
+    $row = mysql_fetch_row($res);
 
     $terbayar = $row[0];
     $terdiskon = $row[1];
@@ -563,7 +563,7 @@ function SaveMultiTransInfo()
         $res = QueryDbTrans($sql, $success);
         if ($success)
         {
-            $row = mysqli_fetch_row($res);
+            $row = mysql_fetch_row($res);
             $idinfo = $row[0];
         }
     }

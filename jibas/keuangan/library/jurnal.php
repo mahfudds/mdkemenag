@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@ function SimpanJurnal($idtahunbuku, $tanggal, $transaksi, $nokas, $keterangan, $
 		$sql = "SELECT last_insert_id()";
 		$result = QueryDbTrans($sql, $success);
 		if ($success) {
-			$row = @mysqli_fetch_row($result);	
+			$row = @mysql_fetch_row($result);	
 			$idjurnal = $row[0];
 		}	
 	}
@@ -95,7 +95,7 @@ function AmbilKodeRekJurnal($idjurnal, $kateakun, $idpenerimaan)
 	}
 	
 	$res = QueryDb($sql);
-	if (mysqli_num_rows($res) == 0)
+	if (mysql_num_rows($res) == 0)
 	{
 		if ($kateakun == "HARTA")
 			$colname = "rekkas";
@@ -111,9 +111,9 @@ function AmbilKodeRekJurnal($idjurnal, $kateakun, $idpenerimaan)
 				 WHERE replid = '$idpenerimaan'";
 		//echo "$sql";		 
 		$res = QueryDb($sql);
-		if (mysqli_num_rows($res) > 0)
+		if (mysql_num_rows($res) > 0)
 		{
-			$row = mysqli_fetch_row($res);
+			$row = mysql_fetch_row($res);
 			return $row[0];
 		}
 		else
@@ -123,7 +123,7 @@ function AmbilKodeRekJurnal($idjurnal, $kateakun, $idpenerimaan)
 	}
 	else
 	{
-		$row = mysqli_fetch_row($res);
+		$row = mysql_fetch_row($res);
 		return $row[0];
 	}
 }

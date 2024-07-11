@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -93,7 +93,7 @@ else if ((strlen($nama) == 0) || (strlen($nip) == 0))
 	$sql = "SELECT nip, nama FROM jbssdm.pegawai ORDER BY nama"; 
 $result = QueryDb($sql);
 $cnt = 0;
-while($row = mysqli_fetch_row($result)) { ?>
+while($row = mysql_fetch_row($result)) { ?>
 <tr>
 	<td align="center"><?=++$cnt ?></td>
     <td align="center"><?=$row[0] ?></td>
@@ -110,7 +110,7 @@ CloseDb();
 $sql = "SELECT nip, nama FROM jbssdm.pegawai ORDER BY nama"; 
 $result = QueryDb($sql);
 $cnt = 0;
-while($row = mysqli_fetch_row($result)) { ?>
+while($row = mysql_fetch_row($result)) { ?>
 <tr>
 	<td align="center"><?=++$cnt ?></td>
     <td align="center"><?=$row[0] ?></td>

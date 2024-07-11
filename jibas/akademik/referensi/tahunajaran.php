@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -63,7 +63,7 @@ if (isset($_REQUEST['action'])) {
 	$sql = "SELECT * FROM tahunajaran WHERE departemen = '$_REQUEST[departemen]' AND tahunajaran='$_REQUEST[tahunajaran]' $filter";
 	$result = QueryDb($sql);
 	
-	if (mysqli_num_rows($result) > 0) {
+	if (mysql_num_rows($result) > 0) {
 		CloseDb();
 		$ERROR_MSG = "Gagal menyimpan data Tahun Ajaran $_REQUEST[tahunajaran] sudah digunakan!";
 	} else {
@@ -72,7 +72,7 @@ if (isset($_REQUEST['action'])) {
 			$result = QueryDb($sql);
 			$sql1 = "SELECT LAST_INSERT_ID(replid) FROM tahunajaran ORDER BY replid DESC LIMIT 1";		
 			$result1 = QueryDb($sql1);		
-			$row1 = mysqli_fetch_row($result1);
+			$row1 = mysql_fetch_row($result1);
 			$replid = $row1[0];	 
 			
 			$sql2 = "UPDATE tahunajaran SET aktif = 0 WHERE replid <> '$replid' AND departemen = '$_REQUEST[departemen]'";
@@ -116,7 +116,7 @@ if ($op == "dw8dxn8w9ms8zs22") {
 	QueryDb($sql);
 	/*$sql = "SELECT replid FROM jbsakad.tahunajaran WHERE departemen='$departemen' ORDER BY replid DESC LIMIT 1";
 	$result = QueryDb($sql);
-	$row = @mysqli_fetch_row($result);
+	$row = @mysql_fetch_row($result);
 	$sql = "UPDATE jbsakad.tahunajaran SET aktif=1 WHERE replid=$row[0]";
 	$result = QueryDb($sql);*/
 	CloseDb();
@@ -274,14 +274,14 @@ no-repeat">
 	OpenDb();
 	$sql_tot = "SELECT * FROM tahunajaran WHERE departemen='$departemen' ORDER BY $urut $urutan";
 	$result_tot = QueryDb($sql_tot);
-	$total = ceil(mysqli_num_rows($result_tot)/(int)$varbaris);
-	$jumlah = mysqli_num_rows($result_tot);
+	$total = ceil(mysql_num_rows($result_tot)/(int)$varbaris);
+	$jumlah = mysql_num_rows($result_tot);
 						
 	$sql="SELECT * FROM tahunajaran WHERE departemen='$departemen' ORDER BY $urut $urutan LIMIT ".(int)$page*(int)$varbaris.",$varbaris";
 	$akhir = ceil($jumlah/5)*5;		
 	//$sql = "SELECT * FROM tahunajaran WHERE departemen = '$departemen' ORDER BY $urut $urutan";    
 	$result = QueryDB($sql);
-	if (@mysqli_num_rows($result) > 0){
+	if (@mysql_num_rows($result) > 0){
 	?>
     <input type="hidden" name="total" id="total" value="<?=$total?>"/>
     <td align="right" width="60%">
@@ -313,7 +313,7 @@ no-repeat">
 			$cnt = (int)$page*(int)$varbaris;
 	}	
 	
-	while ($row = mysqli_fetch_array($result)) { ?>
+	while ($row = mysql_fetch_array($result)) { ?>
     <tr height="25">
     	<td align="center"><?=++$cnt ?></td>
         <td><?=$row['tahunajaran'] ?></td>

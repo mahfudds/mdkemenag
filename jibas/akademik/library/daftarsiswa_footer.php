@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -64,7 +64,7 @@ if (isset($_REQUEST['kelas']))
 <? 	OpenDb();
 	$sql = "SELECT s.nis, s.nama, k.kelas FROM siswa s, kelas k, tingkat t WHERE t.departemen = '$departemen' AND s.idkelas = k.replid AND k.idtingkat = t.replid AND t.replid = $tingkat AND k.idtahunajaran = $tahunajaran AND s.aktif=1 AND s.idkelas = $kelas ORDER BY nama"; 
 	$result = QueryDb($sql);
-	$jum = mysqli_num_rows($result);
+	$jum = mysql_num_rows($result);
 		if ($jum > 0) {
 ?>
 <table width="100%" id="table" class="tab" align="center" cellpadding="2" cellspacing="0">
@@ -77,7 +77,7 @@ if (isset($_REQUEST['kelas']))
 </tr>
 <?
 	$cnt = 1;	
-	while($row = mysqli_fetch_row($result)) {
+	while($row = mysql_fetch_row($result)) { 
 ?>
 <tr>
 	<td align="center" onclick="parent.pilih('<?=$row[0]?>', '<?=$row[1]?>')" style="cursor:pointer"><?=$cnt ?></td>

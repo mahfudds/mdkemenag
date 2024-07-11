@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *  
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -90,7 +90,7 @@ $sql = "SELECT pg.nip, pg.nama, IF(p.status IS NULL, -1, p.status),
 
 $res = QueryDb($sql);
 $n = 0;
-while($row = mysqli_fetch_row($res))
+while($row = mysql_fetch_row($res))
 {
     $n++;
     
@@ -182,7 +182,7 @@ function GetHourMinute($strtime, &$hour, &$minute)
 {
     if (strpos($strtime, ":") !== FALSE)
     {
-        $temp = explode(":", $strtime);
+        $temp = split(":", $strtime);
         $hour = $temp[0];
         $minute = $temp[1];
         

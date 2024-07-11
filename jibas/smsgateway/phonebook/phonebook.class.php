@@ -63,10 +63,10 @@ class Phonebook
 		$filter2= ($alpha!='-1')?" AND nama LIKE '$alpha%'":"";
 		$sql   = "SELECT replid,nohp,nama,`status`,keterangan FROM phonebook WHERE 1 $filter1 $filter2";
 		$res   = QueryDb($sql); 
-		$this->num = @mysqli_num_rows($res);
+		$this->num = @mysql_num_rows($res);
 		$res   = QueryDb($sql." LIMIT ".((($this->page)-1)*showList).",".showList);
 		$this->data  = array();
-		while ($row = @mysqli_fetch_row($res))
+		while ($row = @mysql_fetch_row($res))
 			array_push($this->data,$row);
 		
 		$this->showData();
@@ -84,10 +84,10 @@ class Phonebook
 		$filter= ($alpha!='-1')?" AND `$field` LIKE '%$keyword%'":"";
 		$sql   = "SELECT replid,nohp,nama,`status`,keterangan FROM phonebook WHERE 1 $filter";
 		$res   = QueryDb($sql); 
-		$this->num = @mysqli_num_rows($res);
+		$this->num = @mysql_num_rows($res);
 		$res   = QueryDb($sql." LIMIT ".($this->page*showList).",".showList);
 		$this->data  = array();
-		while ($row = @mysqli_fetch_row($res))
+		while ($row = @mysql_fetch_row($res))
 			array_push($this->data,$row);
 
 		$this->showData();
@@ -168,7 +168,7 @@ class Phonebook
 			
 			$sql = "SELECT COUNT(replid) FROM phonebook WHERE nohp='$hp'";
 			$res = QueryDb($sql);
-			$row = @mysqli_fetch_row($res);
+			$row = @mysql_fetch_row($res);
 			$num = $row[0];
 			if ($num>0)
 				echo "<div align='center' style='border:1px solid #ce0000; background-color:#fbd9d9;padding:4px;font-weight:bold;color:#4b4b4b;margin-bottom:5px'>No HP $hp sudah terdaftar sebelumnya.</div>";	
@@ -226,7 +226,7 @@ class Phonebook
 			
 			$sql = "SELECT COUNT(replid) FROM phonebook WHERE nohp='$hp' AND replid<>'$id'";
 			$res = QueryDb($sql);
-			$row = @mysqli_fetch_row($res);
+			$row = @mysql_fetch_row($res);
 			$num = $row[0];
 			if ($num>0)
 				echo "<div align='center' style='border:1px solid #ce0000; background-color:#fbd9d9;padding:4px;font-weight:bold;color:#4b4b4b;margin-bottom:5px'>No HP $hp sudah terdaftar sebelumnya.</div>";	
@@ -244,7 +244,7 @@ class Phonebook
 		{
 			$sql = "SELECT nama,nohp,`status`,keterangan FROM phonebook WHERE replid='$id'";
 			$res = QueryDb($sql);
-			$row = @mysqli_fetch_row($res);
+			$row = @mysql_fetch_row($res);
 			$nama = $row[0];
 			$hp = $row[1];
 			$ket = $row[3];
@@ -291,7 +291,7 @@ class Phonebook
 				 WHERE aktif = 1";
 		$res = QueryDb($sql);
 		$data = array();
-		while ($row = @mysqli_fetch_row($res))
+		while ($row = @mysql_fetch_row($res))
 		{
 			$temp = $row[1];
 			$temp = str_replace("#", "", $temp);
@@ -311,7 +311,7 @@ class Phonebook
 				  FROM $db_name_akad.siswa
 				 WHERE aktif = 1";
 		$res = QueryDb($sql);
-		while ($row = @mysqli_fetch_row($res))
+		while ($row = @mysql_fetch_row($res))
 		{
 			// hpsiswa
 			$temp = $row[1];
@@ -351,7 +351,7 @@ class Phonebook
 					   AND `status` = '$pb[2]'
 					   AND nohp = '$pb[1]'";
 			$res = QueryDb($sql);
-			$row = @mysqli_fetch_row($res);
+			$row = @mysql_fetch_row($res);
 			if ($row[0] == 0)
 			{
 				$sql = "INSERT INTO phonebook

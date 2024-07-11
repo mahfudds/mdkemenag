@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -71,20 +71,20 @@ else
 			   AND s.nis = '$nis'";	
 }
 $result = QueryDb($sql);
-$row = @mysqli_fetch_row($result);
+$row = @mysql_fetch_row($result);
 $kvalue = $row[0];
 
 $sql = "SELECT departemen FROM tahunbuku WHERE replid='$idtahunbuku'";
 $result = QueryDb($sql);
-$row = @mysqli_fetch_array($result);
-$departemen = $row['departemen'];
+$row = @mysql_fetch_array($result);
+$departemen = $row[departemen];
 
 $sql = "SELECT replid, nama, alamat1 FROM jbsumum.identitas WHERE departemen='$departemen'";
 $result = QueryDb($sql); 
-$row = @mysqli_fetch_array($result);
-$idHeader = $row['replid'];
-$namaHeader = $row['nama'];
-$alamatHeader = $row['alamat1'];
+$row = @mysql_fetch_array($result);
+$idHeader = $row[replid];
+$namaHeader = $row[nama];
+$alamatHeader = $row[alamat1];
 
 CloseDb();
 ?>

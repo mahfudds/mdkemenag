@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -67,7 +67,7 @@ else
 		$sql = "SELECT DAY(pp.tanggal), MONTH(pp.tanggal), pp.jam, p.nama, g.nama, pp.materi, pp.replid FROM presensipelajaran pp, pelajaran p, jbssdm.pegawai g WHERE pp.idkelas = '$kelas' AND pp.idsemester = '$semester' '$pel' AND MONTH(pp.tanggal) = '$bln' AND YEAR(pp.tanggal) = '$thn' AND pp.idpelajaran = p.replid AND pp.gurupelajaran = g.nip ORDER BY pp.tanggal, pp.jam ";
 		
 		$result = QueryDb($sql);			 
-		$jum = mysqli_num_rows($result);
+		$jum = mysql_num_rows($result);
 		if ($jum > 0) {
 	?>
    		
@@ -84,7 +84,7 @@ else
 		</tr>
 		<? 
 		$cnt = 1;
-		while ($row = @mysqli_fetch_row($result)) {					
+		while ($row = @mysql_fetch_row($result)) {					
 		?>	
         <tr>        			
 			<td align="center"><?=$cnt?></td>

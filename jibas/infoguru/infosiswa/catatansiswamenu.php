@@ -4,9 +4,9 @@
  * Jaringan Informasi Bersama Antar Sekolah
  * 
  * @version: 2.6.0 (January 14, 2012)
- * @notes: 
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -99,14 +99,14 @@ function inputbaru(){
 	OpenDb();
 	$sql="SELECT t.replid,t.tahunajaran,t.aktif FROM jbsakad.tahunajaran t, jbsakad.kelas k, jbsakad.riwayatkelassiswa r WHERE k.replid=r.idkelas AND k.idtahunajaran=t.replid AND r.nis='$nis' GROUP BY t.replid ";
 	$result=QueryDb($sql);
-	if (@mysqli_num_rows($result)==0){
+	if (@mysql_num_rows($result)==0){
 		echo "<option value=''>Tidak ada Data</option>";
 	} else {
-		while ($row=@mysqli_fetch_array($result)){
+		while ($row=@mysql_fetch_array($result)){
 			if ($tahunajaran=="")
 				$tahunajaran=$row[0];
 			$akt="";
-			if ($row['aktif']==1)
+			if ($row[aktif]==1)
 				$akt="(A)";
 			echo "<option value='".$row[0]."'".StringIsSelected($row[0],$tahunajaran).">".$row[1]." ".$akt."</option>";
 		}
@@ -129,19 +129,19 @@ function inputbaru(){
 	OpenDb();
 	$sql = "SELECT * FROM jbsvcr.catatankategori WHERE aktif=1 ORDER BY replid";
 	$result = QueryDb($sql);
-	if (@mysqli_num_rows($result) > 0){
+	if (@mysql_num_rows($result) > 0){
 	$cnt=1;
-	while ($row=@mysqli_fetch_array($result)){
+	while ($row=@mysql_fetch_array($result)){
 		$sql_catsiswa="SELECT COUNT(c.replid) as jumlah FROM jbsvcr.catatansiswa c, jbsakad.kelas k, jbsakad.tahunajaran t WHERE c.idkategori='$row[replid]' AND c.nis='$nis' AND c.idkelas=k.replid AND t.replid='$tahunajaran' AND k.idtahunajaran=t.replid";
 		//echo $sql_catsiswa;
 		$res_catsiswa=QueryDb($sql_catsiswa);
-		$row_catsiswa=@mysqli_fetch_row($res_catsiswa);
+		$row_catsiswa=@mysql_fetch_row($res_catsiswa);
   ?>
   <tr>
     <td height="25"><div align="center"><?=$cnt?></div></td>
-    <td height="25"><?=$row['kategori']?></td>
+    <td height="25"><?=$row[kategori]?></td>
     <td height="25"><div align="center"><?=$row_catsiswa[0]?></div></td>
-    <td height="25"><div align="center"><img src="../images/ico/panahkanan.png" style="cursor:pointer" onClick="show('<?=$row['replid']?>')" /><!--<input style="width:20px;" type="button" onClick="show('<?=$row['replid']?>')" class="but" value="&gt;" />-->
+    <td height="25"><div align="center"><img src="../images/ico/panahkanan.png" style="cursor:pointer" onClick="show('<?=$row[replid]?>')" /><!--<input style="width:20px;" type="button" onClick="show('<?=$row[replid]?>')" class="but" value="&gt;" />-->
     </div></td>
   </tr>
   <? $cnt++; } } else { ?>

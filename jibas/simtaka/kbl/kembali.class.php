@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,24 +23,24 @@
 <?
 class CKembali
 {
-	function GetDenda()
+	function GetDenda($anggota)
 	{
 		$sql = "SELECT * FROM konfigurasi";
 		$result = QueryDb($sql);
-		$row = @mysqli_fetch_array($result);
+		$row = @mysql_fetch_array($result);
 		return $row['denda'];
 	}
 	
 	function OnStart()
 	{
-		$this->kodepustaka = trim($_REQUEST['kodepustaka']);
+		$this->kodepustaka = trim($_REQUEST[kodepustaka]);
 		
 		$sql = "SELECT DATE_FORMAT(now(), '%Y-%m-%d')";
 		$result = QueryDb($sql);
-		$row = @mysqli_fetch_row($result);
+		$row = @mysql_fetch_row($result);
 		$this->datenow = $row[0];
 			
-		$this->op=$_REQUEST['op'];
+		$this->op=$_REQUEST[op];
 		$this->num=0;
 		if ($this->op=="ViewPeminjaman")
 		{
@@ -56,22 +56,22 @@ class CKembali
 			else
 				$this->nothing=0;
 				
-			$this->num = @mysqli_num_rows($result);
-			$row = @mysqli_fetch_array($result);
+			$this->num = @mysql_num_rows($result);
+			$row = @mysql_fetch_array($result);
 			
-			$this->idpinjam = $row['replid'];
-			$this->tglpinjam = $row['tglpinjam'];
-			$this->tglkembali = $row['tglkembali'];
-			$this->keterangan = $row['keterangan'];
-			$this->idanggota = $row['idanggota'];
-			$this->jenisanggota = $row['info1'];
-			$this->kodepustaka = $row['kodepustaka'];
+			$this->idpinjam = $row[replid];
+			$this->tglpinjam = $row[tglpinjam];
+			$this->tglkembali = $row[tglkembali];
+			$this->keterangan = $row[keterangan];
+			$this->idanggota = $row[idanggota];
+			$this->jenisanggota = $row[info1];
+			$this->kodepustaka = $row[kodepustaka];
 			$this->namaanggota = $this->GetMemberName();
-			$this->isavailable = (0 == (int)$row['status']) ? 1 : -1;
+			$this->isavailable = (0 == (int)$row[status]) ? 1 : -1;
 			
 			$sql = "SELECT DATEDIFF(NOW(),'".$this->tglkembali."')";
 			$result = QueryDb($sql);
-			$row = @mysqli_fetch_row($result);
+			$row = @mysql_fetch_row($result);
 			if ($row[0] > 0)
 			{
 				$this->denda = $row[0] * (int)$this->GetDenda();
@@ -88,16 +88,16 @@ class CKembali
 					 WHERE d.pustaka=p.replid
 					   AND d.kodepustaka = '" . $this->kodepustaka . "'";
 			$result = QueryDb($sql);
-			$row = @mysqli_fetch_array($result);
-			$this->judul = $row['judul'];
+			$row = @mysql_fetch_array($result);
+			$this->judul = $row[judul];
 		}
 		
 		if ($this->op=="KembalikanPustaka")
 		{
-			$this->denda = $_REQUEST['denda'];
-			$this->idpinjam = $_REQUEST['idpinjam'];
-			$this->telat = $_REQUEST['telat'];
-			$this->keterangan = CQ($_REQUEST['keterangan']);
+			$this->denda = $_REQUEST[denda];
+			$this->idpinjam = $_REQUEST[idpinjam];
+			$this->telat = $_REQUEST[telat];
+			$this->keterangan = CQ($_REQUEST[keterangan]);
 			
 			$sql = "UPDATE pinjam
 					   SET status=2, tglditerima=NOW(), keterangan='$this->keterangan'
@@ -132,7 +132,7 @@ class CKembali
 	function OnLoad()
 	{
 		$onload="onload=\"document.getElementById('kodepustaka').focus()\"";
-		if (isset($_REQUEST['op']) && $this->op=="ViewPeminjaman")
+		if (isset($_REQUEST[op]) && $this->op=="ViewPeminjaman")
 		{
 			if ($this->num!=0)
 			{
@@ -291,7 +291,7 @@ class CKembali
 					 WHERE noregistrasi = '$this->idanggota'";
 		}
 		$res = QueryDb($sql);
-		$row = mysqli_fetch_row($res);
+		$row = mysql_fetch_row($res);
 		$namaanggota = $row[0];
 		
 		return $namaanggota;

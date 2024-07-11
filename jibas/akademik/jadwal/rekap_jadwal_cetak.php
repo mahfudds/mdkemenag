@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@ $sql="SELECT i.deskripsi, j.departemen, t.tahunajaran, t.tglmulai, t.tglakhir FR
 
 $result=QueryDb($sql);
 CloseDb();
-$row=@mysqli_fetch_array($result);
+$row=@mysql_fetch_array($result);
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -50,7 +50,7 @@ $row=@mysqli_fetch_array($result);
 <table border="0" cellpadding="10" cellpadding="5" width="780" align="left">
 <tr>
 	<td align="left" valign="top" colspan="2">
-<?=getHeader($row['departemen'])?>
+<?=getHeader($row[departemen])?>
 	
 <center>
   <font size="4"><strong>REKAP JADWAL GURU</strong></font><br />
@@ -97,7 +97,7 @@ $row=@mysqli_fetch_array($result);
     
     $result = QueryDb($sql);
     $cnt = 0;
-    while ($row = mysqli_fetch_row($result)) {
+    while ($row = mysql_fetch_row($result)) {
 ?>
 <tr height="25">
     <td align="center"><?=++$cnt?></td>

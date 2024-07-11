@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ $sql = "SELECT DISTINCT t.idtabungan, dt.nama
            AND t.tanggal BETWEEN '$datetime1' AND '$datetime2'";
            
 $res = QueryDb($sql);
-while($row = mysqli_fetch_row($res))
+while($row = mysql_fetch_row($res))
 {
    $lsTab[] = array($row[0], $row[1]);
 }
@@ -53,7 +53,7 @@ else
                 WHERE idtabungan = '$idTab'
                   AND nip = '$nip'";
        $res = QueryDb($sql);
-       if ($row = mysqli_fetch_row($res))
+       if ($row = mysql_fetch_row($res))
        {
            $tottarik = $row[0];
            $totsetor = $row[1];
@@ -68,7 +68,7 @@ else
                   AND nip = '$nip'
                   AND tanggal BETWEEN '$datetime1' AND '$datetime2'";
        $res = QueryDb($sql);
-       if ($row = mysqli_fetch_row($res))
+       if ($row = mysql_fetch_row($res))
        {
            $subtarik = $row[0];
            $subsetor = $row[1];
@@ -85,7 +85,7 @@ else
                 ORDER BY replid DESC
                 LIMIT 1";
        $res = QueryDb($sql);
-       if ($row = mysqli_fetch_row($res))
+       if ($row = mysql_fetch_row($res))
        {
            $lastsetor = $row[0];
            $tgllastsetor = $row[1];
@@ -102,7 +102,7 @@ else
                 ORDER BY replid DESC
                 LIMIT 1";
        $res = QueryDb($sql);
-       if ($row = mysqli_fetch_row($res))
+       if ($row = mysql_fetch_row($res))
        {
            $lasttarik = $row[0];
            $tgllasttarik = $row[1];

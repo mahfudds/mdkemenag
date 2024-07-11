@@ -19,7 +19,7 @@ define('VERT_EDGE',1);
  * values.
  *
  */
-class Contour extends stdClass {
+class Contour {
 
     private $dataPoints = array();
     private $nbrCols=0,$nbrRows=0;

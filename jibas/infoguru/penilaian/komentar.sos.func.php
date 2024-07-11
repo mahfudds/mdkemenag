@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  *
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,7 +51,7 @@ function ReadParams()
 
     $sql = "SELECT nama FROM jbsakad.siswa WHERE nis = '$nis'";
     $res = QueryDb($sql);
-    $row = mysqli_fetch_row($res);
+    $row = mysql_fetch_row($res);
     $nama = $row[0];
 }
 
@@ -154,9 +154,9 @@ function GetListKomentar($idpelajaran, $idtingkat, $jenis)
                AND idtingkat = '$idtingkat'
                AND jenis = '$jenis'";
     $res2 = QueryDb($sql);
-    $numlen = strlen(mysqli_num_rows($res2));
+    $numlen = strlen(mysql_num_rows($res2));
     $cnt = 0;
-    while($row2 = mysqli_fetch_row($res2))
+    while($row2 = mysql_fetch_row($res2))
     {
         $cnt += 1;
         $nocnt = str_pad($cnt, $numlen, "0", STR_PAD_LEFT);
@@ -180,7 +180,7 @@ function GetKomentar($replid)
               FROM jbsakad.pilihkomensos
              WHERE replid = '$replid'";
     $res = QueryDb($sql);
-    if ($row = mysqli_fetch_row($res))
+    if ($row = mysql_fetch_row($res))
         return $row[0];
 
     return "";

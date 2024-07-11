@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *  
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
  **[N]**/ ?>
 <?
 function GetDatePart($value, $part) {
-	$inf = explode("-", $value);
+	$inf = split("-", $value);
 	$part = strtolower($part);
 	
 	/*
@@ -202,46 +202,23 @@ function rpad($string, $padchar, $length) {
 }
 
 function MySqlDateFormat($date) {
-	//list($d, $m, $y) = split('[/.-]', $date);
-	//return "$y-$m-$d";
-    $ls = explode("-", $date);
-    $d = $ls[0];
-    $m = $ls[1];
-    $y = $ls[2];
-    return "$y-$m-$d";
+	list($d, $m, $y) = split('[/.-]', $date); 
+	return "$y-$m-$d";
 }
 
 function RegularDateFormat($mysqldate) {
-	//list($y, $m, $d) = split('[/.-]', $mysqldate);
-	//return "$d-$m-$y";
-    $ls = explode("-", $mysqldate);
-    $d = $ls[2];
-    $m = $ls[1];
-    $y = $ls[0];
-    return "$d-$m-$y";
+	list($y, $m, $d) = split('[/.-]', $mysqldate); 
+	return "$d-$m-$y";
 }
 
 function LongDateFormat($mysqldate) {
-	//list($y, $m, $d) = split('[/.-]', $mysqldate);
-	//return "$d ". NamaBulan($m) ." $y";
-    $ls = explode("-", $mysqldate);
-    $d = $ls[2];
-    $m = $ls[1];
-    $y = $ls[0];
-    return "$d ". NamaBulan($m) ." $y";
+	list($y, $m, $d) = split('[/.-]', $mysqldate); 
+	return "$d ". NamaBulan($m) ." $y";
 }
-
-function ShortDateFormat($mysqldate)
-{
-	//list($y, $m, $d) = split('[/.-]', $mysqldate);
-	//return "$d ". NamaBulanPdk($m) ." $y";
-    $ls = explode("-", $mysqldate);
-    $d = $ls[2];
-    $m = $ls[1];
-    $y = $ls[0];
-    return "$d ". NamaBulanPdk($m) ." $y";
+function ShortDateFormat($mysqldate) {
+	list($y, $m, $d) = split('[/.-]', $mysqldate); 
+	return "$d ". NamaBulanPdk($m) ." $y";
 }
-
 function change_urut($a, $b, $c) {	
 	$s = "";
 	if ($a == $b) {

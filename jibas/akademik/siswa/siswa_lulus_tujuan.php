@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -64,7 +64,7 @@ if (isset($_REQUEST['urutan']))
 OpenDb();
 $sql_ajaran = "SELECT replid,tglmulai FROM jbsakad.tahunajaran WHERE replid=$tahunajaranawal";
 $result_ajaran = QueryDb($sql_ajaran);
-$row_ajaran = mysqli_fetch_array($result_ajaran);
+$row_ajaran = mysql_fetch_array($result_ajaran);
 $tglmulai = $row_ajaran['tglmulai'];
 
 if (isset($_REQUEST['op']))
@@ -77,17 +77,17 @@ if ($op=="hgiu82kjs98uqjq89wuj89sga"){
 	//ambil nis lama
 	$sql_lulus_getnislama="SELECT nislama FROM jbsakad.riwayatdeptsiswa WHERE nis='$nis'";
 	$result_nislama=QueryDbTrans($sql_lulus_getnislama,$success);
-	$row_nislama=mysqli_fetch_array($result_nislama);
+	$row_nislama=mysql_fetch_array($result_nislama);
 	$nis_lama = $row_nislama['nislama'];
 	
 	$sql_lulus_get_nis="SELECT * FROM jbsakad.riwayatdeptsiswa WHERE nis='$nis_lama' ORDER BY mulai DESC LIMIT 1";
 	$result_nis=QueryDbTrans($sql_lulus_get_nis, $success);
-	$row_nis=mysqli_fetch_array($result_nis);	
+	$row_nis=mysql_fetch_array($result_nis);	
 	$replid_dept = $row_nis['replid'];
 	
 	$sql_lulus_get_kelas="SELECT r.replid, r.idkelas, k.idtingkat, k.idtahunajaran FROM jbsakad.riwayatkelassiswa r, jbsakad.kelas k WHERE r.nis='$nis_lama' AND r.idkelas = k.replid ORDER BY r.mulai DESC LIMIT 1";
 	$result_kelas=QueryDbTrans($sql_lulus_get_kelas,$success);
-	$row_kelas=mysqli_fetch_array($result_kelas);
+	$row_kelas=mysql_fetch_array($result_kelas);
 	$replid_kelas = $row_kelas['replid'];
 	$kelas_lama = $row_kelas['idkelas'];
 	$tingkat_lama = $row_kelas['idtingkat'];
@@ -209,13 +209,13 @@ if ($op=="x2378e23dkofh73n25ki9234"){
 	OpenDb();
 	$sql_kap_kelas_tujuan="SELECT kapasitas, idtingkat FROM jbsakad.kelas WHERE replid='$kelas'";
 	$result_kap_kelas_tujuan=QueryDb($sql_kap_kelas_tujuan);
-	$row_kap_kelas_tujuan=mysqli_fetch_array($result_kap_kelas_tujuan);
+	$row_kap_kelas_tujuan=mysql_fetch_array($result_kap_kelas_tujuan);
 	$kap_kelas_tujuan=$row_kap_kelas_tujuan['kapasitas'];
 	$tingkatawal=$row_kap_kelas_tujuan['idtingkat'];
 	
 	$sql_jum_kelas_tujuan="SELECT COUNT(nis) FROM jbsakad.siswa WHERE idkelas='$kelas' AND aktif = 1";
 	$result_jum_kelas_tujuan=QueryDb($sql_jum_kelas_tujuan);
-	$row_jum_kelas_tujuan=mysqli_fetch_row($result_jum_kelas_tujuan);
+	$row_jum_kelas_tujuan=mysql_fetch_row($result_jum_kelas_tujuan);
 	$jum_siswa_tujuan = $row_jum_kelas_tujuan[0];
 	CloseDb();
 	
@@ -228,7 +228,7 @@ if ($op=="x2378e23dkofh73n25ki9234"){
 		$result_nislama=QueryDb($sql_lulus_getnislama);
 		
 		CloseDb();
-		if (mysqli_num_rows($result_nislama) > 0) { 
+		if (mysql_num_rows($result_nislama) > 0) { 
 			$ERROR_MSG = "NIS Siswa sudah digunakan!";
 		} else {
 			$tahunsekarang=$_REQUEST['th'];
@@ -524,7 +524,7 @@ function focusNext(elemName, evt) {
 				OpenDb();
 				$sql = "SELECT departemen FROM departemen WHERE aktif=1 AND departemen <> '$departemenawal' ORDER BY urutan ";
 				$result=QueryDb($sql);
-				while ($row=@mysqli_fetch_array($result)){
+				while ($row=@mysql_fetch_array($result)){
 					if ($departemen == "")
 						$departemen = $row['departemen']; ?>
               	<option value="<?=$row['departemen']?>" <?=StringIsSelected($row['departemen'],$departemen)?> >
@@ -541,12 +541,12 @@ function focusNext(elemName, evt) {
         <?	OpenDb();
 			$sql_angkatan="SELECT replid,angkatan,aktif FROM jbsakad.angkatan WHERE departemen='$departemen' AND aktif=1";
 			$result_angkatan=QueryDb($sql_angkatan);
-			while ($row_angkatan=@mysqli_fetch_array($result_angkatan)){
+			while ($row_angkatan=@mysql_fetch_array($result_angkatan)){
 				if ($angkatan=="")
-					$angkatan=$row_angkatan['replid'];
+					$angkatan=$row_angkatan[replid];
 		?>
-			<option value="<?=$row_angkatan['replid']?>" <?=StringIsSelected($row_angkatan['replid'], $angkatan)?>>
-			  <?=$row_angkatan['angkatan'];
+			<option value="<?=$row_angkatan[replid]?>" <?=StringIsSelected($row_angkatan[replid], $angkatan)?>>
+			  <?=$row_angkatan[angkatan];
 		   ?>
 			</option>
 			<?
@@ -561,7 +561,7 @@ function focusNext(elemName, evt) {
         <?	OpenDb();
 			$sql_tahunajaran="SELECT replid,tahunajaran,aktif FROM jbsakad.tahunajaran WHERE departemen='$departemen' AND tglmulai > '$tglmulai' ORDER BY aktif DESC, tglmulai DESC";
 			$result_tahunajaran=QueryDb($sql_tahunajaran);
-			while ($row_tahunajaran=@mysqli_fetch_array($result_tahunajaran)){
+			while ($row_tahunajaran=@mysql_fetch_array($result_tahunajaran)){
 				if ($tahunajaran=="")
 					$tahunajaran=$row_tahunajaran['replid'];
 				if ($row_tahunajaran['aktif']) 
@@ -582,7 +582,7 @@ function focusNext(elemName, evt) {
         <?	OpenDb();
 			$sql_tingkat="SELECT replid,tingkat FROM jbsakad.tingkat WHERE departemen='$departemen' ORDER BY urutan ASC";
 			$result_tingkat=QueryDb($sql_tingkat);
-			while ($row_tingkat=@mysqli_fetch_array($result_tingkat)){
+			while ($row_tingkat=@mysql_fetch_array($result_tingkat)){
 				if ($tingkat=="")
 					$tingkat=$row_tingkat['replid'];
 			?>
@@ -601,15 +601,15 @@ function focusNext(elemName, evt) {
          <?	OpenDb();
 			$sql_kelas="SELECT replid,kelas,kapasitas FROM jbsakad.kelas WHERE idtahunajaran='$tahunajaran' AND idtingkat='$tingkat' AND aktif=1";
 			$result_kelas=QueryDb($sql_kelas);
-			while ($row_kelas=@mysqli_fetch_array($result_kelas)){
+			while ($row_kelas=@mysql_fetch_array($result_kelas)){
 				if ($kelas=="")
 					$kelas=$row_kelas['replid'];
 				$sql_terisi="SELECT COUNT(*) FROM jbsakad.siswa WHERE idkelas='$row_kelas[replid]' AND aktif=1 AND idangkatan = '$angkatan'";
 				$result_terisi=QueryDb($sql_terisi);
-				$row_terisi=@mysqli_fetch_row($result_terisi);
+				$row_terisi=@mysql_fetch_row($result_terisi);
 			?>  
            		<option value="<?=$row_kelas['replid']?>" <?=IntIsSelected($row_kelas['replid'], $kelas)?>>
-				<?=$row_kelas['kelas'].", kapasitas: ".$row_kelas['kapasitas'].", terisi: ".$row_terisi[0]?>
+				<?=$row_kelas[kelas].", kapasitas: ".$row_kelas['kapasitas'].", terisi: ".$row_terisi[0]?>
 			  	</option>
 			 <?
 			 }
@@ -630,20 +630,20 @@ function focusNext(elemName, evt) {
 		$sql_tot = "SELECT s.replid,s.nis,s.nama FROM jbsakad.siswa s WHERE s.idkelas = '$kelas' AND s.aktif=1 AND s.idangkatan = '$angkatan'";
 		//echo($sql_tot);
 		$result_tot = QueryDb($sql_tot);
-		$total=ceil(mysqli_num_rows($result_tot)/(int)$varbaris);
-		$jumlah = mysqli_num_rows($result_tot);
+		$total=ceil(mysql_num_rows($result_tot)/(int)$varbaris);
+		$jumlah = mysql_num_rows($result_tot);
 		$akhir = ceil($jumlah/5)*5;
 		
 		//$sql_siswa = "SELECT s.replid,s.nis,s.nama FROM jbsakad.siswa s, jbsakad.kelas k, jbsakad.tahunajaran t WHERE s.idkelas = $kelas AND k.idtahunajaran = $tahunajaran AND k.idtingkat = $tingkat AND s.idkelas = k.replid AND t.replid = k.idtahunajaran AND s.aktif=1 AND s.idangkatan = $angkatan ORDER BY $urut $urutan LIMIT ".(int)$page*(int)$varbaris.",$varbaris";
 		$sql_siswa = "SELECT s.replid,s.nis,s.nama FROM jbsakad.siswa s WHERE s.idkelas = '$kelas' AND s.aktif=1 AND s.idangkatan = '$angkatan' ORDER BY $urut $urutan LIMIT ".(int)$page*(int)$varbaris.",$varbaris";
 		
 		$result_siswa = QueryDb($sql_siswa);
-		$jum = @mysqli_num_rows($result_siswa);
+		$jum = @mysql_num_rows($result_siswa);
 		
 		$sql5 = "SELECT kelas FROM jbsakad.kelas WHERE replid = $kelas ";
 		$result5 = QueryDb($sql5);
-		$row5 = @mysqli_fetch_array($result5);
-		$nama_kelas = $row5['kelas'];
+		$row5 = @mysql_fetch_array($result5);
+		$nama_kelas = $row5[kelas];
 		
 		if ($jum > 0) { ?>
    	<table width="100%" border="1" cellspacing="0" class="tab" id="table" bordercolor="#000000">
@@ -660,10 +660,10 @@ function focusNext(elemName, evt) {
 	else 
 		$cnt = (int)$page*(int)$varbaris+1;
 		
-	while ($row_siswa=@mysqli_fetch_array($result_siswa)){
+	while ($row_siswa=@mysql_fetch_array($result_siswa)){
 		$sql_riwayat_kelas="SELECT keterangan,status FROM jbsakad.riwayatkelassiswa WHERE nis='$row_siswa[nis]' AND idkelas='$kelas'";
         $result_riwayat_kelas=QueryDb($sql_riwayat_kelas);
-        $row_riwayat = mysqli_fetch_array($result_riwayat_kelas);
+        $row_riwayat = mysql_fetch_array($result_riwayat_kelas);
 		
 	?>
 	<tr height="25"> 

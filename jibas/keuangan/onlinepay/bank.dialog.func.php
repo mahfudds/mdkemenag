@@ -10,7 +10,7 @@ function LoadValue()
 
     $sql = "SELECT * FROM jbsfina.bank WHERE replid = $bankReplid";
     $res = QueryDb($sql);
-    if ($row = mysqli_fetch_array($res))
+    if ($row = mysql_fetch_array($res))
     {
         $bank = $row["bank"];
         $bankNo = $row["bankno"];
@@ -37,7 +37,7 @@ function ShowSelectRek($kategori, $nama, $defValue)
     $readOnly = $isReadOnly ? "disabled" : "";
 
     echo "<select id='$nama' name='$nama' class='inputbox' style='width: 250px' $readOnly>";
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         $sel = $row[0] == $defValue ? "selected" : "";
         echo "<option value='$row[0]' $sel>$row[0] $row[1]</option>";

@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,7 +46,7 @@ $sql = "SELECT j.departemen, j.nama, p.nip, p.nama, t.tingkat
 			WHERE g.nip=p.nip AND g.idpelajaran = j.replid AND t.departemen = j.departemen 
 			  AND t.replid = '$idtingkat' AND j.replid = '$id' AND g.nip = '$nip'"; 
 $result = QueryDb($sql);
-$row = @mysqli_fetch_row($result);
+$row = @mysql_fetch_row($result);
 $departemen = $row[0];
 $pelajaran = $row[1];
 $guru = $row[2].' - '.$row[3];
@@ -61,7 +61,7 @@ if (isset($_REQUEST['Simpan']))
 				  AND a.idtingkat = '$idtingkat' AND a.dasarpenilaian = '$aspek'"; 
 	$result = QueryDb($sql);
 
-	if (mysqli_num_rows($result) > 0) 
+	if (mysql_num_rows($result) > 0) 
 	{
 		CloseDb();		
 		$ERROR_MSG = "Aspek $aspek sudah digunakan!";
@@ -244,10 +244,9 @@ function focusNext(elemName, evt) {
         <input type="text" name="guru" id="guru" size="30" class="disabled" readonly value="<?=$guru ?>" /> <input type="hidden" name="nip" id="nip" value="<?=$nip ?>" /> 
         </td>
 </tr>
-    <tr>
+<tr>
 	<td><strong>Aspek</strong></td>
 	<td>
-
     	<select name="aspek" id="aspek">
 <?			$sql = "SELECT dasarpenilaian, keterangan 
 						 FROM dasarpenilaian 
@@ -257,13 +256,12 @@ function focusNext(elemName, evt) {
 															  AND g.nipguru = '$nip' GROUP BY g.dasarpenilaian) 
 						ORDER BY keterangan";    
 			$result = QueryDb($sql);	
-			while ($row1 = @mysqli_fetch_array($result))
+			while ($row1 = @mysql_fetch_array($result1)) 
 			{
 				$daspen[]=$row1['dasarpenilaian'];
 			}
-
-            $result = QueryDb($sql);
-			while ($row = @mysqli_fetch_array($result)) 
+			
+			while ($row = @mysql_fetch_array($result)) 
 			{
 				if ($aspek == "")
 					$aspek = $row['dasarpenilaian'];	?>

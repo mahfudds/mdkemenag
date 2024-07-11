@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *  
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -70,7 +70,7 @@ else
 {
 	$sql = "SELECT nama FROM satker WHERE satker='$satker'";
 	$result = QueryDb($sql);
-	$row = mysqli_fetch_row($result);
+	$row = mysql_fetch_row($result);
 	$namasatker = $row[0];
 	
 	$sql = "SELECT p.replid FROM pegawai p, peglastdata pl, peggol pg, golongan g, pegjab pj, jabatan j 
@@ -80,10 +80,10 @@ else
 }	
 	
 $result = QueryDb($sql);
-while ($row = mysqli_fetch_row($result)) 
+while ($row = mysql_fetch_row($result)) 
 	$arridpeg[] = $row[0];
 	
-$ndata = mysqli_num_rows($result);
+$ndata = mysql_num_rows($result);
 $npage = floor($ndata / $PAGING_SIZE);
 if (($ndata % $PAGING_SIZE) != 0) 
 	$npage++;
@@ -158,7 +158,7 @@ for($i = $minrownum - 1; $i < $maxrownum && $i < $ndata; $i++)
 			   AND p.aktif = 1 
 			 ORDER BY g.urutan DESC, p.nama ASC";
 	$result = QueryDb($sql);			
-	$row = mysqli_fetch_array($result);
+	$row = mysql_fetch_array($result);
 ?>
 <tr>
 	<td align="center" valign="middle"><?=++$cnt?></td>
@@ -190,7 +190,7 @@ for($i = $minrownum - 1; $i < $maxrownum && $i < $ndata; $i++)
 		$idpegdiklat = $row['idpegdiklat'];
 		$sql = "SELECT d.diklat, pd.tahun FROM pegdiklat pd, diklat d WHERE pd.replid=$idpegdiklat AND pd.iddiklat=d.replid";
 		$rs = QueryDb($sql);
-		$rw = mysqli_fetch_row($rs);
+		$rw = mysql_fetch_row($rs);
 		$diklat = $rw[0];
 		$thndiklat = $rw[1];
 	};

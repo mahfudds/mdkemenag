@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  *
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ function GetVendorName($vendorId)
 
     $sql = "SELECT nama FROM jbsfina.vendor WHERE vendorid = '$vendorId'";
     $res = QueryDb($sql);
-    if ($row = mysqli_fetch_row($res))
+    if ($row = mysql_fetch_row($res))
     {
         $vendorName = $row[0];
     }
@@ -46,7 +46,7 @@ function ShowSelectPetugas($vendorId)
                AND NOT u.userid IN (SELECT vu.userid FROM jbsfina.vendoruser vu WHERE vu.vendorid = '$vendorId')
              ORDER BY u.nama";
     $res = QueryDb($sql);
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         $sb->AppendLine("<option value='$row[0]'>$row[1]</option>");
     }

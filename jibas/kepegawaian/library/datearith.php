@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *  
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -94,8 +94,8 @@ class DateArith
 		if (strpos($time2, ":") === FALSE)
 			return;
 		
-		$atime1 = explode(":", $time1);
-		$atime2 = explode(":", $time2);
+		$atime1 = split(":", $time1);
+		$atime2 = split(":", $time2);
 		
 		if (count($atime1) == 2)
 			$itime1 = array($atime1[0], $atime1[1], 0);

@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,7 +48,7 @@ $tahunakhir=$_REQUEST['tahunakhir'];
 	<?
 	$querysuku = "SELECT COUNT(*) As Jum,j.jenismutasi As jenismutasi FROM jbsakad.mutasisiswa m,jbsakad.jenismutasi j,jbsakad.angkatan a,jbsakad.siswa s WHERE	a.departemen='$departemen' AND s.idangkatan=a.replid AND m.nis=s.nis AND s.statusmutasi=m.jenismutasi AND m.jenismutasi=j.replid AND YEAR(m.tglmutasi) >= '$tahunawal' AND YEAR(m.tglmutasi) <= '$tahunakhir' GROUP BY jenismutasi";
 $resultsuku = QueryDb($querysuku);
-if (@mysqli_num_rows($resultsuku)>0){
+if (@mysql_num_rows($resultsuku)>0){
 	?>
     <img src="gambar_statistik.php?departemen=<?=$departemen?>&tahunawal=<?=$tahunawal?>&tahunakhir=<?=$tahunakhir?>"/></div></td>
   <? } else { ?>

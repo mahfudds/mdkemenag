@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -54,7 +54,7 @@ $menit = "";
 if (isset($_REQUEST['menit']))
 	$menit = $_REQUEST['menit'];
 
-$tgl = date('d')."-".date('m')."-".date('Y');
+$tgl = date(d)."-".date(m)."-".date(Y);
 if (isset($_REQUEST['tanggal']))
 	$tgl= $_REQUEST['tanggal'];
 
@@ -63,7 +63,7 @@ if ($_REQUEST['replid']<> "") {
 	$sql = "SELECT p.replid, p.idkelas, p.idsemester, p.idpelajaran, p.tanggal, p.jam, k.idtahunajaran, a.departemen, k.idtingkat FROM presensipelajaran p, tahunajaran a, kelas k WHERE p.replid = '".$_REQUEST['replid']."' AND k.replid = p.idkelas AND a.replid = k.idtahunajaran";
 	$result = QueryDb($sql);
 	CloseDb();
-	$row = @mysqli_fetch_array($result);
+	$row = @mysql_fetch_array($result);
 	$departemen = $row['departemen'];
 	$tahunajaran = $row['idtahunajaran'];
 	$tingkat = $row['idtingkat'];
@@ -73,7 +73,8 @@ if ($_REQUEST['replid']<> "") {
 	$tgl=TglText($row['tanggal']);
 	$jam=substr($row['jam'],0,2);
 	$menit=substr($row['jam'],3,2);
-}
+}	
+	
 
 $ERROR_MSG = "";
 if (isset($_REQUEST['tampil'])) {	
@@ -82,7 +83,7 @@ if (isset($_REQUEST['tampil'])) {
 	$sql = "SELECT * FROM tahunajaran WHERE replid = '$tahunajaran' AND '$date' BETWEEN tglmulai AND tglakhir";
 	
 	$result = QueryDb($sql);
-	if (mysqli_num_rows($result) > 0) {
+	if (mysql_num_rows($result) > 0) {
 		if ($result) { ?>        	
 			<script language="javascript">
 			
@@ -268,7 +269,7 @@ function focusNext(elemName, evt) {
 			$sql = "SELECT replid,tahunajaran, tglmulai, tglakhir FROM tahunajaran WHERE departemen = '$departemen' AND aktif=1 ORDER BY replid DESC";
 			$result = QueryDb($sql);
 			CloseDb();
-			$row = @mysqli_fetch_array($result);	
+			$row = @mysql_fetch_array($result);	
 			$tahunajaran = $row['replid'];				
 		?>
         <input type="text" name="tahun" id="tahun" class="disabled" readonly style="width:140px;" value="<?=$row['tahunajaran']?>" />
@@ -284,7 +285,7 @@ function focusNext(elemName, evt) {
 			$result = QueryDb($sql);
 			CloseDb();
 	
-			while($row = mysqli_fetch_array($result)) {
+			while($row = mysql_fetch_array($result)) {
 			if ($tingkat == "")
 				$tingkat = $row['replid'];				
 			?>
@@ -301,7 +302,7 @@ function focusNext(elemName, evt) {
             $sql = "SELECT replid,semester FROM semester where departemen='$departemen' AND aktif = 1 ORDER BY replid DESC";
             $result = QueryDb($sql);
             CloseDb();
-            $row = @mysqli_fetch_array($result);			
+            $row = @mysql_fetch_array($result);			
         ?>
             <input type="text" name="sem" id="sem" class="disabled" style="width:140px" readonly value="<?=$row['semester']?>" />
             <input type="hidden" name="semester" id="semester" value="<?=$row['replid']?>">      	</td>
@@ -315,7 +316,7 @@ function focusNext(elemName, evt) {
 			$result = QueryDb($sql);
 			CloseDb();
 	
-			while($row = mysqli_fetch_array($result)) {
+			while($row = mysql_fetch_array($result)) {
 			if ($kelas == "")
 				$kelas = $row['replid'];				 
 			?>
@@ -342,7 +343,7 @@ function focusNext(elemName, evt) {
 			$sql = "SELECT replid,nama FROM pelajaran WHERE departemen = '$departemen' AND aktif=1 ORDER BY nama";
 			$result = QueryDb($sql);
 			CloseDb();
-			while ($row = @mysqli_fetch_array($result)) {
+			while ($row = @mysql_fetch_array($result)) {
 			if ($pelajaran == "") 				
 				$pelajaran = $row['replid'];			
 			?>

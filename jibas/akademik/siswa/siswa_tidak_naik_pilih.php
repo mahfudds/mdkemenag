@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -97,12 +97,12 @@ if ($op=="x2378e23dkofh73n25ki9234"){
 	OpenDb();
 	$sql_kap_kelas_tujuan="SELECT kapasitas FROM jbsakad.kelas WHERE replid=$kelastujuan";
 	$result_kap_kelas_tujuan=QueryDb($sql_kap_kelas_tujuan);
-	$row_kap_kelas_tujuan=mysqli_fetch_array($result_kap_kelas_tujuan);
+	$row_kap_kelas_tujuan=mysql_fetch_array($result_kap_kelas_tujuan);
 	$kap_kelas_tujuan=$row_kap_kelas_tujuan['kapasitas'];
 	
 	$sql_jum_kelas_tujuan="SELECT COUNT(nis) FROM jbsakad.siswa WHERE idkelas=$kelastujuan AND aktif = 1";
 	$result_jum_kelas_tujuan=QueryDb($sql_jum_kelas_tujuan);
-	$row_jum_kelas_tujuan=mysqli_fetch_row($result_jum_kelas_tujuan);
+	$row_jum_kelas_tujuan=mysql_fetch_row($result_jum_kelas_tujuan);
 	
 	if ((int)$kap_kelas_tujuan<=(int)$row_jum_kelas_tujuan[0]){
 		$ERROR_MSG = "Kapasitas kelas tujuan sudah penuh.  Silahkan pilih kelas tujuan lain!";
@@ -298,14 +298,14 @@ function refresh_pilih(i) {
 		$sql_tot = "SELECT s.nis,s.nama,s.idkelas,k.kelas,s.replid,t.tingkat FROM jbsakad.siswa s, kelas k, tingkat t WHERE $string s.idkelas = k.replid AND k.idtahunajaran = $tahunajaran AND s.aktif=1 AND k.idtingkat = t.replid AND t.replid = $tingkat"; 
 		
 		$result_tot = QueryDb($sql_tot);
-		$total=ceil(mysqli_num_rows($result_tot)/(int)$varbaris);
-		$jumlah = mysqli_num_rows($result_tot);
+		$total=ceil(mysql_num_rows($result_tot)/(int)$varbaris);
+		$jumlah = mysql_num_rows($result_tot);
 		$akhir = ceil($jumlah/5)*5;	
 		
 		$sql_siswa = "SELECT s.nis,s.nama,s.idkelas,k.kelas,s.replid,t.tingkat FROM jbsakad.siswa s, kelas k, tingkat t WHERE $string s.idkelas = k.replid AND k.idtahunajaran = $tahunajaran AND s.aktif=1 AND k.idtingkat = t.replid AND t.replid = $tingkat ORDER BY $urut $urutan LIMIT ".(int)$page*(int)$varbaris.",$varbaris";
 		
 		$result_siswa = QueryDb($sql_siswa);
-		if (@mysqli_num_rows($result_siswa)>0) {
+		if (@mysql_num_rows($result_siswa)>0) {
 ?>	
 
 <input type="hidden" name="total" id="total" value="<?=$jumlah?>">
@@ -331,10 +331,10 @@ function refresh_pilih(i) {
 			$cnt = 1;
 		else 
 			$cnt = (int)$page*(int)$varbaris+1;
-		while ($row_siswa=@mysqli_fetch_row($result_siswa)){
+		while ($row_siswa=@mysql_fetch_row($result_siswa)){
             $sql_kelas="SELECT replid,kelas FROM jbsakad.kelas WHERE replid='$row_siswa[2]'";
             $result_kelas=QueryDb($sql_kelas);
-            $row_kelas=@mysqli_fetch_row($result_kelas);
+            $row_kelas=@mysql_fetch_row($result_kelas);
 ?>
 
     <tr height="25">

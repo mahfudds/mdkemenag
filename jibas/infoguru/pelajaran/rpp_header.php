@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -144,7 +144,7 @@ function show() {
 			$sql = "SELECT replid,semester,aktif FROM semester where departemen='$departemen' ORDER BY aktif DESC";
 			$result = QueryDb($sql);
 			CloseDb();
-			while ($row = @mysqli_fetch_array($result)) {
+			while ($row = @mysql_fetch_array($result)) {
 			if ($semester == "") 
 				$semester = $row['replid'];
 			$ada = "";
@@ -165,7 +165,7 @@ function show() {
 			$result = QueryDb($sql);
 			CloseDb();
 	
-			while($row = mysqli_fetch_array($result)) {
+			while($row = mysql_fetch_array($result)) {
 			if ($tingkat == "")
 				$tingkat = $row['replid'];				
 			?>
@@ -185,7 +185,7 @@ function show() {
 			$sql = "SELECT pel.replid as replid,pel.nama as nama FROM pelajaran pel,guru g WHERE pel.departemen = '$departemen' AND pel.aktif=1 AND g.nip='".SI_USER_ID()."' AND g.idpelajaran=pel.replid ORDER BY pel.nama";
 					$result = QueryDb($sql);
 			CloseDb();
-			while ($row = @mysqli_fetch_array($result)) {
+			while ($row = @mysql_fetch_array($result)) {
 			if ($pelajaran == "") 				
 				$pelajaran = $row['replid'];			
 			?>

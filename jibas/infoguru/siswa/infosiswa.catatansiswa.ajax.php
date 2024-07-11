@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,7 +45,7 @@ $sql = "SELECT c.replid as replid,c.judul as judul, c.catatan as catatan, c.nip 
           FROM jbsvcr.catatansiswa c, jbssdm.pegawai p 
 	     WHERE c.nis='$nis' AND MONTH(c.tanggal)='$bulan' AND YEAR(c.tanggal)='$tahun' AND p.nip=c.nip ";
 $result=QueryDb($sql);
-$num=@mysqli_num_rows($result);
+$num=@mysql_num_rows($result);
 ?>
 <table width="100%" border="1" cellspacing="0" class="tab">
 <tr>
@@ -56,7 +56,7 @@ $num=@mysqli_num_rows($result);
 if ($num>0)
 {
   	$cnt=1;
-	while ($row=@mysqli_fetch_array($result))
+	while ($row=@mysql_fetch_array($result))
     {
     	$a="";
     	if ($cnt%2==0)
@@ -67,14 +67,14 @@ if ($num>0)
                 <div align="center"><?=$cnt?></div>
             </td>
             <td height="25" valign="top">
-                <?=ShortDateFormat($row['tanggal'])?><br /><?=$row['nip']?>-<?=$row['nama']?>
+                <?=ShortDateFormat($row[tanggal])?><br /><?=$row[nip]?>-<?=$row[nama]?>
             </td>
         </tr>
         <tr <?=$a?>>
             <td height="25">
                 <font face="Verdana, Arial, Helvetica, sans-serif" color="#999999">
-                    [<?=$row['judul']?>]
-                </font><br /><?=$row['catatan']?>
+                    [<?=$row[judul]?>]
+                </font><br /><?=$row[catatan]?>
             </td>
 <?      $cnt++;
   	}

@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  *
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@ function ShowFollowModul($sortBy)
                AND $userCol = '$userId'";
 
     $res = QueryDb($sql);
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         if ($idList != "") $idList .= ",";
         $idList .= $row[0];
@@ -65,7 +65,7 @@ function ShowFollowModul($sortBy)
 
     $res = QueryDb($sql);
     echo "<table border='0' cellpadding='5' cellspacing='0' width='600px'>";
-    while ($row = mysqli_fetch_array($res))
+    while ($row = mysql_fetch_array($res))
     {
         $idModul = $row['id'];
 
@@ -101,7 +101,7 @@ function ShowFollowChannel($sortBy)
                AND c.aktif = 1
                AND cf.$userCol = '$userId'";
     $res = QueryDb($sql);
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         if ($idList != "") $idList .= ",";
         $idList .= $row[0];
@@ -131,7 +131,7 @@ function ShowFollowChannel($sortBy)
 
     $res = QueryDb($sql);
     echo "<table border='0' cellpadding='5' cellspacing='0' width='600px'>";
-    while ($row = mysqli_fetch_array($res))
+    while ($row = mysql_fetch_array($res))
     {
         $idChannel = $row['id'];
 

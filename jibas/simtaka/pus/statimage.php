@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ $type = $_REQUEST['type'];
 $krit = $_REQUEST['krit']; //1 Statistik peminjam terbanyak 
 $key = $_REQUEST['key'];
 $Limit = $_REQUEST['Limit'];
-$key = explode(',', $key);
+$key = split(',', $key);
 if ($krit==2)
 {
 	require_once("../lib/chartfactory2.php");

@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *  
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,13 +39,13 @@ if (isset($_REQUEST['simpan']))
 				  FROM jbsuser.hakakses
 				 WHERE login = '$_REQUEST[nip]' AND tingkat = $tingkat AND modul = 'SIMPEG'";
 	$result_c = QueryDb($query_c);
-    $num_c = @mysqli_num_rows($result_c);
+    $num_c = @mysql_num_rows($result_c);
 	
 	$query_cek = "SELECT *
 					FROM jbsuser.login
 				   WHERE login = '$_REQUEST[nip]'";
 	$result_cek = QueryDb($query_cek);
-    $num_cek = @mysqli_num_rows($result_cek);
+    $num_cek = @mysql_num_rows($result_cek);
 		
 	BeginTrans();
 	$success=1;	
@@ -106,7 +106,7 @@ if (isset($_REQUEST['simpan']))
 <script language="javascript">
 function caripegawai()
 {
-	newWindow('../library/pegawai.php?flag=0','CariPegawai','600','618','resizable=1,scrollbars=1,status=0,toolbar=1');
+	newWindow('../library/pegawai.php?flag=0','CariPegawai','600','618','resizable=1,scrollbars=1,status=0,toolbar=0');
 }
 
 function acceptPegawai(nip,nama)
@@ -206,12 +206,9 @@ function cek_form()
 <!-- TABLE CONTENT -->
 <tr>
     <td width="80"><strong>Login</strong></td>
-    <td width="1025">
-        <input type="text" size="10" name="nip1" id="nip1" readonly value="<?= isset($_REQUEST['nip']) ? $_REQUEST['nip'] : "" ?>" class="disabled" onClick="caripegawai()">&nbsp;
-        <input type="text" size="30" name="nama1" id="nama1" readonly value="<?= isset($_REQUEST['nama']) ? $_REQUEST['nama'] : "" ?>" class="disabled" onClick="caripegawai()">
-    	<input type="hidden" name="nip" id="nip" value="<?= isset($_REQUEST['nip']) ? $_REQUEST['nip'] : "" ?>">
-        <input type="hidden" name="nama" id="nama" value="<?= isset($_REQUEST['nama']) ? $_REQUEST['nama'] : "" ?>">
-        <a href="#" onClick="caripegawai()"><img src="../images/ico/cari.png" border="0" onMouseOver="showhint('Cari pegawai',this, event, '100px')"></a>
+    <td width="1025"><input type="text" size="10" name="nip1" id="nip1" readonly value="<?=$_REQUEST['nip'] ?>" class="disabled" onClick="caripegawai()">&nbsp;<input type="text" size="30" name="nama1" id="nama1" readonly value="<?=$_REQUEST['nama']?>" class="disabled" onClick="caripegawai()">
+    	<input type="hidden" name="nip" id="nip" value="<?=$_REQUEST['nip']?>">
+        <input type="hidden" name="nama" id="nama" value="<?=$_REQUEST['nama']?>"><a href="#" onClick="caripegawai()"><img src="../images/ico/cari.png" border="0" onMouseOver="showhint('Cari pegawai',this, event, '100px')"></a>
     </td>
 </tr>
 <tr>

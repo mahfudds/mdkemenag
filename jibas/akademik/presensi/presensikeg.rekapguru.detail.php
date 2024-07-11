@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,14 +44,14 @@ $sql = "SELECT nama
           FROM jbssdm.pegawai
          WHERE nip = '$nip'";   
 $res = QueryDB($sql);	
-$row = mysqli_fetch_row($res);
+$row = mysql_fetch_row($res);
 $nama = $row[0];
 
 $sql = "SELECT kegiatan
           FROM jbssat.frkegiatan
          WHERE replid = $idkegiatan";
 $res = QueryDb($sql);
-$row = mysqli_fetch_row($res);
+$row = mysql_fetch_row($res);
 $kegiatan = $row[0];
 
 ?> 
@@ -110,7 +110,7 @@ $kegiatan = $row[0];
                AND p.idkegiatan = $idkegiatan
              ORDER BY date_in DESC";         
     $res = QueryDb($sql);
-    while($row = mysqli_fetch_array($res))
+    while($row = mysql_fetch_array($res))
     {
         $ti = trim($row["time_in"]);
 		$to = trim($row["time_out"]);
@@ -127,9 +127,9 @@ $kegiatan = $row[0];
                        AND hari = $wd";
 			//echo $sql;		   
             $res2 = QueryDb($sql);
-            if (mysqli_num_rows($res2) > 0)
+            if (mysql_num_rows($res2) > 0)
             {
-                $row2 = mysqli_fetch_row($res2);
+                $row2 = mysql_fetch_row($res2);
                 
                 $to = $row2[0] . ":00";
                 $tomark = " (std)";
@@ -163,9 +163,9 @@ $kegiatan = $row[0];
 					   AND hari = $wd";
 			
 			$res2 = QueryDb($sql);
-			if (mysqli_num_rows($res2) > 0)
+			if (mysql_num_rows($res2) > 0)
 			{
-				$row2 = mysqli_fetch_row($res2);
+				$row2 = mysql_fetch_row($res2);
 				$telatt = $row2[0];
 				
 				$telatm = DateArith::TimeToMinute($telatt);

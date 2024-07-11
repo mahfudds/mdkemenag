@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,30 +24,30 @@
 class CAnggotaEdit{
 	var $replid;
 	function OnStart(){
-		if (isset($_REQUEST['simpan'])){
+		if (isset($_REQUEST[simpan])){
 			$this->save();		
 		} else {
-			$this->replid = $_REQUEST['replid'];
+			$this->replid = $_REQUEST[replid];
 			$sql = "SELECT * FROM anggota WHERE replid='$_REQUEST[replid]'";
 			$result = QueryDb($sql);
-			$row = @mysqli_fetch_array($result);
-			$this->noreg = $row['noregistrasi'];
-			$this->nama = $row['nama'];
-			$this->alamat = $row['alamat'];
-			$this->telpon = $row['telpon'];
-			$this->email = $row['email'];
-			$this->hp = $row['HP'];
-			$this->kodepos = $row['kodepos'];
-			$this->pekerjaan = $row['pekerjaan'];
-			$this->institusi = $row['institusi'];
-			$this->keterangan = $row['keterangan'];
+			$row = @mysql_fetch_array($result);
+			$this->noreg = $row[noregistrasi];
+			$this->nama = $row[nama];
+			$this->alamat = $row[alamat];
+			$this->telpon = $row[telpon];
+			$this->email = $row[email];
+			$this->hp = $row[HP];
+			$this->kodepos = $row[kodepos];
+			$this->pekerjaan = $row[pekerjaan];
+			$this->institusi = $row[institusi];
+			$this->keterangan = $row[keterangan];
 		}
 	}
 	function exist(){
 		?>
         <script language="javascript">
 			alert('Kode sudah digunakan!');
-			document.location.href="format.edit.php?id=<?=$_REQUEST['replid']?>";
+			document.location.href="format.edit.php?id=<?=$_REQUEST[replid]?>";
 		</script>
         <?
 	}
@@ -128,16 +128,16 @@ class CAnggotaEdit{
 		<?
 	}
 	function save(){
-		$replid = $_REQUEST['replid'];
-		$nama = trim(addslashes($_REQUEST['nama']));
-		$alamat = trim(addslashes($_REQUEST['alamat']));
-		$kodepos = trim(addslashes($_REQUEST['kodepos']));
-		$email = trim(addslashes($_REQUEST['email']));
-		$telpon = trim(addslashes($_REQUEST['telpon']));
-		$hp = trim(addslashes($_REQUEST['hp']));
-		$kerja = trim(addslashes($_REQUEST['kerja']));
-		$institusi = trim(addslashes($_REQUEST['institusi']));
-		$keterangan = trim(addslashes($_REQUEST['keterangan']));
+		$replid = $_REQUEST[replid];
+		$nama = trim(addslashes($_REQUEST[nama]));
+		$alamat = trim(addslashes($_REQUEST[alamat]));
+		$kodepos = trim(addslashes($_REQUEST[kodepos]));
+		$email = trim(addslashes($_REQUEST[email]));
+		$telpon = trim(addslashes($_REQUEST[telpon]));
+		$hp = trim(addslashes($_REQUEST[hp]));
+		$kerja = trim(addslashes($_REQUEST[kerja]));
+		$institusi = trim(addslashes($_REQUEST[institusi]));
+		$keterangan = trim(addslashes($_REQUEST[keterangan]));
 		$foto = $_FILES['foto'];
 		$uploadedfile = $foto['tmp_name'];
 		$uploadedfile_name = $foto['name'];
@@ -149,7 +149,7 @@ class CAnggotaEdit{
 			$foto_binary = addslashes(fread(fopen($filename,"r"),filesize($filename)));
 			$fill_foto = ", foto='$foto_binary'"; 
 		}
-		$date = @mysqli_fetch_row(QueryDb("SELECT now()"));
+		$date = @mysql_fetch_row(QueryDb("SELECT now()"));
 		$sql = "UPDATE anggota SET nama='$nama', alamat='$alamat', kodepos='$kodepos', email='$email', telpon='$telpon', hp='$hp', pekerjaan='$kerja', institusi='$institusi', keterangan='$keterangan', tgldaftar='$date[0]' $fill_foto WHERE replid='$replid'";
 		$result = QueryDb($sql);
 		if ($result)

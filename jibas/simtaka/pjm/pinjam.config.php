@@ -1,5 +1,5 @@
 <?
-$WaktuPinjamSiswa = 2;
-$WaktuPinjamPegawai = 4;
-$WaktuPinjamLain = 2;
+$WaktuPinjamSiswa = 3;
+$WaktuPinjamPegawai = 5;
+$WaktuPinjamLain = 1;
 ?>

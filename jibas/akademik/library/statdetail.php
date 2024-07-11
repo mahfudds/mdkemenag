@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -62,14 +62,14 @@ function OpenDetailWakaf(id) {
 <body style="background-color:#F5F5F5">
 <?
 if ($key == 2) {
-	$info = explode("-", $keyword);
+	$info = split("-", $keyword);
 	$thn1 = $info[0];
 	$thn2 = $info[1];
 
 	$column = "Tahun";
 	$sql = "SELECT replid, DATE_FORMAT(tanggal, '%d %M %Y') AS tgl, nomor, suami, istri, idbukunikah, idaktanikah FROM aktanikahgab WHERE status=1 AND YEAR(tanggal) = $ref ORDER BY tanggal";	
 } else {
-	$info = explode("-", $keyword);
+	$info = split("-", $keyword);
 	$thn1 = $info[1] . "-" . $info[0] . "-1";
 	$thn2 = $info[3] . "-" . $info[2] . "-31";
 	
@@ -114,7 +114,7 @@ if ($key == 7 || $key == 8 || $key == 9 || $key == 10 || $key == 11) {
 }
 if ($key == 12 || $key == 13 || $key == 14 || $key == 15) {
 	if ($key==12){
-		$info = explode("-", $keyword);
+		$info = split("-", $keyword);
 		$thn1 = $info[0];
 		$thn2 = $info[1];
 	$column = "Jabatan";
@@ -123,7 +123,7 @@ if ($key == 12 || $key == 13 || $key == 14 || $key == 15) {
 	$sql = "SELECT w.replid,w.tanggal,w.nilai FROM wakaf w WHERE YEAR(w.tanggal)='$thn2' ORDER BY w.replid  ";	
 	}
 	if ($key==13){
-		$info = explode("-", $ref);
+		$info = split("-", $ref);
 		$thn1 = $info[1] . "-" . $info[0] . "-1";
 		$thn2 = $info[3] . "-" . $info[2] . "-31";
 		$bln1 = $info[1];
@@ -133,7 +133,7 @@ if ($key == 12 || $key == 13 || $key == 14 || $key == 15) {
 	$sql = "SELECT w.replid,w.tanggal,w.nilai FROM wakaf w WHERE MONTH(w.tanggal)='$bln1' ORDER BY w.replid  ";	
 	}
 	if ($key==14){
-		$info = explode("-", $ref);
+		$info = split("-", $ref);
 		$thn1 = $info[0];
 		$bln1 = $info[1];
 	$column = "Pendidikan";
@@ -142,7 +142,7 @@ if ($key == 12 || $key == 13 || $key == 14 || $key == 15) {
 	$sql = "SELECT w.replid,w.tanggal,w.nilai FROM wakaf w WHERE YEAR(w.tanggal)='$thn1' ORDER BY w.replid ";	
 	}
 	if ($key==15){
-		$info = explode("-", $ref);
+		$info = split("-", $ref);
 		$thn1 = $info[0];
 		$bln1 = $info[1];
 	$column = "Nilai";
@@ -181,7 +181,7 @@ if ($key == 12 || $key == 13 || $key == 14 || $key == 15) {
 OpenDb();
 $result = QueryDb($sql);
 $cnt = 0;
-while ($row = mysqli_fetch_row($result)) {
+while ($row = mysql_fetch_row($result)) {
 ?>
 <tr height="20">
 	<td align="center" valign="top"><?=++$cnt?></td>

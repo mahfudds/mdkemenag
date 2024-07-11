@@ -4,9 +4,9 @@
  * Jaringan Informasi Bersama Antar Sekolah
  * 
  * @version: 2.6.0 (January 14, 2012)
- * @notes: 
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -125,7 +125,7 @@ function cetak() {
 	$sql = "SELECT * FROM jbsvcr.catatankategori ORDER BY replid";
 	//echo $sql;    
 	$result = QueryDb($sql);
-	if (@mysqli_num_rows($result) > 0){
+	if (@mysql_num_rows($result) > 0){
 	?>
     <table border="0" cellpadding="0" cellspacing="0" width="95%" align="center">
     <!-- TABLE CONTENT -->
@@ -149,33 +149,33 @@ function cetak() {
 <? 	
 	
 	$cnt = 0;
-	while ($row = mysqli_fetch_array($result)) { ?>
+	while ($row = mysql_fetch_array($result)) { ?>
     <tr height="25">
     	<td align="center"><?=++$cnt ?></td>
-        <td><?=$row['kategori'] ?></td>
+        <td><?=$row[kategori] ?></td>
         
         <td align="center">
         
 <?		if (SI_USER_LEVEL() == $SI_USER_STAFF) {  
-			if ($row['aktif'] == 1) { ?>
+			if ($row[aktif] == 1) { ?> 
             	<img src="../images/ico/aktif.png" border="0" onMouseOver="showhint('Status Aktif!', this, event, '50px')"/>
 <?			} else { ?>                
 				<img src="../images/ico/nonaktif.png" border="0" onMouseOver="showhint('Status Tidak Aktif!', this, event, '50px')"/>
 <?			}
 		} else { 
-			if ($row['aktif'] == 1) { ?>
-				<a href="JavaScript:setaktif(<?=$row['replid'] ?>, <?=$row['aktif'] ?>)"><img src="../images/ico/aktif.png" border="0" onMouseOver="showhint('Status Aktif!', this, event, '50px')"/></a>
+			if ($row[aktif] == 1) { ?>
+				<a href="JavaScript:setaktif(<?=$row[replid] ?>, <?=$row[aktif] ?>)"><img src="../images/ico/aktif.png" border="0" onMouseOver="showhint('Status Aktif!', this, event, '50px')"/></a>
 <?			} else { ?>
-				<a href="JavaScript:setaktif(<?=$row['replid'] ?>, <?=$row['aktif'] ?>)"><img src="../images/ico/nonaktif.png" border="0" onMouseOver="showhint('Status Tidak Aktif!', this, event, '50px')"/></a>
+				<a href="JavaScript:setaktif(<?=$row[replid] ?>, <?=$row[aktif] ?>)"><img src="../images/ico/nonaktif.png" border="0" onMouseOver="showhint('Status Tidak Aktif!', this, event, '50px')"/></a>
 <?			} //end if
 		} //end if ?>        
         
         </td>
-        <td><?=$row['keterangan'] ?></td>
+        <td><?=$row[keterangan] ?></td>
 <?		if (SI_USER_LEVEL() != $SI_USER_STAFF) {  ?>         
 		<td align="center">
-            <a href="JavaScript:edit(<?=$row['replid'] ?>)"><img src="../images/ico/ubah.png" border="0" onMouseOver="showhint('Ubah Kategori!', this, event, '75px')" /></a>&nbsp;
-            <a href="JavaScript:hapus(<?=$row['replid'] ?>)"><img src="../images/ico/hapus.png" border="0" onMouseOver="showhint('Hapus Kategori!', this, event, '75px')"/></a>
+            <a href="JavaScript:edit(<?=$row[replid] ?>)"><img src="../images/ico/ubah.png" border="0" onMouseOver="showhint('Ubah Kategori!', this, event, '75px')" /></a>&nbsp;
+            <a href="JavaScript:hapus(<?=$row[replid] ?>)"><img src="../images/ico/hapus.png" border="0" onMouseOver="showhint('Hapus Kategori!', this, event, '75px')"/></a>
         </td>
 <?		} ?>  
     </tr>

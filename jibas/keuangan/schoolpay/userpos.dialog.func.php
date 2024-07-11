@@ -9,7 +9,7 @@ function LoadValue()
 
     $sql = "SELECT * FROM jbsfina.userpos WHERE replid = $userReplid";
     $res = QueryDb($sql);
-    if ($row = mysqli_fetch_array($res))
+    if ($row = mysql_fetch_array($res))
     {
         $userId = $row["userid"];
         $userName = $row["nama"];

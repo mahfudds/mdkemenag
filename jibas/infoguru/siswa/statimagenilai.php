@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,12 +30,12 @@ require_once('../library/class/jpgraph.php');
 require_once('../library/class/jpgraph_bar.php');
 require_once('../library/class/jpgraph_line.php');
 
-$departemen = $_REQUEST['departemen'];
-$tahunajaran = $_REQUEST['tahunajaran'];
-$tingkat = $_REQUEST['tingkat'];
-$semester = $_REQUEST['semester'];
-$pelajaran = $_REQUEST['pelajaran'];
-$dasarpenilaian = $_REQUEST['dasarpenilaian'];
+$departemen = $_REQUEST[departemen];
+$tahunajaran = $_REQUEST[tahunajaran];
+$tingkat = $_REQUEST[tingkat];
+$semester = $_REQUEST[semester];
+$pelajaran = $_REQUEST[pelajaran];
+$dasarpenilaian = $_REQUEST[dasarpenilaian];	
 
 // end include file ===============================================================================
 
@@ -55,9 +55,9 @@ OpenDb();
 					"AND k.idtingkat = '$tingkat' ";	
 		//echo $sql;
 		$result=Querydb($sql);
-		$row = @mysqli_fetch_array($result);
+		$row = @mysql_fetch_array($result);
 		
-		if(($row['nmin'] >= 0) AND ($row['nmax'] <= 10)){
+		if(($row[nmin] >= 0) AND ($row[nmax] <= 10)){
 			$dasar = '1'; //satuan
 		}else{
 			$dasar = '10'; //satuan
@@ -86,15 +86,15 @@ OpenDb();
 					"AND k.idtahunajaran = '$tahunajaran' ".
 					"AND k.idtingkat = '$tingkat' ";	
 		//echo $query;
-		$result=Querydb($query) or die(mysqli_error());
+		$result=Querydb($query) or die(mysql_error());
 		
-		if(mysqli_num_rows($result)==0){
+		if(mysql_num_rows($result)==0){
 				$data[$a]=0;	
 		}else{
 			
 				$lab=array(">=90",">=80",">=70",">=60",">=50",">=40",">=30",">=20",">=10");
-				while($fetch=@mysqli_fetch_array($result)){			
-					$data = array($fetch['j1'],$fetch['j2'],$fetch['j3'],$fetch['j4'],$fetch['j5'],$fetch['j6'],$fetch['j7'],$fetch['j8'],$fetch['j9']);
+				while($fetch=@mysql_fetch_array($result)){			
+					$data = array($fetch[j1],$fetch[j2],$fetch[j3],$fetch[j4],$fetch[j5],$fetch[j6],$fetch[j7],$fetch[j8],$fetch[j9]);
 				}
 			
 		}

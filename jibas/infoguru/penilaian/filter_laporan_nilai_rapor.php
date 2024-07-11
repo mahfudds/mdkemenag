@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -208,11 +208,11 @@ if (!isset($_POST['lihat'])) {
                         "WHERE departemen = '$departemen' AND aktif = '1' ORDER BY semester ASC";
             $result_s = QueryDb($query_s);
 
-            $row_s = @mysqli_fetch_array($result_s);
+            $row_s = @mysql_fetch_array($result_s);
                 
             ?>
-            <input type="hidden" name="semester" value="<?=$row_s['replid']?>">
-			<input type="text" size="21" value="<?=$row_s['semester']?>" readonly class="disabled">			</td>
+            <input type="hidden" name="semester" value="<?=$row_s[replid]?>">
+			<input type="text" size="21" value="<?=$row_s[semester]?>" readonly class="disabled">			</td>
             <td align="left" valign="middle" width="72" rowspan="4"><img src="../images/ico/view.png" width="48" height="48" border="0" onClick="show()" style="cursor:pointer;"></td>
           <td align="right" valign="top" width="398" rowspan="4">
           <font size="4" face="Verdana, Arial, Helvetica, sans-serif" style="background-color:#ffcc66">&nbsp;</font>&nbsp;<font size="4" face="Verdana, Arial, Helvetica, sans-serif" color="Gray">Nilai Rapor Siswa</font><br />
@@ -228,12 +228,12 @@ if (!isset($_POST['lihat'])) {
             $result_t = QueryDb($query_t);
 
             $i = 0;
-            while ($row_t = @mysqli_fetch_array($result_t)) {
+            while ($row_t = @mysql_fetch_array($result_t)) {
                 if($tingkat == "") {
-                    $tingkat = $row_t['replid'];
+                    $tingkat = $row_t[replid];
                     $sel[$i] = "selected";
                 }
-                elseif($tingkat == $row_t['replid']) {
+                elseif($tingkat == $row_t[replid]) {
 				    $sel[$i] = "selected";
                 }else {
                     $sel[$i] = "";
@@ -252,9 +252,9 @@ if (!isset($_POST['lihat'])) {
             $query_th = "SELECT replid, tahunajaran FROM jbsakad.tahunajaran ".
                         "WHERE departemen = '$departemen' AND aktif = '1' ";
             $result_th = QueryDb($query_th);
-            $row_th = @mysqli_fetch_array($result_th);
-            $tahun = $row_th['tahunajaran'];
-            $replid = $row_th['replid'];
+            $row_th = @mysql_fetch_array($result_th);
+            $tahun = $row_th[tahunajaran];
+            $replid = $row_th[replid];
 
             $query_k = "SELECT replid, kelas FROM jbsakad.kelas ".
                         "WHERE idtingkat = '$tingkat' ".
@@ -262,12 +262,12 @@ if (!isset($_POST['lihat'])) {
             $result_k = QueryDb($query_k);
 
             $i = 0;
-            while ($row_k = @mysqli_fetch_array($result_k)) {
+            while ($row_k = @mysql_fetch_array($result_k)) {
                 if($kelas == "") {
-                    $kelas = $row_k['replid'];
+                    $kelas = $row_k[replid];
                     $sel[$i] = "selected";
                 }
-                elseif($kelas == $row_k['replid']) {
+                elseif($kelas == $row_k[replid]) {
 				    $sel[$i] = "selected";
                 }else {
                     $sel[$i] = "";
@@ -298,7 +298,7 @@ if (!isset($_POST['lihat'])) {
                          FROM jbsakad.tahunajaran 
                         WHERE replid='$replid'";
                 $res = QueryDb($sql);
-                $row = @mysqli_fetch_array($res);
+                $row = @mysql_fetch_array($res);
                 $yy1 = $row[0];
                 $mm1 = $row[1];
                 $dd1 = $row[2];

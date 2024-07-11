@@ -4,9 +4,9 @@
  * Jaringan Informasi Bersama Antar Sekolah
  * 
  * @version: 23.0 (November 12, 2020)
- * @notes: 
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,9 +42,9 @@ function GetPhoneList($jenis, $nis)
                  WHERE nopendaftaran = '$nis'";
     //echo "$sql<br>";
     $res = QueryDb($sql);
-    if (mysqli_num_rows($res) > 0)
+    if (mysql_num_rows($res) > 0)
     {
-        $row = mysqli_fetch_row($res);
+        $row = mysql_fetch_row($res);
         $temp = array($row[0], $row[1], $row[2]);
         $j = 0;
         for($i = 0; $i < count($temp); $i++)
@@ -83,7 +83,7 @@ function GetChatIdList($jenis, $nis)
                  WHERE nic = '$nis'
                    AND aktif = 1";
     $res = QueryDb($sql);
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         $chatIdList[] = $row[0];
     }
@@ -114,7 +114,7 @@ function GetFcmTokenList($jenis, $userId)
 				   AND loggedin = 1";
 
     $res = QueryDb($sql);
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         $fcmTokenList[] = $row[0];
     }
@@ -486,30 +486,11 @@ function CreateSMSTabungan($jenis, $departemen, $nis, $nama, $tanggal, $besar, $
         $sql = "INSERT INTO jbsjs.notif SET msgdate = NOW(), desttoken = '$jsonTokenList', topicid = '', msgtitle = 'Tabungan', msgbody = '$sms', msgsource = '$jenis'";
         QueryDbTrans($sql, $success);
 
-        /*
         $sql = "INSERT INTO jbsjs.notifmessage SET nis = '$nis', nip = null, nic = null, message = '$sms', notifdate = NOW(), source = '$jenis', title = 'Tabungan'";
         QueryDbTrans($sql, $success);
 
         $sql = "INSERT INTO jbsjs.notifmessagehistory SET nis = '$nis', nip = null, nic = null, message = '$sms', notifdate = NOW(), source = '$jenis', title = 'Tabungan'";
         QueryDbTrans($sql, $success);
-        */
-
-        if ($jenis == "SISTAB")
-        {
-            $sql = "INSERT INTO jbsjs.notifmessage SET nis = '$nis', nip = null, nic = null, message = '$sms', notifdate = NOW(), source = '$jenis', title = 'Tabungan'";
-            QueryDbTrans($sql, $success);
-
-            $sql = "INSERT INTO jbsjs.notifmessagehistory SET nis = '$nis', nip = null, nic = null, message = '$sms', notifdate = NOW(), source = '$jenis', title = 'Tabungan'";
-            QueryDbTrans($sql, $success);
-        }
-        else if ($jenis == "PEGTAB")
-        {
-            $sql = "INSERT INTO jbsjs.notifmessage SET nip = '$nis', nis = null, nic = null, message = '$sms', notifdate = NOW(), source = '$jenis', title = 'Tabungan'";
-            QueryDbTrans($sql, $success);
-
-            $sql = "INSERT INTO jbsjs.notifmessagehistory SET nip = '$nis', nis = null, nic = null, message = '$sms', notifdate = NOW(), source = '$jenis', title = 'Tabungan'";
-            QueryDbTrans($sql, $success);
-        }
 
         $nJsSend = 1;
     }

@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  *
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ function ShowCbDepartemen()
 
     echo "<select id='cbDepartemen' style='height: 25px; width: 220px' onchange='bw_changeDept()'>";
     $res = QueryDb($sql);
-    while ($row = mysqli_fetch_row($res))
+    while ($row = mysql_fetch_row($res))
     {
         if ($selDept == "") $selDept = $row[0];
         echo "<option value='$row[0]'>$row[0]</option>";
@@ -52,13 +52,13 @@ function ShowCbPelajaran($dept)
     $res = QueryDb($sql);
 
     echo "<select id='cbPelajaran' style='height: 25px; width: 300px' onchange='bw_changePel()'>";
-    if (mysqli_num_rows($res) == 0)
+    if (mysql_num_rows($res) == 0)
     {
         echo "<option value='0'>(belum ada channel pelajaran)</option>";
     }
     else
     {
-        while ($row = mysqli_fetch_row($res))
+        while ($row = mysql_fetch_row($res))
         {
             echo "<option value='$row[0]'>$row[1]</option>";
         }
@@ -78,7 +78,7 @@ function BrowseChannel($idPelajaran)
     $res = QueryDb($sql);
 
     echo "<table border='0' width='900' cellpadding='2' cellspacing='0'>";
-    while ($row = mysqli_fetch_array($res))
+    while ($row = mysql_fetch_array($res))
     {
         $idChannel = $row['id'];
 

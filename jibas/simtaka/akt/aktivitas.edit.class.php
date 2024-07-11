@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,23 +23,23 @@
 <?
 class CAktivitasEdit{
 	function OnStart(){
-		$this->replid = $_REQUEST['replid'];
+		$this->replid = $_REQUEST[replid];
 		$sql = "SELECT * FROM aktivitas WHERE replid=".$this->replid;
 		$result = QueryDb($sql);
-		$row = @mysqli_fetch_array($result);
-		$this->perpustakaan = $row['perpustakaan'];
-		$tgl = explode(' ',$row['tanggal']);
+		$row = @mysql_fetch_array($result);
+		$this->perpustakaan = $row[perpustakaan];
+		$tgl = split(' ',$row[tanggal]);
 		$this->tanggal = $tgl[0];
-		$this->aktivitas = $row['aktivitas'];
+		$this->aktivitas = $row[aktivitas];
 		$sqlDate = "SELECT DATE_FORMAT(now(),'%Y-%m-%d'),DATE_FORMAT(now(),'%H:%i:%s')";
 		$resultDate = QueryDb($sqlDate);
-		$rowDate = @mysqli_fetch_row($resultDate);
+		$rowDate = @mysql_fetch_row($resultDate);
 		$this->tglInput = $rowDate[0];		
 		$timeInput = $rowDate[1];
-		if (isset($_REQUEST['simpan'])){
-			$perpustakaan = trim(addslashes($_REQUEST['perpustakaan']));
-			$tanggal = trim(addslashes($_REQUEST['tglInput']));
-			$aktivitas = trim(addslashes($_REQUEST['aktivitas']));
+		if (isset($_REQUEST[simpan])){
+			$perpustakaan = trim(addslashes($_REQUEST[perpustakaan]));
+			$tanggal = trim(addslashes($_REQUEST[tglInput]));
+			$aktivitas = trim(addslashes($_REQUEST[aktivitas]));
 			$sql = "UPDATE aktivitas SET perpustakaan='$perpustakaan',tanggal='".MysqlDateFormat($tanggal)." ".$timeInput."',aktivitas='$aktivitas' WHERE replid=".$this->replid;
 			//echo $sql;exit;
 			$result = QueryDb($sql);
@@ -101,7 +101,7 @@ class CAktivitasEdit{
 		<link href="../sty/style.css" rel="stylesheet" type="text/css" />
 		<select name="perpustakaan" id="perpustakaan" class="cmbfrm"  >
 		<?
-		while ($row = @mysqli_fetch_row($result)){
+		while ($row = @mysql_fetch_row($result)){
 		if ($this->perpustakaan=="")
 			$this->perpustakaan = $row[0];	
 		

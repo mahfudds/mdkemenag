@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  *
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,17 +25,17 @@ function GetVendorName($vendorId)
 {
     $sql = "SELECT nama FROM jbsfina.vendor WHERE vendorid = '$vendorId'";
     $res = QueryDb($sql);
-    if ($row = mysqli_fetch_row($res))
+    if ($row = mysql_fetch_row($res))
         return $row[0];
 
     return "";
 }
 
-function GetVendorUserName($userId)
+function GetUserName($userId)
 {
     $sql = "SELECT nama FROM jbsfina.userpos WHERE userid = '$userId'";
     $res = QueryDb($sql);
-    if ($row = mysqli_fetch_row($res))
+    if ($row = mysql_fetch_row($res))
         return $row[0];
 
     return "";
@@ -45,7 +45,7 @@ function GetTahunBukuName($idTahunBuku)
 {
     $sql = "SELECT tahunbuku FROM jbsfina.tahunbuku WHERE replid = $idTahunBuku";
     $res = QueryDb($sql);
-    if ($row = mysqli_fetch_row($res))
+    if ($row = mysql_fetch_row($res))
         return $row[0];
 
     return "";
@@ -55,7 +55,7 @@ function GetKelasName($idKelas)
 {
     $sql = "SELECT kelas FROM jbsakad.kelas WHERE replid = $idKelas";
     $res = QueryDb($sql);
-    if ($row = mysqli_fetch_row($res))
+    if ($row = mysql_fetch_row($res))
         return $row[0];
 
     return "";

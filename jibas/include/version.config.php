@@ -3,10 +3,10 @@
  * JIBAS Education Community 
  * Jaringan Informasi Bersama Antar Sekolah 
  *  
- * @version: 31.0 (Jun 21, 2024) 
- * @notes:  
+ * @version: 29.0 (September 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net) 
  *  
- * Copyright (C) 2024 JIBAS (http://www.jibas.net) 
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net) 
  *  
  * This program is free software: you can redistribute it and/or modify 
  * it under the terms of the GNU General Public License as published by 
@@ -23,12 +23,12 @@
 <?
 
 /* Versi SISFO JIBAS */
-$G_VERSION="31.0";
+$G_VERSION="29.0";
 
 /* Build date SISFO JIBAS */
-$G_BUILDDATE='21 Juni 2024';
+$G_BUILDDATE='20 September 2023';
 
 /* Hak Cipta SISFO JIBAS */
-$G_COPYRIGHT='';
+$G_COPYRIGHT='Copyright &copy; 2009 Yayasan Indonesia Membaca';
 
 ?>

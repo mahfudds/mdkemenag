@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  *
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@ $sql = "SELECT SUM(jumlah)
           FROM jbsfina.paymenttrans
          WHERE transactionid = '$transId'";
 $res = QueryDb($sql);
-$row = mysqli_fetch_row($res);
+$row = mysql_fetch_row($res);
 $jumlah = $row[0];
 
 $sql = "SELECT p.transactionid, DATE_FORMAT(p.waktu, '%d-%b-%Y %H:%i') AS waktu,
@@ -56,7 +56,7 @@ $sql = "SELECT p.transactionid, DATE_FORMAT(p.waktu, '%d-%b-%Y %H:%i') AS waktu,
           LEFT JOIN jbsfina.datapenerimaan dp ON p.iddatapenerimaan = dp.replid
          WHERE transactionid = '$transId'";
 $res = QueryDb($sql);
-$row = mysqli_fetch_array($res);
+$row = mysql_fetch_array($res);
 $tanggal = $row["waktu"];
 $petugas = $row["namauser"];
 $vendor = $row["namavendor"];
@@ -74,7 +74,7 @@ else
               FROM jbsfina.paymenttabungan
              WHERE jenis = 1";
     $res2 = QueryDb($sql);
-    if ($row2 = mysqli_fetch_row($res2))
+    if ($row2 = mysql_fetch_row($res2))
         $departemen = $row2[0];
 }
 $keterangan = $row["keterangan"];
@@ -85,7 +85,7 @@ $sql = "SELECT nokas
           FROM jbsfina.jurnal 
          WHERE replid = $idJurnal";
 $res = QueryDb($sql);
-if ($row = mysqli_fetch_row($res))
+if ($row = mysql_fetch_row($res))
     $noKas = $row[0];
 
 $rpJumlah = FormatRupiah($jumlah);
@@ -93,7 +93,7 @@ $transaksi = "pembayaran non-tunai untuk <strong>$vendor</strong> no transaksi <
 
 $sql = "SELECT replid, nama, alamat1 FROM jbsumum.identitas WHERE departemen='$departemen'";
 $result = QueryDb($sql);
-$row = @mysqli_fetch_array($result);
+$row = @mysql_fetch_array($result);
 $idHeader = $row["replid"];
 $namaHeader = $row["nama"];
 $alamatHeader = $row["alamat1"];

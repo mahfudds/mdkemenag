@@ -4,9 +4,9 @@
  * Jaringan Informasi Bersama Antar Sekolah
  * 
  * @version: 2.6.0 (January 14, 2012)
- * @notes: 
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@ if (isset($_REQUEST['Simpan'])) {
 	$sql = "SELECT * FROM jbsvcr.catatankategori WHERE kategori = '$_REQUEST[kategori]' AND replid <> '$replid'";
 	$result = QueryDb($sql);
 	
-	if (mysqli_num_rows($result) > 0) {
+	if (mysql_num_rows($result) > 0) {
 		CloseDb();
 		$ERROR_MSG = "Kategori $_REQUEST[kategori] sudah digunakan!";
 	} else {
@@ -60,9 +60,9 @@ OpenDb();
 $sql = "SELECT * FROM jbsvcr.catatankategori WHERE replid = '$replid'"; 
 
 $result = QueryDb($sql);
-$row = mysqli_fetch_array($result);
-$kategori = $row['kategori'];
-$keterangan = $row['keterangan'];
+$row = mysql_fetch_array($result);
+$kategori = $row[kategori];
+$keterangan = $row[keterangan];
 CloseDb();
 
 ?>

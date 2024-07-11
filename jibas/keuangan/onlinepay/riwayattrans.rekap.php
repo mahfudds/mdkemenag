@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  *
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -82,7 +82,7 @@ if ($idPetugas != "ALL")
 $nData = 0;
 $stIdPgTrans = "";
 $res = QueryDb($sql);
-while($row = mysqli_fetch_row($res))
+while($row = mysql_fetch_row($res))
 {
     $nData++;
 
@@ -106,7 +106,7 @@ $sql = "SELECT DISTINCT tanggal
 
 $lsTanggal = array();
 $res = QueryDb($sql);
-while($row = mysqli_fetch_row($res))
+while($row = mysql_fetch_row($res))
 {
     $lsTanggal[] = $row[0];
 }
@@ -127,7 +127,7 @@ if ($pembayaran == "ALL")
     //echo "$sql<br>";
 
     $res = QueryDb($sql);
-    while($row = mysqli_fetch_array($res))
+    while($row = mysql_fetch_array($res))
     {
         $kategori = $row["kategori"];
 
@@ -162,7 +162,7 @@ else
         //echo "$sql<br>";
 
         $res = QueryDb($sql);
-        while($row = mysqli_fetch_array($res))
+        while($row = mysql_fetch_array($res))
         {
             $kategori = $row["kategori"];
 
@@ -260,7 +260,7 @@ for($i = 0; $i < count($lsTanggal); $i++)
                 $sql .= " AND pd.idtabunganp = $idPenerimaan";
         }
         $res = QueryDb($sql);
-        $row = mysqli_fetch_row($res);
+        $row = mysql_fetch_row($res);
         $jumlah = $row[0];
 
         $subTotal += $jumlah;

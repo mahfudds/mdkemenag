@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ OpenDb();
 $sql="SELECT DISTINCT r.rpp, p.nama, t.departemen, r.idpelajaran, r.idsemester, j.jenisujian, s.semester, t.tingkat FROM pelajaran p, rpp r, ujian u, jenisujian j, kelas k, semester s, tingkat t WHERE p.replid=r.idpelajaran AND r.replid= u.idrpp AND j.replid = $ujian AND u.idrpp = '$rpp' AND u.idjenis = j.replid AND u.idkelas = k.replid AND u.idsemester = s.replid AND k.idtingkat = t.replid AND t.replid = '$tingkat'";
 
 $result=QueryDb($sql);
-$row = mysqli_fetch_array($result);
+$row = mysql_fetch_array($result);
 $materi = $row['rpp'];
 $namapel = $row['nama'];
 $pelajaran = $row['idpelajaran'];
@@ -100,7 +100,7 @@ $namatingkat = $row['tingkat'];
         // sample data array
         //$data = array();
 
-        while($row1 = mysqli_fetch_row($result1)) {
+        while($row1 = mysql_fetch_row($result1)) {
             //$data[] = array($row1[1],$row1[2],$row1[3],$row1[4],$row1[5]);			
             $legend_x[] = $row1[0];			
 			$data[] = array($row1[1]);

@@ -1,3 +1,124 @@
-<script language="javascript">
-document.location.href = "jibas";
-</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Drawer</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #B5CB99;
+        }
+
+        .header {
+            background-color: #186F65;
+            color: #FCE09B;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .search-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            background-color: #C84B31;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-top: 16px; /* Margin to align with app-items */
+        }
+
+        .search-input {
+            flex-grow: 1;
+            padding: 8px;
+            margin-right: 16px;
+        }
+
+        .app-drawer {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            padding: 16px;
+        }
+
+        .app-item {
+            background-color: #186F65;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 16px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .app-item img {
+            max-width: 50px;
+            max-height: 50px;
+            margin-bottom: 8px;
+        }
+        
+        .app-item span {
+            font-size: 14px;
+            color: #FCE09B;
+        }
+
+        .app-item:hover {
+            transform: scale(1.05);
+            background-color: #B2533E;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Madrasah Digital</h1>
+        <div class="date-widget">January 19, 2024</div>
+    </div>
+
+    <div class="search-bar">
+        <input type="text" class="search-input" placeholder="Search..." oninput="searchApps()">
+    </div>
+
+    <div class="app-drawer">
+        <div class="app-item" id="app1">
+            <img src="icon1.png" alt="App Icon 1">
+            <span>App 1</span>
+        </div>
+        <div class="app-item" id="app2">
+            <img src="icon2.png" alt="App Icon 2">
+            <span>App 2</span>
+        </div>
+        <div class="app-item" id="app3">
+            <img src="icon3.png" alt="App Icon 3">
+            <span>App 3</span>
+        </div>
+        <!-- Add more app items as needed -->
+    </div>
+
+    <script>
+        function searchApps() {
+            var input, filter, apps, app, i, txtValue;
+            input = document.querySelector('.search-input');
+            filter = input.value.toUpperCase();
+            apps = document.querySelectorAll('.app-item');
+
+            for (i = 0; i < apps.length; i++) {
+                app = apps[i];
+                txtValue = app.textContent || app.innerText;
+
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    app.style.display = "";
+                } else {
+                    app.style.display = "none";
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>

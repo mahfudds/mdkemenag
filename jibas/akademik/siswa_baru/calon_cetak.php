@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ $total = $_REQUEST['total'];
 OpenDb();
 $sql = "SELECT p.proses, k.kelompok, k.keterangan FROM kelompokcalonsiswa k, prosespenerimaansiswa p WHERE k.idproses = '$proses' AND k.replid = '$kelompok'";
 $result = QueryDb($sql);
-$row =@mysqli_fetch_array($result);
+$row =@mysql_fetch_array($result);
 $namaproses = $row['proses'];
 $namakelompok = $row['kelompok'];
 $keterangan = $row['keterangan'];
@@ -105,14 +105,14 @@ $keterangan = $row['keterangan'];
 <?		
 	$sqlset = "SELECT COUNT(replid) FROM settingpsb WHERE idproses = '$proses'";
 	$resset = QueryDb($sqlset);
-	$rowset = mysqli_fetch_row($resset);
+	$rowset = mysql_fetch_row($resset);
 	$ndata = $rowset[0];
 	
 	if ($ndata > 0)
 	{
 		$sqlset = "SELECT * FROM settingpsb WHERE idproses = '$proses'";
 		$resset = QueryDb($sqlset);
-		$rowset = mysqli_fetch_array($resset);
+		$rowset = mysql_fetch_array($resset);
 		
 		$kdsum1 = $rowset['kdsum1']; //$nmsum1 = $rowset['nmsum1'];
 		$kdsum2 = $rowset['kdsum2']; //$nmsum2 = $rowset['nmsum2'];
@@ -150,12 +150,12 @@ $keterangan = $row['keterangan'];
 		$cnt = 0;
 	else
 		$cnt = (int)$page*(int)$varbaris;
-	while ($row = @mysqli_fetch_array($result)) {
+	while ($row = @mysql_fetch_array($result)) {
 		$siswa = "";
 		if ($row["replidsiswa"] <> 0) {
 			$sql3 = "SELECT nis FROM jbsakad.siswa WHERE replid = '$row[replidsiswa]'";
 			$result3 = QueryDb($sql3);
-			$row3 = @mysqli_fetch_array($result3);
+			$row3 = @mysql_fetch_array($result3);
 			$siswa = "<br>NIS Siswa:<br><b>".$row3['nis']."</b>";
 		}
 	?>	

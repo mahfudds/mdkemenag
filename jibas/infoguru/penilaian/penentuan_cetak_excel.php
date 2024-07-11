@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -60,7 +60,7 @@ if(isset($_REQUEST["aspekket"]))
 
 $sql = "SELECT nama FROM pelajaran WHERE replid = '$pelajaran'";
 $res = QueryDb($sql);
-$row = mysqli_fetch_row($res);
+$row = mysql_fetch_row($res);
 $namapel = $row[0];
 
 ?>
@@ -77,9 +77,9 @@ $idinfo = 0;
 $nap_ada = 0;
 $sql = "SELECT replid FROM jbsakad.infonap WHERE idpelajaran='$pelajaran' AND idsemester='$semester' AND idkelas='$kelas'";
 $res = QueryDb($sql);
-if (mysqli_num_rows($res) > 0)
+if (mysql_num_rows($res) > 0)
 {
-	$row = mysqli_fetch_row($res);
+	$row = mysql_fetch_row($res);
 	$idinfo = $row[0];
 	
 	$sql = "SELECT COUNT(n.replid)
@@ -88,7 +88,7 @@ if (mysqli_num_rows($res) > 0)
 			   AND a.idpelajaran = '$pelajaran' AND a.dasarpenilaian='$aspek' AND a.aktif = 1
 			   AND n.idinfo = '$idinfo' ";		   
 	$res = QueryDb($sql);
-	$row = mysqli_fetch_row($res);
+	$row = mysql_fetch_row($res);
 	$nap_ada = $row[0];
 }
 
@@ -98,7 +98,7 @@ $sql = "SELECT SUM(bobot) as bobotPK, COUNT(a.replid)
 		 WHERE a.nipguru='$nip' AND a.idtingkat=k.idtingkat AND k.replid='$kelas' 
 		   AND a.idpelajaran='$pelajaran' AND a.dasarpenilaian='$aspek' AND a.aktif=1";
 $res = QueryDb($sql);
-$row = @mysqli_fetch_row($res);
+$row = @mysql_fetch_row($res);
 $bobot_PK = $row[0];
 $jum_nhb = $row[1];
 
@@ -110,7 +110,7 @@ $sql = "SELECT j.jenisujian as jenisujian, a.bobot as bobot, a.replid, a.idjenis
 		   AND a.idjenisujian=j.replid AND a.aktif = 1 
 	  ORDER BY a.replid"; 
 $result_get_aturan_PK = QueryDb($sql);
-$jum_PK = @mysqli_num_rows($result_get_aturan_PK);
+$jum_PK = @mysql_num_rows($result_get_aturan_PK);
 
 //Ambil nilai grading
 $sql = "SELECT grade 
@@ -120,7 +120,7 @@ $sql = "SELECT grade
 	  ORDER BY nmin DESC";
 $res = QueryDb($sql);
 $cntgrad = 0;
-while ($row = @mysqli_fetch_array($res)) 
+while ($row = @mysql_fetch_array($res)) 
 {
 	$grading[$cntgrad] = $row['grade'];
 	$cntgrad++;
@@ -143,7 +143,7 @@ while ($row = @mysqli_fetch_array($res))
     </tr>
     <tr height="15" class="header" align="center">
 	<?	$i = 0;
-		while ($row_PK = @mysqli_fetch_array($result_get_aturan_PK)) 
+		while ($row_PK = @mysql_fetch_array($result_get_aturan_PK)) 
 		{			
             $ujian[$i++] = array($row_PK['replid'], $row_PK['bobot'], $row_PK['idjenisujian'], $aspek);  ?>
     		<td width="8%" class="headerlong">
@@ -160,8 +160,8 @@ while ($row = @mysqli_fetch_array($res))
 		  ORDER BY nama";
   	$res_siswa = QueryDb($sql);
   	$cnt = 1;
-	$total = mysqli_num_rows($res_siswa);
-  	while ($row_siswa = @mysqli_fetch_array($res_siswa)) 
+	$total = mysql_num_rows($res_siswa);
+  	while ($row_siswa = @mysql_fetch_array($res_siswa)) 
 	{ ?>
   	<tr height="25">
     	<td align="center"><?=$cnt?></td>
@@ -174,7 +174,7 @@ while ($row = @mysqli_fetch_array($res))
 				     WHERE n.idpelajaran = '$pelajaran' AND n.idkelas='$kelas' AND n.nis='$row_siswa[nis]' AND n.idsemester='$semester' 
 				       AND n.idjenis='$value[2]' AND n.idaturan=a.replid AND a.replid='$value[0]'";
 			$res = QueryDb($sql);
-			$row = @mysqli_fetch_array($res);
+			$row = @mysql_fetch_array($res);
 			echo "<td align='center'>" . $row['nilaiujian'] . "</td>";
 		}  	?>
 	   	<td align="center"><strong>
@@ -193,8 +193,8 @@ while ($row = @mysqli_fetch_array($res))
 				   AND a.dasarpenilaian = '$aspek' 
 				       $ext_idinfo";
 		$res = QueryDb($sql);
-		$nilaiangka_pemkonsep = @mysqli_num_rows($res);
-		$row_get_nap_pemkonsep = @mysqli_fetch_row($res);
+		$nilaiangka_pemkonsep = @mysql_num_rows($res);
+		$row_get_nap_pemkonsep = @mysql_fetch_row($res);
 		
 		if ($nilaiangka_pemkonsep == 0) 
 		{		
@@ -209,7 +209,7 @@ while ($row = @mysqli_fetch_array($res))
 						   AND n.idjenis = '$value[2]' AND n.idaturan = a.replid 
 						   AND a.dasarpenilaian = '$aspek'";
 				$res = QueryDb($sql);
-				$row = @mysqli_fetch_array($res);
+				$row = @mysql_fetch_array($res);
 				$nau = $row["nilaiAU"];
 				$bobot = $value[1];
 				$nap = $nau * $bobot;
@@ -248,7 +248,7 @@ while ($row = @mysqli_fetch_array($res))
 					 	 WHERE a.idpelajaran = $pelajaran AND a.idtingkat = k.idtingkat AND k.replid = '$kelas' 
 						   AND a.dasarpenilaian = '$aspek' AND a.nipguru = '$nip' AND '$nilakhirpk' BETWEEN a.nmin AND a.nmax";
 				$res = QueryDb($sql);
-				$row = @mysqli_fetch_array($res);
+				$row = @mysql_fetch_array($res);
 				$grade_PK = $row['grade'];
 			} 
 			else 

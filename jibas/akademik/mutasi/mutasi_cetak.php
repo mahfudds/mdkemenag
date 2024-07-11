@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -95,7 +95,7 @@ OpenDb();
 	$query_mutasi="SELECT s.nis,s.nama,a.angkatan,k.kelas,s.statusmutasi FROM jbsakad.siswa s, jbsakad.angkatan a, jbsakad.kelas k WHERE s.idangkatan=a.replid AND s.aktif=1 AND k.replid=s.idkelas AND a.departemen='$departemen' $tambahan ORDER BY s.nis";
 	$result_mutasi=QueryDb($query_mutasi);
 		  $a=0;
-		  while($row_mutasi=mysqli_fetch_row($result_mutasi)){$a++;
+		  while($row_mutasi=mysql_fetch_row($result_mutasi)){$a++;
 		  ?>
           <tr>
             <td height="25" bordercolor="#000000"><?=$a; ?></td>
@@ -113,7 +113,7 @@ OpenDb();
 		  <tr><td colspan="6">&nbsp;</td></tr>
 		  <?
 		  }
-		  if(mysqli_num_rows($result_mutasi)==0)
+		  if(mysql_num_rows($result_mutasi)==0)
 		  	{
 		?>
 		<tr>

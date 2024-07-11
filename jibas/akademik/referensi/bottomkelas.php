@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -55,12 +55,12 @@ if (isset($_REQUEST['hal']))
 OpenDb();
 $sql_get_tingkat="SELECT tingkat FROM tingkat WHERE replid='$tingkat'";
 $result_get_tingkat = QueryDB($sql_get_tingkat);
-$row_get_tingkat = @mysqli_fetch_row($result_get_tingkat);
+$row_get_tingkat = @mysql_fetch_row($result_get_tingkat);  
 $nama_tingkat=$row_get_tingkat[0];
 	
 $sql_get_tahunajaran = "SELECT tahunajaran FROM tahunajaran WHERE replid='$tahunajaran'";  
 $result_get_tahunajaran = QueryDB($sql_get_tahunajaran);
-$row_get_tahunajaran = @mysqli_fetch_row($result_get_tahunajaran);
+$row_get_tahunajaran = @mysql_fetch_row($result_get_tahunajaran); 
 $nama_tahunajaran=$row_get_tahunajaran[0];
 CloseDb();
 
@@ -246,14 +246,14 @@ function change_baris() {
 	OpenDb();
 	$sql_tot = "SELECT k.replid, k.kelas, k.idtahunajaran, k.kapasitas, k.nipwali, k.aktif, k.keterangan, t.replid, t.tahunajaran, t.departemen, p.nama FROM kelas k, tahunajaran t, jbssdm.pegawai p WHERE t.replid='$tahunajaran' AND k.idtahunajaran=t.replid AND k.nipwali=p.nip AND t.departemen='$departemen' AND k.idtingkat='$tingkat' GROUP BY k.replid";
 	$result_tot = QueryDb($sql_tot);
-	$total = ceil(mysqli_num_rows($result_tot)/(int)$varbaris);
-	$jumlah = mysqli_num_rows($result_tot);
+	$total = ceil(mysql_num_rows($result_tot)/(int)$varbaris);
+	$jumlah = mysql_num_rows($result_tot);
 	$akhir = ceil($jumlah/5)*5;
 	
 	$sql_kelas = "SELECT k.replid, k.kelas, k.idtahunajaran, k.kapasitas, k.nipwali, k.aktif, k.keterangan, t.replid, t.tahunajaran, t.departemen, p.nama FROM kelas k, tahunajaran t, jbssdm.pegawai p WHERE t.replid='$tahunajaran' AND k.idtahunajaran=t.replid AND k.nipwali=p.nip AND t.departemen='$departemen' AND k.idtingkat='$tingkat' GROUP BY k.replid ORDER BY $urut $urutan LIMIT ".(int)$page*(int)$varbaris.",$varbaris";
 	$result_kelas = QueryDb($sql_kelas);
 	
-	if (@mysqli_num_rows($result_kelas) > 0){
+	if (@mysql_num_rows($result_kelas) > 0){ 
 ?>
 <input type="hidden" name="total" id="total" value="<?=$total?>"/>
 <table width="100%" border="0" align="center">          
@@ -289,11 +289,11 @@ function change_baris() {
 	else 
 		$cnt = (int)$page*(int)$varbaris;
 
-	while ($row_kelas = @mysqli_fetch_row($result_kelas)) {
+	while ($row_kelas = @mysql_fetch_row($result_kelas)) {
 		$kelas=$row_kelas[0];
 		$sql_get_jumsiswa = "SELECT COUNT(*) FROM jbsakad.siswa s WHERE s.idkelas='$kelas' AND s.aktif=1";
 		$result_get_jumsiswa = QueryDB($sql_get_jumsiswa);
-		if ($row_get_jumsiswa = mysqli_fetch_row($result_get_jumsiswa)){
+		if ($row_get_jumsiswa = mysql_fetch_row($result_get_jumsiswa)){
 			$terisi = $row_get_jumsiswa[0];
 		} else {
 			$terisi = 0;

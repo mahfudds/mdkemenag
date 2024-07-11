@@ -22,22 +22,34 @@ setUpTabs = function() {
 	$("#vtabs1").jVertTabs();
 }
 
+// resizeVTab = function() {
+// 	var docHeight = $(document).height();
+//     //$('#debug1').val(docHeight);
+	
+// 	var vTabHeight = docHeight - 160;
+// 	$("#vtabs1").height(vTabHeight);
+	
+// 	var vTabDivHeight = docHeight - 170;
+// 	$("#vtabs1>div").height(vTabDivHeight);
+// 	$("#vtabs1>div>div").height(vTabDivHeight);
+	
+// 	var vTabPaneHeight = docHeight - 220;
+// 	$("#vtabs1>div>div>div").height(vTabPaneHeight);
+	
+// 	//$('#debug2').val($("#vtabs1>div").height());
+// 	//$('#debug3').val($("#vtabs1>div>div").height());
+// }
+
 resizeVTab = function() {
-	var docHeight = $(document).height();
-    //$('#debug1').val(docHeight);
-	
-	var vTabHeight = docHeight - 160;
-	$("#vtabs1").height(vTabHeight);
-	
-	var vTabDivHeight = docHeight - 170;
-	$("#vtabs1>div").height(vTabDivHeight);
-	$("#vtabs1>div>div").height(vTabDivHeight);
-	
-	var vTabPaneHeight = docHeight - 220;
-	$("#vtabs1>div>div>div").height(vTabPaneHeight);
-	
-	//$('#debug2').val($("#vtabs1>div").height());
-	//$('#debug3').val($("#vtabs1>div>div").height());
+    var vTabHeight = $(window).height();
+    $("#vtabs1").height(vTabHeight);
+
+    var vTabDivHeight = vTabHeight - 10; // Adjust as needed
+    $("#vtabs1>div").height(vTabDivHeight);
+    $("#vtabs1>div>div").height(vTabDivHeight);
+
+    var vTabPaneHeight = vTabHeight - 50; // Adjust as needed
+    $("#vtabs1>div>div>div").height(vTabPaneHeight);
 }
 
 pageLoader = function() {

@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  *
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -63,7 +63,7 @@ $sql = "SELECT DISTINCT p.replid, p.nama
            AND i.idkelas = '$kelas'
          ORDER BY p.nama";
 $res = QueryDb($sql);
-while($row = mysqli_fetch_row($res))
+while($row = mysql_fetch_row($res))
 {
     $pelarr[] = array($row[0], $row[1]);
 
@@ -90,7 +90,7 @@ $sql = "SELECT DISTINCT a.dasarpenilaian, d.keterangan
            AND i.idsemester = '$semester' 
            AND i.idkelas = '$kelas'";
 $res = QueryDb($sql);
-while($row = mysqli_fetch_row($res))
+while($row = mysql_fetch_row($res))
 {
     $aspekarr[] = array($row[0], $row[1]);
 }
@@ -101,7 +101,7 @@ $sql = "SELECT aktif
           FROM tahunajaran
          WHERE replid = '$tahunajaran'";
 $res = QueryDb($sql);
-$row = mysqli_fetch_row($res);
+$row = mysql_fetch_row($res);
 $ta_aktif = (int) $row[0];
 
 if ($ta_aktif == 0)
@@ -119,7 +119,7 @@ else
 $res = QueryDb($sql);
 
 $siswa = array();
-while($row = mysqli_fetch_row($res))
+while($row = mysql_fetch_row($res))
 {
     $siswa[] = array($row[0], $row[1]);
 }
@@ -208,9 +208,9 @@ $nsiswa = count($siswa);
                            AND n.idaturan = a.replid 	   
                            AND a.dasarpenilaian = '$asp'";
                 $res = QueryDb($sql);
-                if (mysqli_num_rows($res) > 0)
+                if (mysql_num_rows($res) > 0)
                 {
-                    $row = mysqli_fetch_row($res);
+                    $row = mysql_fetch_row($res);
                     $na = $row[0];
                     $nh = $row[1];
                     $komentar = $row[2];

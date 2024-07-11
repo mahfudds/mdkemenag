@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,9 +33,9 @@ session_start();
 
 OpenDb();
 
-$username = trim($_POST['username']);
+$username = trim($_POST[username]);
 if ($username=="jibas") $username="landlord";
-$password = trim($_POST['password']);
+$password = trim($_POST[password]);
 
 $username = str_replace("'", "\'", $username);
 $username = str_replace("--", " ", $username);
@@ -49,8 +49,8 @@ if ($login == "landlord")
 {
 	$sql_la = "SELECT password FROM $db_name_user.landlord";
 	$result_la = QueryDb($sql_la);
-	$row_la = @mysqli_fetch_array($result_la);
-	if (md5($password)==$row_la['password'])
+	$row_la = @mysql_fetch_array($result_la);
+	if (md5($password)==$row_la[password])
 	{
 		$_SESSION['login'] = "landlord";
 		$_SESSION['tingkat'] = "0";
@@ -71,7 +71,7 @@ else
                AND h.modul='SMSG'";
 	$result = QueryDb($sql);
 	
-	$jum = mysqli_num_rows($result);
+	$jum = mysql_num_rows($result);
 	if ($jum < 1){
 		?>
 		<script language="JavaScript">
@@ -81,7 +81,7 @@ else
 		<? 
 		$user_exists = false;
 	} else {
-		$row = mysqli_fetch_row($result);
+		$row = mysql_fetch_row($result);
 		$level = $row[1];
 		if ($row[0]!=md5($password)){
 			?>
@@ -96,7 +96,7 @@ else
                       FROM $db_name_user.login l, $db_name_sdm.pegawai p 
                      WHERE l.login=p.nip AND l.login=$username ";
 			$result = QueryDb($sql);
-			$row = mysqli_fetch_row($result);
+			$row = mysql_fetch_row($result);
 			if ($row[0]=='0'){
 				?>
 				<script language="JavaScript">

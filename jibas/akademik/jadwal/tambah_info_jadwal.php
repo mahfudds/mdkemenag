@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,7 +45,7 @@ if ($op=="simpan"){
 	OpenDb();
 	$sql_simpan_cek="SELECT * FROM jbsakad.infojadwal WHERE deskripsi='$deskripsi' AND tglmulai='$tglmulaisimpan' AND 	tglakhir='$tglakhirsimpan' AND idtahunajaran = '$tahunajaran'";  
 	$result_simpan_cek=QueryDb($sql_simpan_cek);	
-	if ($row_simpan_cek=@mysqli_num_rows($result_simpan_cek)){
+	if ($row_simpan_cek=@mysql_num_rows($result_simpan_cek)){
 	?>
 		<SCRIPT type="text/javascript" language="javascript">
 			alert ('Duplikasi Data, data sudah digunakan !');
@@ -58,7 +58,7 @@ if ($op=="simpan"){
 		if ($result_simpan){
 			$sql_simpan_ambil="SELECT LAST_INSERT_ID(replid) FROM infojadwal ORDER BY replid DESC LIMIT 1";  
 			$result_simpan_ambil=QueryDb($sql_simpan_ambil);
-			$row_simpan_ambil=@mysqli_fetch_row($result_simpan_ambil)
+			$row_simpan_ambil=@mysql_fetch_row($result_simpan_ambil)
 		?>
 		<SCRIPT type="text/javascript" language="javascript">
 			parent.opener.refresh_setelah_add(<?=$row_simpan_ambil[0]?>);

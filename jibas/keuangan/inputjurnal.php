@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -60,14 +60,14 @@ if (1 == (int)$_REQUEST['issubmit'])
 	//Ambil awalan dan cacah tahunbuku untuk bikin nokas;
 	$sql = "SELECT awalan, cacah FROM tahunbuku WHERE replid = '$idtahunbuku'";
 	$result = QueryDb($sql);
-	if (mysqli_num_rows($result) == 0) 
+	if (mysql_num_rows($result) == 0) 
 	{
 		CloseDb();
 		trigger_error("Tidak ditemukan data tahunbuku", E_USER_ERROR);
 	} 
 	else 
 	{
-		$row = mysqli_fetch_row($result);
+		$row = mysql_fetch_row($result);
 		$awalan = $row[0];
 		$cacah = $row[1];
 	}
@@ -80,7 +80,7 @@ if (1 == (int)$_REQUEST['issubmit'])
 	$success = 0;
 	
 	$sql = "INSERT INTO jurnal 
-			   SET tanggal='$tanggal', transaksi='".CQ($_REQUEST['keperluan'])."', idpetugas=$idpetugas_value, petugas='$petugas', 
+			   SET tanggal='$tanggal', transaksi='".CQ($_REQUEST[keperluan])."', idpetugas=$idpetugas_value, petugas='$petugas', 
 			   	   nokas='$nokas', idtahunbuku='$idtahunbuku', keterangan='".CQ($_REQUEST['keterangan'])."', sumber='jurnalumum'";
 	QueryDbTrans($sql, $success);
 	
@@ -88,7 +88,7 @@ if (1 == (int)$_REQUEST['issubmit'])
 	if ($success) 
 	{
 		$result = QueryDbTrans($sql, $success);
-		$row = mysqli_fetch_row($result);
+		$row = mysql_fetch_row($result);
 		$idjurnal = $row[0];
 	}
 	
@@ -372,7 +372,7 @@ function focusNext(elemName, evt) {
 			<? $sql = "SELECT replid, tahunbuku FROM tahunbuku WHERE aktif = 1 AND departemen = '$departemen'";
                $result = QueryDb($sql);
                     
-               $row = mysqli_fetch_row($result);
+               $row = mysql_fetch_row($result);
             ?>
                 <input type="text" name="tahunbuku" id="tahunbuku" size="27" readonly style="background-color:#CCCC99" value="<?=$row[1] ?>">
                 <input type="hidden" name="idtahunbuku" id="idtahunbuku" value="<?=$row[0] ?>" />

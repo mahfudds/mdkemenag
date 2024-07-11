@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,10 +40,10 @@ ReadPageParam();
 	
 $op = $_REQUEST['op'];
 if ($op == "12134892y428442323x423")
-	DelTabungan($_REQUEST['id']);
+	DelTabungan($_REQUEST[id]);
 
 if ($op == "d28xen32hxbd32dn239dx")
-	SetAktif($_REQUEST['id'], $_REQUEST['newaktif']); ?>
+	SetAktif($_REQUEST[id], $_REQUEST[newaktif]); ?>
 	
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -100,7 +100,7 @@ if ($op == "d28xen32hxbd32dn239dx")
 				 WHERE departemen = '$departemen'
 				 ORDER BY replid";         
 		$res = QueryDb($sql);
-		$row = mysqli_fetch_row($res);
+		$row = mysql_fetch_row($res);
 		$jumlah = $row[0];
 		$total = ceil((int)$jumlah/(int)$varbaris);
 	
@@ -112,7 +112,7 @@ if ($op == "d28xen32hxbd32dn239dx")
 		$akhir = ceil($jumlah/5) * 5;
 		$request = QueryDb($sql);
 	
-	if (@mysqli_num_rows($request) > 0)
+	if (@mysql_num_rows($request) > 0)
 	{
 ?>          
         <input type="hidden" name="total" id="total" value="<?=$total?>"/>
@@ -140,22 +140,22 @@ if ($op == "d28xen32hxbd32dn239dx")
 	else 
 		$cnt = (int)$page*(int)$varbaris;
 		
-	while ($row = mysqli_fetch_array($request)) { ?>
+	while ($row = mysql_fetch_array($request)) { ?>
     <tr height="25">
     	<td align="center"><?=++$cnt?></td>
         <td><?=$row['nama'] ?></td>        
         <td>
 <?		$sql = "SELECT nama FROM rekakun WHERE kode = '$row[rekkas]'";
 		$result = QueryDb($sql);
-		$row2 = mysqli_fetch_row($result);
+		$row2 = mysql_fetch_row($result);
 		$namarekkas = $row2[0];
 	
 		$sql = "SELECT nama FROM rekakun WHERE kode = '$row[rekutang]'";
 		$result = QueryDb($sql);
-		$row2 = mysqli_fetch_row($result);
+		$row2 = mysql_fetch_row($result);
 		$namarekutang = $row2[0]; ?>
-		<strong>Kas:</strong> <?=$row['rekkas'] . " " . $namarekkas ?><br />
-		<strong>Utang:</strong> <?=$row['rekutang'] . " " . $namarekutang ?><br />
+		<strong>Kas:</strong> <?=$row[rekkas] . " " . $namarekkas ?><br />
+		<strong>Utang:</strong> <?=$row[rekutang] . " " . $namarekutang ?><br />
         </td>
         <td><?=$row['keterangan'] ?></td>
 		<td align="center">

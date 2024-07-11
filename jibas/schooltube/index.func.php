@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  *
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ function ShowCbSearchDepartemen()
     $res = QueryDb($sql);
     echo "<select id='searchDept' style='font-size: 12px; height: 27px; width: 160px;'>";
     echo "<option value='ALLDEPT'>(all departement)</option>";
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         echo "<option value='$row[0]'>$row[0]</option>";
     }
@@ -85,7 +85,7 @@ function CheckLogin($login, $password)
              WHERE l.login = p.nip 
                AND l.login = $loginValue";
     $res = QueryDb($sql);
-    if ($row = mysqli_fetch_row($res))
+    if ($row = mysql_fetch_row($res))
     {
         // PEGAWAI
         $aktif = $row[0];
@@ -107,7 +107,7 @@ function CheckLogin($login, $password)
         $_SESSION["UserCol"] = "nip";
         $_SESSION["UserType"] = 2; // 1 Admin, 2 Pegawai, 3 Siswa
 
-        return GenericReturn::createJson(1, "Login OK", "");
+        return GenericReturn::createJson(1, "Login OK");
     }
     else
     {
@@ -115,7 +115,7 @@ function CheckLogin($login, $password)
                   FROM jbsakad.siswa
                  WHERE nis = $loginValue";
         $res = QueryDb($sql);
-        if ($row = mysqli_fetch_row($res))
+        if ($row = mysql_fetch_row($res))
         {
             $aktif = $row[0];
             $pinsiswa = $row[1];
@@ -133,7 +133,7 @@ function CheckLogin($login, $password)
             $_SESSION["UserCol"] = "nis";
             $_SESSION["UserType"] = 3; // 1 Admin, 2 Pegawai, 3 Siswa
 
-            return GenericReturn::createJson(1, "Login OK", "");
+            return GenericReturn::createJson(1, "Login OK");
         }
         else
         {
@@ -162,13 +162,13 @@ function ShowUserPict()
     }
 
     $res = QueryDb($sql);
-    if (mysqli_num_rows($res) == 0)
+    if (mysql_num_rows($res) == 0)
     {
         echo "<img src='images/nofoto.png' title='tidak ada gambar foto'>";
     }
     else
     {
-        $row = mysqli_fetch_row($res);
+        $row = mysql_fetch_row($res);
         if ($row[0] == 0)
         {
             echo "<img src='images/nofoto.png' title='tidak ada gambar foto'>";

@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,7 +51,7 @@ if (isset($_REQUEST['aktif']))
 OpenDb();
 $sql = "SELECT t.tahunajaran, t.tglmulai, t.tglakhir FROM tahunajaran t, kelas k WHERE k.idtahunajaran = t.replid AND k.replid = '$kelas'"; 
 $result = QueryDb($sql);
-$row = mysqli_fetch_array($result);
+$row = mysql_fetch_array($result);
 
 $jgk1 = explode('-',$row['tglmulai']);
 $jgk2 = explode('-',$row['tglakhir']); 
@@ -191,12 +191,12 @@ $sql = "SELECT t.tglmulai, t.tglakhir FROM tahunajaran t, kelas k WHERE k.idtahu
 $result = QueryDb($sql);
 
 CloseDb();
-if (mysqli_num_rows($result)) {
+if (mysql_num_rows($result)) {
 	OpenDb();
 	$sql = "SELECT replid, DAY(tanggal1) AS tgl1, MONTH(tanggal1) AS bln1, YEAR(tanggal1) AS th1, DAY(tanggal2) AS tgl2, MONTH(tanggal2) AS bln2, YEAR(tanggal2) AS th2 FROM presensiharian WHERE idkelas = '$kelas' AND idsemester = '$semester' AND ((MONTH(tanggal1) = '$bln' AND YEAR(tanggal1) = '$th') OR (MONTH(tanggal2) = '$bln') AND YEAR(tanggal2) = '$th') ORDER BY tanggal1";    
 	
 	$result = QueryDb($sql);
-	if (mysqli_num_rows($result) > 0) {
+	if (mysql_num_rows($result) > 0) {
 ?>
 
 
@@ -209,7 +209,7 @@ if (mysqli_num_rows($result)) {
     </tr>
    	<?
 		$cnt = 0;
-		while ($row = @mysqli_fetch_array($result)) {
+		while ($row = @mysql_fetch_array($result)) {
 	?>
     <tr height="25">   	
        	<td align="center"><?=++$cnt ?></td>        

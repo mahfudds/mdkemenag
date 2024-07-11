@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -81,7 +81,7 @@ function getIdDel($idroot) {
 	
 	$sql = "SELECT replid FROM jbssdm.jabatan WHERE rootid = $idroot";
 	$result = QueryDb($sql);
-	while ($row = mysqli_fetch_row($result)) 
+	while ($row = mysql_fetch_row($result)) 
 		getIdDel($row[0]);
 }
 
@@ -89,7 +89,7 @@ function getNSubDir($idroot)
 {
 	$sql = "SELECT count(*) FROM jbssdm.jabatan WHERE rootid = $idroot";
 	$result = QueryDb($sql);
-	$row = mysqli_fetch_row($result);
+	$row = mysql_fetch_row($result);
 	return $row[0];
 }
 
@@ -111,7 +111,7 @@ function getEmployee($idjab)
                AND pj.terakhir = 1 AND pj.idjabatan = '$idjab'
              ORDER BY p.nama";
     $result = QueryDb($sql);
-    while ($row = mysqli_fetch_row($result))
+    while ($row = mysql_fetch_row($result))
 	{
         if ($employee != "")
             $employee .= ", ";
@@ -130,7 +130,7 @@ function getNEmployee($idjab)
              WHERE terakhir = 1
                AND idjabatan = '$idjab'";
     $result = QueryDb($sql);
-    $row = mysqli_fetch_row($result);
+    $row = mysql_fetch_row($result);
 	
     return $row[0];
 }
@@ -143,7 +143,7 @@ function traverse($idroot, $count)
 	$result = QueryDb($sql);
 	$space = spacing($count);
 	
-	while ($row = mysqli_fetch_row($result))
+	while ($row = mysql_fetch_row($result))
 	{
 		$idjab = $row[0];
 		$sing  = $row[1];
@@ -212,14 +212,14 @@ function traverse($idroot, $count)
 <?
 $sql = "SELECT replid, singkatan, jabatan FROM jbssdm.jabatan WHERE rootid=0";
 $result = QueryDb($sql);
-if (mysqli_num_rows($result) == 0) 
+if (mysql_num_rows($result) == 0) 
 {
 	echo "Belum ada data";
 } 
 else 
 {
 	$ntree = 0;
-	while($row = mysqli_fetch_row($result))
+	while($row = mysql_fetch_row($result))
 	{
 		$ntree++;
 		$idjab = $row[0];

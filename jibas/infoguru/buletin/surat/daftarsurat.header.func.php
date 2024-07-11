@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ function ShowCbDepartemen()
     $res = QueryDb($sql);
     
     echo "<select id='cbDept' name='cbDept' class='inputbox' onchange='cbDept_OnChange()'>";
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         if ($departemen == "")
             $departemen = $row[0];
@@ -53,7 +53,7 @@ function ShowCbKategori($departemen)
     
     echo "<select id='cbKategori' name='cbKategori' class='inputbox' onchange='showBlank()'>";
     echo "<option value='0'>(Semua Kategori)</option>";
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         echo "<option value='$row[1]'>$row[0]</option>";
     }
@@ -70,7 +70,7 @@ function ShowCbDate90()
                    MONTH(DATE_SUB(NOW(), INTERVAL 90 DAY)) AS MM3, 
                    YEAR(DATE_SUB(NOW(), INTERVAL 90 DAY)) AS YY3";
     $res = QueryDb($sql);
-    $row = mysqli_fetch_array($res);
+    $row = mysql_fetch_array($res);
     
     echo "<select id='cbBulan1' name='cbBulan1' class='inputbox' onchange='showBlank()'>";
     for($i = 1; $i <= 12; $i++)

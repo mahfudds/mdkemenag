@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -227,7 +227,7 @@ function change_baris()
 <?		$sql = "SELECT kode, kategori FROM kategoripenerimaan ORDER BY urutan";
 		OpenDb();
 		$result = QueryDb($sql);
-		while ($row = mysqli_fetch_row($result)) {
+		while ($row = mysql_fetch_row($result)) {
 			if ($idkategori == "")
 				$idkategori = $row[0];	?>
           <option value="<?=$row[0]?>" <?=StringIsSelected($idkategori, $row[0])?> >
@@ -253,8 +253,8 @@ function change_baris()
 	$sql_tot = "SELECT * FROM datapenerimaan WHERE idkategori = '$idkategori' AND departemen = '$departemen' ORDER BY replid";         
 	
 	$result_tot = QueryDb($sql_tot);
-	$total = ceil(mysqli_num_rows($result_tot)/(int)$varbaris);
-	$jumlah = mysqli_num_rows($result_tot);
+	$total = ceil(mysql_num_rows($result_tot)/(int)$varbaris);
+	$jumlah = mysql_num_rows($result_tot);
 	
 	$sql = "SELECT * FROM datapenerimaan WHERE idkategori = '$idkategori' AND departemen = '$departemen' ORDER BY replid LIMIT ".(int)$page*(int)$varbaris.",$varbaris";
 		
@@ -262,7 +262,7 @@ function change_baris()
 	$akhir = ceil($jumlah/5)*5;
 	$request = QueryDb($sql);
 	
-	if (@mysqli_num_rows($request) > 0){
+	if (@mysql_num_rows($request) > 0){
 ?>          
          <input type="hidden" name="total" id="total" value="<?=$total?>"/>
         <td align="right">
@@ -289,35 +289,35 @@ function change_baris()
 	else 
 		$cnt = (int)$page*(int)$varbaris;
 		
-	while ($row = mysqli_fetch_array($request)) { ?>
+	while ($row = mysql_fetch_array($request)) { ?>
     <tr height="25">
     	<td align="center"><?=++$cnt?></td>
         <td><?=$row['nama'] ?></td>        
         <td>
 <?		$sql = "SELECT nama FROM rekakun WHERE kode = '$row[rekkas]'";
 		$result = QueryDb($sql);
-		$row2 = mysqli_fetch_row($result);
+		$row2 = mysql_fetch_row($result);
 		$namarekkas = $row2[0];
 	
 		$sql = "SELECT nama FROM rekakun WHERE kode = '$row[rekpendapatan]'";
 		$result = QueryDb($sql);
-		$row2 = mysqli_fetch_row($result);
+		$row2 = mysql_fetch_row($result);
 		$namarekpendapatan = $row2[0];
 	
 		$sql = "SELECT nama FROM rekakun WHERE kode = '$row[rekpiutang]'";
 		$result = QueryDb($sql);
-		$row2 = mysqli_fetch_row($result);
+		$row2 = mysql_fetch_row($result);
 		$namarekpiutang = $row2[0];
 		
 		$sql = "SELECT nama FROM rekakun WHERE kode = '$row[info1]'";
 		$result = QueryDb($sql);
-		$row2 = mysqli_fetch_row($result);
+		$row2 = mysql_fetch_row($result);
 		$namarekdiskon = $row2[0];
 		?>
-		<strong>Kas:</strong> <?=$row['rekkas'] . " " . $namarekkas ?><br />
-        <strong>Pendapatan:</strong> <?=$row['rekpendapatan'] . " " . $namarekpendapatan ?><br />
-        <strong>Piutang:</strong> <?=$row['rekpiutang'] . " " . $namarekpiutang ?><br />
-		<strong>Diskon:</strong> <?=$row['info1'] . " " . $namarekdiskon ?><br />
+		<strong>Kas:</strong> <?=$row[rekkas] . " " . $namarekkas ?><br />
+        <strong>Pendapatan:</strong> <?=$row[rekpendapatan] . " " . $namarekpendapatan ?><br />
+        <strong>Piutang:</strong> <?=$row[rekpiutang] . " " . $namarekpiutang ?><br />
+		<strong>Diskon:</strong> <?=$row[info1] . " " . $namarekdiskon ?><br />
         </td>
         <td><?=$row['keterangan'] ?></td>
 		<td align="center">

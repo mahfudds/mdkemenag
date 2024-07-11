@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -124,7 +124,7 @@ function simpan(){
 <input type="hidden" name="receiver" id="receiver" size="300"/>
 <input type="hidden" name="tahun" id="tahun" value="<?=$tahun?>" />
 <input type="hidden" name="sender" id="sender" value="tambah" />
-<input type="hidden" name="tanggal" id="tanggal" value="<?=date('d')."-".date('m')."-".date('Y'); ?>" />
+<input type="hidden" name="tanggal" id="tanggal" value="<?=date(d)."-".date(m)."-".date(Y); ?>" />
 <fieldset><legend style="background-color:#FF6600; color:#FFFFFF; font-size:14px; padding:3px 0px 3px 0px">&nbsp;Tulis pesan untuk Guru&nbsp;</legend>
 <table width="100%" border="0" cellspacing="0" align="center">
   <tr>

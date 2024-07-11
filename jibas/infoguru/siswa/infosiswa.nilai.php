@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,10 +47,10 @@ do
 			  FROM riwayatdeptsiswa
 			 WHERE nis='$check_nis'";
 	$result = QueryDb($sql);
-	$nrow = mysqli_num_rows($result);
+	$nrow = mysql_num_rows($result);
 	if ($nrow > 0)
 	{
-		$row = mysqli_fetch_array($result);
+		$row = mysql_fetch_array($result);
 		$dep[] = array($row['departemen'], $check_nis);
 		
 		if (strlen($row['nislama']) > 0)
@@ -68,7 +68,7 @@ $sql_ajaran = "SELECT DISTINCT(t.replid), t.tahunajaran
 				ORDER BY t.replid DESC";
 $result_ajaran = QueryDb($sql_ajaran);
 $k = 0;
-while ($row_ajaran = @mysqli_fetch_array($result_ajaran))
+while ($row_ajaran = @mysql_fetch_array($result_ajaran))
 {
 	$ajaran[$k] = array($row_ajaran['replid'], $row_ajaran['tahunajaran']);
 	$k++;
@@ -83,7 +83,7 @@ $sql_kls = "SELECT DISTINCT(r.idkelas), k.kelas, t.tingkat, k.idtahunajaran
 			 WHERE r.nis = '$nis' AND r.idkelas = k.replid AND k.idtingkat = t.replid ";
 $result_kls = QueryDb($sql_kls);
 $j = 0;
-while ($row_kls = @mysqli_fetch_array($result_kls))
+while ($row_kls = @mysql_fetch_array($result_kls))
 {
 	$kls[$j] = array($row_kls['idkelas'], $row_kls['kelas'], $row_kls['tingkat'], $row_kls['idtahunajaran']);
 	if ($row_kls['idtahunajaran']==$tahunajaran)
@@ -156,7 +156,7 @@ if (isset($_REQUEST['pelajaran']))
 					   AND u.replid = n.idujian AND n.nis = '$nis'
 					 ORDER BY p.nama";
 			$result = QueryDb($sql); 				
-			while ($row = @mysqli_fetch_array($result)) {
+			while ($row = @mysql_fetch_array($result)) {
 				if ($pelajaran == "") 
 					$pelajaran = $row['replid'];  ?>
 				<option value="<?=$row['replid']?>" <?=IntIsSelected($row['replid'], $pelajaran) ?> > 
@@ -177,11 +177,11 @@ if (isset($_REQUEST['pelajaran']))
 <? 			$depart = $dep[$departemen][0];
 			$sql_sem = "SELECT * FROM semester WHERE departemen = '$depart' ORDER BY replid";
 			$result_sem = QueryDb($sql_sem);
-			$numsem = @mysqli_num_rows($result_sem);
+			$numsem = @mysql_num_rows($result_sem);
 			
 			$id = 0;
 			$arrsem;
-			while ($row_sem = @mysqli_fetch_array($result_sem))
+			while ($row_sem = @mysql_fetch_array($result_sem))
 			{
 				$arrsem[] = $row_sem['replid'];
 				if ($semester == "") 
@@ -203,8 +203,8 @@ if (isset($_REQUEST['pelajaran']))
 					<td width="72%" valign="top">
 <?						$sql = "SELECT * FROM pelajaran WHERE replid = $pelajaran ";
 						$result = QueryDb($sql);
-						$row = mysqli_fetch_array($result); ?>	
-						<font color="#000000" size="3" class="news_content1">Pelajaran <?=$row['nama']?><br />Semester <?=$nmsem?> </font>
+						$row = mysql_fetch_array($result); ?>	
+						<font color="#000000" size="3" class="news_content1">Pelajaran <?=$row[nama]?><br />Semester <?=$nmsem?> </font>
 					</td> 
 					<td width="28%" align="right" valign="top"> 
 						<a href="JavaScript:CetakNilai2(<?=$semester?>)"><img src="../images/ico/print.png" border="0" />&nbsp;Cetak</a>
@@ -215,9 +215,9 @@ if (isset($_REQUEST['pelajaran']))
 						 WHERE j.idpelajaran = '$pelajaran' AND u.idjenis = j.replid
 						 GROUP BY j.jenisujian";
 				$result = QueryDb($sql);
-				if (mysqli_num_rows($result) > 0)
+				if (mysql_num_rows($result) > 0)
 				{ //2
-					while($row = @mysqli_fetch_array($result))
+					while($row = @mysql_fetch_array($result))
 					{	//1		?>
 						<tr>
 							<td colspan="2"> 
@@ -233,7 +233,7 @@ if (isset($_REQUEST['pelajaran']))
 									  ORDER BY u.tanggal";
 							$result1 = QueryDb($sql1);
 							
-							if (@mysqli_num_rows($result1) > 0)
+							if (@mysql_num_rows($result1) > 0)
 							{ // if nilai ?>
 								<table border="1" width="100%" id="table19" class="tab" >
 								<tr class="header" align="center" height="30">		
@@ -244,10 +244,10 @@ if (isset($_REQUEST['pelajaran']))
 								</tr>
 <?								$sql2 = "SELECT AVG(n.nilaiujian) as rata FROM ujian u, pelajaran p, nilaiujian n WHERE u.idpelajaran = p.replid AND u.idkelas = '$kelas' AND u.idpelajaran = '$pelajaran' AND u.idsemester = '".$semester."' AND u.idjenis = '$row[replid]' AND u.replid = n.idujian AND n.nis = '$nis' ";
 								$result2 = QueryDb($sql2);	
-								$row2 = @mysqli_fetch_array($result2);
-								$rata = $row2['rata'];
+								$row2 = @mysql_fetch_array($result2);
+								$rata = $row2[rata];
 								$cnt = 1;
-								while($row1 = @mysqli_fetch_array($result1))
+								while($row1 = @mysql_fetch_array($result1))
 								{ ?>
 									<tr>        			
 										<td width="5" height="25" align="center"><?=$cnt?></td>

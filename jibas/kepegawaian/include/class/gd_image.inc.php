@@ -11,7 +11,6 @@
 require_once 'jpgraph_rgb.inc.php';
 require_once 'jpgraph_ttf.inc.php';
 require_once 'imageSmoothArc.php';
-require_once 'jpgraph_errhandler.inc.php';
 
 // Line styles
 define('LINESTYLE_SOLID',1);
@@ -126,7 +125,7 @@ class Image {
         }
 
         $this->img = @imagecreatetruecolor($aWidth, $aHeight);
-        if( !$this->img ) {
+        if( $this->img < 1 ) {
             JpGraphError::RaiseL(25126);
             //die("Can't create truecolor image. Check that you really have GD2 library installed.");
         }
@@ -188,7 +187,7 @@ class Image {
         else {
             $f = 'imagecopyresampled';
         }
-        $f($aToHdl,$aFromHdl,(int)$aToX,(int)$aToY,(int)$aFromX,(int)$aFromY, (int)$aWidth,(int)$aHeight,(int)$aw,(int)$ah);
+        $f($aToHdl,$aFromHdl,$aToX,$aToY,$aFromX,$aFromY, $aWidth,$aHeight,$aw,$ah);
     }
 
     function Copy($fromImg,$toX,$toY,$fromX,$fromY,$toWidth,$toHeight,$fromWidth=-1,$fromHeight=-1) {
@@ -220,11 +219,17 @@ class Image {
         }
     }
 
-    static function GetWidth($aImg) {
+    static function GetWidth($aImg=null) {
+        if( $aImg === null ) {
+            $aImg = $this->img;
+        }
         return imagesx($aImg);
     }
 
-    static function GetHeight($aImg) {
+    static function GetHeight($aImg=null) {
+        if( $aImg === null ) {
+            $aImg = $this->img;
+        }
         return imagesy($aImg);
     }
 
@@ -285,7 +290,7 @@ class Image {
 
     // Get the specific height for a text string
     function GetTextHeight($txt="",$angle=0) {
-        $tmp = preg_split('/\n/',$txt ?: '');
+        $tmp = preg_split('/\n/',$txt);
         $n = count($tmp);
         $m=0;
         for($i=0; $i< $n; ++$i) {
@@ -333,7 +338,7 @@ class Image {
     // etxt width.
     function GetTextWidth($txt,$angle=0) {
 
-        $tmp = preg_split('/\n/',$txt ?: '');
+        $tmp = preg_split('/\n/',$txt);
         $n = count($tmp);
         if( $this->font_family <= FF_FONT2+1 ) {
 
@@ -648,7 +653,7 @@ class Image {
         $use_font = $this->font_family;
 
         if( $dir==90 ) {
-            imagestringup($this->img,$use_font,(int)$x,(int)$y,$txt,$this->current_color);
+            imagestringup($this->img,$use_font,$x,$y,$txt,$this->current_color);
             $aBoundingBox = array(round($x),round($y),round($x),round($y-$w),round($x+$h),round($y-$w),round($x+$h),round($y));
             if( $aDebug ) {
                 // Draw bounding box
@@ -658,7 +663,7 @@ class Image {
             }
         }
         else {
-            if( preg_match('/\n/',$txt ?: '') ) {
+            if( preg_match('/\n/',$txt) ) {
                 $tmp = preg_split('/\n/',$txt);
                 for($i=0; $i < count($tmp); ++$i) {
                     $w1 = $this->GetTextWidth($tmp[$i]);
@@ -675,7 +680,7 @@ class Image {
             }
             else {
                 //Put the text
-                imagestring($this->img,$use_font,(int)$x,(int)($y-$h+1),$txt ?: '',$this->current_color);
+                imagestring($this->img,$use_font,$x,$y-$h+1,$txt,$this->current_color);
             }
             if( $aDebug ) {
                 // Draw the bounding rectangle and the bounding box
@@ -931,7 +936,7 @@ class Image {
                     // Do nothing the text is drawn at baseline by default
                 }
             } 
-            ImageTTFText ($this->img, $this->font_size, $dir, (int)$x, (int)$y,
+            ImageTTFText ($this->img, $this->font_size, $dir, $x, $y,
                           $this->current_color,$this->font_file,$txt);
 
             // Calculate and return the co-ordinates for the bounding box
@@ -1038,7 +1043,7 @@ class Image {
                 $xl -= $bbox[0]/2;
                 $yl = $y - $yadj;
                 //$xl = $xl- $xadj;
-                ImageTTFText($this->img, $this->font_size, $dir, (int)$xl, (int)($yl-($h-$fh)+$fh*$i),
+                ImageTTFText($this->img, $this->font_size, $dir, $xl, $yl-($h-$fh)+$fh*$i,
                              $this->current_color,$this->font_file,$tmp[$i]);
 
                // echo "xl=$xl,".$tmp[$i]." <br>";
@@ -1437,11 +1442,7 @@ class Image {
         }
         $old = $this->line_weight;
         imagesetthickness($this->img,1);
-        if (CheckPHPVersion('8.1.0')) {
-            imagefilledpolygon($this->img,$pts,$this->current_color);
-        } else {
-            imagefilledpolygon($this->img,$pts,count($pts)/2,$this->current_color);
-        }
+        imagefilledpolygon($this->img,$pts,count($pts)/2,$this->current_color);
         $this->line_weight = $old;
         imagesetthickness($this->img,$old);
     }
@@ -1659,24 +1660,15 @@ class Image {
     }
 
     // Stream image to browser or to file
-    function Stream($aFile=NULL) {
+    function Stream($aFile="") {
         $this->DoSupersampling();
 
         $func="image".$this->img_format;
         if( $this->img_format=="jpeg" && $this->quality != null ) {
             $res = @$func($this->img,$aFile,$this->quality);
-			
-			if(!$res){
-				if($aFile != NULL){	
-                    JpGraphError::RaiseL(25107,$aFile);//("Can't write to file '$aFile'. Check that the process running PHP has enough permission.");
-				}else{
-                    JpGraphError::RaiseL(25108);//("Can't stream image. This is most likely due to a faulty PHP/GD setup. Try to recompile PHP and use the built-in GD library that comes with PHP.");
-				}
-		
-			}
-		}
+        }
         else {
-            if( $aFile != NULL ) {
+            if( $aFile != "" ) {
                 $res = @$func($this->img,$aFile);
                 if( !$res ) {
                     JpGraphError::RaiseL(25107,$aFile);//("Can't write to file '$aFile'. Check that the process running PHP has enough permission.");
@@ -1772,11 +1764,7 @@ class Image {
         $p4y=ceil(($y1 - $dist_y));
 
         $array=array($p1x,$p1y,$p2x,$p2y,$p3x,$p3y,$p4x,$p4y);
-        if (CheckPHPVersion('8.1.0')) {
-            imagefilledpolygon ( $im, $array, $color );
-        } else {
-            imagefilledpolygon ( $im, $array, (count($array)/2), $color );
-        }
+        imagefilledpolygon ( $im, $array, (count($array)/2), $color );
 
         // for antialias
         imageline($im, $p1x, $p1y, $p2x, $p2y, $color);
@@ -1837,11 +1825,7 @@ class Image {
         } 
 
         imagesetthickness($im, 1);
-        if (CheckPHPVersion('8.1.0')) {
-            imagefilledpolygon($im, $pts, $color);
-        } else {
-            imagefilledpolygon($im, $pts,count($pts)/2, $color);
-        }
+        imagefilledpolygon($im, $pts,count($pts)/2, $color);
 
 
         $weight *= 2;
@@ -1958,8 +1942,8 @@ class RotImage extends Image {
 
     function __construct($aWidth,$aHeight,$a=0,$aFormat=DEFAULT_GFORMAT,$aSetAutoMargin=true) {
         parent::__construct($aWidth,$aHeight,$aFormat,$aSetAutoMargin);
-        $this->dx=$this->width/2;
-        $this->dy=$this->height/2;
+        $this->dx=$this->left_margin+$this->plotwidth/2;
+        $this->dy=$this->top_margin+$this->plotheight/2;
         $this->SetAngle($a);
     }
 
@@ -2026,6 +2010,8 @@ class RotImage extends Image {
 
     function SetMargin($lm,$rm,$tm,$bm) {
         parent::SetMargin($lm,$rm,$tm,$bm);
+        $this->dx=$this->left_margin+$this->plotwidth/2;
+        $this->dy=$this->top_margin+$this->plotheight/2;
         $this->UpdateRotMatrice();
     }
 
@@ -2276,7 +2262,7 @@ class ImgStreamCache {
     // image file doesn't exist or exists but is to old
     function GetAndStream($aImage,$aCacheFileName) {
         if( $this->Isvalid($aCacheFileName) ) {
-            return $this->StreamImgFile($aImage,$aCacheFileName);
+            $this->StreamImgFile($aImage,$aCacheFileName);
         }
         else {
             return false;

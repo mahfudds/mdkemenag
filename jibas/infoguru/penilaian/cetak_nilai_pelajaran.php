@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -76,7 +76,7 @@ if(isset($_POST["pelajaran"])){
 }elseif(isset($_GET["pelajaran"])){
 	$pelajaran = $_GET["pelajaran"];
 }
-$jenis_penilaian = $_GET['jenis_penilaian'];
+$jenis_penilaian = $_GET[jenis_penilaian];
 ?>
 
 <html>
@@ -112,8 +112,8 @@ openDb();
 		<?
 		$query_tkt = "SELECT * FROM jbsakad.tingkat WHERE replid = '$tingkat'";
 		$result_tkt = QueryDb($query_tkt);
-		$row_tkt = mysqli_fetch_array($result_tkt);
-		 echo $row_tkt['tingkat'] ?></td>
+		$row_tkt = mysql_fetch_array($result_tkt);
+		 echo $row_tkt[tingkat] ?></td>
 	</tr>
 	<tr>
 		<td>Kelas</td>
@@ -122,8 +122,8 @@ openDb();
 		<? 
 		$query_kls = "SELECT * FROM jbsakad.kelas WHERE replid = '$kelas'";
 		$result_kls = QueryDb($query_kls);
-		$row_kls = mysqli_fetch_array($result_kls);
-		echo $row_kls['kelas'] ?></td>
+		$row_kls = mysql_fetch_array($result_kls);
+		echo $row_kls[kelas] ?></td>
 	</tr>
 	<tr>
 		<td>Pelajaran</td>
@@ -134,8 +134,8 @@ openDb();
 			}elseif($pelajaran != "all"){
 				$query_pel = "SELECT nama FROM jbsakad.pelajaran WHERE replid = '$pelajaran'";
 				$result_pel = QueryDb($query_pel);
-				$row_pel = mysqli_fetch_array($result_pel);
-				$pel = $row_pel['nama'];
+				$row_pel = mysql_fetch_array($result_pel);
+				$pel = $row_pel[nama];
 			}
 		echo $pel ?></td>
 	</tr>
@@ -159,7 +159,7 @@ openDb();
 				"WHERE jenisujian.replid = '$jenis_penilaian'";
 	$result_jp = QueryDb($query_jp);
 	
-	$row_jp = @mysqli_fetch_array($result_jp);
+	$row_jp = @mysql_fetch_array($result_jp);
 	echo "<b>$row_jp[jenisujian]</b>"; ?>
 	
 	
@@ -174,19 +174,19 @@ openDb();
 				"AND siswa.idkelas = '$kelas' ".
 				"AND siswa.nis = nilaiujian.nis ".
                 "AND siswa.aktif = '1' ORDER BY siswa.nama, ujian.tanggal, nilaiujian.idujian";
-	$result_uj = QueryDb($query_uj) or die (mysqli_error());
+	$result_uj = QueryDb($query_uj) or die (mysql_error());
 	
 	//echo $query_uj;
-	$num_uj = @mysqli_num_rows($result_uj);
+	$num_uj = @mysql_num_rows($result_uj);
 	
-	while($row_uj = @mysqli_fetch_array($result_uj)){
-		$my_data[$row_uj['nis']]['n'][$row_uj['idujian']]['nilai'] = $row_uj['nilaiujian'];
-		$my_data[$row_uj['nis']]['n'][$row_uj['idujian']]['id'] = $row_uj['replid'];
-		$my_data[$row_uj['nis']]['n'][$row_uj['idujian']]['idujian'] = $row_uj['idujian'];
-		$my_data[$row_uj['nis']]['n'][$row_uj['idujian']]['status'] = $row_uj['statuspenilaian'];
-		$my_data[$row_uj['nis']]['n'][$row_uj['idujian']]['lenket'] = $row_uj['lenket'];
+	while($row_uj = @mysql_fetch_array($result_uj)){
+		$my_data[$row_uj[nis]][n][$row_uj[idujian]][nilai] = $row_uj[nilaiujian];
+		$my_data[$row_uj[nis]][n][$row_uj[idujian]][id] = $row_uj[replid];
+		$my_data[$row_uj[nis]][n][$row_uj[idujian]][idujian] = $row_uj[idujian];
+		$my_data[$row_uj[nis]][n][$row_uj[idujian]][status] = $row_uj[statuspenilaian];
+		$my_data[$row_uj[nis]][n][$row_uj[idujian]][lenket] = $row_uj[lenket];
 		//$my_data[$row_uj[nis]][Replid] = $row_uj[Replid];
-		$my_data[$row_uj['nis']]['nama'] = $row_uj['nama'];
+		$my_data[$row_uj[nis]][nama] = $row_uj[nama];
 	}
 
 	?>
@@ -207,19 +207,19 @@ openDb();
 				
 			$i=0;
 			$nujian = 0;
-			while($row_qz = @mysqli_fetch_array($result_qz)){
+			while($row_qz = @mysql_fetch_array($result_qz)){
 			$i++;
 			?>
 				<td class="headerlong" align="center" height="30">				
 				<? 
-				$tgl = format_tgl($row_qz['tanggal']);
+				$tgl = format_tgl($row_qz[tanggal]);
 				echo  "$row_qz[jenisujian]-$i"; ?>
 				<?="<br>($tgl)"; ?>
 				</td>								
 			<?
-			$kol_idujian[$nujian] = $row_qz['replid'];
+			$kol_idujian[$nujian] = $row_qz[replid];
 			$nujian++;
-			$kolom[$row_qz['replid']] = $row_qz['replid'];
+			$kolom[$row_qz[replid]] = $row_qz[replid];			
 			}
 			?>
 			<td class="headerlong" align="center" height="30">Rata-Rata Siswa</td>
@@ -227,9 +227,9 @@ openDb();
 			 $query_ju = "SELECT * FROM jbsakad.jenisujian ".
 						 "WHERE jenisujian.replid = '$jenis_penilaian'";
 			 $result_ju = QueryDb($query_ju);
-			 $row_ju = @mysqli_fetch_array($result_ju);
+			 $row_ju = @mysql_fetch_array($result_ju);
 			?>
-			<td class="headerlong" align="center" height="30">Nilai Akhir <?=$row_ju['jenisujian'] ?></td>
+			<td class="headerlong" align="center" height="30">Nilai Akhir <?=$row_ju[jenisujian] ?></td>
 		</tr>			
 			<?
 			$totCol[] = 0;
@@ -303,9 +303,9 @@ openDb();
 								 "AND nau.idkelas = '$kelas' ".
 								 "AND nau.idsemester = '$semester' ".
 								 "AND nau.nis = '$ns'";
-					$result_nau = QueryDb($query_nau) or die (mysqli_error());
-					$row_nau = mysqli_fetch_array($result_nau);
-					echo $row_nau['nilaiAU'];
+					$result_nau = QueryDb($query_nau) or die (mysql_error());
+					$row_nau = mysql_fetch_array($result_nau);
+					echo $row_nau[nilaiAU];
 					?>					
 				</td>
 				</tr>

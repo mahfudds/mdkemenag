@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -182,46 +182,26 @@ function rpad($string, $padchar, $length)
 
 function MySqlDateFormat($date) 
 {
-	//list($d, $m, $y) = split('[/.-]', $date);
-	//return "$y-$m-$d";
-    $ls = explode("-", $date);
-    $d = $ls[0];
-    $m = $ls[1];
-    $y = $ls[2];
-    return "$y-$m-$d";
+	list($d, $m, $y) = split('[/.-]', $date); 
+	return "$y-$m-$d";
 }
 
 function RegularDateFormat($mysqldate) 
 {
-	//list($y, $m, $d) = split('[/.-]', $mysqldate);
-	//return "$d-$m-$y";
-    $ls = explode("-", $mysqldate);
-    $d = $ls[2];
-    $m = $ls[1];
-    $y = $ls[0];
-    return "$d-$m-$y";
+	list($y, $m, $d) = split('[/.-]', $mysqldate); 
+	return "$d-$m-$y";
 }
 
 function LongDateFormat($mysqldate) 
 {
-	//list($y, $m, $d) = split('[/.-]', $mysqldate);
-	//return "$d ". NamaBulan($m) ." $y";
-    $ls = explode("-", $mysqldate);
-    $d = $ls[2];
-    $m = $ls[1];
-    $y = $ls[0];
-    return "$d ". NamaBulan($m) ." $y";
+	list($y, $m, $d) = split('[/.-]', $mysqldate); 
+	return "$d ". NamaBulan($m) ." $y";
 }
 
 function ShortDateFormat($mysqldate) 
 {
-	//list($y, $m, $d) = split('[/.-]', $mysqldate);
-	//return "$d ". NamaBulanPdk($m) ." $y";
-    $ls = explode("-", $mysqldate);
-    $d = $ls[2];
-    $m = $ls[1];
-    $y = $ls[0];
-    return "$d ". NamaBulanPdk($m) ." $y";
+	list($y, $m, $d) = split('[/.-]', $mysqldate); 
+	return "$d ". NamaBulanPdk($m) ." $y";
 }
 
 function TglDb($value) 
@@ -251,31 +231,31 @@ function TglTextLong($value)
 	
 	switch ($bulan)
 	{
-		case 1:
+		case 01:
 			$nama_bulan="Januari";
 			break;
-		case 2:
+		case 02:
 			$nama_bulan="Februari";
 			break;
-		case 3:
+		case 03:
 			$nama_bulan="Maret";
 			break;
-		case 4:
+		case 04:
 			$nama_bulan="April";
 			break;
-		case 5:
+		case 05:
 			$nama_bulan="Mei";
 			break;
-		case 6:
+		case 06:
 			$nama_bulan="Juni";
 			break;
-		case 7:
+		case 07:
 			$nama_bulan="Juli";
 			break;
-		case 8:
+		case 08:
 			$nama_bulan="Agustus";
 			break;
-		case 9:
+		case 09:
 			$nama_bulan="September";
 			break;
 		case 10:
@@ -304,31 +284,31 @@ function TglTextShort($value)
 	$bulan = $xxx[1];
 	$tanggal = $xxx[2];
 	switch ($bulan){
-		case 1:
+		case 01:
 			$nama_bulan="Jan";
 			break;
-		case 2:
+		case 02:
 			$nama_bulan="Feb";
 			break;
-		case 3:
+		case 03:
 			$nama_bulan="Mar";
 			break;
-		case 4:
+		case 04:
 			$nama_bulan="Apr";
 			break;
-		case 5:
+		case 05:
 			$nama_bulan="Mei";
 			break;
-		case 6:
+		case 06:
 			$nama_bulan="Jun";
 			break;
-		case 7:
+		case 07:
 			$nama_bulan="Jul";
 			break;
-		case 8:
+		case 08:
 			$nama_bulan="Agust";
 			break;
-		case 9:
+		case 09:
 			$nama_bulan="Sep";
 			break;
 		case 10:
@@ -449,7 +429,7 @@ function CQ($string)
 
 function GetDatePart($value, $part)
 {
-	$inf = explode("-", $value);
+	$inf = split("-", $value);
 	$part = strtolower($part);
 	
 	if (count($inf) == 3)

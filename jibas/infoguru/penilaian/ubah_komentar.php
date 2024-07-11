@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -101,8 +101,8 @@ window.close();
 <?
 $sql_get_comment="SELECT k.komentar,s.nama,k.nis FROM jbsakad.komennap k, jbsakad.siswa s WHERE k.nis=s.nis AND k.replid='$replid'";
 $result_get_comment=QueryDb($sql_get_comment);
-$row_get_comment=@mysqli_fetch_row($result_get_comment);
-$ada_get_comment=@mysqli_num_rows($result_get_comment);
+$row_get_comment=@mysql_fetch_row($result_get_comment);
+$ada_get_comment=@mysql_num_rows($result_get_comment);
 //echo $sql_get_comment;
 ?>
 <form name="frm_komentar" id="frm_komentar" action="ubah_komentar.php" method="POST">

@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  *
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,10 +43,10 @@ try
              WHERE p.replid = $idPayment";
     echo "$sql<br>";
     $res = QueryDbEx($sql);
-    if (mysqli_num_rows($res) == 0)
+    if (mysql_num_rows($res) == 0)
         throw new Exception("Tidak ditemukan data konfigurasi pembayaran siswa");
 
-    $row = mysqli_fetch_row($res);
+    $row = mysql_fetch_row($res);
     Pre($row);
 
     $nis = $row[0];
@@ -68,7 +68,7 @@ try
                AND idtabungan = '$idDataTabungan'";
     echo "$sql<br>";
     $res = QueryDbEx($sql);
-    $row = mysqli_fetch_row($res);
+    $row = mysql_fetch_row($res);
     $jSaldo = $row[0];
     echo "JSALDO = $jSaldo<br>";
 
@@ -77,7 +77,7 @@ try
              WHERE replid = $idTabungan";
     echo "$sql<br>";
     $res = QueryDbEx($sql);
-    $row = mysqli_fetch_row($res);
+    $row = mysql_fetch_row($res);
     $debetAwal = (int)$row[0];
     echo "Debet Awal = $debetAwal<br>";
 
@@ -96,7 +96,7 @@ try
                    AND b.idpenerimaan = pn.replid";
         echo "$sql<br>";
         $res = QueryDbEx($sql);
-        $row = mysqli_fetch_array($res);
+        $row = mysql_fetch_array($res);
         Pre($row);
 
         $nis = $row['nis'];
@@ -127,7 +127,7 @@ try
                    AND replid <> $idPenerimaanJtt";
         echo "$sql<br>";
         $res = QueryDbEx($sql);
-        if ($row = mysqli_fetch_row($res))
+        if ($row = mysql_fetch_row($res))
         {
             $totalCicilan = $row[0];
             $totalDiskon = $row[1];
@@ -151,7 +151,7 @@ try
                      WHERE idbesarjtt = '$idBesarJtt' 
                      ORDER BY tanggal, replid ASC";
             $res = QueryDb($sql);
-            while($row = mysqli_fetch_row($res))
+            while($row = mysql_fetch_row($res))
             {
                 $cicilan++;
                 if ($row[0] == $idPenerimaanJtt)
@@ -177,7 +177,7 @@ try
                   FROM jbsfina.penerimaanjtt 
                  WHERE replid = $idPenerimaanJtt";
         $res = QueryDb($sql);
-        if ($row = mysqli_fetch_row($res))
+        if ($row = mysql_fetch_row($res))
             $idJurnal = $row[0];
 
         $sql = "UPDATE jbsfina.jurnal 

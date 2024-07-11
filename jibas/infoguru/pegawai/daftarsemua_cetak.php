@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@ $nip = $_REQUEST['nip'];
 $sql = "SELECT * FROM jbssdm.pegawai WHERE nip='$nip'";
 
 $result = QueryDb($sql);
-$row = mysqli_fetch_array($result);
+$row = mysql_fetch_array($result);
 
 $nama = $row['nama'];
 $gelarawal = $row['gelarawal'];
@@ -171,12 +171,12 @@ $keterangan = $row['keterangan'];
                AND ds.nip = '$nip'
              ORDER BY td.urutan   ";
     $res = QueryDb($sql);
-    $ntambahandata = mysqli_num_rows($res);
+    $ntambahandata = mysql_num_rows($res);
 
     if ($ntambahandata > 0)
     {
         $first = true;
-        while($row = mysqli_fetch_array($res))
+        while($row = mysql_fetch_array($res))
         {
             $no += 1;
             $replid = $row['replid'];
@@ -230,9 +230,9 @@ $keterangan = $row['keterangan'];
 <?
 $sql = "SELECT replid, DATE_FORMAT(tanggal,'%d %M %Y') AS ftmt, keterangan FROM jbssdm.jadwal WHERE nip='$nip' AND jenis='pensiun'";
 $result = QueryDb($sql);
-if (mysqli_num_rows($result) > 0) {
+if (mysql_num_rows($result) > 0) {
 	$cnt = 0;
-	while ($row = mysqli_fetch_array($result)) { ?>
+	while ($row = mysql_fetch_array($result)) { ?>
 	<tr height="25">
 		<td align="center"><?=++$cnt?></td>
 	    <td align="center"><?=$row['ftmt']?></td>
@@ -275,7 +275,7 @@ if (mysqli_num_rows($result) > 0) {
 $sql = "SELECT replid, golongan, terakhir, DATE_FORMAT(tmt,'%d %M %Y') AS ftmt, sk, keterangan FROM jbssdm.peggol WHERE nip = '$nip' ORDER BY tmt DESC";
 $result = QueryDb($sql);
 $cnt = 0;
-while ($row = mysqli_fetch_array($result)) {
+while ($row = mysql_fetch_array($result)) {
 ?>
 <tr height="25">
 	<td align="center"><?=++$cnt?></td>
@@ -312,7 +312,7 @@ while ($row = mysqli_fetch_array($result)) {
 $sql = "SELECT p.replid, p.jenis, p.namajab, DATE_FORMAT(p.tmt,'%d %M %Y') AS ftmt, p.sk, p.keterangan, p.terakhir FROM jbssdm.pegjab p WHERE p.nip = '$nip'  ORDER BY tmt DESC";
 $result = QueryDb($sql);
 $cnt = 0;
-while ($row = mysqli_fetch_array($result)) {
+while ($row = mysql_fetch_array($result)) {
 ?>
 <tr height="25">
 	<td align="center"><?=++$cnt?></td>
@@ -349,7 +349,7 @@ while ($row = mysqli_fetch_array($result)) {
 $sql = "SELECT p.replid, p.iddiklat, d.diklat, p.tahun, p.sk, p.keterangan, p.terakhir FROM jbssdm.pegdiklat p, jbssdm.diklat d WHERE p.nip = '$nip' AND p.iddiklat = d.replid ORDER BY p.tahun DESC, p.replid DESC";
 $result = QueryDb($sql);
 $cnt = 0;
-while ($row = mysqli_fetch_array($result)) {
+while ($row = mysql_fetch_array($result)) {
 ?>
 <tr height="25">
 	<td align="center"><?=++$cnt?></td>
@@ -388,7 +388,7 @@ $sql = "SELECT ps.replid, ps.tingkat, ps.sekolah, ps.sk, ps.lulus, ps.keterangan
         WHERE ps.nip = '$nip' ORDER BY ps.lulus DESC";
 $result = QueryDb($sql);
 $cnt = 0;
-while ($row = mysqli_fetch_array($result)) {
+while ($row = mysql_fetch_array($result)) {
 ?>
 <tr height="25">
 	<td align="center"><?=++$cnt?></td>
@@ -430,7 +430,7 @@ $sql = "SELECT ps.replid, ps.sertifikat, ps.lembaga, ps.tahun, ps.keterangan, ps
          ORDER BY ps.tahun DESC";
 $result = QueryDb($sql);
 $cnt = 0;
-while ($row = mysqli_fetch_array($result)) {
+while ($row = mysql_fetch_array($result)) {
 ?>
 <tr height="25">
 	<td align="center"><?=++$cnt?></td>
@@ -473,7 +473,7 @@ $sql = "SELECT ps.replid, ps.thnawal, ps.thnakhir, ps.tempat, ps.jabatan, ps.ket
          ORDER BY ps.thnawal DESC";
 $result = QueryDb($sql);
 $cnt = 0;
-while ($row = mysqli_fetch_array($result))
+while ($row = mysql_fetch_array($result))
 {
 ?>
 <tr height="25">
@@ -519,7 +519,7 @@ $sql = "SELECT ps.replid, ps.nama, ps.alm, ps.hubungan, ps.tgllahir, ps.hp, ps.e
          ORDER BY ps.nama";
 $result = QueryDb($sql);
 $cnt = 0;
-while ($row = mysqli_fetch_array($result))
+while ($row = mysql_fetch_array($result))
 {
 ?>
 <tr height="25">

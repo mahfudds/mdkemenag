@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -158,12 +158,12 @@ function change_baris() {
 		$sql_siswa = "SELECT s.replid, s.nis, s.nama, s.idkelas, k.kelas, s.tmplahir, s.tgllahir, s.statusmutasi, s.aktif, s.alumni, t.tingkat, a.tgllulus from jbsakad.siswa s, jbsakad.kelas k, jbsakad.tingkat t, jbsakad.alumni a WHERE s.$jenis = '$cari' AND k.replid=a.klsakhir AND k.idtingkat=t.replid AND a.departemen='$departemen' AND s.nis = a.nis ORDER BY $urut $urutan LIMIT ".(int)$page*(int)$varbaris.",$varbaris"; 
 	}
 	$result_tot = QueryDb($sql_tot);
-	$total=ceil(mysqli_num_rows($result_tot)/(int)$varbaris);
-	$jumlah = mysqli_num_rows($result_tot);
+	$total=ceil(mysql_num_rows($result_tot)/(int)$varbaris);
+	$jumlah = mysql_num_rows($result_tot);
 	$akhir = ceil($jumlah/5)*5;
 	
 	$result_siswa = QueryDb($sql_siswa);
-	if (mysqli_num_rows($result_siswa) > 0) {
+	if (mysql_num_rows($result_siswa) > 0) {
 	
 ?>
 	<input type="hidden" name="total" id="total" value="<?=$total?>"/>
@@ -192,7 +192,7 @@ function change_baris() {
 			$cnt_siswa = 1;
 		else 
 			$cnt_siswa = (int)$page*(int)$varbaris+1;
-		while ($row_siswa = @mysqli_fetch_array($result_siswa)) {		
+		while ($row_siswa = @mysql_fetch_array($result_siswa)) {		
 	?>
   	<tr height="25"> 
   		<td align="center"><?=$cnt_siswa?></td>

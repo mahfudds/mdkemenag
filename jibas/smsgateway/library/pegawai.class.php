@@ -23,7 +23,7 @@ class Pegawai{
 			$sql = "SELECT replid,bagian FROM $db_name_sdm.bagianpegawai ORDER BY urutan ASC";
 			$res = QueryDb($sql);
 			$bag = array();
-			while($row = @mysqli_fetch_row($res))
+			while($row = @mysql_fetch_row($res))
 				array_push($bag,$row[1]);
 			?>
 			<table border='0'>
@@ -83,7 +83,7 @@ class Pegawai{
 			OpenDb();
 			$sql = "SELECT nip,nama FROM $db_name_sdm.pegawai WHERE 1 $this->filter";
 			$res = QueryDb($sql);
-			$num = @mysqli_num_rows($res);
+			$num = @mysql_num_rows($res);
 			if ($num>0){
 				$cnt = 1;
 				?>
@@ -95,10 +95,10 @@ class Pegawai{
 					<td>&nbsp;</td>
 				</tr>
 				<?php
-				while ($row = @mysqli_fetch_row($res)){
+				while ($row = @mysql_fetch_row($res)){
 				$sqlpass = "SELECT count(replid) FROM $db_name_user.login WHERE login='$row[0]'";
 				$respass = QueryDb($sqlpass);
-				$rowpass = @mysqli_fetch_row($respass);
+				$rowpass = @mysql_fetch_row($respass);
 				$hp		 = ($rowpass[0]==0)?'false':'true';
 				?>
 				<tr height="20">

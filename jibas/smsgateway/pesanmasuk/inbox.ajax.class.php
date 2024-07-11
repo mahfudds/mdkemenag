@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -64,11 +64,11 @@ class NewInbox{
 	function GetNewID(){
 		$sql = "SELECT * FROM inbox WHERE YEAR(ReceivingDateTime)='$this->Year' AND MONTH(ReceivingDateTime)='$this->Month' AND ID NOT IN (".$this->CurrentInboxIdList.") ORDER BY ID DESC";
 		$res = QueryDb($sql);
-		$num = @mysqli_num_rows($res);
+		$num = @mysql_num_rows($res);
 		$IDList = "";
 		if ($num>0){
 			$cnt = 1;
-			while ($row = @mysqli_fetch_array($res)){
+			while ($row = @mysql_fetch_array($res)){
 				  if ($IDList=="")
 					  $IDList = $row['ID'];
 				  else		
@@ -93,7 +93,7 @@ class NewInbox{
 	function GetMessage(){
 		$sql = "SELECT * FROM inbox WHERE ID = '$this->InboxID'";
 		$res = QueryDb($sql);
-		$row = @mysqli_fetch_array($res);
+		$row = @mysql_fetch_array($res);
 		?>
         <table width="100%" border="0" cellspacing="3" cellpadding="2">
           <tr>
@@ -115,7 +115,7 @@ class NewInbox{
                 <div class="BtnSilver" align="center" id="BtnReply" style="display:block" onclick="BalasSMS('1')">Balas</div>
                 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="padding-top:10px">
                   <tr>
-                    <td align="right" width="50%" style="padding-right:3px"><div class="BtnSilver" align="center" id="BtnSend" style="display:none; " onclick="KirimSMS('<?=$row['ID']?>')">Kirim</div></td>
+                    <td align="right" width="50%" style="padding-right:3px"><div class="BtnSilver" align="center" id="BtnSend" style="display:none; " onclick="KirimSMS('<?=$row[ID]?>')">Kirim</div></td>
                     <td align="left" style="padding-left:3px"><div class="BtnSilver" align="center" id="BtnCancel" style="display:none" onclick="BalasSMS('0')">Batal</div></td>
                   </tr>
                 </table>
@@ -135,7 +135,7 @@ class NewInbox{
 
 		$sql = "SELECT SenderNumber FROM inbox WHERE ID = '$this->ID'";
 		$res = QueryDb($sql);
-		$row = @mysqli_fetch_array($res);
+		$row = @mysql_fetch_array($res);
 		$sender = $row[0];
 
 		$sql = "INSERT INTO outbox SET InsertIntoDB=now(), SendingDateTime=now(), Text='$this->TxtToReply', DestinationNumber='$sender', SenderID='$sender', CreatorID='$sender', idsmsgeninfo=$idsmsgeninfo";
@@ -157,10 +157,10 @@ class NewInbox{
 		  $ID  = "";
 		  $sql = "SELECT * FROM inbox WHERE YEAR(ReceivingDateTime)='$this->Year' AND MONTH(ReceivingDateTime)='$this->Month' ORDER BY ID DESC";
 		  $res = QueryDb($sql);
-		  $num = @mysqli_num_rows($res);
+		  $num = @mysql_num_rows($res);
 		  if ($num>0){
 		  $cnt=1;
-		  while ($row = @mysqli_fetch_array($res)){
+		  while ($row = @mysql_fetch_array($res)){
 		  if ($ID=="")
 		  	  $ID = $row['ID'];
 		  else		
@@ -175,7 +175,7 @@ class NewInbox{
 		  $nohp  = str_replace("+62","",$row['SenderNumber']);	
           $sqlph = "SELECT nama FROM phonebook WHERE nohp LIKE '%$nohp'";
 		  $resph = QueryDb($sqlph);
-		  $rowph = @mysqli_fetch_row($resph);
+		  $rowph = @mysql_fetch_row($resph);
 		  $nama  = $rowph[0];
 		  ?>
           <tr style="cursor:pointer;<?=$bg?><?=$style?>" id="<?=$row['ID']?>">

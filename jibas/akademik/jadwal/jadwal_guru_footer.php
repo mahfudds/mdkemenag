@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -61,17 +61,17 @@ function loadJam($id)
 	       "FROM jam WHERE departemen = '$id' ORDER BY jamke";
 	
 	$result = QueryDb($sql);
-	$GLOBALS['maxJam'] = mysqli_num_rows($result);
+	$GLOBALS[maxJam] = mysql_num_rows($result);
 	
-	while($row = mysqli_fetch_array($result)) {
-		$GLOBALS['jam']['row'][$row[0]]['jam1'] = $row[1];
-		$GLOBALS['jam']['row'][$row[0]]['jam2'] = $row[2];
+	while($row = mysql_fetch_array($result)) {
+		$GLOBALS[jam][row][$row[0]][jam1] = $row[1];
+		$GLOBALS[jam][row][$row[0]][jam2] = $row[2];
 	}
 	return true;
 }
 
 function loadJadwal()
-{
+{		
 	$sql = "SELECT j.replid AS id, j.hari AS hari, j.jamke AS jam, j.njam AS njam, j.keterangan AS ket, ".
 	       "l.nama AS pelajaran, k.kelas, ".
 	       "CASE j.status WHEN 0 THEN 'Mengajar' WHEN 1 THEN 'Asistensi' WHEN 2 THEN 'Tambahan' END AS status ".
@@ -81,17 +81,17 @@ function loadJadwal()
 	       "' AND j.infojadwal = ".$_REQUEST['info'].
 	       " AND j.idkelas = k.replid ".
 	       "AND j.idpelajaran = l.replid";
-
+	
 	$result = QueryDb($sql);
-
-	while($row = mysqli_fetch_assoc($result))
+	
+	while($row = mysql_fetch_assoc($result))
 	{
-		$GLOBALS['jadwal']['row'][$row['hari']][$row['jam']]['id'] = $row['id'];
-		$GLOBALS['jadwal']['row'][$row['hari']][$row['jam']]['njam'] = $row['njam'];
-		$GLOBALS['jadwal']['row'][$row['hari']][$row['jam']]['pelajaran'] = $row['pelajaran'];
-		$GLOBALS['jadwal']['row'][$row['hari']][$row['jam']]['kelas'] = $row['kelas'];
-		$GLOBALS['jadwal']['row'][$row['hari']][$row['jam']]['status'] = $row['status'];
-		$GLOBALS['jadwal']['row'][$row['hari']][$row['jam']]['ket'] = $row['ket'];
+		$GLOBALS[jadwal][row][$row[hari]][$row[jam]][id] = $row[id];
+		$GLOBALS[jadwal][row][$row[hari]][$row[jam]][njam] = $row[njam];
+		$GLOBALS[jadwal][row][$row[hari]][$row[jam]][pelajaran] = $row[pelajaran];
+		$GLOBALS[jadwal][row][$row[hari]][$row[jam]][kelas] = $row[kelas];
+		$GLOBALS[jadwal][row][$row[hari]][$row[jam]][status] = $row[status];
+		$GLOBALS[jadwal][row][$row[hari]][$row[jam]][ket] = $row[ket];
 	}
 	return true;
 }
@@ -99,28 +99,28 @@ function loadJadwal()
 function getCell($r, $c)
 {
 	global $mask, $jadwal;
-
+	
 	if($mask[$c] == 0)
 	{
-		if(isset($jadwal['row'][$c][$r]))
+		if(isset($jadwal[row][$c][$r]))
 		{
-			$mask[$c] = $jadwal['row'][$c][$r]['njam'] - 1;
-
-			$s = "<td class='jadwal' rowspan='{$jadwal['row'][$c][$r]['njam']}' width='110px'>";
-			$s.= "{$jadwal['row'][$c][$r]['kelas']}<br>";
-			$s.= "<b>{$jadwal['row'][$c][$r]['pelajaran']}</b><br>";
-			$s.= "<i>{$jadwal['row'][$c][$r]['status']}</i><br>{$jadwal['row'][$c][$r]['ket']}<br>";
+			$mask[$c] = $jadwal[row][$c][$r][njam] - 1;
+			
+			$s = "<td class='jadwal' rowspan='{$jadwal[row][$c][$r][njam]}' width='110px'>";
+			$s.= "{$jadwal[row][$c][$r][kelas]}<br>";
+			$s.= "<b>{$jadwal[row][$c][$r][pelajaran]}</b><br>";
+			$s.= "<i>{$jadwal[row][$c][$r][status]}</i><br>{$jadwal[row][$c][$r][ket]}<br>";
 			$s.= "<img src='../images/ico/ubah.png' style='cursor:pointer' ";
-			$s.= " onclick='edit({$jadwal['row'][$c][$r]['id']})' onMouseOver='showhint(\"Ubah Jadwal!\", this, event, \"90px\")'> &nbsp;";
+			$s.= " onclick='edit({$jadwal[row][$c][$r][id]})' onMouseOver='showhint(\"Ubah Jadwal!\", this, event, \"90px\")'> &nbsp;";
 			$s.= "<img src='../images/ico/hapus.png' style='cursor:pointer' ";
-			$s.= " onclick='hapus({$jadwal['row'][$c][$r]['id']},0)' onMouseOver='showhint(\"Hapus Jadwal!\", this, event, \"90px\")'>";
+			$s.= " onclick='hapus({$jadwal[row][$c][$r][id]},0)' onMouseOver='showhint(\"Hapus Jadwal!\", this, event, \"90px\")'>";
 			$s.= "</td>";
-
+			
 			return $s;
 		}
 		else
 		{
-			$s = "<td class='jadwal' width='110px'>";
+			$s = "<td class='jadwal' width='110px'>";			
 			$s.= "<img src='../images/ico/tambah.png' style='cursor:pointer' onclick='tambah($r, $c)' ";
 			$s.= "onMouseOver='showhint(\"Tambah Jadwal!\", this, event, \"100px\")'>";
 			$s.= "</td>";
@@ -137,7 +137,7 @@ function getCell($r, $c)
 $mask = NULL;
 for($i = 1; $i <= 7; $i++)
 {
-	$mask[$i] = 0;
+	$mask[i] = 0;
 }
 
 loadJam($departemen);
@@ -171,13 +171,13 @@ loadJadwal();
 <script type="text/javascript" language="javascript" src="../javascript/common.js"></script>
 <script type="text/javascript" language="javascript">
 
-function tambah(jam, hari) {
+function tambah(jam, hari) {		
 	var nip = document.getElementById('nip').value;
 	var info = document.getElementById('info').value;
 	var departemen = document.getElementById('departemen').value;
 	var tahunajaran = document.getElementById('tahunajaran').value;
 	var maxJam = document.getElementById('maxJam').value;
-
+			
 	newWindow('jadwal_guru_add.php?departemen='+departemen+'&tahunajaran='+tahunajaran+'&nip='+nip+'&info='+info+'&maxJam='+maxJam+'&jam='+jam+'&hari='+hari, 'TambahJadwalGuru', '500', '480', 'resizable=1,scrollbars=1,status=0,toolbar=0');
 }
 
@@ -186,26 +186,26 @@ function hapus(replid, field) {
 	var nip = document.getElementById('nip').value;
 	var info = document.getElementById('info').value;
 	var tahunajaran = document.getElementById('tahunajaran').value;
-
+	
 	if (confirm("Apakah anda yakin akan menghapus jadwal kelas ini?"))
 		document.location.href = "jadwal_guru_footer.php?op=xm8r389xemx23xb2378e23&replid="+replid+"&field="+field+"&nip="+nip+"&info="+info+"&departemen="+departemen+"&tahunajaran="+tahunajaran;
 }
 
 function edit(replid) {
-	var maxJam = document.getElementById('maxJam').value;
+	var maxJam = document.getElementById('maxJam').value;	
 	newWindow('jadwal_guru_edit.php?maxJam='+maxJam+'&replid='+replid, 'UbahJadwalGuru','500','480','resizable=1,scrollbars=1,status=0,toolbar=0')
-
+		
 }
 
 function cetak() {
 	var departemen = document.getElementById('departemen').value;
 	var nip = document.getElementById('nip').value;
 	var info = document.getElementById('info').value;
-
+	
 	newWindow('jadwal_guru_cetak.php?nip='+nip+'&info='+info+'&departemen='+departemen, 'CetakJadwalGuru','790', '650', 'resizable=1,scrollbars=1,status=0,toolbar=0');
 }
 
-function refresh() {
+function refresh() {	
 	document.location.reload();
 }
 
@@ -225,13 +225,13 @@ function refresh() {
 <table border="0" width="100%" align="center">
 <!-- TABLE CENTER -->
 <tr>
-	<td>
-<?	OpenDb();
-	$sql = "SELECT * FROM pelajaran p, guru g WHERE g.nip = '$nip' AND p.departemen = '$departemen' AND g.idpelajaran = p.replid";
-
+	<td> 
+<?	OpenDb(); 
+	$sql = "SELECT * FROM pelajaran p, guru g WHERE g.nip = '$nip' AND p.departemen = '$departemen' AND g.idpelajaran = p.replid";	
+	
 	$result = QueryDb($sql);
-	CloseDb();
-	if (@mysqli_num_rows($result)>0){
+	CloseDb();      
+	if (@mysql_num_rows($result)>0){			
 ?>
     <table width="100%" border="0" align="center">
   	<tr>
@@ -240,7 +240,7 @@ function refresh() {
    	<? if (SI_USER_LEVEL() != $SI_USER_STAFF) { ?>
 	    <a title="Hapus" href="JavaScript:hapus('<?=$nip ?>', 1)">
         <img src="../images/ico/hapus.png" border="0" onMouseOver="showhint('Hapus Jadwal!', this, event, '90px')"/>&nbsp;Hapus Jadwal Guru Ini</a>&nbsp;&nbsp;
-	<? } ?>
+	<? } ?>  
     	<a href="JavaScript:cetak()">
         <img src="../images/ico/print.png" border="0" onMouseOver="showhint('Cetak!', this, event, '50px')"/>&nbsp;Cetak</a>&nbsp;&nbsp;
     	</td>
@@ -259,13 +259,13 @@ function refresh() {
         <td width="110px" class="header" align="center">Minggu</td>
     </tr>
 	<?
-
-		if(isset($jam['row'])) {
-
-			foreach($jam['row'] as $k => $v) {
+	
+		if(isset($jam[row])) {
+			
+			foreach($jam[row] as $k => $v) {
 	?> 
     <tr>
-        <td class="jam" width="110px"><b><?=++$j ?>.</b> <?=$v['jam1'] ?> - <?=$v['jam2'] ?></td>
+        <td class="jam" width="110px"><b><?=++$j ?>.</b> <?=$v[jam1] ?> - <?=$v[jam2] ?></td>
         <? for($i = 1; $i <= 7; $i++) {?> 
         <?=getCell($k, $i); ?> 
         <? }?>  

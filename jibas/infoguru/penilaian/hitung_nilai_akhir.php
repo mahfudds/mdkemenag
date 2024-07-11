@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -66,14 +66,14 @@ if(isset($_POST["pelajaran"])){
 }elseif(isset($_GET["pelajaran"])){
 	$pelajaran = $_GET["pelajaran"];
 }
-if(isset($_GET['jenis_penilaian'])){
-	$jenis_penilaian = $_GET['jenis_penilaian'];
-}elseif(isset($_POST['jenis_penilaian'])){
-	$jenis_penilaian = $_POST['jenis_penilaian'];
+if(isset($_GET[jenis_penilaian])){
+	$jenis_penilaian = $_GET[jenis_penilaian];
+}elseif(isset($_POST[jenis_penilaian])){
+	$jenis_penilaian = $_POST[jenis_penilaian];
 }
-if(isset($_POST['simpan'])){
+if(isset($_POST[simpan])){
 	$j=1;
-	while($_POST['num_data'] >= $j){
+	while($_POST[num_data] >= $j){
 		$nau = "nilai_akhir$j";
 		if ($_POST[$nau]=="")
 		$_POST[$nau]=0;
@@ -84,21 +84,21 @@ if(isset($_POST['simpan'])){
 		echo $query_cek;
 		//exit();
 		$result_cek = QueryDb($query_cek);
-		$num_cek = @mysqli_num_rows($result_cek);
-		$row_cek = @mysqli_fetch_array($result_cek); 
+		$num_cek = @mysql_num_rows($result_cek);
+		$row_cek = @mysql_fetch_array($result_cek); 
 		
 		if($num_cek == 0){
 				$query_nau = "INSERT INTO jbsakad.nau (idpelajaran, nis, idkelas, idsemester, idjenis, nilaiAU, keterangan) ".
 							 "VALUES ('$pelajaran','$_POST[$n]','$kelas','$semester','$jenis_penilaian','$_POST[$nau]','$ket')";
-				$result_nau = QueryDb($query_nau) or die (mysqli_error());
+				$result_nau = QueryDb($query_nau) or die (mysql_error());
 		}elseif($num_cek  > 0){
 				$query_nau = "UPDATE jbsakad.nau SET nau.nilaiAU = '$_POST[$nau]', idsemester = '$semester' WHERE nau.nis = '$_POST[$n]' AND idjenis = '$jenis_penilaian'";
-				$result_nau = QueryDb($query_nau) or die (mysqli_error());
+				$result_nau = QueryDb($query_nau) or die (mysql_error());
 		}
 		//echo "tes$query_nau<br>";
 		$j++;
 	}
-	  if(mysqli_affected_rows($mysqlconnection) >= 0) {
+	  if(mysql_affected_rows() >= 0) {
 	  	?>
 		<script language="javascript">
 			document.location.href = "tampil_nilai_pelajaran.php?jenis_penilaian=<?=$jenis_penilaian ?>&departemen=<?=$departemen ?>&pelajaran=<?=$pelajaran ?>&tingkat=<?=$tingkat ?>&kelas=<?=$kelas ?>&semester=<?=$semester ?>&tahun=<?=$tahun ?>";
@@ -211,7 +211,7 @@ var pilih;
 <input type="hidden" name="tahun" value="<?=$tahun ?>">
 <input type="hidden" name="semester" value="<?=$semester ?>">
 <input type="hidden" name="jenis_penilaian" value="<?=$jenis_penilaian ?>">
-    <fieldset><legend><b>Input Nilai Akhir Manual <?=$row_jp['jenisujian'] ?></b>
+    <fieldset><legend><b>Input Nilai Akhir Manual <?=$row_jp[jenisujian] ?></b>
 		
 	<?
 	$query_uj = "SELECT nilaiujian.replid, nilaiujian.idujian, nilaiujian.nis, siswa.nama, nilaiujian.nilaiujian ".
@@ -222,16 +222,16 @@ var pilih;
 				"AND ujian.idsemester = '$semester' ".
 				"AND ujian.replid = nilaiujian.idujian ".
 				"AND siswa.nis = nilaiujian.nis ORDER BY siswa.nama, ujian.tanggal, nilaiujian.idujian";
-	$result_uj = QueryDb($query_uj) or die (mysqli_error());
+	$result_uj = QueryDb($query_uj) or die (mysql_error());
 	
 	//echo $query_uj;
 
-	while($row_uj = @mysqli_fetch_array($result_uj)){
-		$my_data[$row_uj['nis']]['n'][$row_uj['idujian']]['nilai'] = $row_uj['nilaiujian'];
-		$my_data[$row_uj['nis']]['n'][$row_uj['idujian']]['id'] = $row_uj['replid'];
-		$my_data[$row_uj['nis']]['n'][$row_uj['idujian']]['idujian'] = $row_uj['idujian'];
+	while($row_uj = @mysql_fetch_array($result_uj)){
+		$my_data[$row_uj[nis]][n][$row_uj[idujian]][nilai] = $row_uj[nilaiujian];
+		$my_data[$row_uj[nis]][n][$row_uj[idujian]][id] = $row_uj[replid];
+		$my_data[$row_uj[nis]][n][$row_uj[idujian]][idujian] = $row_uj[idujian];
 		//$my_data[$row_uj[nis]][Replid] = $row_uj[Replid];
-		$my_data[$row_uj['nis']]['nama'] = $row_uj['nama'];
+		$my_data[$row_uj[nis]][nama] = $row_uj[nama];
 	}
 	?>
 	<table width="100%" id="table" class="tab" border="1">
@@ -253,21 +253,21 @@ var pilih;
 					
 			$i=0;
 			$nujian = 0;
-			while($row_qz = @mysqli_fetch_array($result_qz)){
+			while($row_qz = @mysql_fetch_array($result_qz)){
 			$i++;
 			?>
 				<td class="headerlong" align="center"  height="30">				
 				<? 
-				$tgl = format_tgl($row_qz['tanggal']);
+				$tgl = format_tgl($row_qz[tanggal]);
 				echo  "$row_qz[jenisujian] - $i";
-				$kol_idujian[$nujian] = $row_qz['replid'];
+				$kol_idujian[$nujian] = $row_qz[replid];
 				$nujian++; 
 				?>
 				
 				<?="<br>($tgl)"; ?>
 				</td>								
 			<?
-			$kolom[$row_qz['replid']] = $row_qz['replid'];
+			$kolom[$row_qz[replid]] = $row_qz[replid];			
 			}
 			?>
 			<td class="headerlong" align="center" height="30">Rata-Rata Siswa</td>
@@ -275,9 +275,9 @@ var pilih;
 			 $query_ju = "SELECT * FROM jbsakad.jenisujian ".
 						 "WHERE jenisujian.replid = '$jenis_penilaian'";
 			 $result_ju = QueryDb($query_ju);
-			 $row_ju = @mysqli_fetch_array($result_ju);
+			 $row_ju = @mysql_fetch_array($result_ju);
 			?>
-			<td class="headerlong" align="center" height="30">Nilai Akhir <?=$row_ju['jenisujian'] ?></td>
+			<td class="headerlong" align="center" height="30">Nilai Akhir <?=$row_ju[jenisujian] ?></td>
 		</tr>			
 			<?
 			$totCol[] = 0;
@@ -340,8 +340,8 @@ var pilih;
 								 "AND nau.idkelas = '$kelas' ".
 								 "AND nau.idsemester = '$semester' ".
 								 "AND nau.nis = '$ns'";
-					$result_nau = QueryDb($query_nau) or die (mysqli_error());
-					$row_nau = mysqli_fetch_array($result_nau);
+					$result_nau = QueryDb($query_nau) or die (mysql_error());
+					$row_nau = mysql_fetch_array($result_nau);
                    echo " <td align='center'><input type='text' id='nilai_akhir$i' name='nilai_akhir$i' maxlength='8' value='$row_nau[nilaiAU]'></td>
 				</tr>";
             }

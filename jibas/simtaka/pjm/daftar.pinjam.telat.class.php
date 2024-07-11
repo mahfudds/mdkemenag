@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,30 +25,30 @@ class CTelat
 {
 	function OnStart()
 	{
-		$op = $_REQUEST['op'];
+		$op = $_REQUEST[op];
 		
 		$this->kriteria='all';
-		if (isset($_REQUEST['kriteria']))
-			$this->kriteria=$_REQUEST['kriteria'];
+		if (isset($_REQUEST[kriteria]))
+			$this->kriteria=$_REQUEST[kriteria];
 			
 		if ($this->kriteria=='nip')
 			$this->statuspeminjam=0;
 		elseif ($this->kriteria=='nis')
 			$this->statuspeminjam=1;
 			
-		$this->noanggota = $_REQUEST['noanggota'];
-		$this->nama = $_REQUEST['nama'];
+		$this->noanggota = $_REQUEST[noanggota];
+		$this->nama = $_REQUEST[nama];
 		$sqlDate="SELECT DAY(now()),MONTH(now()),YEAR(now())";
 		$resultDate = QueryDb($sqlDate);
-		$rDate = @mysqli_fetch_row($resultDate);
+		$rDate = @mysql_fetch_row($resultDate);
 		
 		$this->tglAwal = $rDate[0]."-".$rDate[1]."-".$rDate[2];
-		if (isset($_REQUEST['tglAwal']))
-			$this->tglAwal = $_REQUEST['tglAwal'];
+		if (isset($_REQUEST[tglAwal]))
+			$this->tglAwal = $_REQUEST[tglAwal];
 			
 		$this->tglAkhir = $rDate[0]."-".$rDate[1]."-".$rDate[2];	
-		if (isset($_REQUEST['tglAkhir']))
-			$this->tglAkhir = $_REQUEST['tglAkhir'];
+		if (isset($_REQUEST[tglAkhir]))
+			$this->tglAkhir = $_REQUEST[tglAkhir];	
 	}
 	
 	function OnFinish()
@@ -64,7 +64,7 @@ class CTelat
 	{
 		$sql = "SELECT DATE_FORMAT(now(),'%Y-%m-%d')";
 		$result = QueryDb($sql);
-		$row = @mysqli_fetch_row($result);
+		$row = @mysql_fetch_row($result);
 		$now = $row[0];
 		if ($this->kriteria=='all')
 			$sql = "SELECT *
@@ -96,7 +96,7 @@ class CTelat
 					 ORDER BY tglpinjam";
 		
 		$result = QueryDb($sql);
-		$num = @mysqli_num_rows($result);
+		$num = @mysql_num_rows($result);
 		?>
 		<div class="filter">
         <table width="100%" border="0" cellpadding="2" cellspacing="2">
@@ -179,7 +179,7 @@ class CTelat
 <?		if ($num > 0)
 		{
 			$cnt = 0;
-			while ($row = @mysqli_fetch_array($result))
+			while ($row = @mysql_fetch_array($result))
 			{
 				$cnt += 1;
 				
@@ -189,7 +189,7 @@ class CTelat
 						   AND d.kodepustaka='$row[kodepustaka]'";
 				//echo $sql;
 				$res = QueryDb($sql);
-				$r = @mysqli_fetch_row($res);
+				$r = @mysql_fetch_row($res);
 				$judul = $r[0];
 				
 				$this->idanggota = $row['idanggota'];
@@ -199,17 +199,17 @@ class CTelat
 				$weight = '';
 				$alt = 'OK';
 				$img = '<img src="../img/ico/Valid.png" width="16" height="16" title='.$alt.' />';
-				if ($row['tglkembali']<=$now)
+				if ($row[tglkembali]<=$now)
 				{
-					if ($row['tglkembali']==$now)
+					if ($row[tglkembali]==$now)
 					{
 						$alt = 'Hari&nbsp;ini&nbsp;batas&nbsp;pengembalian&nbsp;terakhir';
 						$color='#cb6e01';
 						$weight='font-weight:bold';
 					}
-					elseif ($row['tglkembali']<$now)
+					elseif ($row[tglkembali]<$now)
 					{
-						$diff = @mysqli_fetch_row(QueryDb("SELECT DATEDIFF('".$now."','".$row['tglkembali']."')"));
+						$diff = @mysql_fetch_row(QueryDb("SELECT DATEDIFF('".$now."','".$row[tglkembali]."')"));
 						$alt = 'Terlambat&nbsp;'.$diff[0].'&nbsp;hari';
 						$color='red';
 						$weight='font-weight:bold';
@@ -219,19 +219,19 @@ class CTelat
 				}  ?>
 				<tr height="25" style="color:<?=$color?>; <?=$weight?>">
 					<td align='center'><?=$cnt?></td>
-					<td align="center"><?=LongDateFormat($row['tglpinjam'])?></td>
-					<td align="center"><?=LongDateFormat($row['tglkembali'])?></td>
-					<td align="left"><?=$row['idanggota']?><br><?=$this->GetMemberName();?></td>
-					<td align="left"><?= $row['kodepustaka'] . "<br>$judul" ?></td>
-					<td align="left"><?=$row['keterangan']?></td>
+					<td align="center"><?=LongDateFormat($row[tglpinjam])?></td>
+					<td align="center"><?=LongDateFormat($row[tglkembali])?></td>
+					<td align="left"><?=$row[idanggota]?><br><?=$this->GetMemberName();?></td>
+					<td align="left"><?= $row[kodepustaka] . "<br>$judul" ?></td>
+					<td align="left"><?=$row[keterangan]?></td>
 					<td align="center"><?=$telat?></td>
 					<td align="center">
-						<a title="Kembalikan Sekarang" href="javascript:kembalikan('<?=$row['kodepustaka']?>');">
+						<a title="Kembalikan Sekarang" href="javascript:kembalikan('<?=$row[kodepustaka]?>');">
 						<img src="../img/ico/refresh.png" width="16" height="16" border="0" />
 						</a>
 					</td>
 					<td align="center">
-						<a title="Perpanjangan" href="javascript:perpanjang('<?=$row['kodepustaka']?>');">
+						<a title="Perpanjangan" href="javascript:perpanjang('<?=$row[kodepustaka]?>');">
 						<img src="../img/ico/tambah.png" width="16" height="16" border="0" />
 						</a>
 					</td>
@@ -269,7 +269,7 @@ class CTelat
 					 WHERE noregistrasi = '$this->idanggota'";
 		}
 		$res = QueryDb($sql);
-		$row = mysqli_fetch_row($res);
+		$row = mysql_fetch_row($res);
 		$namaanggota = $row[0];
 		
 		return $namaanggota;

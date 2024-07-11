@@ -7,7 +7,6 @@ require_once("include/common.php");
 require_once("include/compatibility.php");
 
 $replid = $_REQUEST['replid'];
-$nip = SI_USER_ID();
 
 OpenDb();
 
@@ -17,11 +16,10 @@ $sql = "SELECT c.nis, s.nama AS namasis, DATE_FORMAT(c.tanggal, '%d-%M-%Y') AS t
          WHERE c.nis = s.nis
            AND c.nip = p.nip
            AND s.idkelas = k.replid
-           AND (c.sifat = 0 OR (c.sifat = 1 AND c.nip = '$nip'))
            AND c.replid = $replid";
            
 $res = QueryDb($sql);
-$row = mysqli_fetch_array($res);
+$row = mysql_fetch_array($res);
 ?>
 <table id="Table_01" width="100%" border="0" cellpadding="0" cellspacing="0">
 <tr>

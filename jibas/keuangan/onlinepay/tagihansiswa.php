@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  *
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -111,13 +111,7 @@ OpenDb();
                         <strong>Tahun Buku&nbsp;</strong>
                     </td>
                     <td align="left" valign="middle">
-                        <span id="divtahunbuku">
-<?php
-                        $idTahunBuku = "";
-                        $tahunBuku = "";
-                        ShowSelectTahunBuku();
-?>
-                        </span>
+<?php                   ShowAccYear();    ?>
                     </td>
                 </tr>
                 <tr style="height: 55px">
@@ -139,8 +133,8 @@ OpenDb();
                     <td align="right" valign="middle"><strong>Siswa:</strong>&nbsp;</td>
                     <td  align="left" valign="middle">
                         <input type="hidden" name="kelompok" id="kelompok">
-                        <input type="text" name="noid" id="noid" size="15" readonly class='inputbox' style="background-color:#daefff; font-size: 14px;" onclick="SearchUser()">
-                        <input type="text" name="nama" id="nama" size="30" readonly class='inputbox' style="background-color:#daefff; font-size: 14px;" onclick="SearchUser()">
+                        <input type="text" name="noid" id="noid" size="15" readonly class='inputbox' style="background-color:#daefff; font-size: 14px;">
+                        <input type="text" name="nama" id="nama" size="30" readonly class='inputbox' style="background-color:#daefff; font-size: 14px;">
                         <input type="hidden" name="kelas" id="kelas">
                         <input type="button" class="but" value="..." style="width: 40px; height: 23px;" onclick="SearchUser()">
                         &nbsp;&nbsp;&nbsp;

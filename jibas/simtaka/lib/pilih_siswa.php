@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -68,11 +68,11 @@ OpenDb();
 	<option value=-1>(Semua Departemen)</option>
 	<?	$sql = "SELECT departemen FROM ".get_db_name('akad').".departemen ORDER BY urutan";
         $result = QueryDb($sql);
-		while ($row=@mysqli_fetch_array($result)) {
+		while ($row=@mysql_fetch_array($result)) {
 			if ($departemen == "")
-                $departemen = $row['departemen']; ?>
-        <option value="<?=$row['departemen'] ?>" <?=StringIsSelected($row['departemen'], $departemen) ?> >
-        <?=$row['departemen'] ?>
+                $departemen = $row[departemen]; ?>
+        <option value="<?=$row[departemen] ?>" <?=StringIsSelected($row[departemen], $departemen) ?> >
+        <?=$row[departemen] ?>
         </option>
         <?	} ?>
   	</select>
@@ -84,7 +84,7 @@ OpenDb();
             OpenDb();
 			$sql="SELECT * FROM ".get_db_name('akad').".tingkat WHERE departemen='$departemen' AND aktif = 1 ORDER BY urutan";
             $result=QueryDb($sql);
-            while ($row=@mysqli_fetch_array($result)){
+            while ($row=@mysql_fetch_array($result)){
                 if ($tingkat=="")
                     $tingkat=$row['replid'];
         ?> 
@@ -100,7 +100,7 @@ OpenDb();
 			$sql = "SELECT replid,tahunajaran,aktif FROM ".get_db_name('akad').".tahunajaran where departemen='$departemen' ORDER BY aktif DESC, replid DESC";
 			$result = QueryDb($sql);
 			CloseDb();
-			while ($row = @mysqli_fetch_array($result)) {
+			while ($row = @mysql_fetch_array($result)) {
 				if ($tahunajaran == "") 
 					$tahunajaran = $row['replid'];
 				if ($row['aktif']) 
@@ -122,12 +122,12 @@ OpenDb();
 		$sql="SELECT k.replid,k.kelas FROM ".get_db_name('akad').".kelas k,".get_db_name('akad').".tahunajaran ta,".get_db_name('akad').".tingkat ti WHERE k.idtahunajaran=ta.replid AND k.idtingkat=ti.replid AND ti.departemen='$departemen' AND ta.replid=$tahunajaran AND ti.replid = $tingkat AND k.aktif=1 ORDER BY k.kelas";
     	$result=QueryDb($sql);
 		CloseDb();
-    	while ($row=@mysqli_fetch_array($result)){
+    	while ($row=@mysql_fetch_array($result)){
             if ($kelas == "")
-                $kelas = $row['replid'];
+                $kelas = $row[replid]; 
                 ?>
-    	<option value="<?=$row['replid'] ?>" <?=StringIsSelected($row['replid'], $kelas) ?> >
-    	<?=$row['kelas'] ?>
+    	<option value="<?=$row[replid] ?>" <?=StringIsSelected($row[replid], $kelas) ?> >
+    	<?=$row[kelas] ?>
     	</option>
     <?	} 
 	} else {	?>
@@ -145,14 +145,14 @@ OpenDb();
 if ($kelas <> "" && $tingkat <> "" && $tahunajaran <> "") { 
 	$sql_tot = "SELECT s.nis, s.nama, k.kelas FROM ".get_db_name('akad').".siswa s,".get_db_name('akad').".kelas k WHERE s.aktif=1 AND k.replid=s.idkelas AND s.alumni=0 AND k.replid='$kelas' ORDER BY s.nama"; 	
 	$result_tot = QueryDb($sql_tot);
-	$total = ceil(mysqli_num_rows($result_tot)/(int)$varbaris);
-	$jumlah = mysqli_num_rows($result_tot);
+	$total = ceil(mysql_num_rows($result_tot)/(int)$varbaris);
+	$jumlah = mysql_num_rows($result_tot);
 	$akhir = ceil($jumlah/5)*5;
 	
 	$sql = "SELECT s.nis, s.nama, k.kelas FROM ".get_db_name('akad').".siswa s,".get_db_name('akad').".kelas k WHERE s.aktif=1 AND k.replid=s.idkelas AND s.alumni=0 AND k.replid='$kelas' ORDER BY $urut $urutan LIMIT ".(int)$page*(int)$varbaris.",$varbaris";
 	$result = QueryDb($sql);
 	
-	if (mysqli_num_rows($result) > 0) {
+	if (mysql_num_rows($result) > 0) {
 ?>
 	<table width="100%" id="table" class="tab" align="center" cellpadding="2" cellspacing="0" border="1" bordercolor="#000000">
 	<tr height="30" class="header" align="center">
@@ -166,7 +166,7 @@ if ($kelas <> "" && $tingkat <> "" && $tahunajaran <> "") {
 		$cnt = 1;
 	else 
 		$cnt = (int)$page*(int)$varbaris+1;
-	while($row = mysqli_fetch_row($result)) { 
+	while($row = mysql_fetch_row($result)) { 
 ?>
 	<tr height="25" onClick="pilih('<?=$row[0]?>','<?=$row[1]?>')" style="cursor:pointer">
 		<td align="center" ><?=$cnt ?></td>

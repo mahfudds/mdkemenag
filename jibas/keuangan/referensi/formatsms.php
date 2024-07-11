@@ -4,9 +4,9 @@
  * Jaringan Informasi Bersama Antar Sekolah
  * 
  * @version: 23.0 (November 12, 2020)
- * @notes: 
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -66,7 +66,7 @@ $seldept = isset($_REQUEST['departemen']) ? $_REQUEST['departemen'] : "";
 				 WHERE aktif = 1
 				 ORDER BY urutan";
 		$res = QueryDb($sql);
-		while($row = mysqli_fetch_row($res))
+		while($row = mysql_fetch_row($res))
 		{
 			if ($seldept == "")
 				$seldept = $row[0];

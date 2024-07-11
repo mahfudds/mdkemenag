@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -114,7 +114,7 @@ function change_urutan(urutan) {
 		$sql_siswa = "SELECT nis,nama,idkelas from jbsakad.siswa WHERE $jenis LIKE '%$cari%' ORDER BY $urutan ASC"; 
 		$result_siswa = QueryDb($sql_siswa);
 		$cnt_siswa = 1;
-		if ($jumlah = mysqli_num_rows($result_siswa)>0) {
+		if ($jumlah = mysql_num_rows($result_siswa)>0) {
 			?>
 			<tr>
     <td class="header">No</td>
@@ -139,13 +139,13 @@ function change_urutan(urutan) {
     <td class="header">&nbsp;</td>
   </tr>
 			<? //onmouseover="showhint('Urutkan berdasarkan Kelas', this, event, '120px')"
-		while ($row_siswa = @mysqli_fetch_array($result_siswa)) {
+		while ($row_siswa = @mysql_fetch_array($result_siswa)) {
 		$nis=$row_siswa['nis'];
 		$nama=$row_siswa['nama'];
-		$idkelas=$row_siswa['idkelas'];
+		$idkelas=$row_siswa[idkelas];
 				$sql_gabung = "SELECT t.replid,t.departemen,k.replid,k.kelas,k.idtingkat from jbsakad.tingkat t,jbsakad.kelas k WHERE k.replid='$idkelas' AND t.replid=k.idtingkat AND t.departemen = '$departemen'"; 
 				$result_gabung = QueryDb($sql_gabung);
-				if ($row_gabung = @mysqli_fetch_row($result_gabung)) {
+				if ($row_gabung = @mysql_fetch_row($result_gabung)) {
 				$kelas=$row_gabung[3];
 				
 		?>

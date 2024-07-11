@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,8 +23,8 @@
 <?
 require_once('../inc/config.php');
 require_once('../inc/db_functions.php');
-$id=$_REQUEST['id'];
-$state=$_REQUEST['state'];
+$id=$_REQUEST[id];
+$state=$_REQUEST[state];
 OpenDb();
 	//State:
 	//1.Perpustakaan
@@ -46,7 +46,7 @@ elseif ($state=='5')
 elseif ($state=='6')
 	$sql = "SELECT pu.replid FROM pustaka pu WHERE pu.penulis='$id'";			
 $result = QueryDb($sql);
-$num = @mysqli_num_rows($result);
+$num = @mysql_num_rows($result);
 //echo $sql."<br>";
 //echo $num;
 ?>
@@ -79,12 +79,12 @@ $num = @mysqli_num_rows($result);
 	<div style="padding-left:5px; padding-top:5px; padding-right:5px; padding-bottom:5px;">
 		<table width="100%" border="0" cellspacing="5" cellpadding="5">
 		<? $i=1; ?>
-		<? while ($row = @mysqli_fetch_row($result)){ ?>
+		<? while ($row = @mysql_fetch_row($result)){ ?>
         <?
 			$sql2 = "SELECT pu.judul, pn.gelardepan, pn.nama, pn.gelarbelakang, pb.nama, pu.replid FROM pustaka pu, penulis pn, penerbit pb WHERE pu.replid=$row[0] AND pu.penerbit=pb.replid AND pu.penulis=pn.replid";
 			//echo $sql2;
 			$result2 = QueryDb($sql2);
-			$row2 = @mysqli_fetch_row($result2);
+			$row2 = @mysql_fetch_row($result2);
 		?>
 		<? //for ($i=1; $i<=$num; $i++){ ?>
         <? if ($i==1 || $i%2!=0) { ?>  

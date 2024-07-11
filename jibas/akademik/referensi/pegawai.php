@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -50,26 +50,14 @@ $op = "";
 if (isset($_REQUEST['op']))
 	$op = $_REQUEST['op'];
 
-if ($op == "dw8dxn8w9ms8zs22")
-{
+if ($op == "dw8dxn8w9ms8zs22") {
 	$sql = "UPDATE jbssdm.pegawai SET aktif = '$_REQUEST[newaktif]' WHERE replid = '$_REQUEST[replid]' ";
 	QueryDb($sql);
-}
-else if ($op == "xm8r389xemx23xb2378e23")
-{
-    // -- v31 -- 2025-05-26
-    $sql = "DELETE FROM jbsakad.riwayatfoto WHERE nip = (SELECT nip FROM jbssdm.pegawai WHERE replid = '$_REQUEST[replid]')";
-    QueryDb($sql);
-
-    // -- v31 -- 2025-05-26
-    $sql = "DELETE FROM jbssdm.tambahandatapegawai WHERE nip = (SELECT nip FROM jbssdm.pegawai WHERE replid = '$_REQUEST[replid]')";
-    QueryDb($sql);
-
+} else if ($op == "xm8r389xemx23xb2378e23") {
 	$sql = "DELETE FROM jbssdm.pegawai WHERE replid = '$_REQUEST[replid]'";
 	$result = QueryDb($sql);
-
-	$page = 0;
-	$hal = 0;
+	$page=0;
+	$hal=0;
 }
 
 if ($op == "fdgfde342ft45tgwer34rfwef") {
@@ -238,14 +226,14 @@ function exel()
       	<td width="38%" align="right">
       	<strong>Bagian&nbsp;</strong>
       	<select name="bagian" id="bagian" onchange="change_bagian()" >
-        <option value="-1" <?=StringIsSelected($row_bag['bagian'], $bagian)?>>Semua Bagian </option>
+        <option value="-1" <?=StringIsSelected($row_bag[bagian], $bagian)?>>Semua Bagian </option>
 	<?
         $sql_bag = "SELECT bagian FROM jbssdm.bagianpegawai ORDER BY urutan";    
 		$result_bag = QueryDB($sql_bag);
-		while ($row_bag = @mysqli_fetch_array($result_bag)){
+		while ($row_bag = @mysql_fetch_array($result_bag)){
 	?>
-        <option value="<?=$row_bag['bagian']?>" <?=StringIsSelected($row_bag['bagian'], $bagian)?>>
-        <?=$row_bag['bagian']?>
+        <option value="<?=$row_bag[bagian]?>" <?=StringIsSelected($row_bag[bagian], $bagian)?>>
+        <?=$row_bag[bagian]?>
         </option>
     <?
 		}
@@ -255,22 +243,22 @@ function exel()
 		if ($bagian != "-1"){
 			$sql_tot = "SELECT * FROM jbssdm.pegawai WHERE bagian='$bagian' ORDER BY replid";
 			$result_tot = QueryDb($sql_tot);
-			$total = ceil(mysqli_num_rows($result_tot)/(int)$varbaris);
-			$jumlah = mysqli_num_rows($result_tot);
+			$total = ceil(mysql_num_rows($result_tot)/(int)$varbaris);
+			$jumlah = mysql_num_rows($result_tot);
 						
 			$sql_pegawai="SELECT * FROM jbssdm.pegawai WHERE bagian='$bagian' ORDER BY $urut $urutan LIMIT ".(int)$page*(int)$varbaris.",$varbaris";
 		} else {
 			$sql_tot = "SELECT * FROM jbssdm.pegawai ORDER BY replid";
 			$result_tot = QueryDb($sql_tot);
-			$total = ceil(mysqli_num_rows($result_tot)/(int)$varbaris);
-			$jumlah = mysqli_num_rows($result_tot);
+			$total = ceil(mysql_num_rows($result_tot)/(int)$varbaris);
+			$jumlah = mysql_num_rows($result_tot);
 			
 			$sql_pegawai="SELECT * FROM jbssdm.pegawai ORDER BY $urut $urutan LIMIT ".(int)$page*(int)$varbaris.",$varbaris";
 		}
 		
 		$akhir = ceil($jumlah/5)*5;
 		$result_pegawai=QueryDb($sql_pegawai);
-		if (@mysqli_num_rows($result_pegawai) > 0){ ?>
+		if (@mysql_num_rows($result_pegawai) > 0){ ?>
 		<input type="hidden" name="total" id="total" value="<?=$total?>"/>
     	<td width="60%" align="right">
         	<a href="#" onClick="refresh()"><img src="../images/ico/refresh.png" border="0" onMouseOver="showhint('Refresh!', this, event, '50px')"/>&nbsp;Refresh</a>&nbsp;&nbsp;
@@ -300,7 +288,7 @@ function exel()
 	else 
 		$cnt = (int)$page*(int)$varbaris+1;
 	
-	while ($row_pegawai = mysqli_fetch_array($result_pegawai)) { ?>
+	while ($row_pegawai = mysql_fetch_array($result_pegawai)) { ?>
     <tr height="25">
     	<td width="20" align="center"><?=$cnt ?></td>
         <td align="center"><?=$row_pegawai['nip'] ?></td>

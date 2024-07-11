@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,10 +31,10 @@ $departemen=$_POST['departemen'];
   OpenDb();
 	$sql_tahunajaran = "SELECT replid,tahunajaran FROM tahunajaran where departemen='$departemen' AND aktif = 1 ";
 	$result_tahunajaran = QueryDb($sql_tahunajaran);
-	if($row_tahunajaran = mysqli_fetch_array($result_tahunajaran)) {
+	if($row_tahunajaran = mysql_fetch_array($result_tahunajaran)) {
 ?>
   <input type="text" name="tahunajaran" id="tahunajaran" size="21" class="disabled" readonly="readonly" value="<?=$row_tahunajaran['tahunajaran']?>">
-  <input type="hidden" name="idtahunajaran" id="idtahunajaran" value="<?=$row_tahunajaran['replid']?>">
+  <input type="hidden" name="idtahunajaran" id="idtahunajaran" value="<?=$row_tahunajaran[replid]?>">
   
   <?
   } //while

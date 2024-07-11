@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  *
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ function ShowMediaVideo($idMedia)
               FROM jbsel.media
              WHERE id = $idMedia";
     $res = QueryDbEx($sql);
-    if ($row = mysqli_fetch_array($res))
+    if ($row = mysql_fetch_array($res))
     {
         $url = UrlCombine($FILESHARE_ADDR, $row['videoloc']);
         $url = UrlCombine($url, $row['videoname']);
@@ -48,7 +48,7 @@ function ShowMediaInfo($idMedia)
               FROM jbsel.media 
              WHERE id = $idMedia";
     $res = QueryDbEx($sql);
-    if ($row = mysqli_fetch_array($res))
+    if ($row = mysql_fetch_array($res))
     {
         $idKategori = $row['idkategori'];
         $kateValue = "(tidak ada kategori)";
@@ -59,7 +59,7 @@ function ShowMediaInfo($idMedia)
                       FROM jbscbe.kategori
                      WHERE id = $idKategori";
             $res2 = QueryDb($sql);
-            if ($row2 = mysqli_fetch_row($res2))
+            if ($row2 = mysql_fetch_row($res2))
                 $kateValue = $row2[0];
         }
 
@@ -82,7 +82,7 @@ function ShowMediaAktif($no, $idMedia)
               FROM jbsel.media 
              WHERE id = $idMedia";
     $res = QueryDb($sql);
-    if ($row = mysqli_fetch_row($res))
+    if ($row = mysql_fetch_row($res))
     {
         $aktif = (int) $row[0];
 
@@ -113,7 +113,7 @@ function ShowMediaFiles($cnt, $idMedia)
     $res2 = QueryDb($sql);
 
     $tab = "<table border='1' cellspacing='0' cellpadding='2' width='99%' style='border-width: 1px; border-collapse: collapse;'>";
-    while($row2 = mysqli_fetch_array($res2))
+    while($row2 = mysql_fetch_array($res2))
     {
         $idFile = $row2['id'];
 
@@ -143,7 +143,7 @@ function RemoveMediaFile($idFile)
               FROM jbsel.mediafile
              WHERE id = $idFile";
     $res = QueryDb($sql);
-    $row = mysqli_fetch_row($res);
+    $row = mysql_fetch_row($res);
 
     $filename = $row[0];
     $fileloc = UrlToPath($row[1]);

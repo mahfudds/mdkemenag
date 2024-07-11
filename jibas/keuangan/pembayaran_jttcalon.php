@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -311,14 +311,14 @@ $sql = "SELECT c.nopendaftaran, c.nama, c.telponsiswa as telpon, c.hpsiswa as hp
 			WHERE c.idkelompok = k.replid AND c.idproses = p.replid AND c.replid = '$replid'";
 
 $result = QueryDb($sql);
-if (mysqli_num_rows($result) == 0) 
+if (mysql_num_rows($result) == 0) 
 {
 	CloseDb();
 	exit();
 } 
 else 
 {
-	$row = mysqli_fetch_array($result);
+	$row = mysql_fetch_array($result);
 	$no = $row['nopendaftaran'];
 	$nama = $row['nama'];
 	$telpon = $row['telpon'];
@@ -332,7 +332,7 @@ else
 // Nama jenis penerimaan 
 $sql = "SELECT nama FROM datapenerimaan WHERE replid = '$idpenerimaan'";
 $result = QueryDb($sql);
-$row = mysqli_fetch_row($result);
+$row = mysql_fetch_row($result);
 $namapenerimaan = $row[0];
 
 // Besar pembayaran yang harus dilunasi
@@ -350,11 +350,11 @@ $sql = "SELECT b.replid AS id, b.besar, b.keterangan, b.lunas, b.info1 AS idjurn
 			  WHERE b.idcalon = $replid AND b.idpenerimaan = '$idpenerimaan' AND b.info2 = '$idtahunbuku'";	
 $result = QueryDb($sql);
 
-$bayar = mysqli_num_rows($result);
+$bayar = mysql_num_rows($result);
 $tgl_jurnal = date('d-m-Y');
-if (mysqli_num_rows($result) > 0) 
+if (mysql_num_rows($result) > 0) 
 {
-	$row = mysqli_fetch_array($result);
+	$row = mysql_fetch_array($result);
 	$idbesarjtt = $row['id'];
 	$lunas = $row['lunas'];
 	
@@ -702,7 +702,7 @@ function panggil(elem)
 	{ 
    	$sql = "SELECT count(*) FROM penerimaanjttcalon WHERE idbesarjttcalon = '$idbesarjtt'";
       $result = QueryDb($sql);
-      $row = mysqli_fetch_row($result);
+      $row = mysql_fetch_row($result);
       $nbayar = $row[0];
         
       $info = "Pembayaran Pertama";
@@ -720,7 +720,7 @@ function panggil(elem)
 					   AND b.replid = '$idbesarjtt'
                      ORDER BY p.tanggal, p.replid ASC";
 			$result = QueryDb($sql);
-			if (mysqli_num_rows($result) > 1) 
+			if (mysql_num_rows($result) > 1) 
 				$info = "Pembayaran Cicilan";
     ?> 
         <fieldset>
@@ -752,7 +752,7 @@ function panggil(elem)
         <? 
 			$cnt = 0;
 			$total = 0;
-			while ($row = mysqli_fetch_array($result))
+			while ($row = mysql_fetch_array($result))
 			{
 				$total += $row['jumlah'] + $row['diskon'];
 				$total_diskon += $row['diskon'];  ?>

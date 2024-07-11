@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -66,7 +66,7 @@ if (isset($_REQUEST['simpan']))
 	
 	$sql = "SELECT * FROM jbsumum.identitas WHERE departemen='$departemen'";
 	$result = QueryDb($sql);
-	if (@mysqli_num_rows($result) > 0)
+	if (@mysql_num_rows($result) > 0)
 	{
 		$sql="UPDATE jbsumum.identitas SET foto='$foto_data' WHERE departemen='$departemen'";
 		QueryDb($sql);
@@ -83,7 +83,7 @@ if (isset($_REQUEST['simpan']))
 }
 $sql = "SELECT replid FROM jbsumum.identitas WHERE departemen='$departemen'";
 $result = QueryDb($sql);
-$row = @mysqli_fetch_row($result);
+$row = @mysql_fetch_row($result);
 $replid = $row[0];
 
 $gbrbaru = 0;
@@ -128,7 +128,7 @@ function ganti() {
 		z = file.split(string4split);
 		ext = z[z.length-1];
 		
-		if (ext!='JPG' && ext!='jpg' && ext!='Jpg' && ext!='JPg' && ext!='JPEG' && ext!='jpeg'){
+		if (ext!='JPG' && ext!='jpg' && ext!='png' && ext!='Jpg' && ext!='JPg' && ext!='JPEG' && ext!='jpeg'){
 			alert ('Format Gambar harus ber-extensi jpg atau JPG !');
 			document.getElementById("foto").value='';
 			document.form1.foto.focus();
@@ -154,7 +154,7 @@ function reffoto(){
 function getfoto(){
 	show_wait('fotoInfo');	
 	var departemen = document.getElementById("departemen").value;
-	sendRequestText("refreshfoto2.php", showFoto, "&departemen="+departemen);
+	sendRequestText("refreshfoto2.php", showFoto, "&departemen"+departemen);
 }
 function wait_foto() {
 	show_wait("fotoInfo"); //lihat div id 

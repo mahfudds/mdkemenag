@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -62,7 +62,7 @@ $sql = "SELECT t.departemen, a.tahunajaran, s.semester, k.kelas, t.tingkat, l.na
            AND p.idsemester = s.replid AND a.aktif = 1 AND s.replid = '$semester' AND p.idpelajaran = l.replid  $filter1 $filter2 $filter3";
 $result = QueryDB($sql);
 
-$row = mysqli_fetch_array($result);
+$row = mysql_fetch_array($result);
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -74,7 +74,7 @@ $row = mysqli_fetch_array($result);
 </head>
 
 <body>
-<?=getHeader($row['departemen'])?>
+<?=getHeader($row[departemen])?>
 
 <table border="0" cellpadding="5" width="100%" align="left">
 <tr>
@@ -117,7 +117,7 @@ $row = mysqli_fetch_array($result);
 	$sql = "SELECT DAY(p.tanggal), MONTH(p.tanggal), YEAR(p.tanggal), p.jam, s.status, p.materi, p.objektif, p.refleksi, p.rencana, p.keterangan, p.replid, l.nama, k.kelas FROM presensipelajaran p, kelas k, pelajaran l, statusguru s, tingkat t WHERE p.idkelas = k.replid AND p.idpelajaran = l.replid AND p.gurupelajaran = '$nip' AND p.tanggal BETWEEN '$tglawal' AND '$tglakhir' AND p.jenisguru = s.replid AND p.idsemester = '$semester' AND p.idkelas = k.replid AND k.idtingkat = t.replid $filter1 $filter2 $filter3 ORDER BY $urut $urutan";
 	
 	$result = QueryDb($sql);			 
-	$jum_hadir = mysqli_num_rows($result);
+	$jum_hadir = mysql_num_rows($result);
 	if ($jum_hadir > 0) { 
 ?>      
     <table class="tab" id="table" border="1" style="border-collapse:collapse" width="100%" align="left" bordercolor="#000000">
@@ -136,7 +136,7 @@ $row = mysqli_fetch_array($result);
     </tr>
 <?		
 	$cnt = 0;
-	while ($row = mysqli_fetch_row($result)) { ?>
+	while ($row = mysql_fetch_row($result)) { ?>
     <tr height="25">    	    	 			
 		<td align="center" ><?=++$cnt?></td>
         <td align="center" ><?=$row[0].' '.$bulan[$row[1]].' '.substr($row[2],2,2)?></td>

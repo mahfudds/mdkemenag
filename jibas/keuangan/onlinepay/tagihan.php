@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  *
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -104,20 +104,6 @@ OpenDb();
                 ShowSelectDepartemen() ?>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <a href="#" onclick="location.reload();" style="font-weight: normal; text-decoration: underline; color: blue;">muat ulang</a><br>
-                </td>
-            </tr>
-            <tr style="height: 35px">
-                <td width="120" align="left" valign="top">
-                    <strong>Tahun Buku:</strong>
-                </td>
-                <td align="left" valign="top">
-                    <span id="divtahunbuku">
-<?php
-                    $idTahunBuku = "";
-                    $tahunBuku = "";
-                    ShowSelectTahunBuku()
-?>
-                    </span>
                 </td>
             </tr>
             <tr style="height: 35px">

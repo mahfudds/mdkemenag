@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,7 +53,7 @@ $sql = "SELECT h.login, h.aktif, h.lastlogin, h.departemen, h.tingkat, h.keteran
 		 WHERE h.modul='SIMTAKA'
 		   AND l.login=h.login";
 $result = QueryDb($sql);
-$num = @mysqli_num_rows($result);
+$num = @mysql_num_rows($result);
 ?>
 <table width="100%" border="1" cellspacing="0" cellpadding="0" class="tab" id="table">
 <tr height="30" >
@@ -69,7 +69,7 @@ $num = @mysqli_num_rows($result);
 if ($num > 0)
 {
   $cnt = 0;
-  while ($row=@mysqli_fetch_row($result))
+  while ($row=@mysql_fetch_row($result))
   {
 	$cnt += 1;
 	
@@ -77,14 +77,14 @@ if ($num > 0)
 		      FROM ".get_db_name('sdm').".pegawai
 			 WHERE nip='$row[0]'";
 	$res = QueryDb($sql);
-	$r = @mysqli_fetch_row($res);
+	$r = @mysql_fetch_row($res);
 	$namapeg = $r[0];
 	
 	if ($row[4]==2)
 	{
 		$sql = "SELECT nama FROM perpustakaan WHERE replid='$row[6]'";
 		$res = QueryDb($sql);
-		$r = @mysqli_fetch_row($res);
+		$r = @mysql_fetch_row($res);
 		$namaperpus = $r[0];
 		$namatingkat = "Staf Perpustakaan";
 	}

@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -71,16 +71,16 @@ if ($op=="xm8r389xemx23xb2378e23"){
 	if ($success){
 		$sql = "SELECT r.idkelas FROM jbsakad.riwayatkelassiswa r, jbsakad.kelas k WHERE r.nis = '$nis' AND r.idkelas = k.replid ORDER BY mulai DESC LIMIT 1";
 		$result = QueryDb($sql);
-		$row = mysqli_fetch_row($result);
+		$row = mysql_fetch_row($result);
 		$idkelasasal = $row[0];
 					
 		$sql_jumlah="SELECT COUNT(s.nis) FROM jbsakad.siswa s WHERE s.idkelas = '$idkelasasal' AND aktif = 1";	
 		$result_jumlah=QueryDb($sql_jumlah);
-		$row_jumlah=@mysqli_fetch_row($result_jumlah);
+		$row_jumlah=@mysql_fetch_row($result_jumlah);
 			
 		$sql_kapasitas="SELECT kapasitas FROM jbsakad.kelas WHERE replid = '$idkelasasal'";
 		$result_kapasitas=QueryDb($sql_kapasitas);
-		$row_kapasitas=@mysqli_fetch_row($result_kapasitas);
+		$row_kapasitas=@mysql_fetch_row($result_kapasitas);
 			
 		if ((int)$row_jumlah[0] < (int)$row_kapasitas[0])
 			$success = 1;
@@ -234,21 +234,21 @@ function focusNext(elemName, evt) {
     $sql_kelas="SELECT replid,kelas,kapasitas FROM jbsakad.kelas WHERE idtahunajaran='$idtahunajaran' AND idtingkat='$idtingkat' ORDER BY kelas";
     $result_kelas=QueryDb($sql_kelas);
     $cnt_kelas=1;
-    while ($row_kelas=@mysqli_fetch_array($result_kelas)){
+    while ($row_kelas=@mysql_fetch_array($result_kelas)){
         if ($idkelas == "")
             $idkelas = $row_kelas['replid'];
             
         $kelas = $row_kelas['kelas'];			
         $sql1 = "SELECT COUNT(*) FROM siswa WHERE idkelas = '$row_kelas[replid]' AND aktif = 1";				
         $result1 = QueryDb($sql1);
-        $row1 = @mysqli_fetch_row($result1); 				
+        $row1 = @mysql_fetch_row($result1); 				
         
 ?>
         <option value="<?=$row_kelas['replid']?>" <?=StringIsSelected($row_kelas['replid'], $idkelas) ?>><?=$row_kelas['kelas'].", kapasitas: ".$row_kelas['kapasitas'].", terisi: ".$row1[0]?></option>
 
 <?  
         if ($cnt_kelas==1)
-            $id=$row_kelas['replid'];
+            $id=$row_kelas[replid];
         $cnt_kelas++;
     }
     CloseDb();
@@ -265,14 +265,14 @@ function focusNext(elemName, evt) {
 		$sql_tot = "SELECT s.nis,s.nama,s.idkelas,s.replid from jbsakad.siswa s, jbsakad.kelas k WHERE k.idtahunajaran='$idtahunajaran' AND k.idtingkat='$idtingkat' AND k.replid=s.idkelas AND s.idkelas='$idkelas' AND s.aktif=1 ORDER BY $urut $urutan"; 
 
 		$result_tot = QueryDb($sql_tot);
-		$total=ceil(mysqli_num_rows($result_tot)/(int)$varbaris);
-		$jumlah = mysqli_num_rows($result_tot);
+		$total=ceil(mysql_num_rows($result_tot)/(int)$varbaris);
+		$jumlah = mysql_num_rows($result_tot);
 		$akhir = ceil($jumlah/5)*5;
 		
 		$sql_siswa = "SELECT s.nis,s.nama,s.idkelas,s.replid from jbsakad.siswa s, jbsakad.kelas k WHERE k.idtahunajaran='$idtahunajaran' AND k.idtingkat='$idtingkat' AND k.replid=s.idkelas AND s.idkelas='$idkelas' AND s.aktif=1 ORDER BY $urut $urutan LIMIT ".(int)$page*(int)$varbaris.",$varbaris";
 		$result_siswa = QueryDb($sql_siswa);
 		
-		if (mysqli_num_rows($result_siswa) > 0) {
+		if (mysql_num_rows($result_siswa) > 0) {
 	?>
     <table class="tab" id="table" border="1" style="border-collapse:collapse" width="100%" align="left" bordercolor="#000000">
 	<tr height="30" class="header" align="center">
@@ -287,14 +287,14 @@ function focusNext(elemName, evt) {
 			else 
 				$cnt_siswa = (int)$page*(int)$varbaris;
 			
-			while ($row_siswa = @mysqli_fetch_array($result_siswa)) {
+			while ($row_siswa = @mysql_fetch_array($result_siswa)) {
 				$nis=$row_siswa['nis'];
 				$nama=$row_siswa['nama'];
 				$idkelas=$row_siswa['idkelas'];
 				
 				$sql_riwayat_kelas="SELECT keterangan,status FROM jbsakad.riwayatkelassiswa WHERE nis='$nis' AND idkelas='$idkelas'";
 				$result_riwayat_kelas=QueryDb($sql_riwayat_kelas);
-				$row_riwayat = mysqli_fetch_array($result_riwayat_kelas);
+				$row_riwayat = mysql_fetch_array($result_riwayat_kelas);
 	?>
   	<tr height="25"> 
   		<td align="center"><?=++$cnt_siswa?></td>

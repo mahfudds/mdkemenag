@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -65,36 +65,36 @@ if (isset($_REQUEST['harian']))
 
 $sql_ta="SELECT * FROM jbsakad.tahunajaran WHERE replid='$tahunajaran'";
 $result_ta=QueryDb($sql_ta);
-$row_ta=@mysqli_fetch_array($result_ta);
+$row_ta=@mysql_fetch_array($result_ta);
 $tglawal=$row_ta['tglmulai'];
 $tglakhir=$row_ta['tglakhir'];
 
 //echo "Dep=".$departemen.", Tkt=".$tingkat.", Kls=".$kelas.", Pelajaran=".$pelajaran.", Semester=".$semester.", Thn AJaran=".$tahun;
  	$sql_get_ta="SELECT tahunajaran FROM jbsakad.tahunajaran WHERE replid='$tahunajaran'";
 	$result_get_ta=QueryDb($sql_get_ta);
-	$row_get_ta=@mysqli_fetch_array($result_get_ta);
+	$row_get_ta=@mysql_fetch_array($result_get_ta);
 	
 	$sql_get_nama="SELECT nama FROM jbsakad.siswa WHERE nis='$nis'";
 	$result_get_nama=QueryDb($sql_get_nama);
-	$row_get_nama=@mysqli_fetch_array($result_get_nama);
+	$row_get_nama=@mysql_fetch_array($result_get_nama);
 	
 	 $sql_get_kls="SELECT kelas FROM jbsakad.kelas WHERE replid='$kelas'";
 	$result_get_kls=QueryDb($sql_get_kls);
-	$row_get_kls=@mysqli_fetch_array($result_get_kls);
+	$row_get_kls=@mysql_fetch_array($result_get_kls);
 	
 	$sql_get_sem="SELECT semester FROM jbsakad.semester WHERE replid='$semester'";
 	$result_get_sem=QueryDb($sql_get_sem);
-	$row_get_sem=@mysqli_fetch_array($result_get_sem);
+	$row_get_sem=@mysql_fetch_array($result_get_sem);
 	
 	$sql_get_w_kls="SELECT p.nama as namawalikelas, p.nip as nipwalikelas FROM jbssdm.pegawai p, jbsakad.kelas k WHERE k.replid='$kelas' AND k.nipwali=p.nip";
 	//echo $sql_get_w_kls;
 	$rslt_get_w_kls=QueryDb($sql_get_w_kls);
-	$row_get_w_kls=@mysqli_fetch_array($rslt_get_w_kls);
+	$row_get_w_kls=@mysql_fetch_array($rslt_get_w_kls);
 	
 	$sql_get_kepsek="SELECT d.nipkepsek as nipkepsek,p.nama as namakepsek FROM jbssdm.pegawai p, jbsakad.departemen d WHERE  p.nip=d.nipkepsek AND d.departemen='$departemen'";
 	//echo $sql_get_kepsek;
 	$rslt_get_kepsek=QueryDb($sql_get_kepsek);
-	$row_get_kepsek=@mysqli_fetch_array($rslt_get_kepsek);
+	$row_get_kepsek=@mysql_fetch_array($rslt_get_kepsek);
 /**/
 header('Content-Type: application/vnd.ms-word'); //IE and Opera  
 header('Content-Type: application/w-msword'); // Other browsers  
@@ -269,7 +269,7 @@ div.Section4
    
 	
 	?><td height="20"><span class="style5">:&nbsp;
-        <?=$row_get_ta['tahunajaran']?>
+        <?=$row_get_ta[tahunajaran]?>
     </span></td>
   </tr>
   <tr>
@@ -286,7 +286,7 @@ div.Section4
 	
 	?>
 	<td height="20"><span class="style5">:&nbsp;
-	    <?=$row_get_nama['nama']?>
+	    <?=$row_get_nama[nama]?>
 	</span></td>
   </tr>
   <tr>
@@ -296,7 +296,7 @@ div.Section4
    
 	?>
     <td height="20"><span class="style5">:&nbsp;
-        <?=$row_get_kls['kelas']."/".$row_get_sem['semester']?>
+        <?=$row_get_kls[kelas]."/".$row_get_sem[semester]?>
     </span></td>
   </tr>
 </table>
@@ -330,7 +330,7 @@ div.Section4
 		GROUP BY pel.nama";    
 	$res = QueryDb($sql);
 	$i = 0;
-	while($row = mysqli_fetch_row($res))
+	while($row = mysql_fetch_row($res))
 	{
 		$pelarr[$i++] = array($row[0], $row[1]);
 	}
@@ -346,7 +346,7 @@ div.Section4
 				  AND idsemester = '$semester'
 			      AND idkelas = '$kelas'";
 		$res = QueryDb($sql);
-		$row = mysqli_fetch_row($res);
+		$row = mysql_fetch_row($res);
 		$nilaimin = $row[0];
 		
 		$sql = "SELECT DISTINCT a.dasarpenilaian, d.keterangan 
@@ -360,7 +360,7 @@ div.Section4
 		$res = QueryDb($sql);				 
 		$aspekarr = array();				 
 		$j = 0;
-		while($row = mysqli_fetch_row($res))
+		while($row = mysql_fetch_row($res))
 		{
 			$na = "";
 			$nh = "";
@@ -376,9 +376,9 @@ div.Section4
 					   AND n.idaturan = a.replid 	   
 					   AND a.dasarpenilaian = '$asp'";
 			$res2 = QueryDb($sql);
-			if (mysqli_num_rows($res2) > 0)
+			if (mysql_num_rows($res2) > 0)
 			{
-				$row2 = mysqli_fetch_row($res2);
+				$row2 = mysql_fetch_row($res2);
 				$na = $row2[0];
 				$nh = $row2[1];
 			}
@@ -446,18 +446,18 @@ div.Section4
   <tr>
     <td width="33%" rowspan="2"><div align="center">(.............................................)</div></td>
     <td width="33%"><div align="center">
-      <u><?=$row_get_kepsek['namakepsek']?></u>
+      <u><?=$row_get_kepsek[namakepsek]?></u>
     </div></td>
     <td width="33%"><div align="center">
-      <u><?=$row_get_w_kls['namawalikelas']?></u>
+      <u><?=$row_get_w_kls[namawalikelas]?></u>
     </div></td>
   </tr>
   <tr>
     <td><div align="center">
-      NIP : <?=$row_get_kepsek['nipkepsek']?>
+      NIP : <?=$row_get_kepsek[nipkepsek]?>
     </div></td>
     <td width="33%"><div align="center">
-      NIP : <?=$row_get_w_kls['nipwalikelas']?>
+      NIP : <?=$row_get_w_kls[nipwalikelas]?>
     </div></td>
   </tr>
 </table>
@@ -494,7 +494,7 @@ mso-break-type:section-break'>
    
 	
 	?><td height="20"><span class="style5">:&nbsp;
-        <?=$row_get_ta['tahunajaran']?>
+        <?=$row_get_ta[tahunajaran]?>
     </span></td>
   </tr>
   <tr>
@@ -511,7 +511,7 @@ mso-break-type:section-break'>
 	
 	?>
 	<td height="20"><span class="style5">:&nbsp;
-	    <?=$row_get_nama['nama']?>
+	    <?=$row_get_nama[nama]?>
 	</span></td>
   </tr>
   <tr>
@@ -521,7 +521,7 @@ mso-break-type:section-break'>
    
 	?>
     <td height="20"><span class="style5">:&nbsp;
-        <?=$row_get_kls['kelas']."/".$row_get_sem['semester']?>
+        <?=$row_get_kls[kelas]."/".$row_get_sem[semester]?>
     </span></td>
   </tr>
 </table>
@@ -547,7 +547,7 @@ mso-break-type:section-break'>
 								"GROUP BY pel.nama";
 	$result_get_pelajaran_komentar=QueryDb($sql_get_pelajaran_komentar);
 	$cntpel_komentar=1;
-	while ($row_get_pelajaran_komentar=@mysqli_fetch_array($result_get_pelajaran_komentar))
+	while ($row_get_pelajaran_komentar=@mysql_fetch_array($result_get_pelajaran_komentar))
     {
         $sql_get_komentar = "SELECT k.komentar
                                FROM jbsakad.komennap k, jbsakad.infonap i
@@ -556,10 +556,10 @@ mso-break-type:section-break'>
                                 AND i.idsemester = '$semester'
                                 AND i.replid=k.idinfo";
         $result_get_komentar=QueryDb($sql_get_komentar);
-    	$row_get_komentar=@mysqli_fetch_row($result_get_komentar);
+    	$row_get_komentar=@mysql_fetch_row($result_get_komentar);
 	?>
 	<tr>
-	<td height="25"><span class="style5"><?=$row_get_pelajaran_komentar['nama']?></span></td>
+	<td height="25"><span class="style5"><?=$row_get_pelajaran_komentar[nama]?></span></td>
 	<td height="25"><?=$row_get_komentar[0]?></td>
 	</tr>
 	<?
@@ -592,18 +592,18 @@ mso-break-type:section-break'>
   <tr>
     <td width="33%" rowspan="2"><div align="center">(.............................................)</div></td>
     <td width="33%"><div align="center">
-      <u><?=$row_get_kepsek['namakepsek']?></u>
+      <u><?=$row_get_kepsek[namakepsek]?></u>
     </div></td>
     <td width="33%"><div align="center">
-      <u><?=$row_get_w_kls['namawalikelas']?></u>
+      <u><?=$row_get_w_kls[namawalikelas]?></u>
     </div></td>
   </tr>
   <tr>
     <td><div align="center">
-      NIP : <?=$row_get_kepsek['nipkepsek']?>
+      NIP : <?=$row_get_kepsek[nipkepsek]?>
     </div></td>
     <td width="33%"><div align="center">
-      NIP : <?=$row_get_w_kls['nipwalikelas']?>
+      NIP : <?=$row_get_w_kls[nipwalikelas]?>
     </div></td>
   </tr>
 </table>
@@ -641,7 +641,7 @@ mso-break-type:section-break'>
    
 	
 	?><td height="20"><span class="style5">:&nbsp;
-        <?=$row_get_ta['tahunajaran']?>
+        <?=$row_get_ta[tahunajaran]?>
     </span></td>
   </tr>
   <tr>
@@ -658,7 +658,7 @@ mso-break-type:section-break'>
 	
 	?>
 	<td height="20"><span class="style5">:&nbsp;
-	    <?=$row_get_nama['nama']?>
+	    <?=$row_get_nama[nama]?>
 	</span></td>
   </tr>
   <tr>
@@ -668,7 +668,7 @@ mso-break-type:section-break'>
    
 	?>
     <td height="20"><span class="style5">:&nbsp;
-        <?=$row_get_kls['kelas']."/".$row_get_sem['semester']?>
+        <?=$row_get_kls[kelas]."/".$row_get_sem[semester]?>
     </span></td>
   </tr>
 </table>
@@ -708,47 +708,47 @@ mso-break-type:section-break'>
 	$result_get_pelajaran_presensi=QueryDb($sql_get_pelajaran_presensi);
 	$cntpel_presensi=1;
 	
-	while ($row_get_pelajaran_presensi=@mysqli_fetch_array($result_get_pelajaran_presensi)){
+	while ($row_get_pelajaran_presensi=@mysql_fetch_array($result_get_pelajaran_presensi)){
 	//ambil semua jumlah presensi per pelajaran 
 	$sql_get_all_presensi="select count(*) as jumlah FROM jbsakad.presensipelajaran pel, jbsakad.ppsiswa pp ".
 						  "WHERE pel.idpelajaran='$row_get_pelajaran_presensi[replid]' AND pel.idsemester='$semester' AND pel.idkelas='$kelas' ".
 		                  "AND pel.replid=pp.idpp AND pp.nis='$nis'";
 	$result_get_all_presensi=QueryDb($sql_get_all_presensi);
-	$row_get_all_presensi=@mysqli_fetch_array($result_get_all_presensi);
+	$row_get_all_presensi=@mysql_fetch_array($result_get_all_presensi);
 	//dapet nih jumlahnya
-	$jumlah_presensi=$row_get_all_presensi['jumlah'];
+	$jumlah_presensi=$row_get_all_presensi[jumlah];
 
 	//ambil yang hadir
 	$sql_get_hadir="select count(*) as hadir FROM jbsakad.presensipelajaran pel, jbsakad.ppsiswa pp ".
 						  "WHERE pel.idpelajaran='$row_get_pelajaran_presensi[replid]' AND pel.idsemester='$semester' AND pel.idkelas='$kelas' ".
 		                  "AND pel.replid=pp.idpp AND pp.nis='$nis' AND pp.statushadir=0";
 	$result_get_hadir=QueryDb($sql_get_hadir);
-	$row_get_hadir=@mysqli_fetch_array($result_get_hadir);
-	$hadir=$row_get_hadir['hadir'];
+	$row_get_hadir=@mysql_fetch_array($result_get_hadir);
+	$hadir=$row_get_hadir[hadir];
 	$hh[$cntpel_presensi]=$hadir;	;
 	//ambil yang sakit
 	$sql_get_sakit="select count(*) as sakit FROM jbsakad.presensipelajaran pel, jbsakad.ppsiswa pp ".
 						  "WHERE pel.idpelajaran='$row_get_pelajaran_presensi[replid]' AND pel.idsemester='$semester' AND pel.idkelas='$kelas' ".
 		                  "AND pel.replid=pp.idpp AND pp.nis='$nis' AND pp.statushadir=1";
 	$result_get_sakit=QueryDb($sql_get_sakit);
-	$row_get_sakit=@mysqli_fetch_array($result_get_sakit);
-	$sakit=$row_get_sakit['sakit'];
+	$row_get_sakit=@mysql_fetch_array($result_get_sakit);
+	$sakit=$row_get_sakit[sakit];
 	$ss[$cntpel_presensi]=$sakit;	
 	//ambil yang ijin
 	$sql_get_ijin="select count(*) as ijin FROM jbsakad.presensipelajaran pel, jbsakad.ppsiswa pp ".
 						  "WHERE pel.idpelajaran='$row_get_pelajaran_presensi[replid]' AND pel.idsemester='$semester' AND pel.idkelas='$kelas' ".
 		                  "AND pel.replid=pp.idpp AND pp.nis='$nis' AND pp.statushadir=2";
 	$result_get_ijin=QueryDb($sql_get_ijin);
-	$row_get_ijin=@mysqli_fetch_array($result_get_ijin);
-	$ijin=$row_get_ijin['ijin'];
+	$row_get_ijin=@mysql_fetch_array($result_get_ijin);
+	$ijin=$row_get_ijin[ijin];
 	$ii[$cntpel_presensi]=$ijin;	
 	//ambil yang alpa
 	$sql_get_alpa="select count(*) as alpa FROM jbsakad.presensipelajaran pel, jbsakad.ppsiswa pp ".
 						  "WHERE pel.idpelajaran='$row_get_pelajaran_presensi[replid]' AND pel.idsemester='$semester' AND pel.idkelas='$kelas' ".
 		                  "AND pel.replid=pp.idpp AND pp.nis='$nis' AND pp.statushadir=3";
 	$result_get_alpa=QueryDb($sql_get_alpa);
-	$row_get_alpa=@mysqli_fetch_array($result_get_alpa);
-	$alpa=$row_get_alpa['alpa'];
+	$row_get_alpa=@mysql_fetch_array($result_get_alpa);
+	$alpa=$row_get_alpa[alpa];
 	$aa[$cntpel_presensi]=$alp;
 	//hitung prosentase kalo jumlahnya gak 0
 	if ($jumlah_presensi<>0){
@@ -764,7 +764,7 @@ mso-break-type:section-break'>
 	}
 	?>
 	<tr>
-    <td height="25"><span class="style5"><?=$row_get_pelajaran_presensi['nama']?></span></td>
+    <td height="25"><span class="style5"><?=$row_get_pelajaran_presensi[nama]?></span></td>
     <td height="25"><div align="center">
       <span class="style5"><?=$hadir?></span>
     </div></td>
@@ -811,7 +811,7 @@ mso-break-type:section-break'>
 	               "WHERE pel.idsemester='22' AND pel.idkelas='$kelas' ". 
                    "AND pel.replid=pp.idpp AND pp.nis='$nis' AND pp.statushadir=0";
     $result_all_hadir=QueryDb($sql_all_hadir);
-	$row_all_hadir=@mysqli_fetch_array($result_all_hadir);
+	$row_all_hadir=@mysql_fetch_array($result_all_hadir);
 	$all_hadir=$row_all_hadir[allhadir];
 	
 	//sekarang hitung jumlah sakit semua pelajaran
@@ -819,7 +819,7 @@ mso-break-type:section-break'>
 	               "WHERE pel.idsemester='22' AND pel.idkelas='$kelas' ". 
                    "AND pel.replid=pp.idpp AND pp.nis='$nis' AND pp.statushadir=1";
     $result_all_sakit=QueryDb($sql_all_sakit);
-	$row_all_sakit=@mysqli_fetch_array($result_all_sakit);
+	$row_all_sakit=@mysql_fetch_array($result_all_sakit);
 	$all_sakit=$row_all_sakit[allsakit];
 
 	//sekarang hitung jumlah ijin semua pelajaran
@@ -827,7 +827,7 @@ mso-break-type:section-break'>
 	               "WHERE pel.idsemester='22' AND pel.idkelas='$kelas' ". 
                    "AND pel.replid=pp.idpp AND pp.nis='$nis' AND pp.statushadir=2";
     $result_all_ijin=QueryDb($sql_all_ijin);
-	$row_all_ijin=@mysqli_fetch_array($result_all_ijin);
+	$row_all_ijin=@mysql_fetch_array($result_all_ijin);
 	$all_ijin=$row_all_ijin[allijin];
 
 	//sekarang hitung jumlah alpa semua pelajaran
@@ -835,7 +835,7 @@ mso-break-type:section-break'>
 	               "WHERE pel.idsemester='22' AND pel.idkelas='$kelas' ". 
                    "AND pel.replid=pp.idpp AND pp.nis='$nis' AND pp.statushadir=3";
     $result_all_alpa=QueryDb($sql_all_alpa);
-	$row_all_alpa=@mysqli_fetch_array($result_all_alpa);
+	$row_all_alpa=@mysql_fetch_array($result_all_alpa);
 	$all_alpa=$row_all_alpa[allalpa];
 	*/
 	?>
@@ -883,18 +883,18 @@ mso-break-type:section-break'>
   <tr>
     <td width="33%" rowspan="2"><div align="center">(.............................................)</div></td>
     <td width="33%"><div align="center">
-      <u><?=$row_get_kepsek['namakepsek']?></u>
+      <u><?=$row_get_kepsek[namakepsek]?></u>
     </div></td>
     <td width="33%"><div align="center">
-      <u><?=$row_get_w_kls['namawalikelas']?></u>
+      <u><?=$row_get_w_kls[namawalikelas]?></u>
     </div></td>
   </tr>
   <tr>
     <td><div align="center">
-      NIP : <?=$row_get_kepsek['nipkepsek']?>
+      NIP : <?=$row_get_kepsek[nipkepsek]?>
     </div></td>
     <td width="33%"><div align="center">
-      NIP : <?=$row_get_w_kls['nipwalikelas']?>
+      NIP : <?=$row_get_w_kls[nipwalikelas]?>
     </div></td>
   </tr>
 </table>
@@ -932,7 +932,7 @@ mso-break-type:section-break'>
    
 	
 	?><td height="20"><span class="style5">:&nbsp;
-        <?=$row_get_ta['tahunajaran']?>
+        <?=$row_get_ta[tahunajaran]?>
     </span></td>
   </tr>
   <tr>
@@ -949,7 +949,7 @@ mso-break-type:section-break'>
 	
 	?>
 	<td height="20"><span class="style5">:&nbsp;
-	    <?=$row_get_nama['nama']?>
+	    <?=$row_get_nama[nama]?>
 	</span></td>
   </tr>
   <tr>
@@ -959,7 +959,7 @@ mso-break-type:section-break'>
    
 	?>
     <td height="20"><span class="style5">:&nbsp;
-        <?=$row_get_kls['kelas']."/".$row_get_sem['semester']?>
+        <?=$row_get_kls[kelas]."/".$row_get_sem[semester]?>
     </span></td>
   </tr>
 </table>
@@ -1005,7 +1005,7 @@ mso-break-type:section-break'>
   <!-- Ambil pelajaran per departemen-->
 	<?
 	$result_harian=QueryDb($sql_harian);
-	$row_harian=@mysqli_fetch_array($result_harian);
+	$row_harian=@mysql_fetch_array($result_harian);
 	$hadir=$row_harian['hadir'];
 	$sakit=$row_harian['sakit'];
 	$ijin=$row_harian['ijin'];
@@ -1079,18 +1079,18 @@ mso-break-type:section-break'>
   <tr>
     <td width="33%" rowspan="2"><div align="center">(.............................................)</div></td>
     <td width="33%"><div align="center">
-      <u><?=$row_get_kepsek['namakepsek']?></u>
+      <u><?=$row_get_kepsek[namakepsek]?></u>
     </div></td>
     <td width="33%"><div align="center">
-      <u><?=$row_get_w_kls['namawalikelas']?></u>
+      <u><?=$row_get_w_kls[namawalikelas]?></u>
     </div></td>
   </tr>
   <tr>
     <td><div align="center">
-      NIP : <?=$row_get_kepsek['nipkepsek']?>
+      NIP : <?=$row_get_kepsek[nipkepsek]?>
     </div></td>
     <td width="33%"><div align="center">
-      NIP : <?=$row_get_w_kls['nipwalikelas']?>
+      NIP : <?=$row_get_w_kls[nipwalikelas]?>
     </div></td>
   </tr>
 </table>

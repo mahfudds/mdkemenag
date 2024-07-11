@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -283,14 +283,14 @@ function refresh_daftar() {
 	
 	$sql_tot = $sql;
 	$result_tot = QueryDb($sql_tot);
-	$total=ceil(mysqli_num_rows($result_tot)/(int)$varbaris);
-	$jumlah = mysqli_num_rows($result_tot);
+	$total=ceil(mysql_num_rows($result_tot)/(int)$varbaris);
+	$jumlah = mysql_num_rows($result_tot);
 	$akhir = ceil($jumlah/5)*5;	
 	
 	$sql = $sql." ORDER BY $urut $urutan LIMIT ".(int)$page*(int)$varbaris.",$varbaris";
 	$result = QueryDb($sql);
 	
-	$jum = @mysqli_num_rows($result);
+	$jum = @mysql_num_rows($result);
 	
 	
 	if ($jum == 0) { 
@@ -347,13 +347,13 @@ function refresh_daftar() {
 			$cnt = (int)$page*(int)$varbaris;
 		
 		$result = QueryDb($sql);
-		while ($row = @mysqli_fetch_array($result)) {
+		while ($row = @mysql_fetch_array($result)) {
 			if ($row['replidsiswa'] <> NULL) {
 				OpenDb();	
 				$sql1 = "SELECT s.nis, k.kelas FROM siswa s, kelas k WHERE s.replid ='$row[replidsiswa]' AND s.idkelas = k.replid";  				
 				$result1 = QueryDb($sql1);
 				CloseDb();
-				$row1 = @mysqli_fetch_array($result1);
+				$row1 = @mysql_fetch_array($result1);
 				$nis = $row1['nis'];
 				$kls = $row1['kelas'];
 			} else {
@@ -365,14 +365,14 @@ function refresh_daftar() {
        	<td align="center"><?=++$cnt ?></td>
         <td align="center" ><?=$row['nopendaftaran'] ?></td>
 		<td align="center" ><?=$row['nisn'] ?></td>
-        <td><a href="#" onclick="tampil('<?=$row['replid']?>')"><?=$row['nama']?></a></td>
+        <td><a href="#" onclick="tampil('<?=$row[replid]?>')"><?=$row['nama']?></a></td>
         <td align="center"><?=$nis ?></td>
         <td align="center"	><?=$kls?></td>
         
         
         <td align="center">
 		<? if ($row['replidsiswa'] == NULL) { ?>
-        <input type="button" name="pindah" id="pindah" value=" > " class="but" onClick="pindah(<?=$row['replid']?>, '<?=$row['nisn']?>')" onmouseover="showhint('Klik untuk menempatkan calon siswa!', this, event, '90px')"/>
+        <input type="button" name="pindah" id="pindah" value=" > " class="but" onClick="pindah(<?=$row['replid']?>, '<?=$row[nisn]?>')" onmouseover="showhint('Klik untuk menempatkan calon siswa!', this, event, '90px')"/>        
         <? } ?>
         </td>
 		

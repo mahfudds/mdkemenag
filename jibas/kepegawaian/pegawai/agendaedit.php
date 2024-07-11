@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *  
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -60,7 +60,7 @@ if (isset($_REQUEST['btSubmit'])) {
 	$sql = "SELECT j.nip, p.gelarawal, p.nama, p.gelarakhir, j.tanggal, j.keterangan, j.jenis FROM jadwal j, pegawai p WHERE j.nip = p.nip AND j.replid = $id";
 	OpenDb();
 	$result = QueryDb($sql);
-	$row = mysqli_fetch_array($result);
+	$row = mysql_fetch_array($result);
 	$tgl = GetDatePart($row['tanggal'], "d");
 	$bln = GetDatePart($row['tanggal'], "m");
 	$thn = GetDatePart($row['tanggal'], "y");
@@ -144,7 +144,7 @@ function validate() {
 <?			OpenDb();
 			$sql = "SELECT nama, agenda FROM jenisagenda ORDER BY urutan";            
 			$result = QueryDb($sql);
-			while ($row = mysqli_fetch_row($result)) { ?>
+			while ($row = mysql_fetch_row($result)) { ?>
             	<option value="<?=$row[1]?>" <?=StringIsSelected($row[1], $jenis)?>><?=$row[0]?></option>
 <?			} 
 			CloseDb(); ?>      

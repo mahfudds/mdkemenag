@@ -50,7 +50,7 @@ function ShowDaftarPetugas($vendorId)
                AND vu.vendorid = '$vendorId'
              ORDER BY vu.tingkat, u.nama";
     $res = QueryDb($sql);
-    $num = mysqli_num_rows($res);
+    $num = mysql_num_rows($res);
     if ($num == 0)
     {
         echo "(belum ada data petugas)";
@@ -59,7 +59,7 @@ function ShowDaftarPetugas($vendorId)
 
     $sb = new StringBuilder();
     $sb->AppendLine("<table border='0' cellspacing='0' cellpadding='2'>");
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         $userId = $row[0];
         $rowId = $row[3];

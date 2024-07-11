@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -76,7 +76,7 @@ if ($op == "dw8dxn8w9ms8zs22") {
 	$sql = "DELETE FROM presensipelajaran WHERE replid = '$replid'";
 	//echo $sql;exit;
 	QueryDb($sql);
-	if(mysqli_affected_rows($mysqlconnection) > 0) {
+	if(mysql_affected_rows() > 0) {
 	?>
     <script language="JavaScript">
         alert('Data presensi pelajaran berhasil dihapus');
@@ -94,7 +94,7 @@ OpenDb();
 if ($_REQUEST['replid']<> "") {
 	$sql1 = "SELECT k.idtingkat, s.departemen, p.idkelas FROM kelas k, semester s, presensipelajaran p WHERE p.replid = '".$_REQUEST[replid]."' AND p.idkelas = k.replid AND p.idsemester = s.replid"; 
 	$result1 = QueryDb($sql1);
-	$row1 = mysqli_fetch_array($result1);
+	$row1 = mysql_fetch_array($result1);
 	$departemen = $row1['departemen'];
 	$tingkat = $row1['idtingkat'];
 		
@@ -105,8 +105,8 @@ if ($_REQUEST['replid']<> "") {
 }
 
 $result = QueryDb($sql);
-$jml = @mysqli_num_rows($result);
-$row = @mysqli_fetch_array($result);
+$jml = @mysql_num_rows($result);
+$row = @mysql_fetch_array($result);
 if ($jml > 0) {
 	$id = $row['replid'];
 	//$tahunajaran = $row['idtahunajaran'];	
@@ -287,7 +287,7 @@ function focusNext(elemName, evt) {
 		$sql = "SELECT s.replid, s.status FROM statusguru s ORDER BY status";
 		$result = QueryDb($sql);
 		CloseDb();
-		while($row = mysqli_fetch_array($result)) 
+		while($row = mysql_fetch_array($result)) 
 		{
 			if ($jenis == "")
 				$jenis = $row['replid'];	?>
@@ -339,15 +339,15 @@ function focusNext(elemName, evt) {
 		
 		$result = QueryDb($sql);		
 		$cnt = 1;
-		$jum = @mysqli_num_rows($result);
+		$jum = @mysql_num_rows($result);
 		
-		while ($row = @mysqli_fetch_array($result)) {		
+		while ($row = @mysql_fetch_array($result)) {		
 			if ($id) {
 				$sql1 = "SELECT * FROM ppsiswa WHERE idpp = '$id' AND nis='$row[nis]'";
 				
 				$result1 = QueryDb($sql1);
-				$jml = mysqli_num_rows($result1);
-				$row1 = mysqli_fetch_array($result1);
+				$jml = mysql_num_rows($result1);
+				$row1 = mysql_fetch_array($result1);
 				if ($jml <> 0) {									
 					$status=$row1['statushadir'];
 					$catatan=$row1['catatan'];				
@@ -360,9 +360,9 @@ function focusNext(elemName, evt) {
         <tr>        			
 			<td height="25" align="center"><?=$cnt?></td>
 			<? if ($row['idkelas'] <> $kelas) { ?>
-            <td align="center" onMouseOver="showhint('Kelas tetap di <?=$row['kelas']?>', this, event, '80px')">
+            <td align="center" onMouseOver="showhint('Kelas tetap di <?=$row[kelas]?>', this, event, '80px')">
             <font color="#FF0000"><?=$row['nis']?></font></td>
-            <td onMouseOver="showhint('Kelas tetap di <?=$row['kelas']?>', this, event, '80px')">
+            <td onMouseOver="showhint('Kelas tetap di <?=$row[kelas]?>', this, event, '80px')">
             <font color="#FF0000"><?=$row['nama']?></font></td>			
 		<? } else if ($row['aktif'] == 0) { ?>			
             <td align="center" onMouseOver="showhint('Status siswa tidak aktif lagi!', this, event, '80px')">

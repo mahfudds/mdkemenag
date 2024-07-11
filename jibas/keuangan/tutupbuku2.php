@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -87,10 +87,7 @@ if (isset($_REQUEST['lanjut']))
 	{
 		$n_aktiva = 0;
 		$n_pasiva = 0;
-
-		// 2024-06-26
-		$aktiva = array();
-
+	
 		$sql = "SELECT jd.koderek, SUM(jd.debet - jd.kredit) 
 				FROM jurnal j, jurnaldetail jd, rekakun ra 
 				WHERE j.replid = jd.idjurnal AND jd.koderek = ra.kode AND j.idtahunbuku = '$idtahunbuku' 
@@ -98,16 +95,13 @@ if (isset($_REQUEST['lanjut']))
 				GROUP BY jd.koderek, ra.nama ORDER BY jd.koderek";
 		//echo  "$sql<br>";				
 		$result = QueryDb($sql); 
-		while($row = mysqli_fetch_row($result))
+		while($row = mysql_fetch_row($result))
 		{
 			$aktiva[$n_aktiva]["kode"] = $row[0];
 			$aktiva[$n_aktiva]["jumlah"] = (float)$row[1];
 			$n_aktiva++;
 		}
-
-        // 2024-06-26
-		$pasiva = array();
-
+		
 		$sql = "SELECT jd.koderek, sum(jd.kredit - jd.debet) 
 				FROM jurnal j, jurnaldetail jd, rekakun ra 
 				WHERE j.replid = jd.idjurnal AND jd.koderek = ra.kode AND j.idtahunbuku = '$idtahunbuku' 
@@ -115,7 +109,7 @@ if (isset($_REQUEST['lanjut']))
 				GROUP BY jd.koderek, ra.nama ORDER BY jd.koderek";
 		//echo  "$sql<br>";				
 		$result = QueryDb($sql); 
-		while($row = mysqli_fetch_row($result))
+		while($row = mysql_fetch_row($result))
 		{
 			$pasiva[$n_pasiva]["kode"] = $row[0];
 			$pasiva[$n_pasiva]["jumlah"] = (float)$row[1];
@@ -407,7 +401,7 @@ OpenDb();
             <?
             $sql = "SELECT kode, nama FROM rekakun WHERE kategori='MODAL' ORDER BY kode";
             $result = QueryDb($sql);
-            while ($row = mysqli_fetch_row($result)) {
+            while ($row = mysql_fetch_row($result)) {
             ?>
                 <option value="<?=$row[0]?>"><?=$row[0] . "  " . $row[1]?></option>
             <?

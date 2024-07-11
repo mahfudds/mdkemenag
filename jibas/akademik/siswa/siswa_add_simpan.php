@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -136,16 +136,16 @@ $departemen=$_POST['departemen'];
 			$foto_data = addslashes(fread(fopen($file_data, "r"), filesize($file_data)));
 		}*/
 
-$date=date('j');
-$month=date('m');
-$year=date('Y');
+$date=date(j);
+$month=date(m);
+$year=date(Y);
 $kumplit=$year."-".$month."-".$date;
 OpenDb();
 BeginTrans();
 $success=0;
 $sql_cek ="SELECT nis from jbsakad.siswa  where nis ='$nis'";
 $hasil_cek=QueryDb($sql_cek);
-if (mysqli_fetch_row($hasil_cek)>0){
+if (mysql_fetch_row($hasil_cek)>0){
 ?>
 <script language="javascript">
 alert ('Maaf nis <?=$nis?> sudah digunakan');

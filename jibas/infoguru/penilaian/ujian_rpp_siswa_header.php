@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -141,11 +141,11 @@ function show(){
         $query_s = "SELECT replid, semester, aktif FROM jbsakad.semester ".
                     "WHERE departemen = '$departemen' AND aktif = '1' ORDER BY semester ASC";
         $result_s = QueryDb($query_s);
-        $row_s = @mysqli_fetch_array($result_s);
+        $row_s = @mysql_fetch_array($result_s);
 					
         ?>
-            <input type="hidden" name="semester" id="semester" value="<?=$row_s['replid']?>">
-            <input type="text" size="34" value="<?=$row_s['semester']?>" readonly class="disabled"></td>
+            <input type="hidden" name="semester" id="semester" value="<?=$row_s[replid]?>">
+            <input type="text" size="34" value="<?=$row_s[semester]?>" readonly class="disabled"></td>
     </tr>
 	<tr>
         <td><strong>Kelas</strong></td>
@@ -156,12 +156,12 @@ function show(){
         	$result_t = QueryDb($query_t);
 
 			$i = 0;
-			while ($row_t = @mysqli_fetch_array($result_t)) {
+			while ($row_t = @mysql_fetch_array($result_t)) {
 				if($tingkat == "") {
-					$tingkat = $row_t['replid'];
+					$tingkat = $row_t[replid];
 					$sel[$i] = "selected";
 				}
-				elseif($tingkat == $row_t['replid']) {
+				elseif($tingkat == $row_t[replid]) {
 					$sel[$i] = "selected";
 				}else {
 					$sel[$i] = "";
@@ -181,12 +181,12 @@ function show(){
             $result_k = QueryDb($query_k);
 
             $i = 0;
-            while ($row_k = @mysqli_fetch_array($result_k)) {
+            while ($row_k = @mysql_fetch_array($result_k)) {
                 if($kelas == "") {
-                    $kelas = $row_k['replid'];
+                    $kelas = $row_k[replid];
                     $sel[$i] = "selected";
                 }
-                elseif($kelas == $row_k['replid']) {
+                elseif($kelas == $row_k[replid]) {
 				    $sel[$i] = "selected";
                 }else {
                     $sel[$i] = "";
@@ -208,12 +208,12 @@ function show(){
             //	        	"WHERE departemen = '$departemen' AND aktif = 1 ORDER BY nama";
        		$result_p = QueryDb($query_p);
 			$i = 0;
-			while ($row_p = @mysqli_fetch_array($result_p)) {
+			while ($row_p = @mysql_fetch_array($result_p)) {
 				if($pelajaran == "") {
-					$pelajaran = $row_p['replid'];
+					$pelajaran = $row_p[replid];
 					$sel[$i] = "selected";
 				}
-				elseif($pelajaran == $row_p['replid']) {
+				elseif($pelajaran == $row_p[replid]) {
 					$sel[$i] = "selected";
 				}else {
 					$sel[$i] = "";

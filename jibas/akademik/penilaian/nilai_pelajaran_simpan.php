@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@ $sql_get_nau_per_nis =
 	   FROM jbsakad.nau WHERE idkelas = '$_REQUEST[kelas]' AND idsemester = '$_REQUEST[semester]' 
 	    AND idaturan = '$_REQUEST[idaturan]'";
 $result_nau = QueryDb($sql_get_nau_per_nis);
-if (mysqli_num_rows($result_nau) > 0) 
+if (mysql_num_rows($result_nau) > 0) 
 {	
 	$sql_hapus_nau = "DELETE FROM jbsakad.nau 
 					   WHERE idkelas = '$_REQUEST[kelas]' AND idsemester = '$_REQUEST[semester]' 
@@ -47,7 +47,7 @@ if (mysqli_num_rows($result_nau) > 0)
 
 $tanggal = TglDb($_REQUEST['tanggal']);	
 $rpp = "";
-if ($_REQUEST['idrpp'] != '')
+if ($_REQUEST[idrpp] != '') 
 	$rpp = " ,idrpp='$_REQUEST[idrpp]'";
 
 $sql1 = "INSERT INTO ujian SET idpelajaran = '$_REQUEST[pelajaran]', idkelas = '$_REQUEST[kelas]', 
@@ -57,7 +57,7 @@ QueryDbTrans($sql1,$success);
 
 $sql2 = "SELECT LAST_INSERT_ID()";
 $result1 = QueryDb($sql2);
-$row = mysqli_fetch_row($result1);
+$row = mysql_fetch_row($result1);
 $id = $row[0];
 
 $a = $_REQUEST['nilaiujian'];	

@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,19 +36,19 @@ $urutan = $_REQUEST['urutan'];
 OpenDb();
 $sql = "SELECT departemen FROM tahunajaran t, kelas k, siswa s WHERE s.nis='$nis' AND s.idkelas=k.replid AND k.idtahunajaran=t.replid";
 $result = QueryDb($sql);
-$row = @mysqli_fetch_row($result);
+$row = @mysql_fetch_row($result);
 $departemen = $row[0];
 
 $sql = "SELECT nama FROM siswa WHERE nis='$nis'";   
 $result = QueryDB($sql);	
-$row = mysqli_fetch_array($result);
+$row = mysql_fetch_array($result);
 
 $sql = "SELECT DAY(p.tanggal1), MONTH(p.tanggal1), YEAR(p.tanggal1), DAY(p.tanggal2), MONTH(p.tanggal2), YEAR(p.tanggal2), ph.hadir, ph.ijin, ph.sakit, ph.alpa, ph.cuti, ph.keterangan, s.nama, m.semester, k.kelas FROM presensiharian p, phsiswa ph, siswa s, semester m, kelas k WHERE ph.idpresensi = p.replid AND ph.nis = s.nis AND ph.nis = '$nis' AND p.idsemester = m.replid AND p.idkelas = k.replid AND (((p.tanggal1 BETWEEN '$tglawal' AND '$tglakhir') OR (p.tanggal2 BETWEEN '$tglawal' AND '$tglakhir')) OR (('$tglawal' BETWEEN p.tanggal1 AND p.tanggal2) OR ('$tglakhir' BETWEEN p.tanggal1 AND p.tanggal2))) ORDER BY $urut $urutan ";
 
 //$sql = "SELECT DAY(p.tanggal1), MONTH(p.tanggal1), YEAR(p.tanggal1), DAY(p.tanggal2), MONTH(p.tanggal2), YEAR(p.tanggal2), ph.hadir, ph.ijin, ph.sakit, ph.alpa, ph.cuti, ph.keterangan, s.nama, m.semester, k.kelas, m.departemen FROM presensiharian p, phsiswa ph, siswa s, semester m, kelas k WHERE ph.idpresensi = p.replid AND ph.nis = s.nis AND ph.nis = '$nis' AND p.idsemester = m.replid AND p.idkelas = k.replid AND (((p.tanggal1 BETWEEN '$tglawal' AND '$tglakhir') OR (p.tanggal2 BETWEEN '$tglawal' AND '$tglakhir')) OR (('$tglawal' BETWEEN p.tanggal1 AND p.tanggal2) OR ('$tglakhir' BETWEEN p.tanggal1 AND p.tanggal2))) ORDER BY $urut $urutan ";
 //echo $sql;	
 $result = QueryDb($sql);
-$jum = @mysqli_num_rows($result);
+$jum = @mysql_num_rows($result);
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -102,7 +102,7 @@ $jum = @mysqli_num_rows($result);
     </tr>
 <?		
 	$cnt = 0;
-	while ($row = @mysqli_fetch_row($result)) { ?>
+	while ($row = @mysql_fetch_row($result)) { ?>
     <tr height="25">    	
     	<td align="center"><?=++$cnt?></td>
 		<td align="center"><?=$row[0].' '.$bulan[$row[1]].' '.$row[2].' - '.$row[3].' '.$bulan[$row[4]].' '.$row[5]?></td>

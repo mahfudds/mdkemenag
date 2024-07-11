@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,19 +38,19 @@ OpenDb();
 
 $sql = "SELECT replid, departemen, nislama FROM riwayatdeptsiswa WHERE nis = '$nis_awal'";
 $result = QueryDb($sql);
-$row = @mysqli_fetch_array($result);
+$row = @mysql_fetch_array($result);
 $dep[0] = array($row['departemen'], $nis_awal);
 //$no[1] = $row['nislama'];
 if ($row['nislama'] <> "") {
 	$sql1 = "SELECT replid, departemen, nislama FROM riwayatdeptsiswa WHERE nis = '$row[nislama]'";
 	$result1 = QueryDb($sql1);
-	$row1 = @mysqli_fetch_array($result1);	
+	$row1 = @mysql_fetch_array($result1);	
 	$dep[1] = array($row1['departemen'], $row['nislama']);
 	//$no[2] = $row1['nislama'];	
 	if ($row1['nislama'] <> "") {				
 		$sql2 = "SELECT replid, departemen, nislama FROM riwayatdeptsiswa WHERE nis = '$row1[nislama]'";
 		$result2 = QueryDb($sql2);
-		$row2 = @mysqli_fetch_array($result2);					
+		$row2 = @mysql_fetch_array($result2);					
 		$dep[2] = array($row2['departemen'],$row1['nislama']) ;
 	}	
 }		
@@ -61,7 +61,7 @@ $sql_ajaran = "SELECT DISTINCT(t.replid), t.tahunajaran FROM riwayatkelassiswa r
 
 $result_ajaran = QueryDb($sql_ajaran);
 $k = 0;
-while ($row_ajaran = @mysqli_fetch_array($result_ajaran)) {
+while ($row_ajaran = @mysql_fetch_array($result_ajaran)) {
 	$ajaran[$k] = array($row_ajaran['replid'],$row_ajaran['tahunajaran']);
 	$k++;
 }
@@ -74,7 +74,7 @@ $sql_kls = "SELECT DISTINCT(r.idkelas), k.kelas, t.tingkat, k.idtahunajaran FROM
 
 $result_kls = QueryDb($sql_kls);
 $j = 0;
-while ($row_kls = @mysqli_fetch_array($result_kls)) {
+while ($row_kls = @mysql_fetch_array($result_kls)) {
 	$kls[$j] = array($row_kls['idkelas'],$row_kls['kelas'],$row_kls['tingkat'],$row_kls['idtahunajaran']);
 	if ($row_kls['idtahunajaran']==$tahunajaran)
 		$kelas = $row_kls['idkelas'];
@@ -194,7 +194,7 @@ function tampil(pelajaran,kelas,nis,departemen) {
 		$sql = "SELECT DISTINCT p.replid, p.nama FROM ujian u, pelajaran p, nilaiujian n WHERE u.idpelajaran = p.replid AND u.idkelas = $kelas AND u.replid = n.idujian AND n.nis = '$nis' ORDER BY p.nama";
 		//echo '<br> sql '.$sql;
 		$result = QueryDb($sql); 				
-		while ($row = @mysqli_fetch_array($result)) {
+		while ($row = @mysql_fetch_array($result)) {
 	?>
     <tr>   	
        	<td height="25" align="center" onclick="tampil('<?=$row[0]?>','<?=$kelas?>','<?=$nis?>','<?=$dep[$departemen][0]?>')" style="cursor:pointer"><?=++$cnt?></td>

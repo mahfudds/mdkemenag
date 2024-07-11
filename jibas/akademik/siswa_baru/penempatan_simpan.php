@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,7 +51,7 @@ if (isset($_REQUEST['Simpan']))
 {
 	$sql = "SELECT replid FROM siswa WHERE nis = '$nis'";
 	$result = QueryDb($sql);
-	if (mysqli_num_rows($result) > 0) 
+	if (mysql_num_rows($result) > 0) 
 	{
 		$ERROR_MSG = "NIS ".$nis." sudah digunakan!";
 	} 
@@ -59,7 +59,7 @@ if (isset($_REQUEST['Simpan']))
 	{
 		$sql = "SELECT * FROM calonsiswa WHERE replid = '$replid'";
 		$result = QueryDb($sql);
-		$row = @mysqli_fetch_array($result);
+		$row = @mysql_fetch_array($result);
 
 		$nopendaftaran = $row['nopendaftaran'];
 		$agama = $row['agama'] == NULL ? "NULL" : "'" . $row['agama'] . "'";
@@ -100,9 +100,9 @@ if (isset($_REQUEST['Simpan']))
 		$nama = $row['nama'];
 		$nama = str_replace("'", "`", $nama);
 			
-		$date = date('j');
-		$month = date('m');
-		$year = date('Y');
+		$date = date(j);
+		$month = date(m);
+		$year = date(Y);
 		$kumplit = $year."-".$month."-".$date;
 		
 		$pinsiswa = random(5);
@@ -133,7 +133,7 @@ if (isset($_REQUEST['Simpan']))
 		{
 			$sql1 = "SELECT LAST_INSERT_ID()";	
 			$result1 = QueryDb($sql1);
-			$row1 = mysqli_fetch_row($result1);
+			$row1 = mysql_fetch_row($result1);
 			$id = $row1[0];
 			
 			$sql2 = "UPDATE calonsiswa SET replidsiswa = '$id' WHERE replid = '$replid'";				
@@ -237,7 +237,7 @@ function focusNext(elemName, evt) {
 			WHERE k.replid = '$kelas' AND t.replid = '$tahunajaran' AND k.idtahunajaran = t.replid 
 			AND a.replid = '$angkatan' AND a.departemen = '$departemen'";
 	$result = QueryDb($sql);
-	$row = @mysqli_fetch_row($result);
+	$row = @mysql_fetch_row($result);
 	$kls = $row[0];
 	$tahun = $row[1];
 	$angkt = $row[2];

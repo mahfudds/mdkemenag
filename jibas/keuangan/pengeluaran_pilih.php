@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -82,7 +82,7 @@ function change_dep() {
 <br /><br />
 <?	$sql = "SELECT replid AS id, nama FROM datapengeluaran WHERE aktif = 1 AND departemen='$departemen' ORDER BY nama";
 	$request = QueryDb($sql);
-	if (mysqli_num_rows($request) > 0) {
+	if (mysql_num_rows($request) > 0) {
 ?>	
     <table class="tab" id="table" border="1" style="border-collapse:collapse" width="100%" align="left" bordercolor="#000000">
     <!-- TABLE CONTENT -->
@@ -92,7 +92,7 @@ function change_dep() {
     </tr>
 <?
 	$cnt = 0;
-	while ($row = mysqli_fetch_array($request)) { ?>
+	while ($row = mysql_fetch_array($request)) { ?>
     <tr height="25" onClick="show_content(<?=$row['id'] ?>)" style="cursor:pointer;">
     	<td align="center"><?=++$cnt?></td>
         <td><a href="JavaScript:show_content(<?=$row['id'] ?>)"><?=$row['nama'] ?></a></td>

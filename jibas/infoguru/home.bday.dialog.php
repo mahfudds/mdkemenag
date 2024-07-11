@@ -26,7 +26,7 @@ else
 }
 
 $res = QueryDb($sql);
-$row = @mysqli_fetch_array($res);
+$row = @mysql_fetch_array($res);
 
 if ($row['isnull'] == 0)
 {

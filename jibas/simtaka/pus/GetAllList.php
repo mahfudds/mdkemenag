@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,8 +35,8 @@ $filter="";
 if ($idperpustakaan != -1)
   $filter=" AND d.perpustakaan=".$idperpustakaan;
   
-$waktu = $_REQUEST['waktu'];
-$waktu = explode('-', $waktu);
+$waktu = $_REQUEST[waktu];
+$waktu = split('-', $waktu);
 ?>
 <table width="100%" border="1" cellspacing="0" cellpadding="5" class="tab">
 <tr height='25'>
@@ -55,7 +55,7 @@ $sql = "SELECT IF(p.nis IS NOT NULL, p.nis, IF(p.nip IS NOT NULL, p.nip, p.idmem
 		 ORDER BY tglpinjam DESC";
 $result = QueryDb($sql);
 $cnt = 0;
-while ($row = @mysqli_fetch_row($result))
+while ($row = @mysql_fetch_row($result))
 {
   $cnt += 1; ?>
   <tr height='20'>
@@ -98,7 +98,7 @@ function GetMemberName($idanggota, $jenisanggota)
 				 WHERE noregistrasi = '$idanggota'";
 	}
 	$res = QueryDb($sql);
-	$row = mysqli_fetch_row($res);
+	$row = mysql_fetch_row($res);
 	$namaanggota = $row[0];
 	
 	return $namaanggota;

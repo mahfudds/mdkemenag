@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *  
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -91,14 +91,6 @@ class DaftarPribadi
 	
 		if ($success)
 		{
-            // -- v31 -- 2025-05-26
-            $sql = "DELETE FROM jbsakad.riwayatfoto WHERE nip = '$this->nip'";
-            QueryDb($sql);
-
-            // -- v31 -- 2025-05-26
-            $sql = "DELETE FROM jbssdm.tambahandatapegawai WHERE nip = '$this->nip'";
-            QueryDb($sql);
-
 			$sql = "DELETE FROM jbssdm.pegawai WHERE nip='$this->nip'";
 			QueryDbTrans($sql, $success);
 		}
@@ -131,7 +123,7 @@ class DaftarPribadi
                   FROM pegawai p
                  WHERE p.nip='$this->nip'";
         $result = QueryDb($sql);
-        $row = mysqli_fetch_row($result);
+        $row = mysql_fetch_row($result);
         $this->pegawai = $row[0];
         $this->replid = $row[1];
     }
@@ -175,7 +167,7 @@ class DaftarPribadi
 	
         $sql = "SELECT replid FROM jbssdm.pegawai WHERE nip = '$this->newnip' AND nip <> '$this->nip'";
         $result = QueryDb($sql);
-        if (mysqli_num_rows($result) > 0)
+        if (mysql_num_rows($result) > 0)
         {
     		$this->ERRMSG = "Telah ada pegawai dengan NIP $nip";
         }
@@ -331,7 +323,7 @@ class DaftarPribadi
     {
         $sql = "SELECT * FROM pegawai WHERE nip='$this->nip'";
         $result = QueryDb($sql);
-        $row = mysqli_fetch_array($result);
+        $row = mysql_fetch_array($result);
 		  $this->bagian = $row['bagian'];
 		  $this->nuptk = $row['nuptk'];
 		  $this->nrp = $row['nrp'];

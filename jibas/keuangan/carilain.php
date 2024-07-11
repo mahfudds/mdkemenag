@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -156,8 +156,8 @@ function change_baris() {
 <?  OpenDb();
 	$sql_tot = "SELECT replid AS id, nama, keterangan FROM pemohonlain";
 	$result_tot = QueryDb($sql_tot);
-	$total = ceil(mysqli_num_rows($result_tot)/(int)$varbaris);
-	$jumlah = mysqli_num_rows($result_tot);
+	$total = ceil(mysql_num_rows($result_tot)/(int)$varbaris);
+	$jumlah = mysql_num_rows($result_tot);
 	
 	$offset = (int)$hal*(int)$varbaris;
 	
@@ -165,7 +165,7 @@ function change_baris() {
 	$akhir = ceil($jumlah/5)*5;	
 	$result = QueryDb($sql);
 	
-	if (@mysqli_num_rows($result) > 0) {
+	if (@mysql_num_rows($result) > 0) {
 	
 ?>
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
@@ -201,11 +201,11 @@ function change_baris() {
 	else 
 		$no = (int)$hal*(int)$varbaris;
 
-	while ($row = mysqli_fetch_array($result)) { ?>
+	while ($row = mysql_fetch_array($result)) { ?>
     <tr >
-    	<td align="center"  onClick="pilih('<?=$row['id']?>','<?=$row['nama']?>')" style="cursor:pointer"><?= ++$no ?></td>
-        <td  onClick="pilih('<?=$row['id']?>','<?=$row['nama']?>')" style="cursor:pointer"><?=$row['nama'] ?></td>
-        <td  onClick="pilih('<?=$row['id']?>','<?=$row['nama']?>')" style="cursor:pointer"><?=$row['keterangan'] ?></td>
+    	<td align="center"  onClick="pilih('<?=$row[id]?>','<?=$row[nama]?>')" style="cursor:pointer"><?= ++$no ?></td>
+        <td  onClick="pilih('<?=$row[id]?>','<?=$row[nama]?>')" style="cursor:pointer"><?=$row['nama'] ?></td>
+        <td  onClick="pilih('<?=$row[id]?>','<?=$row[nama]?>')" style="cursor:pointer"><?=$row['keterangan'] ?></td>
         <?  if (getLevel() != 2) { ?>
         <td align="center">
         	<a href="#" onclick="ubah('<?=$row['id']?>')" ><img src="images/ico/ubah.png" border="0" onMouseOver="showhint('Ubah Data Pemohon!', this, event, '80px')"></a>&nbsp;

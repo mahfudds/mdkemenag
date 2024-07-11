@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,16 +26,16 @@ class CPenggunaAdd
 	function OnStart()
 	{
 		$this->nip="";
-		if (isset($_REQUEST['nip']))
-			$this->nip=$_REQUEST['nip'];
+		if (isset($_REQUEST[nip]))
+			$this->nip=$_REQUEST[nip];
 			
 		$this->nama="";
-		if (isset($_REQUEST['nama']))
-			$this->nama=$_REQUEST['nama'];
+		if (isset($_REQUEST[nama]))
+			$this->nama=$_REQUEST[nama];
 			
-		if (isset($_REQUEST['simpan']))
+		if (isset($_REQUEST[simpan]))
 		{
-			if ($_REQUEST['tingkat'] == '1')
+			if ($_REQUEST[tingkat] == '1')
 			{
 				$sql = "UPDATE ".get_db_name('user').".hakakses
 						   SET tingkat='$_REQUEST[tingkat]',
@@ -45,7 +45,7 @@ class CPenggunaAdd
 			}
 			else
 			{
-				$temp = explode(":", $_REQUEST['perpustakaan']);
+				$temp = explode(":", $_REQUEST[perpustakaan]);
 				$idperpustakaan = $temp[0];
 		
 				$sql = "UPDATE ".get_db_name('user').".hakakses
@@ -67,22 +67,22 @@ class CPenggunaAdd
 					 WHERE login='$this->nip'
 					   AND modul='SIMTAKA' ";
 			$result = QueryDb($sql);
-			$row = @mysqli_fetch_array($result);
-			$this->keterangan=$row['keterangan'];
-			$this->nip=$row['login'];
-			$this->tingkat=$row['tingkat'];
-			if (isset($_REQUEST['tingkat']))
-				$this->tingkat=$_REQUEST['tingkat'];
-			$this->dep = $row['departemen'];
-			$this->perpustakaan = $row['info1'];
+			$row = @mysql_fetch_array($result);
+			$this->keterangan=$row[keterangan];
+			$this->nip=$row[login];
+			$this->tingkat=$row[tingkat];
+			if (isset($_REQUEST[tingkat]))
+				$this->tingkat=$_REQUEST[tingkat];
+			$this->dep = $row[departemen];	
+			$this->perpustakaan = $row[info1];
 			
 			$sql = "SELECT *
 					  FROM ".get_db_name('sdm').".pegawai
 					 WHERE nip='$this->nip'";
 			//$echo $$this->tingkat;
 			$result = QueryDb($sql);
-			$row = @mysqli_fetch_array($result);
-			$this->nama=$row['nama'];
+			$row = @mysql_fetch_array($result);
+			$this->nama=$row[nama];
 
 		}
 		
@@ -153,7 +153,7 @@ class CPenggunaAdd
 							 WHERE aktif = 1
 							 ORDER BY urutan";
 					$result = QueryDb($sql);
-					while($row = mysqli_fetch_row($result))
+					while($row = mysql_fetch_row($result))
 					{
 						$sel = $this->dep == $row[0] ? "selected" : "";	?>
 						<option value='<?=$row[0]?>' <?=$sel?>><?=$row[0]?></option>
@@ -178,11 +178,11 @@ class CPenggunaAdd
 								 ORDER BY replid";
 						$result = QueryDb($sql);
 						
-						while ($row = @mysqli_fetch_array($result))
+						while ($row = @mysql_fetch_array($result))
 						{
-							$sel = $this->perpustakaan == $row['replid'] ? "selected" : ""; ?>
-							<option value="<?=$row['replid'] . ":" . $row['nama']?>" <?=$sel?>>
-								<?=$row['nama']?>
+							$sel = $this->perpustakaan == $row[replid] ? "selected" : ""; ?>
+							<option value="<?=$row[replid] . ":" . $row[nama]?>" <?=$sel?>>
+								<?=$row[nama]?>
 							</option>
 <?						}
 					} ?>

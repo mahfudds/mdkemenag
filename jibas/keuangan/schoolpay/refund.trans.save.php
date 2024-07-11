@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  *
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -80,7 +80,7 @@ try
              WHERE jenis = 2
                AND departemen = '$departemen'";
     $res = QueryDbEx($sql);
-    if ($row = mysqli_fetch_row($res))
+    if ($row = mysql_fetch_row($res))
     {
         $rekKasVendorSiswa = $row[0];
         $rekUtangVendorSiswa = $row[1];
@@ -95,7 +95,7 @@ try
               FROM jbsfina.paymenttabungan
              WHERE jenis = 1";
     $res = QueryDbEx($sql);
-    if ($row = mysqli_fetch_row($res))
+    if ($row = mysql_fetch_row($res))
     {
         $deptPeg = $row[0];
         $rekKasVendorPegawai = $row[1];
@@ -109,7 +109,7 @@ try
              WHERE p.jenis = 2 
                AND p.replid IN ($stAllIdPayment)";
     $res = QueryDbEx($sql);
-    if ($row = mysqli_fetch_row($res))
+    if ($row = mysql_fetch_row($res))
         $tagihanSiswa = $row[0];
 
     // Ambil jumlah tagihan dari transaksi pegawai
@@ -119,7 +119,7 @@ try
              WHERE p.jenis = 1  
                AND p.replid IN ($stAllIdPayment)";
     $res = QueryDbEx($sql);
-    if ($row = mysqli_fetch_row($res))
+    if ($row = mysql_fetch_row($res))
         $tagihanPegawai = $row[0];
 
     $idPetugas = getIdUser();
@@ -153,7 +153,7 @@ try
 
         $sql = "SELECT LAST_INSERT_ID()";
         $res = QueryDbEx($sql);
-        if ($row = mysqli_fetch_row($res))
+        if ($row = mysql_fetch_row($res))
             $idJurnalSiswa = $row[0];
 
         $sql = "INSERT INTO jbsfina.jurnaldetail 
@@ -184,7 +184,7 @@ try
 
         $sql = "SELECT LAST_INSERT_ID()";
         $res = QueryDbEx($sql);
-        if ($row = mysqli_fetch_row($res))
+        if ($row = mysql_fetch_row($res))
             $idJurnalPegawai = $row[0];
 
         $sql = "INSERT INTO jbsfina.jurnaldetail 
@@ -209,7 +209,7 @@ try
     $idRefund = 0;
     $sql = "SELECT LAST_INSERT_ID()";
     $res = QueryDbEx($sql);
-    if ($row = mysqli_fetch_row($res))
+    if ($row = mysql_fetch_row($res))
         $idRefund = $row[0];
 
     for($i = 0; $i < count($lsTanggal); $i++)

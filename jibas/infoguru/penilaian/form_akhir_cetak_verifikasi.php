@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -153,8 +153,8 @@ function focusNext(elemName, evt) {
 							AND a.nipguru = '$nip' 
 					   ORDER BY	keterangan";
 			$result_daspen = QueryDb($sql_daspen);
-			$num_daspen = @mysqli_num_rows($result_daspen);
-			while ($row_daspen=@mysqli_fetch_array($result_daspen))
+			$num_daspen = @mysql_num_rows($result_daspen);
+			while ($row_daspen=@mysql_fetch_array($result_daspen))
 			{
 				if ($aspek=="")
 					$aspek=$row_daspen['dasarpenilaian']; ?>	
@@ -177,8 +177,8 @@ function focusNext(elemName, evt) {
 				    AND a.dasarpenilaian='$aspek' AND nipguru='$nip' AND j.replid = a.idjenisujian
  		       ORDER BY jenisujian";
 			$result_jenispengujian=QueryDb($sql_jenispengujian);
-			$num_jenispengujian=@mysqli_num_rows($result_jenispengujian);
-			while ($row_jenispengujian=@mysqli_fetch_array($result_jenispengujian))
+			$num_jenispengujian=@mysql_num_rows($result_jenispengujian);
+			while ($row_jenispengujian=@mysql_fetch_array($result_jenispengujian))
 			{
 				if ($aturan=="")
 					$aturan=$row_jenispengujian['replid'];	?>
@@ -194,7 +194,7 @@ function focusNext(elemName, evt) {
                     WHERE idkelas = '$kelas' AND idaturan = '$aturan' AND idsemester = '$semester'";
             $result = QueryDb($sql);
                 
-            if (mysqli_num_rows($result) > 0) 
+            if (mysql_num_rows($result) > 0) 
             {	
                 $but = "<input class=\"but\" type=\"button\" name=\"cetak\" id=\"cetak\" value=\"Cetak\" onClick=\"validate();\"  />";
             } else {

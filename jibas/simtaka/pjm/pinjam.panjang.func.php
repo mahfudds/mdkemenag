@@ -10,9 +10,9 @@ function GetTitle()
              WHERE p.replid = dp.pustaka
                AND dp.kodepustaka = '$kodepustaka'";
     $res = QueryDb($sql);
-    if (mysqli_num_rows($res) > 0)
+    if (mysql_num_rows($res) > 0)
     {
-        $row = mysqli_fetch_row($res);
+        $row = mysql_fetch_row($res);
         $judul = $row[0];
     }
     
@@ -29,9 +29,9 @@ function GetReturnDate()
              WHERE kodepustaka = '$kodepustaka'
                AND status = 1";
     $res = QueryDb($sql);
-    if (mysqli_num_rows($res) > 0)
+    if (mysql_num_rows($res) > 0)
     {
-        $row = mysqli_fetch_row($res);
+        $row = mysql_fetch_row($res);
         $kembali = $row[0];
     }
     

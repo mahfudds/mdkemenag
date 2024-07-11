@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ $sql = "SELECT j.departemen, j.nama, p.nip, p.nama
 		  FROM guru g, jbssdm.pegawai p, pelajaran j 
 		 WHERE g.nip=p.nip AND g.idpelajaran = j.replid AND j.replid = '$id_pelajaran' AND g.nip = '$nip_guru'"; 
 $result = QueryDb($sql);
-$row = @mysqli_fetch_row($result);
+$row = @mysql_fetch_row($result);
 $departemen = $row[0];
 $pelajaran = $row[1];
 $guru = $row[2].' - '.$row[3];
@@ -188,7 +188,7 @@ function cetak() {
 <? 	
 $sql = "SELECT tingkat, replid FROM tingkat WHERE departemen = '$departemen' AND aktif=1 ORDER BY urutan";
 $result = QueryDb($sql);
-if (mysqli_num_rows($result) > 0)
+if (mysql_num_rows($result) > 0)
 { 
 ?>	
  	<td align="right" colspan="2" valign="top"><a href="#" onClick="document.location.reload()"><img src="../images/ico/refresh.png" border="0" onMouseOver="showhint('Refresh!', this, event, '50px')"/>&nbsp;Refresh</a>&nbsp;&nbsp;
@@ -199,7 +199,7 @@ if (mysqli_num_rows($result) > 0)
 
 <? 	
 	$cnt = 0;  
-    while ($row_tkt = @mysqli_fetch_array($result)) 
+    while ($row_tkt = @mysql_fetch_array($result)) 
 	{
 		++$cnt;
 		$query_at = "SELECT a.dasarpenilaian, dp.keterangan
@@ -212,8 +212,8 @@ if (mysqli_num_rows($result) > 0)
   		<br>
   		<fieldset>
         <legend>
-        <b>Tingkat <?=$row_tkt['tingkat'] ?> &nbsp;&nbsp;&nbsp;
-<?		if (@mysqli_num_rows($result_at)>0)
+        <b>Tingkat <?=$row_tkt[tingkat] ?> &nbsp;&nbsp;&nbsp;
+<?		if (@mysql_num_rows($result_at)>0)
 		{ 
 			$cetak = 1; ?>	
     		<a href = "JavaScript:tambah(<?=$row_tkt['replid']?>)">
@@ -231,7 +231,7 @@ if (mysqli_num_rows($result) > 0)
     	    <td class="header" colspan="2" height="30">&nbsp;</td>
 		</tr>
 <?		$i = 1;
-		while($row_at = mysqli_fetch_row($result_at))
+		while($row_at = mysql_fetch_row($result_at))
 		{	?>
 		<tr height="25">
 			<td align="center"><?=$i ?></td>
@@ -242,7 +242,7 @@ if (mysqli_num_rows($result) > 0)
 						"AND t.departemen = '$departemen' AND a.dasarpenilaian = '$row_at[0]' AND a.nipguru = '$nip_guru' ".
 						"AND t.replid = a.idtingkat";
 			$result_ju = QueryDb($query_ju);
-			while($row_ju = mysqli_fetch_row($result_ju))
+			while($row_ju = mysql_fetch_row($result_ju))
 			{
 				if ($row_ju[2] == 1) 
 				{ ?>
@@ -254,7 +254,7 @@ if (mysqli_num_rows($result) > 0)
 					<a href="JavaScript:setaktif(<?=$row_ju[3] ?>, <?=$row_ju[2] ?>)"><img src="../images/ico/nonaktif.png" border="0" onMouseOver="showhint('Status Tidak Aktif!', this, event, '50px')" /></a>&nbsp;
 					<?=$row_ju[0]." = ".$row_ju[1]."<br>";
                 } // if ($row_ju[2] == 1) 
-			} // while($row_ju = mysqli_fetch_row($result_ju))   ?>
+			} // while($row_ju = mysql_fetch_row($result_ju))   ?>
 			</td>
     	 	<td align="center" width="*"> 
             	<a href = "JavaScript:edit('<?=$row_tkt['replid']?>','<?=$row_at[0]?>')">
@@ -267,7 +267,7 @@ if (mysqli_num_rows($result) > 0)
    			</td>
         </tr>
 <?			$i++;
-		} // while($row_at = mysqli_fetch_row($result_at)) 	?>
+		} // while($row_at = mysql_fetch_row($result_at)) 	?>
   	</table>
     <script language='JavaScript'>
           Tables('table<?=$cnt?>', 1, 0);

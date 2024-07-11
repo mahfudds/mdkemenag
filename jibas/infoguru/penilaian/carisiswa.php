@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -122,13 +122,13 @@ openDB();
 	</fieldset>
 <?
 if ((isset($_POST["cari"]))){
- 	if((trim($_POST['cr_nis']!="")) && (trim($_POST['cr_nama']==""))) {
+ 	if((trim($_POST[cr_nis]!="")) && (trim($_POST[cr_nama]==""))) {
 		$selectSQL ="SELECT nis,nama,idkelas FROM jbsakad.siswa ".
 		            "WHERE nis LIKE '$_POST[cr_nis]%' AND aktif = '1'";
-	}elseif((isset($_POST["cari"])) && (trim($_POST['cr_nama']!="")) && (trim($_POST['cr_nis']==""))){
+	}elseif((isset($_POST["cari"])) && (trim($_POST[cr_nama]!="")) && (trim($_POST[cr_nis]==""))){
 		$selectSQL ="SELECT nis,nama,idkelas FROM jbsakad.siswa ".
 		            "WHERE nama LIKE '$_POST[cr_nama]%' AND aktif = '1'";
-	}elseif((isset($_POST["cari"])) && (trim($_POST['cr_nis']=="")) && (trim($_POST['cr_nama']==""))) {
+	}elseif((isset($_POST["cari"])) && (trim($_POST[cr_nis]=="")) && (trim($_POST[cr_nama]==""))) {
 		$selectSQL ="SELECT nis,nama,idkelas FROM jbsakad.siswa WHERE nama='x'";
 	}
 
@@ -144,7 +144,7 @@ if ((isset($_POST["cari"]))){
 						<td class='header' height='30'>Nama</td>
 						<td class='header' height='30'>Kelas</td>";
 
-	$jml_data = @mysqli_num_rows($result_sis);
+	$jml_data = @mysql_num_rows($result_sis);
 
 	if($jml_data=="0"){
 		echo "<tr>
@@ -153,17 +153,17 @@ if ((isset($_POST["cari"]))){
 	}else{
 
 	$cnt = 0;
-	while($row = @mysqli_fetch_array($result_sis)){
+	while($row = @mysql_fetch_array($result_sis)){
 	  
 	  $qq = "SELECT kelas, departemen FROM kelas WHERE replid = '$row[idkelas]'";
 	  $rr = QueryDb($qq);
-	  $rw = mysqli_fetch_array($rr);
+	  $rw = mysql_fetch_array($rr);
 	?>
 
 	<tr <?="bgcolor=#".($cnt%2?"ffffff":"EAECEE").""; ?>>
-		<td class='data'><input type="hidden" name="nis<?=$cnt; ?>" value="<?=$row['nis']; ?>">
-		<input type="hidden" name="nama<?=$cnt; ?>" value="<?=$row['nama']; ?>"><input name='siswa' type='radio' value='<?=$row['nis']; ?>' onclick='changeSel(<?=$cnt; ?>)' width='20%'><?=$row['nis']; ?></td>
-		<td width='60%'class='data'><?=$row['nama']; ?></td><td><?="$rw[departemen] - $rw[kelas]"; ?> </td>
+		<td class='data'><input type="hidden" name="nis<?=$cnt; ?>" value="<?=$row[nis]; ?>">
+		<input type="hidden" name="nama<?=$cnt; ?>" value="<?=$row[nama]; ?>"><input name='siswa' type='radio' value='<?=$row[nis]; ?>' onclick='changeSel(<?=$cnt; ?>)' width='20%'><?=$row[nis]; ?></td>
+		<td width='60%'class='data'><?=$row[nama]; ?></td><td><?="$rw[departemen] - $rw[kelas]"; ?> </td> 
 	</tr>
 	<?
 	$cnt++;

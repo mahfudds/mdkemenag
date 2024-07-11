@@ -13,7 +13,7 @@
 // CLASS MGraph
 // Description: Create a container image that can hold several graph
 //=============================================================================
-class MGraph extends stdClass {
+class MGraph {
 
     public $title = null, $subtitle = null, $subsubtitle = null;
 

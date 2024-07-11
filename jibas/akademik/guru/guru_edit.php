@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -56,7 +56,7 @@ if (isset($_REQUEST['Simpan'])) {
 	$sql1 = "SELECT * FROM guru g, pelajaran p WHERE p.departemen = '$departemen' AND g.nip = '$nipguru' AND g.idpelajaran = '$pelajaran' AND g.statusguru = '$status' AND g.idpelajaran = p.replid AND g.replid <> '$replid' ";	
 	$result1 = QueryDb($sql1);
 
-	if (mysqli_num_rows($result1) > 0) {
+	if (mysql_num_rows($result1) > 0) {
 		CloseDb();		
 		$ERROR_MSG = "Nama guru $nama sudah digunakan!";
 	} else {	
@@ -76,7 +76,7 @@ if (isset($_REQUEST['Simpan'])) {
 OpenDb();
 $sql = "SELECT g.nip,g.statusguru,g.keterangan,l.departemen,p.nama,g.idpelajaran,l.nama AS pelajar FROM guru g, pelajaran l, jbssdm.pegawai p WHERE g.replid='$replid' AND p.nip = g.nip AND l.replid = g.idpelajaran";
 $result = QueryDb($sql);
-$row = mysqli_fetch_array($result);
+$row = mysql_fetch_array($result);
 $keterangan = $row['keterangan'];
 $departemen = $row['departemen'];
 $nipguru = $row['nip'];
@@ -199,7 +199,7 @@ function panggil(elem){
 			$sql = "SELECT kode,nama,replid FROM pelajaran WHERE departemen = '$departemen' AND aktif =1 ORDER BY nama ASC";    
 			$result = QueryDb($sql);	
 			CloseDb();
-			while ($row = @mysqli_fetch_array($result)) {
+			while ($row = @mysql_fetch_array($result)) {
 		?>				
           <option value="<?=$row['replid'] ?>" <?=IntIsSelected($row['replid'], $pelajaran) ?> >
 		  <?=$row['nama'] ?>
@@ -230,7 +230,7 @@ function panggil(elem){
 			$sql = "SELECT status FROM statusguru ORDER BY status ASC";    
 			$result = QueryDb($sql);	
 			CloseDb();
-			while ($row = @mysqli_fetch_array($result)) {
+			while ($row = @mysql_fetch_array($result)) {
 				if ($status == "")
 					$status = $row['status'];?>
           <option value="<?=$row['status'] ?>" <?=StringIsSelected($row['status'], $status) ?> >

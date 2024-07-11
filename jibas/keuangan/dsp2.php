@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -97,7 +97,7 @@ function manageLock(no) {
         	<? 
 			$sql = "SELECT departemen FROM jbsakad.departemen ORDER BY kode";
 			$result = QueryDb($sql);
-			while($row = mysqli_fetch_row($result)) {
+			while($row = mysql_fetch_row($result)) {
 				if ($departemen == "")
 					$departemen = $row[0];
 			?>
@@ -115,7 +115,7 @@ function manageLock(no) {
         	<? 
 			$sql = "SELECT replid, angkatan FROM jbsakad.angkatan WHERE departemen = '$departemen' ORDER BY replid";
 			$result = QueryDb($sql);
-			while($row = mysqli_fetch_row($result)) {
+			while($row = mysql_fetch_row($result)) {
 				if ($idangkatan == 0)
 					$idangkatan = $row[0];
 			?>
@@ -133,7 +133,7 @@ function manageLock(no) {
         	<? 
 			$sql = "SELECT DISTINCT idkelas, kelas FROM jbsakad.siswa, jbsakad.kelas WHERE jbsakad.siswa.idkelas = jbsakad.kelas.replid AND idangkatan='$idangkatan' ORDER BY idkelas";
 			$result = QueryDb($sql);
-			while($row = mysqli_fetch_row($result)) {
+			while($row = mysql_fetch_row($result)) {
 				if ($idkelas == 0)
 					$idkelas = $row[0];
 			?>
@@ -159,10 +159,10 @@ function manageLock(no) {
 	$sql = "SELECT nis, nama FROM jbsakad.siswa WHERE idkelas = '$idkelas' ORDER BY nama";
 	$result = QueryDb($sql);
 	$no = 0;
-	while ($row = mysqli_fetch_array($result)) {
+	while ($row = mysql_fetch_array($result)) {
 		$sql = "SELECT replid AS id, dsp, keterangan FROM jbsfina.datadsp WHERE nis = '$row[0]'";
 		$result2 = QueryDb($sql);
-		$ndsp = mysqli_num_rows($result2);
+		$ndsp = mysql_num_rows($result2);
 		$iddsp = 0;
 		$dsp = "";
 		$ket = "";
@@ -171,7 +171,7 @@ function manageLock(no) {
 		if ($ndsp > 0) {
 			$isnew = 0;
 			$status = "disabled";
-			$row2 = mysqli_fetch_row($result2);
+			$row2 = mysql_fetch_row($result2);
 			$iddsp = $row2[0];
 			$dsp = $row2[1];
 			$ket = $row2[2];

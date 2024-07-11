@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -57,19 +57,19 @@ if ($dasar == 'Golongan Darah') {
 } elseif ($dasar == 'Kondisi Siswa') {	
 	$query = "SELECT $tabel FROM jbsakad.kondisisiswa ORDER BY $tabel ";
 	$result = QueryDb($query);
-	$jum = @mysqli_num_rows($result);
+	$jum = @mysql_num_rows($result);
 } elseif ($dasar == 'Status Siswa') {	
 	$query = "SELECT $tabel FROM jbsakad.statussiswa ORDER BY $tabel ";
 	$result = QueryDb($query);
-	$jum = @mysqli_num_rows($result);
+	$jum = @mysql_num_rows($result);
 } elseif ($dasar == 'Pekerjaan Ayah' || $dasar == 'Pekerjaan Ibu') {	
 	$query = "SELECT pekerjaan FROM jbsumum.jenispekerjaan ORDER BY pekerjaan ";
 	$result = QueryDb($query);
-	$jum = @mysqli_num_rows($result);
+	$jum = @mysql_num_rows($result);
 } elseif ($dasar == 'Pendidikan Ayah' || $dasar == 'Pendidikan Ibu') {	
 	$query = "SELECT pendidikan FROM jbsumum.tingkatpendidikan ORDER BY pendidikan ";
 	$result = QueryDb($query);
-	$jum = @mysqli_num_rows($result);
+	$jum = @mysql_num_rows($result);
 } elseif ($dasar == 'Penghasilan Orang Tua') {		
 	$batas = array(0,1000000,2500000,5000000);
 	$judul = array(1 => '< Rp 1000000','Rp 1000000 s/d Rp 2500000','Rp 2500000 s/d Rp 5000000','> Rp 5000000');
@@ -77,7 +77,7 @@ if ($dasar == 'Golongan Darah') {
 } elseif ($dasar == 'Agama' || $dasar == 'Suku') {		
 	$query = "SELECT $tabel FROM jbsumum.$tabel";
 	$result = QueryDb($query);
-	$jum = @mysqli_num_rows($result);	
+	$jum = @mysql_num_rows($result);	
 } else {	
 	$jum = 1;
 }
@@ -95,7 +95,7 @@ for ($i=1;$i<=$jum;$i++) {
 	} elseif ($dasar == 'Status Aktif') {
 		$filter = $row[$i-1];		
 	} elseif ($dasar=='Agama' || $dasar=='Suku' || $dasar=='Status Siswa' || $dasar=='Kondisi Siswa' || $dasar=='Pekerjaan Ayah' || $dasar=='Pekerjaan Ibu' || $dasar=='Pendidikan Ayah' || $dasar=='Pendidikan Ibu') {
-		$row = @mysqli_fetch_row($result);
+		$row = @mysql_fetch_row($result);
 		$judul[$i] = $row[0];		
 		$filter = "1 AND s.$tabel = '$row[0]'";
 		if ($dasar=='Pekerjaan Ayah' || $dasar=='Pekerjaan Ibu' || $dasar=='Pendidikan Ayah' || $dasar=='Pendidikan Ibu') {
@@ -133,9 +133,9 @@ for ($i=1;$i<=$jum;$i++) {
 	
 	$data[$i] = 0;	
 	$result1 = QueryDb($query1);
-	$num = @mysqli_num_rows($result1);
+	$num = @mysql_num_rows($result1);
 	
-	while ($row1 = @mysqli_fetch_row($result1)) {
+	while ($row1 = @mysql_fetch_row($result1)) {
    		$data[$i] = $row1[0];
 		if ($dasar=="Asal Sekolah" || $dasar=="Kode Pos Siswa" || $dasar=="Tahun Kelahiran" || $dasar=="Usia") { 
 			//echo "judul ".$row1[1];
@@ -196,7 +196,7 @@ for ($i=1;$i<=$jum;$i++) {
  			OpenDb();
 			$sql="SELECT proses FROM prosespenerimaansiswa WHERE replid='$idproses'";
 			$result=QueryDb($sql);
-			if ($row=@mysqli_fetch_array($result)){
+			if ($row=@mysql_fetch_array($result)){
 				echo $row['proses'];
 			}
 			CloseDb();

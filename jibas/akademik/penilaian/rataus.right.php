@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,7 +53,7 @@ function CetakRataUjianSiswa(pel,kls,sem,nis,tkt,dp){
     <?
     $sql = "SELECT nama,departemen FROM pelajaran WHERE replid='$pel'";
     $res = QueryDb($sql);
-    $row = @mysqli_fetch_row($res);
+    $row = @mysql_fetch_row($res);
     echo $row[0];
 	
 	$dep = $row[1];
@@ -67,7 +67,7 @@ function CetakRataUjianSiswa(pel,kls,sem,nis,tkt,dp){
     $sql = "SELECT p.nama FROM jbssdm.pegawai p, guru g WHERE g.idpelajaran='$pel' AND g.nip=p.nip";
     $res = QueryDb($sql);
     $namaguru = "";
-    while ($row = @mysqli_fetch_row($res)){
+    while ($row = @mysql_fetch_row($res)){
          if ($namaguru=="")
             $namaguru = $row[0];
          else
@@ -83,7 +83,7 @@ function CetakRataUjianSiswa(pel,kls,sem,nis,tkt,dp){
 	<?
 	$sql = "SELECT s.replid,s.semester FROM semester s, ujian u, nilaiujian n WHERE s.departemen='$dep' AND u.idpelajaran='$pel' AND  n.idujian=u.replid AND n.nis='$nis' AND u.idsemester=s.replid GROUP BY s.replid";
 	$res = QueryDb($sql);
-	while ($row = @mysqli_fetch_row($res)){
+	while ($row = @mysql_fetch_row($res)){
 		$semester[] = array($row[0],$row[1]);
 	}
 	?>
@@ -112,14 +112,14 @@ function CetakRataUjianSiswa(pel,kls,sem,nis,tkt,dp){
 								AND a.dasarpenilaian = d.dasarpenilaian
 						   ORDER BY d.keterangan;";	  	  
 					$res5 = QueryDb($sql5);
-					while ($row5 = @mysqli_fetch_array($res5))
+					while ($row5 = @mysql_fetch_array($res5))
 					{ ?>
 					<li class="TabbedPanelsTab" tabindex="0"><?=$row5['keterangan']?></li>
 <? 					} ?>
 				  </ul> <!-- ul class="TabbedPanelsTabGroup" -->
 				  <div class="TabbedPanelsContentGroup">
 <? 					$res5 = QueryDb($sql5);
-					while ($row5 = @mysqli_fetch_array($res5))
+					while ($row5 = @mysql_fetch_array($res5))
 					{ ?>
 					<div class="TabbedPanelsContent">
 						<div align="right"><span style="cursor:pointer" onclick="CetakRataUjianSiswa('<?=$pel?>','<?=$kls?>','<?=$semester[$i][0]?>','<?=$nis?>','<?=$tkt?>','<?=$row5['dasarpenilaian']?>')"><img src="../images/ico/print.png" width="16" height="16" border="0" />&nbsp;<b>Cetak</b></span></div>
@@ -130,7 +130,7 @@ function CetakRataUjianSiswa(pel,kls,sem,nis,tkt,dp){
 						$res = QueryDb($sql);
 						$cnt2=1;
 
-						while ($row = @mysqli_fetch_row($res))
+						while ($row = @mysql_fetch_row($res))
 						{
 							$rata = 0;
 							$numnilai = 0;
@@ -139,15 +139,15 @@ function CetakRataUjianSiswa(pel,kls,sem,nis,tkt,dp){
 									 WHERE u.idkelas = '$kls' AND u.idsemester = ".$semester[$i][0]." AND u.idjenis = '$row[0]' 
 									 AND u.replid = n.idujian AND u.idaturan='$row[2]' AND n.nis = '$nis' ORDER BY u.tanggal";
 							$res2 = QueryDb($sql2);
-							$num2 = @mysqli_num_rows($res2);
+							$num2 = @mysql_num_rows($res2);
 							$cnt3 = 0;
 							$content = array();
-							while ($row2 = @mysqli_fetch_row($res2))
+							while ($row2 = @mysql_fetch_row($res2))
 							{
 								$sql3 = "SELECT nilaiRK FROM ratauk 
 										 WHERE idkelas='$kls' AND idsemester='".$semester[$i][0]."' AND idujian='$row2[3]'";
 								$res3 = QueryDb($sql3);
-								$row3 = @mysqli_fetch_row($res3);
+								$row3 = @mysql_fetch_row($res3);
 								$ratauk = $row[0];
 								$prosen = round((($row2[2]  - $row3[0]) / $row3[0]) * 100, 2)."%";
 								//if ($prosen < 0)
@@ -163,7 +163,7 @@ function CetakRataUjianSiswa(pel,kls,sem,nis,tkt,dp){
 							//echo $num2."_";
 							$sql2 = "SELECT nilaiAU FROM nau WHERE idkelas = '$kls' AND idsemester = '".$semester[$i][0]."' AND idjenis = '$row[0]' AND nis = '$nis' AND idpelajaran = '$pel' AND idaturan='$row[2]'";
 							$res2 = QueryDb($sql2);
-							$row2 = @mysqli_fetch_row($res2);
+							$row2 = @mysql_fetch_row($res2);
 							$nilaiakhir = $row2[0];	
 							//echo $sql2;
 							?>

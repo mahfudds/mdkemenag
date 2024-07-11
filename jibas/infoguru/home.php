@@ -286,7 +286,7 @@ OpenDb();
 					Tanggal:
 					<span id='divCbTahun'><? ShowCbTahun(); ?></span>
 					<span id='divCbBulan'><? ShowCbBulan(); ?></span>
-					<span id='divCbTanggal'><? ShowCbTanggal(date('Y'), date('n')); ?></span><br>
+					<span id='divCbTanggal'><? ShowCbTanggal(); ?></span><br>
 					<span id='debug'></span>
 				</thead>	
 				<tbody>

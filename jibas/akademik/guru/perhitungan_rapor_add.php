@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,7 +53,7 @@ $sql = "SELECT j.departemen, j.nama, p.nip, p.nama, t.tingkat
 		 	WHERE g.nip=p.nip AND g.idpelajaran = j.replid AND t.departemen = j.departemen 
 		     AND t.replid = '$id_tingkat' AND j.replid = '$id_pelajaran' AND g.nip = '$nip_guru'"; 
 $result = QueryDb($sql);
-$row = @mysqli_fetch_row($result);
+$row = @mysql_fetch_row($result);
 $departemen = $row[0];
 $pelajaran = $row[1];
 $guru = $row[2].' - '.$row[3];
@@ -183,7 +183,7 @@ function simpan(evt) {
 									 AND a.idtingkat = '$id_tingkat' ) 
 					ORDER BY keterangan";    
 			$result = QueryDb($sql);	
-			while ($row = @mysqli_fetch_array($result)) 
+			while ($row = @mysql_fetch_array($result)) 
 			{
 				if ($aspek == "")
 					$aspek = $row['dasarpenilaian'];		?>
@@ -201,8 +201,8 @@ function simpan(evt) {
          <br />
 <?			$sql = "SELECT replid, jenisujian FROM jenisujian WHERE idpelajaran = '$id_pelajaran'"; 
 			$result = QueryDb($sql);
-			$num = mysqli_num_rows($result);
-			if (mysqli_num_rows($result) > 0) 
+			$num = mysql_num_rows($result);
+			if (mysql_num_rows($result) > 0) 
 			{	?>
             <table border="0" width="100%"  id="table" class="tab">
             <tr>		
@@ -212,7 +212,7 @@ function simpan(evt) {
                   <td class="header" align="center" width="15%" height="30">Bobot</td>
             </tr>
 <?				$i = 1;
-            while ($row = @mysqli_fetch_array($result)) 
+            while ($row = @mysql_fetch_array($result)) 
             {	?>		
             <tr>
                <td align="center" height="25">
@@ -243,7 +243,6 @@ function simpan(evt) {
 			</fieldset>
 			</td>
 		</tr>
-            <!--
         <tr>
 			<td colspan="2" height="25" width="100%" align="left" valign="top" style="border-width:1px; border-style:dashed; border-color:#03F; background-color:#CFF">
     			<strong>Pilih aspek penilaian.<br>Centang jenis pengujian yang sesuai dengan aspek penilaian yang dipilih.<br>Kemudian berikan bobot nilainya.<br/>
@@ -252,7 +251,6 @@ function simpan(evt) {
 									  </strong>
 			</td>
 		</tr>
-		 -->
 		<tr>
 			<td colspan="2" align="center">
 <?			if ($num > 0) 

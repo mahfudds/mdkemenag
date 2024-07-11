@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ class CPinjam
 {
 	function OnStart()
 	{
-		$this->state = $_REQUEST['state'];
+		$this->state = $_REQUEST[state];
 		
 		$this->jenisanggota = $_REQUEST['jenisanggota'];
 		$jenis = 'pegawai';
@@ -37,14 +37,14 @@ class CPinjam
 			case '1' : $jenis = 'siswa'; break;
 			case '2' : $jenis = 'lain'; break;
 		}
-		$this->noanggota = $_REQUEST['noanggota'];
-		$this->nama = $_REQUEST['nama'];
+		$this->noanggota = $_REQUEST[noanggota];
+		$this->nama = $_REQUEST[nama];
 		$this->numcode = 0;
-		$this->kodepustaka = $_REQUEST['kodepustaka'];
+		$this->kodepustaka = $_REQUEST[kodepustaka];
 		
 		$this->op = "";
-		if (isset($_REQUEST['op']))
-			$this->op = $_REQUEST['op'];
+		if (isset($_REQUEST[op]))
+			$this->op = $_REQUEST[op];
 		
 		if ($this->op == "newuser")
 		{
@@ -61,8 +61,8 @@ class CPinjam
 					 WHERE p.replid = d.pustaka
 					   AND (d.kodepustaka='$this->kodepustaka' OR d.info1 = '$this->kodepustaka')";
 			$result=QueryDb($sql);
-			$this->numcode=@mysqli_num_rows($result);
-			$row=@mysqli_fetch_row($result);
+			$this->numcode=@mysql_num_rows($result);
+			$row=@mysql_fetch_row($result);
 			$this->replid = $row[0];
 			$this->kodepustaka = $row[1];
 			$this->judul = $row[2];
@@ -83,22 +83,22 @@ class CPinjam
 					   AND idanggota = '$_REQUEST[noanggota]'
 					   AND status = 1";
 			$result = QueryDb($sql);
-			$num = @mysqli_num_rows($result);
+			$num = @mysql_num_rows($result);
 			if ($num == 0)
 			{
 				$idmember = "";
 				if ($jenis == "siswa")
-					$idmember = "nis = '".$_REQUEST['noanggota']."'";
+					$idmember = "nis = '".$_REQUEST[noanggota]."'";
 				elseif ($jenis == "pegawai")
-					$idmember = "nip = '".$_REQUEST['noanggota']."'";
+					$idmember = "nip = '".$_REQUEST[noanggota]."'";
 				else
-					$idmember = "idmember = '".$_REQUEST['noanggota']."'";
+					$idmember = "idmember = '".$_REQUEST[noanggota]."'";
 					
 				$sql = "INSERT INTO pinjam
-						   SET kodepustaka='".$_REQUEST['kodepustaka']."',
-							   tglpinjam = '".MySqlDateFormat($_REQUEST['tglpinjam'])."',
-							   tglkembali = '".MySqlDateFormat($_REQUEST['tglkembali'])."',
-							   idanggota = '".$_REQUEST['noanggota']."',
+						   SET kodepustaka='".$_REQUEST[kodepustaka]."',
+							   tglpinjam = '".MySqlDateFormat($_REQUEST[tglpinjam])."',
+							   tglkembali = '".MySqlDateFormat($_REQUEST[tglkembali])."',
+							   idanggota = '".$_REQUEST[noanggota]."',
 							   keterangan = '".CQ($_REQUEST['keterangan'])."',
 							   info1 = '$jenis',
 							   $idmember";
@@ -134,7 +134,7 @@ class CPinjam
 					  FROM pinjam
 					 WHERE replid IN ($_REQUEST[idstr])";
 			$result = QueryDb($sql);
-			while ($row = @mysqli_fetch_array($result))
+			while ($row = @mysql_fetch_array($result))
 			{
 				$sql = "UPDATE daftarpustaka
 						   SET status = 0
@@ -143,7 +143,7 @@ class CPinjam
 			}
 		}
 		
-		if (isset($_REQUEST['openuser']))
+		if (isset($_REQUEST[openuser]))
 			$this->OpenUser();
 	}
 	
@@ -165,7 +165,7 @@ class CPinjam
 	{
 		$sql = "SELECT * FROM konfigurasi";
 		$result = QueryDb($sql);
-		$row = @mysqli_fetch_array($result);
+		$row = @mysql_fetch_array($result);
 		$max_siswa_pjm = $row['siswa'];
 		$max_pegawai_pjm = $row['pegawai'];
 		$max_anggota_pjm = $row['other'];
@@ -207,7 +207,7 @@ class CPinjam
 						   DATE_FORMAT(DATE_ADD(NOW(), INTERVAL $addDay DAY), '%d-%m-%Y')";
 			//echo $this->state . " -- $sql";			   
 			$result = QueryDb($sql);
-			$row = @mysqli_fetch_row($result);
+			$row = @mysql_fetch_row($result);
 			$this->datenow = $row[0];
 			$this->datereturn = $row[1];
 			
@@ -219,16 +219,16 @@ class CPinjam
 			
 		$sql = "SELECT DATE_FORMAT(now(),'%Y-%m-%d')";
 		$result = QueryDb($sql);
-		$row = @mysqli_fetch_row($result);
+		$row = @mysql_fetch_row($result);
 		$now = $row[0];
 
 		$sql = "SELECT * FROM pinjam WHERE idanggota='$this->noanggota' AND status=1 AND tglkembali<'".$now."' ORDER BY tglpinjam";
 		$result = QueryDb($sql);
-		$JumTelat = @mysqli_num_rows($result);
+		$JumTelat = @mysql_num_rows($result);
 
 		$sql = "SELECT * FROM pinjam WHERE idanggota='$this->noanggota' AND status=1";
 		$result = QueryDb($sql);
-		$JumPinjam = @mysqli_num_rows($result);
+		$JumPinjam = @mysql_num_rows($result);
 		$max_queue = $this->GetMaxQueue($this->state); ?>
         <input type="hidden" name="max_queue" id="max_queue" value="<?=$max_queue?>" />
 		<table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -295,7 +295,7 @@ class CPinjam
             </td>
           </tr>
 		  	<?
-			if (isset($_REQUEST['noanggota']) && $_REQUEST['noanggota']!=""){
+			if (isset($_REQUEST[noanggota]) && $_REQUEST[noanggota]!=""){
 			?>
           <tr>
             <td colspan="2">
@@ -306,7 +306,7 @@ class CPinjam
               <?
               $sql = "SELECT * FROM pinjam WHERE idanggota='$this->noanggota' AND status=0 ORDER BY tglkembali";
 			  $result = QueryDb($sql);
-			  $num = @mysqli_num_rows($result);
+			  $num = @mysql_num_rows($result);
               if ($num>0){
 			  ?>
               <table width="98%" border="1"  cellspacing="0" cellpadding="2" class="tab">
@@ -320,17 +320,17 @@ class CPinjam
                   <tbody style="overflow:hidden;" >
                   <?
 				  $cnt=1;
-				  while ($row=@mysqli_fetch_array($result)){
-				  $judul = @mysqli_fetch_row(QueryDb("SELECT p.judul FROM pustaka p, daftarpustaka d WHERE d.pustaka=p.replid AND d.kodepustaka='$row[kodepustaka]'"));
+				  while ($row=@mysql_fetch_array($result)){
+				  $judul = @mysql_fetch_row(QueryDb("SELECT p.judul FROM pustaka p, daftarpustaka d WHERE d.pustaka=p.replid AND d.kodepustaka='$row[kodepustaka]'"));
 				  ?>
                   <tr height="25">
                     <td width="20" height="20" align="center">
-						<input type="hidden" name="idpinjam<?=$cnt?>" id="idpinjam<?=$cnt?>" value="<?=$row['replid']?>" />
+						<input type="hidden" name="idpinjam<?=$cnt?>" id="idpinjam<?=$cnt?>" value="<?=$row[replid]?>" />
 						<?=$cnt?>                    </td>
-                    <td width="254" align="center"><?=$row['kodepustaka']?></td>
+                    <td width="254" align="center"><?=$row[kodepustaka]?></td>
                     <td width="496" ><?=$judul[0]?></td>
-                    <td width="100" align="center"><?=LongDateFormat($row['tglkembali'])?></td>
-                    <td width="100" align="center"><a href="javascript:HapusPeminjaman('<?=$row['replid']?>')"><img src="../img/ico/hapus.png" width="16" height="16" border="0" /></a></td>
+                    <td width="100" align="center"><?=LongDateFormat($row[tglkembali])?></td>
+                    <td width="100" align="center"><a href="javascript:HapusPeminjaman('<?=$row[replid]?>')"><img src="../img/ico/hapus.png" width="16" height="16" border="0" /></a></td>
                   </tr>
                   <? $cnt++; ?>
                   <? } ?>

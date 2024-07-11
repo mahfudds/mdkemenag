@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -67,20 +67,20 @@ if (isset($_GET["op"]))
 OpenDb();
 if ($op == "del") {
 	$sql = "SELECT replid FROM jbsakad.infonap WHERE idpelajaran = '$pelajaran' AND idsemester = '$semester' AND idkelas = '$kelas' ";
-	$result = QueryDb($sql) or die(mysqli_error());
-	$num = mysqli_num_rows($result);
+	$result = QueryDb($sql) or die(mysql_error());
+	$num = mysql_num_rows($result);
 	
 	if ($num > 0) {
-		$row = mysqli_fetch_array($result);
+		$row = mysql_fetch_array($result);
 		
 		$sql = "DELETE FROM jbsakad.nap WHERE idinfo = '$row[replid]'";
-		$result = QueryDb($sql) or die(mysqli_error());
+		$result = QueryDb($sql) or die(mysql_error());
 		
 		$sql = "DELETE FROM jbsakad.komennap WHERE idinfo = '$row[replid]'";
-		$result = QueryDb($sql) or die(mysqli_error());
+		$result = QueryDb($sql) or die(mysql_error());
 		
 		$sql = "DELETE FROM jbsakad.infonap WHERE replid = '$row[replid]'";
-		$result = QueryDb($sql) or die(mysqli_error());
+		$result = QueryDb($sql) or die(mysql_error());
 	}
 }
 ?>
@@ -147,19 +147,19 @@ function refreshpage() {
     
 $query_p = "SELECT nama FROM jbsakad.pelajaran WHERE replid = '$pelajaran'";
 $result_p = QueryDb($query_p);
-$row_p = @mysqli_fetch_array($result_p);
+$row_p = @mysql_fetch_array($result_p);
 
 $query_infonap = "SELECT replid FROM jbsakad.infonap " .
                  " WHERE infonap.idkelas = '$kelas'  ".
         		 " AND infonap.idpelajaran = '$pelajaran' ".
                  " AND infonap.idsemester = '$semester'";
 $result_infonap = QueryDb($query_infonap);
-$row_infonap = @mysqli_fetch_array($result_infonap);
-$num_infonap = @mysqli_num_rows($result_infonap);
+$row_infonap = @mysql_fetch_array($result_infonap);
+$num_infonap = @mysql_num_rows($result_infonap);
 
 $replid_infonap = 0;
 if ($num_infonap > 0) {
-	$replid_infonap = $row_infonap['replid'];
+	$replid_infonap = $row_infonap[replid];
 }
           
 //echo $query_p;
@@ -183,14 +183,14 @@ if ($replid_infonap == 0) {
             "AND siswa.nis IN " .
             " ( select nis from nap where nap.idinfo = '$replid_infonap' ) ORDER BY nama";
 };     
-$result = QueryDb($query) or die(mysqli_error());
-$num = @mysqli_num_rows($result);
+$result = QueryDb($query) or die(mysql_error());
+$num = @mysql_num_rows($result);
 //echo $query;
 $my_data = "";
  
-while($row = @mysqli_fetch_array($result)) {
-    $my_data[$row['nis']]['nama'] = $row['nama'];
-    $my_data[$row['nis']][$row['idjenis']] = $row['nilaiAU'];
+while($row = @mysql_fetch_array($result)) {
+    $my_data[$row[nis]][nama] = $row[nama];
+    $my_data[$row[nis]][$row[idjenis]] = $row[nilaiAU];
 }
 
 $query_cek = "SELECT replid, nilaimin FROM jbsakad.infonap ".
@@ -199,23 +199,23 @@ $query_cek = "SELECT replid, nilaimin FROM jbsakad.infonap ".
                 "AND idkelas = '$kelas' ";
                 //"AND tingkat = '$tingkat'";
 $result_cek = QueryDb($query_cek);
-$num_cek = @mysqli_num_rows($result_cek);
-$row_cek = @mysqli_fetch_array($result_cek);
+$num_cek = @mysql_num_rows($result_cek);
+$row_cek = @mysql_fetch_array($result_cek);
 
 $query_nhb2 = "SELECT replid, dasarpenilaian, bobot ".
             "FROM jbsakad.aturannhb WHERE idpelajaran = '$pelajaran' ".
             "AND idtingkat = '$tingkat'";
-$result_nhb2 = QueryDb($query_nhb2) or die(mysqli_error());
-$num_nhb2 = @mysqli_num_rows($result_nhb2);
+$result_nhb2 = QueryDb($query_nhb2) or die(mysql_error());
+$num_nhb2 = @mysql_num_rows($result_nhb2);
 
 $qq = "SELECT tingkat FROM jbsakad.tingkat WHERE replid = '$tingkat'";
 $rr = QueryDb($qq);
-$rw = mysqli_fetch_array($rr);
+$rw = mysql_fetch_array($rr);
 
 if($num_nhb2 == 0) {
   	?>
   	<script language="javascript">
-  		alert("Masukkan terlebih dahulu Dasar Penilaian dan Bobot Penilaian untuk Pelajaran <?=$row_p['nama'] ?> dan Tingkat <?=$rw['tingkat'] ?>");
+  		alert("Masukkan terlebih dahulu Dasar Penilaian dan Bobot Penilaian untuk Pelajaran <?=$row_p[nama] ?> dan Tingkat <?=$rw[tingkat] ?>");
   	</script>
   	<?
 }else {
@@ -251,15 +251,15 @@ if($num_cek > 0) {
         <td rowspan="2" class="headerlong" width="150" height="30">Nama</td>
         <?
         $query_ju = "SELECT replid, jenisujian FROM jbsakad.jenisujian WHERE idpelajaran = '$pelajaran'";
-        $result_ju = QueryDb($query_ju) or die(mysqli_error());
-        $num_ju = @mysqli_num_rows($result_ju);
+        $result_ju = QueryDb($query_ju) or die(mysql_error());
+        $num_ju = @mysql_num_rows($result_ju);
 		
 		$cnt = 0;
-		while($row_ju = @mysqli_fetch_array($result_ju)) {
-			$idx_ju[$cnt] = $row_ju['replid'];
+		while($row_ju = @mysql_fetch_array($result_ju)) {
+			$idx_ju[$cnt] = $row_ju[replid];
 			$cnt++;
 		}
-		$result_ju = QueryDb($query_ju) or die(mysqli_error($mysqlconnection));
+		$result_ju = QueryDb($query_ju) or die(mysql_error());
         ?>
         
         <td class="headerlong" colspan="<?=$num_ju;?>" align="center">Nilai Akhir</td>
@@ -268,20 +268,20 @@ if($num_cek > 0) {
         $query_nhb = "SELECT replid, dasarpenilaian, bobot ".
                      "FROM jbsakad.aturannhb WHERE idpelajaran = '$pelajaran' ".
                      "AND idtingkat = '$tingkat'";
-        $result_nhb = QueryDb($query_nhb) or die(mysqli_error());
-        $num_nhb = @mysqli_num_rows($result_nhb);
+        $result_nhb = QueryDb($query_nhb) or die(mysql_error());
+        $num_nhb = @mysql_num_rows($result_nhb);
 		
         //echo $num_nhb;
         $r = 0;
         $v = 0;
 		$idpraktek = "#";
 		$idkonsep = "#";
-        while($row_nhb = @mysqli_fetch_array($result_nhb)) {
-            $plit = explode(";", $row_nhb['bobot']);
+        while($row_nhb = @mysql_fetch_array($result_nhb)) {
+            $plit = split(";", $row_nhb[bobot]);
             if($plit != "") {
                 foreach($plit as $pl) {
                     $r++;
-                    list($ujian, $bobot) = explode(":", $pl);
+                    list($ujian, $bobot) = split(":", $pl);
                     if($bobot != "") {
 						$cnt = 0;
 						$found = false;
@@ -293,7 +293,7 @@ if($num_cek > 0) {
 						}
 					    $as[$cnt] = $bobot;
                     }
-					if ($row_nhb['dasarpenilaian'] == "Praktik") {
+					if ($row_nhb[dasarpenilaian] == "Praktik") {
 						$idpraktek = $idpraktek . "[" . $ujian . "]";
 					} else {
 						$idkonsep = $idkonsep . "[" . $ujian . "]";
@@ -301,11 +301,11 @@ if($num_cek > 0) {
                 }
             }
             $v++;
-			$r_aturan[] = $row_nhb['replid'];
+			$r_aturan[] = $row_nhb[replid];
 			$color = "white";
-			if ($row_nhb['dasarpenilaian'] == "Praktik")
+			if ($row_nhb[dasarpenilaian] == "Praktik")
 				$color = "cyan";
-			else if ($row_nhb['dasarpenilaian'] == "Pemahaman Konsep")
+			else if ($row_nhb[dasarpenilaian] == "Pemahaman Konsep")
 				$color = "yellow";
 				
             echo "<td class='headerlong' colspan='2' align='center'>
@@ -320,27 +320,27 @@ if($num_cek > 0) {
         <?
         $c = 0;
 		$pos = 0;
-        while($row_ju = @mysqli_fetch_array($result_ju)) {
+        while($row_ju = @mysql_fetch_array($result_ju)) {
             $c++;
-			$pos = (int)strpos($idpraktek, "[" . $row_ju['replid'] . "]");
+			$pos = (int)strpos($idpraktek, "[" . $row_ju[replid] . "]");
 			$color = "white";
 			if ($pos > 0) {
 				$color = "cyan";
 			} else {
-				$pos = (int)strpos($idkonsep, "[" . $row_ju['replid'] . "]");
+				$pos = (int)strpos($idkonsep, "[" . $row_ju[replid] . "]");
 				if ($pos > 0) 
 					$color = "yellow";
 			}
 			$cnt = 0;
 			$found = false;
 			while ($cnt < $num_ju && !$found) {
-				if ($idx_ju[$cnt] == $row_ju['replid'])
+				if ($idx_ju[$cnt] == $row_ju[replid])
 					$found = true;
 				else
 					$cnt++;
 			}
             echo "<td class='headerlong' align='center'><font color='$color'>$row_ju[jenisujian] $as[$cnt]</font></td>";
-            $kolom[$row_ju['replid']] = $row_ju['replid'];
+            $kolom[$row_ju[replid]] = $row_ju[replid];
         }
 
         for($i=1;$i<=$num_nhb;$i++) {
@@ -380,14 +380,14 @@ if($num_cek > 0) {
 		   $t++;
 				$query_nhb = "SELECT bobot ".
 							 "FROM jbsakad.aturannhb WHERE aturannhb.replid = '$id_aturan'";
-				$result_nhb = QueryDb($query_nhb) or die(mysqli_error());
+				$result_nhb = QueryDb($query_nhb) or die(mysql_error());
 				
-				while($row_nhb = @mysqli_fetch_array($result_nhb)) {
-					$plit = explode(";", $row_nhb['bobot']);
+				while($row_nhb = @mysql_fetch_array($result_nhb)) {
+					$plit = split(";", $row_nhb[bobot]);
 					if($plit != "") {
 						foreach($plit as $pl) {
 							$r++;
-							list($ujian, $bobot) = explode(":", $pl);
+							list($ujian, $bobot) = split(":", $pl);
 							if($bobot != "") {
 								$as[$r] = $bobot;
 							}
@@ -397,9 +397,9 @@ if($num_cek > 0) {
         							     "AND idpelajaran = '$pelajaran' ". 
                                                                      "AND idsemester = '$semester'";
 							$result_nau = QueryDb($query_nau);
-							$row_nau = mysqli_fetch_array($result_nau);
+							$row_nau = mysql_fetch_array($result_nau);
 
-							$nau_b = $row_nau['nilaiAU']*$bobot;
+							$nau_b = $row_nau[nilaiAU]*$bobot;
 							$ttl_bbt[$id_aturan] += $bobot;
 							$ttl_nau_b[$id_aturan] += $nau_b;
 							//echo "$ujian-$row_nau[NilaiAU]-$nau_b-$ttl_nau_b[$id_aturan]<br><br>";
@@ -411,7 +411,7 @@ if($num_cek > 0) {
                 $query_nap = "SELECT nap.nilaihuruf FROM jbsakad.nap WHERE nis = '$ns' ".
                             "AND idaturan = '$id_aturan'";
 				$result_nap = QueryDb($query_nap);
-				$row_nap = mysqli_fetch_array($result_nap);
+				$row_nap = mysql_fetch_array($result_nap);
 				$nilaiangka[$id_aturan] = $ttl_nau_b[$id_aturan]/$ttl_bbt[$id_aturan];
 				$f = sprintf("%01.2f", $nilaiangka[$id_aturan]);
 				
@@ -456,28 +456,28 @@ if($num_cek > 0) {
 </body>
 </html>
 <?
-if(isset($_POST['simpan'])) {
+if(isset($_POST[simpan])) {
     $query_p = "INSERT INTO jbsakad.infonap(idpelajaran, idsemester, idkelas,  nilaimin) ".
                 "VALUES('$_POST[pelajaran]', '$_POST[semester]', '$_POST[kelas]', '$_POST[nlulus]')";
-    $result_p = QueryDb($query_p) or die(mysqli_error());
+    $result_p = QueryDb($query_p) or die(mysql_error());
 
     $query_l = "SELECT LAST_INSERT_ID(replid) As replid FROM jbsakad.infonap ORDER BY replid DESC LIMIT 1";
     $result_l = QueryDb($query_l);
-    $row_l = @mysqli_fetch_array($result_l);
-    $rep = $row_l['replid'];
+    $row_l = @mysql_fetch_array($result_l);
+    $rep = $row_l[replid];
 
-    if(isset($_POST['nis'])) {
+    if(isset($_POST[nis])) {
       $i = 0;
-       foreach($_POST['nis'] as $key => $value) {
+       foreach($_POST[nis] as $key => $value) {
             $i++;
             $p = "predikat$i";
             $query_komen = "INSERT INTO jbsakad.komennap(nis, idinfo, predikat) ".
                            "VALUES('$value', '$rep', '$_POST[$p]')";
-           $result_komen = QueryDb($query_komen) or die(mysqli_error());
+           $result_komen = QueryDb($query_komen) or die(mysql_error());
 		   
 		   echo "$query_komen<br>";
 
-            for($x=1;$x<=$_POST['num_nhb'];$x++) {
+            for($x=1;$x<=$_POST[num_nhb];$x++) {
  			    
                 $at = "aturan$x";
                 echo $nang = "nA$i$x";
@@ -485,7 +485,7 @@ if(isset($_POST['simpan'])) {
 				
                 $query_nap = "INSERT INTO jbsakad.nap(nis, idaturan, idinfo, nilaiangka, nilaihuruf) ".
                             "VALUES('$value', '$_POST[$at]', '$rep', '$_POST[$nang]', '$_POST[$nihu]')";
-              	$result_nap = QueryDb($query_nap) or die(mysqli_error());
+              	$result_nap = QueryDb($query_nap) or die(mysql_error());
 		 
 			   echo "$query_nap<br>";
             }
@@ -496,7 +496,7 @@ if(isset($_POST['simpan'])) {
        
         ?>
         <script languange="javascript">
-            document.location.href = "tampil_penentuan.php?pelajaran=<?=$_POST['pelajaran']?>&tingkat=<?=$_POST['tingkat']?>&kelas=<?=$_POST['kelas']?>&semester=<?=$_POST['semester']?>";
+            document.location.href = "tampil_penentuan.php?pelajaran=<?=$_POST[pelajaran]?>&tingkat=<?=$_POST[tingkat]?>&kelas=<?=$_POST[kelas]?>&semester=<?=$_POST[semester]?>";
         </script>
         <?
 	}

@@ -8,7 +8,7 @@ function ShowCbDepartemen($id, $onchange)
 			 ORDER BY urutan";
 	$res = QueryDb($sql);
 	echo "<option value='ALL'>(Semua)</option>";
-	while($row = mysqli_fetch_row($res))
+	while($row = mysql_fetch_row($res))
 	{
 		echo "<option value='$row[0]'>$row[0]</option>";
 	}
@@ -77,7 +77,7 @@ function ShowLastAgenda($maxListAgendaTs, $offsetListAgenda)
 	//$fsql = str_replace("\t", " ", $fsql);
 	
 	$res = QueryDb($sql);
-    if (0 == mysqli_num_rows($res))
+    if (0 == mysql_num_rows($res))
     {
         $html .= "<tr>";
 		$html .= "<td align='left' valign='top'>";
@@ -91,7 +91,7 @@ function ShowLastAgenda($maxListAgendaTs, $offsetListAgenda)
 	
 	$html = "";
 	$no = 0;
-    while($row = mysqli_fetch_array($res))
+    while($row = mysql_fetch_array($res))
     {
         $no += 1;
         
@@ -140,7 +140,7 @@ function ShowLinkNextListAgenda($maxListAgendaTs)
 	//$fsql = str_replace("\t", " ", $fsql);
 	
 	$res = QueryDb($sql);
-	$ndata = mysqli_num_rows($res);
+	$ndata = mysql_num_rows($res);
 	if ($ndata == 0)
 	{
 		echo "";
@@ -179,7 +179,7 @@ function ShowLastPesan($minListPesanId, $offsetListPesan)
 	//$fsql = str_replace("\t", "\\t", $fsql);
 	
 	$res = QueryDb($sql);
-    if (0 == mysqli_num_rows($res))
+    if (0 == mysql_num_rows($res))
     {
 		$html .= "<tr>";
 		$html .= "<td align='left' valign='top'>";
@@ -194,7 +194,7 @@ function ShowLastPesan($minListPesanId, $offsetListPesan)
 	$html = "";
 	
     $no = 0;
-    while($row = mysqli_fetch_array($res))
+    while($row = mysql_fetch_array($res))
     {
         $no += 1;
         
@@ -218,7 +218,7 @@ function ShowLastPesan($minListPesanId, $offsetListPesan)
                       FROM jbssdm.pegawai
                      WHERE nip = '$nip'";
             $res2 = QueryDb($sql);
-            $row2 = mysqli_fetch_row($res2);
+            $row2 = mysql_fetch_row($res2);
             
             $sendername = $row2[0];
         }
@@ -229,7 +229,7 @@ function ShowLastPesan($minListPesanId, $offsetListPesan)
                       FROM jbsakad.siswa
                      WHERE nis = '$nis'";
             $res2 = QueryDb($sql);
-            $row2 = mysqli_fetch_row($res2);
+            $row2 = mysql_fetch_row($res2);
             
             $sendername = $row2[0];
         }
@@ -263,7 +263,7 @@ function ShowLinkNextListPesan($minListPesanId)
              LIMIT 1";
 	
 	$res = QueryDb($sql);
-	$ndata = mysqli_num_rows($res);
+	$ndata = mysql_num_rows($res);
 	if ($ndata == 0)
 	{
 		echo "";
@@ -304,7 +304,7 @@ function ShowBirthdayList($dd, $mm, $yy)
 	$html = "";
 	
 	$res = QueryDb($sql);
-	if (0 == mysqli_num_rows($res))
+	if (0 == mysql_num_rows($res))
     {
 		$html .= "<tr>";
 		$html .= "<td align='left' valign='top'>";
@@ -316,7 +316,7 @@ function ShowBirthdayList($dd, $mm, $yy)
         return;
     }
 	
-	while($row = mysqli_fetch_array($res))
+	while($row = mysql_fetch_array($res))
 	{
 		$jenis = $row['jenis'];
 		$info = $jenis == "S" ? "kelas" : "bagian";
@@ -397,7 +397,7 @@ function ShowLastNotes($minListNotesId, $offsetListNotes, $departemen)
 	
 	$html = "";		 
 	$res = QueryDb($sql);
-    if (0 == mysqli_num_rows($res))
+    if (0 == mysql_num_rows($res))
     {
 		$html .= "<tr>";
 		$html .= "<td align='left' valign='top'>";
@@ -410,7 +410,7 @@ function ShowLastNotes($minListNotesId, $offsetListNotes, $departemen)
     }
 	
 	$no = 0;
-    while($row = mysqli_fetch_array($res))
+    while($row = mysql_fetch_array($res))
     {
         $no += 1;
         
@@ -478,7 +478,7 @@ function ShowLinkNextListNotes($minListNotesId, $departemen)
 	}
 	
 	$res = QueryDb($sql);
-	$ndata = mysqli_num_rows($res);
+	$ndata = mysql_num_rows($res);
 	if ($ndata == 0)
 	{
 		echo "";
@@ -522,7 +522,7 @@ function ShowLastBeritaSekolah($maxListBSekolahTs)
 	$html = "";
 	
 	$res = QueryDb($sql);
-    if (0 == mysqli_num_rows($res))
+    if (0 == mysql_num_rows($res))
     {
         $html .= "<tr>";
 		$html .= "<td align='left' valign='top'>";
@@ -535,7 +535,7 @@ function ShowLastBeritaSekolah($maxListBSekolahTs)
     }
 	
 	$no = 0;
-    while($row = mysqli_fetch_array($res))
+    while($row = mysql_fetch_array($res))
     {
         $no += 1;
         
@@ -582,7 +582,7 @@ function ShowLinkNextListBeritaSekolah($maxListBSekolahTs)
 	//$fsql = str_replace("\t", " ", $fsql);
 	
 	$res = QueryDb($sql);
-	$ndata = mysqli_num_rows($res);
+	$ndata = mysql_num_rows($res);
 	if ($ndata == 0)
 	{
 		echo "";
@@ -627,7 +627,7 @@ function ShowLastBeritaGuru($maxListBGuruTs)
 	$html = "";
 	
 	$res = QueryDb($sql);
-    if (0 == mysqli_num_rows($res))
+    if (0 == mysql_num_rows($res))
     {
         $html .= "<tr>";
 		$html .= "<td align='left' valign='top'>";
@@ -640,7 +640,7 @@ function ShowLastBeritaGuru($maxListBGuruTs)
     }
 	
 	$no = 0;
-    while($row = mysqli_fetch_array($res))
+    while($row = mysql_fetch_array($res))
     {
         $no += 1;
         
@@ -687,7 +687,7 @@ function ShowLinkNextListBeritaGuru($maxListBGuruTs)
 	//$fsql = str_replace("\t", " ", $fsql);
 	
 	$res = QueryDb($sql);
-	$ndata = mysqli_num_rows($res);
+	$ndata = mysql_num_rows($res);
 	if ($ndata == 0)
 	{
 		echo "";
@@ -731,7 +731,7 @@ function ShowLastBeritaSiswa($maxListBSiswaTs)
 	$html = "";
 	
 	$res = QueryDb($sql);
-    if (0 == mysqli_num_rows($res))
+    if (0 == mysql_num_rows($res))
     {
         $html .= "<tr>";
 		$html .= "<td align='left' valign='top'>";
@@ -744,7 +744,7 @@ function ShowLastBeritaSiswa($maxListBSiswaTs)
     }
 	
 	$no = 0;
-    while($row = mysqli_fetch_array($res))
+    while($row = mysql_fetch_array($res))
     {
         $no += 1;
 		
@@ -762,7 +762,7 @@ function ShowLastBeritaSiswa($maxListBSiswaTs)
 					 WHERE nip = '" . $row['idguru'] ."'";
 		}
 		$res2 = QueryDb($sql);
-		$row2 = mysqli_fetch_row($res2);
+		$row2 = mysql_fetch_row($res2);
 		$nama = $row2[0];
         
 		$replid = $row['replid'];
@@ -808,7 +808,7 @@ function ShowLinkNextListBeritaSiswa($maxListBSiswaTs)
 	//$fsql = str_replace("\t", " ", $fsql);
 	
 	$res = QueryDb($sql);
-	$ndata = mysqli_num_rows($res);
+	$ndata = mysql_num_rows($res);
 	if ($ndata == 0)
 	{
 		echo "";
@@ -836,9 +836,9 @@ function ShowImageUser()
 			 WHERE nip = '$nip'";
 	$res = QueryDb($sql);	
 
-	if (mysqli_num_rows($res) > 0)
+	if (mysql_num_rows($res) > 0)
 	{
-		$row = mysqli_fetch_array($res);
+		$row = mysql_fetch_array($res);
 		if ($row['isnull'] == 0)
 		{
 			$pict = base64_encode($row['foto']);    

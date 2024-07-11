@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,7 +45,7 @@ else
 {
 	$sql = "SELECT nama FROM jbssdm.pegawai WHERE nip = '$petugas'";
 	$res = QueryDb($sql);
-	$row = mysqli_fetch_row($res);
+	$row = mysql_fetch_row($res);
 	$namapetugas = $row[0];
 }
 
@@ -113,7 +113,7 @@ if ($dept == "ALL")
 	$sql = "SELECT departemen FROM jbsakad.departemen ORDER BY urutan";
 	$dres = QueryDb($sql);
 	$k = 0;
-	while ($drow = mysqli_fetch_row($dres))
+	while ($drow = mysql_fetch_row($dres))
 		$darray[$k++] = $drow[0];
 }
 else
@@ -147,7 +147,7 @@ for($k = 0; $k < count($darray); $k++)
 	$rarray = array();
 	$sql = "SELECT replid, nama FROM jbsfina.datapenerimaan WHERE departemen='$dept' AND aktif=1 AND idkategori='$idkategori'";
 	$pres = QueryDb($sql);
-	while($prow = mysqli_fetch_row($pres))
+	while($prow = mysql_fetch_row($pres))
 	{
 		$idp = $prow[0];
 		$pen = $prow[1];
@@ -216,7 +216,7 @@ for($k = 0; $k < count($darray); $k++)
 		}
 		
 		$jres = QueryDb($sql);
-		$jrow = mysqli_fetch_row($jres);
+		$jrow = mysql_fetch_row($jres);
 		$jumlah = 0;
 		if (!is_null($jrow[0]))
 			$jumlah = $jrow[0];

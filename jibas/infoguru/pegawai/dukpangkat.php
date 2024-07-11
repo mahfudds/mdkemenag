@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -127,10 +127,10 @@ $sql = "SELECT p.replid FROM jbssdm.pegawai p, jbssdm.peglastdata pl, jbssdm.peg
 }
 
 $result = QueryDb($sql);
-while ($row = mysqli_fetch_row($result)) 
+while ($row = mysql_fetch_row($result)) 
 	$arridpeg[] = $row[0];
 
-$ndata = mysqli_num_rows($result);
+$ndata = mysql_num_rows($result);
 $npage = floor($ndata / $PAGING_SIZE);
 if (($ndata % $PAGING_SIZE) != 0) 
 	$npage++;
@@ -158,7 +158,7 @@ $maxrownum = $pagenum * $PAGING_SIZE;
 	    <option value="all" <?=StringIsSelected("all", $satker)?> >(semua)</option>
 <?	$sql = "SELECT satker, nama FROM jbssdm.satker ORDER BY replid";    
 	$result = QueryDb($sql);
-	while($row = mysqli_fetch_row($result)) { ?>
+	while($row = mysql_fetch_row($result)) { ?>
 		<option value="<?=$row[0]?>" <?=StringIsSelected($row[0], $satker)?> ><?=$row[1]?></option>
 <?	} ?>
     </select>
@@ -254,7 +254,7 @@ for($i = $minrownum - 1; $i < $maxrownum && $i < $ndata; $i++)
 			 ORDER BY g.urutan DESC, p.nama ASC";
 	
 	$result = QueryDb($sql);			
-	$row = mysqli_fetch_array($result);
+	$row = mysql_fetch_array($result);
 ?>
 <tr>
 	<td align="center" valign="middle"><?=++$cnt?></td>
@@ -283,7 +283,7 @@ for($i = $minrownum - 1; $i < $maxrownum && $i < $ndata; $i++)
 		$idpegdiklat = $row['idpegdiklat'];
 		$sql = "SELECT d.diklat, pd.tahun FROM jbssdm.pegdiklat pd, jbssdm.diklat d WHERE pd.replid=$idpegdiklat AND pd.iddiklat=d.replid";
 		$rs = QueryDb($sql);
-		$rw = mysqli_fetch_row($rs);
+		$rw = mysql_fetch_row($rs);
 		$diklat = $rw[0];
 		$thndiklat = $rw[1];
 	};

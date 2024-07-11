@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -187,15 +187,15 @@ function refresh_daftar() {
 		$sql_tot = "SELECT s.nis,s.nama,s.idkelas,k.kelas,s.replid from jbsakad.siswa s, kelas k $string AND k.idtingkat = '$idtingkat' AND s.idkelas = k.replid AND k.idtahunajaran = '$idtahunajaran' AND s.aktif=1 ORDER BY $urut $urutan";  
 		
 		$result_tot = QueryDb($sql_tot);
-		$total=ceil(mysqli_num_rows($result_tot)/(int)$varbaris);
-		$jumlah = mysqli_num_rows($result_tot);
+		$total=ceil(mysql_num_rows($result_tot)/(int)$varbaris);
+		$jumlah = mysql_num_rows($result_tot);
 		$akhir = ceil($jumlah/5)*5;	
 		
 		$sql_siswa = "SELECT s.nis,s.nama,s.idkelas,k.kelas,s.replid from jbsakad.siswa s, kelas k $string AND k.idtingkat = '$idtingkat' AND s.idkelas = k.replid AND k.idtahunajaran = '$idtahunajaran' AND s.aktif=1 ORDER BY $urut $urutan LIMIT ".(int)$page*(int)$varbaris.",$varbaris";
 		
 		$result_siswa = QueryDb($sql_siswa);
 		
-		if (@mysqli_num_rows($result_siswa)>0) {
+		if (@mysql_num_rows($result_siswa)>0) {
 ?>	
 <table border="0" width="100%" align="center">
 <!-- TABLE CENTER -->
@@ -215,7 +215,7 @@ function refresh_daftar() {
 		else 
 			$cnt_siswa = (int)$page*(int)$varbaris;
 			
-		while ($row_siswa = @mysqli_fetch_array($result_siswa)) {
+		while ($row_siswa = @mysql_fetch_array($result_siswa)) {
 			$nis=$row_siswa['nis'];
 			$nama=$row_siswa['nama'];
 			$idkelas=$row_siswa['idkelas'];

@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,14 +35,14 @@ OpenDb();
 
 $sql = "SELECT kodeawalan FROM jbsakad.prosespenerimaansiswa WHERE replid = '$proses'";	
 $res = QueryDb($sql);	
-$row = mysqli_fetch_row($res);	
+$row = mysql_fetch_row($res);	
 $kode_no = $row[0];
 $kodelen = strlen($kode_no);
 //echo "$kode_no<br>";
 
 $sql = "SELECT MAX(LPAD(nopendaftaran, " . ($kodelen + 20) . ",'*')) FROM jbsakad.calonsiswa WHERE idproses = '$proses'";
 $res = QueryDb($sql);	
-$row = mysqli_fetch_row($res);
+$row = mysql_fetch_row($res);
 $nom = $row[0];
 //echo "$nom<br>";
 
@@ -62,7 +62,7 @@ do
     $sql = "SELECT COUNT(replid) FROM jbsakad.calonsiswa WHERE nopendaftaran='$no'";
     //echo "$sql<br>";
     $res = QueryDb($sql);
-    $row = mysqli_fetch_row($res);
+    $row = mysql_fetch_row($res);
     $ndata = (int)$row[0];
 }
 while($ndata > 0);
@@ -200,14 +200,14 @@ else
 	{
 	    $sql = "SELECT isnull(foto) FROM jbsakad.calonsiswa WHERE replid='$_REQUEST[replid]'";
 	    $res2 = QueryDb($sql);
-	    $row2 = mysqli_fetch_row($res2);
+	    $row2 = mysql_fetch_row($res2);
 	    $isFotoNull = (int) $row2[0];
 
 	    if ($isFotoNull == 0)
 	    {
 	        $sql = "SELECT foto FROM jbsakad.calonsiswa WHERE replid='$_REQUEST[replid]'";
 	        $res2 = QueryDb($sql);
-	        $row2 = mysqli_fetch_row($res2);
+	        $row2 = mysql_fetch_row($res2);
 	        $data = $row2[0];
 
             $filename = "$tmp_path/ed-cs-tmp.jpg";
@@ -295,7 +295,7 @@ if ($success && $_REQUEST['action'] == 'ubah')
 {
     $sql = "SELECT nopendaftaran FROM jbsakad.calonsiswa WHERE replid = $_REQUEST[replid]";
     $res = QueryDb($sql);
-    $row = mysqli_fetch_row($res);
+    $row = mysql_fetch_row($res);
     $no = $row[0];
 }
 

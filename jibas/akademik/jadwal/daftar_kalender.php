@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -85,7 +85,7 @@ else if ($op == "vmt489tukd9fcmf92kd2309scm2323rc3")
 				 FROM jbsakad.kalenderakademik
 				WHERE departemen = '$_REQUEST[departemen]'";
 	$res = QueryDb($sql);
-	$row = mysqli_fetch_row($res);
+	$row = mysql_fetch_row($res);
 	$ncal = (int)$row[0];
 	
 	if ($ncal > 1)
@@ -225,7 +225,7 @@ windowIMA=parent.opener.refresh_change(0,0);
 			//$sql = "SELECT COUNT(t.replid) FROM jbsakad.tahunajaran t WHERE t.departemen = '$departemen' UNION SELECT COUNT(k.replid) FROM jbsakad.kalenderakademik k WHERE k.departemen = '$departemen'";
 			//echo $sql;
 			$result = QueryDb($sql);
-			$row = mysqli_fetch_row($result);
+			$row = mysql_fetch_row($result);
 			$jumlah = $row[0];
 			//echo 'ada row '.$row[0];
 		 ?> 
@@ -249,7 +249,7 @@ if ($departemen <> "") {
 	$sql = "SELECT i.kalender, i.aktif, i.replid, i.terlihat, i.idtahunajaran, t.tglmulai, t.tglakhir FROM jbsakad.kalenderakademik i, jbsakad.tahunajaran t WHERE t.departemen ='$departemen' AND i.idtahunajaran = t.replid ORDER BY $urut $urutan";
 	
 	$result = QueryDb($sql);
-	if (@mysqli_num_rows($result) > 0) {
+	if (@mysql_num_rows($result) > 0) {
 	?>
     <br /> 
 	<table class="tab" id="table" border="1" style="border-collapse:collapse" width="100%" align="left">
@@ -261,7 +261,7 @@ if ($departemen <> "") {
 	</tr>
     <?
 	$cnt=1;
-	while ($row = @mysqli_fetch_array($result)) {				
+	while ($row = @mysql_fetch_array($result)) {				
 		$replid=$row['replid'];
 	?>
     <tr height="25">

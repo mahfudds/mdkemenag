@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -220,14 +220,14 @@ function change_baris() {
 	//$sql = "SELECT p.replid, p.proses, p.keterangan, p.aktif, p.kodeawalan, COUNT(c.replid) AS jumlah FROM prosespenerimaansiswa p, calonsiswa c WHERE p.departemen='$departemen' AND c.idproses = p.replid AND c.aktif = 1 GROUP BY c.idproses ORDER BY $urut $urutan"; 
 	$sql_tot = "SELECT p.replid, p.proses, p.keterangan, p.aktif, p.kodeawalan FROM prosespenerimaansiswa p WHERE p.departemen='$departemen' "; 
 	$result_tot = QueryDb($sql_tot);
-	$total = ceil(mysqli_num_rows($result_tot)/(int)$varbaris);
-	$jumlah = mysqli_num_rows($result_tot);
+	$total = ceil(mysql_num_rows($result_tot)/(int)$varbaris);
+	$jumlah = mysql_num_rows($result_tot);
 						
 	$sql = "SELECT p.replid, p.proses, p.keterangan, p.aktif, p.kodeawalan FROM prosespenerimaansiswa p WHERE p.departemen='$departemen' ORDER BY $urut $urutan LIMIT ".(int)$page*(int)$varbaris.",$varbaris"; 						
 	$akhir = ceil($jumlah/5)*5;
 	
 	$result = QueryDb($sql);
-	if (@mysqli_num_rows($result) > 0){
+	if (@mysql_num_rows($result) > 0){
 		
 ?>
     <input type="hidden" name="total" id="total" value="<?=$total?>"/>	
@@ -260,10 +260,10 @@ function change_baris() {
 		else 
 			$cnt = (int)$page*(int)$varbaris;
 			
-		while ($row = @mysqli_fetch_array($result)) {
+		while ($row = @mysql_fetch_array($result)) {
 			$sql1 = "SELECT COUNT(c.replid) AS jumlah FROM calonsiswa c WHERE c.idproses = '$row[replid]' AND c.aktif = 1"; 
 			$result1 = QueryDb($sql1);	
-			$row1 = mysqli_fetch_array($result1);
+			$row1 = mysql_fetch_array($result1);
 ?>			
     <tr>   	
        	<td height="25" align="center"><?=++$cnt ?></td>

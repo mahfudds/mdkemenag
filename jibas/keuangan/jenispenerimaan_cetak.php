@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -71,7 +71,7 @@ if (isset($_REQUEST['departemen']))
 <?	OpenDb();	
 	$sql = "SELECT kategori FROM kategoripenerimaan WHERE kode='$idkategori' ORDER BY urutan";
 	$result = QueryDb($sql);    
-	$row = mysqli_fetch_row($result);
+	$row = mysql_fetch_row($result);
 	echo  $row[0]; ?>
     </strong></td>
 </tr>
@@ -94,35 +94,35 @@ if (isset($_REQUEST['departemen']))
 	//else
 		//$cnt = (int)$page*(int)$varbaris;
 		
-	while ($row = mysqli_fetch_array($request)) { ?>
+	while ($row = mysql_fetch_array($request)) { ?>
     <tr height="25">
     	<td align="center"><?=++$cnt?></td>
         <td><?=$row['nama'] ?></td>        
         <td>
 <?		$sql = "SELECT nama FROM rekakun WHERE kode = '$row[rekkas]'";
 		$result = QueryDb($sql);
-		$row2 = mysqli_fetch_row($result);
+		$row2 = mysql_fetch_row($result);
 		$namarekkas = $row2[0];
 	
 		$sql = "SELECT nama FROM rekakun WHERE kode = '$row[rekpendapatan]'";
 		$result = QueryDb($sql);
-		$row2 = mysqli_fetch_row($result);
+		$row2 = mysql_fetch_row($result);
 		$namarekpendapatan = $row2[0];
 	
 		$sql = "SELECT nama FROM rekakun WHERE kode = '$row[rekpiutang]'";
 		$result = QueryDb($sql);
-		$row2 = mysqli_fetch_row($result);
+		$row2 = mysql_fetch_row($result);
 		$namarekpiutang = $row2[0];
 		
 		$sql = "SELECT nama FROM rekakun WHERE kode = '$row[info1]'";
 		$result = QueryDb($sql);
-		$row2 = mysqli_fetch_row($result);
+		$row2 = mysql_fetch_row($result);
 		$namarekdiskon = $row2[0];
 		?>
-		<strong>Kas:</strong> <?=$row['rekkas'] . " " . $namarekkas ?><br />
-        <strong>Pendapatan:</strong> <?=$row['rekpendapatan'] . " " . $namarekpendapatan ?><br />
-        <strong>Piutang:</strong> <?=$row['rekpiutang'] . " " . $namarekpiutang ?><br />
-		<strong>Diskon:</strong> <?=$row['info1'] . " " . $namarekdiskon ?><br />
+		<strong>Kas:</strong> <?=$row[rekkas] . " " . $namarekkas ?><br />
+        <strong>Pendapatan:</strong> <?=$row[rekpendapatan] . " " . $namarekpendapatan ?><br />
+        <strong>Piutang:</strong> <?=$row[rekpiutang] . " " . $namarekpiutang ?><br />
+		<strong>Diskon:</strong> <?=$row[info1] . " " . $namarekdiskon ?><br />
         </td>
         <td><?=$row['keterangan'] ?></td>
     </tr>

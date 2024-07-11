@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -61,7 +61,7 @@ class UserList{
 			OpenDb();
 			$sql = "SELECT login FROM $db_name_user.hakakses WHERE replid='$id'";
 			$res = QueryDb($sql);
-			$row = @mysqli_fetch_row($res);
+			$row = @mysql_fetch_row($res);
 			$login = $row[0];
 			
 			$sql = "DELETE FROM $db_name_user.hakakses WHERE replid='$id'";
@@ -69,7 +69,7 @@ class UserList{
 			
 			$sql = "SELECT COUNT(replid) FROM $db_name_user.hakakses WHERE login='$login'";
 			$res = QueryDb($sql);
-			$row = @mysqli_fetch_row($res);
+			$row = @mysql_fetch_row($res);
 			$num = $row[0];
 			
 			if ($num==0){
@@ -132,7 +132,7 @@ class UserList{
 			OpenDb();
 			$sql = "SELECT login,tingkat,keterangan,lastlogin,replid FROM $db_name_user.hakakses WHERE modul='SMSG'";
 			$res = QueryDb($sql);
-			$num = @mysqli_num_rows($res);
+			$num = @mysql_num_rows($res);
 			if ($num>0){
 				$cnt = 1;
 				?>
@@ -147,10 +147,10 @@ class UserList{
 					<td>&nbsp;</td>
 				</tr>
 				<?php
-				while ($row = @mysqli_fetch_row($res)){
+				while ($row = @mysql_fetch_row($res)){
 				$sqlpeg = "SELECT nama FROM $db_name_sdm.pegawai WHERE nip='$row[0]'";
 				$respeg = QueryDb($sqlpeg);
-				$rowpeg = @mysqli_fetch_row($respeg);
+				$rowpeg = @mysql_fetch_row($respeg);
 				?>
 				<tr height="20">
 					<td align="center"><?php echo $cnt ?></td>
@@ -200,7 +200,7 @@ class UserList{
 					 WHERE login = '$nip'
 					   AND modul='SMSG'";
 			$res = QueryDb($sql);
-			$row = @mysqli_fetch_row($res);
+			$row = @mysql_fetch_row($res);
 			$num = $row[0];
 			if ($num > 0)
 			{
@@ -212,7 +212,7 @@ class UserList{
 					      FROM $db_name_user.login
 						 WHERE login='$nip'";
 				$res = QueryDb($sql);
-				$row = @mysqli_fetch_row($res);
+				$row = @mysql_fetch_row($res);
 				
 				if ($row[0] < 1)
 				{
@@ -328,14 +328,14 @@ class UserList{
 			
 			$sql = "SELECT login,tingkat,keterangan FROM $db_name_user.hakakses WHERE replid='$id'";
 			$res = QueryDb($sql);
-			$row = @mysqli_fetch_row($res);
+			$row = @mysql_fetch_row($res);
 			$nip = $row[0];
 			$tingkat = $row[1];
 			$ket = $row[2];
 			
 			$sql = "SELECT nama FROM $db_name_sdm.pegawai WHERE nip='$nip'";
 			$res = QueryDb($sql);
-			$row = @mysqli_fetch_row($res);
+			$row = @mysql_fetch_row($res);
 			$nama= $row[0];
 			?>
 			<title>Ubah Pengguna</title>

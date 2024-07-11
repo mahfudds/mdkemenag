@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,21 +30,21 @@ OpenDb();
  
 $sql = "SELECT MONTH(NOW()), YEAR(NOW()), DAY(NOW())";
 $result = QueryDb($sql);
-$row = mysqli_fetch_row($result);
+$row = mysql_fetch_row($result);
 $now = $row[2]."-".$row[0]."-".$row[1];
 $tgl = $now;
-if (isset($_REQUEST['tgl']))
-	$tgl = $_REQUEST['tgl'];
+if (isset($_REQUEST[tgl]))
+	$tgl = $_REQUEST[tgl];
 	
-if (isset($_REQUEST['Simpan']))
+if (isset($_REQUEST[Simpan]))
 {
 	$sql = "SELECT kode FROM jbsfina.barang WHERE kode='$_REQUEST[kode]'";
 	$result = QueryDb($sql);
-	$num = @mysqli_num_rows($result);
+	$num = @mysql_num_rows($result);
 	if ($num>0){
 		?>
 		<script language="javascript">
-			alert('Kode Barang \'<?=$_REQUEST['kode']?>\' sudah digunakan!');
+			alert('Kode Barang \'<?=$_REQUEST[kode]?>\' sudah digunakan!');
         </script>
 		<?
 	} else {
@@ -71,11 +71,11 @@ if (isset($_REQUEST['Simpan']))
 			$isifoto="";
 		}
 		
-		$tgl = MySqlDateFormat($_REQUEST['tgl']);
+		$tgl = MySqlDateFormat($_REQUEST[tgl]);
 		
-		$sql = "INSERT INTO jbsfina.barang SET kode='".trim($_REQUEST['kode'])."', nama='".trim($_REQUEST['nama'])."',
-					   jumlah='".trim($_REQUEST['jumlah'])."',kondisi='".addslashes(trim($_REQUEST['kondisi']))."',tglperolehan='$tgl',
-					   keterangan='".addslashes(trim($_REQUEST['keterangan']))."',idkelompok='$_REQUEST[idkelompok]',
+		$sql = "INSERT INTO jbsfina.barang SET kode='".trim($_REQUEST[kode])."', nama='".trim($_REQUEST[nama])."',
+					   jumlah='".trim($_REQUEST[jumlah])."',kondisi='".addslashes(trim($_REQUEST[kondisi]))."',tglperolehan='$tgl',
+					   keterangan='".addslashes(trim($_REQUEST[keterangan]))."',idkelompok='$_REQUEST[idkelompok]',
 					   satuan='$_REQUEST[satuan]', info1='$_REQUEST[angkaharga]' $isifoto";
 		$result = QueryDb($sql);
 		if ($result){
@@ -212,7 +212,7 @@ function salinharga()
 <fieldset style="border:#336699 1px solid; background-color:#eaf4ff" >
 <legend style="background-color:#336699; color:#FFFFFF; font-size:10px; font-weight:bold; padding:5px">&nbsp;Tambah&nbsp;Barang&nbsp;</legend>
 <form action="AddBarang.php" method="post" enctype="multipart/form-data" onSubmit="return validate()">
-<input type="hidden" name="idkelompok" id="idkelompok" value="<?=$_REQUEST['idkelompok']?>" />
+<input type="hidden" name="idkelompok" id="idkelompok" value="<?=$_REQUEST[idkelompok]?>" />
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
     <td width="14%" align="right"><strong>Kode&nbsp;Barang</strong></td>

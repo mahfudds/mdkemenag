@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@ $sql = "SELECT jenispemohon, nip, nis, pemohonlain, penerima,
 		  FROM pengeluaran
 		 WHERE replid='$idtransaksi'";
 $result = QueryDb($sql);
-$row = mysqli_fetch_array($result);
+$row = mysql_fetch_array($result);
 $jpemohon = $row['jenispemohon'];
 if ($jpemohon == 1)
 	$idpemohon = $row['nip'];
@@ -66,32 +66,32 @@ else if ($jpemohon == 2)
 else
 	$sql = "SELECT nama FROM pemohonlain WHERE replid = $idpemohon";
 $result = QueryDb($sql);
-$row = mysqli_fetch_row($result);
+$row = mysql_fetch_row($result);
 $namapemohon = $row[0];
 if ($jpemohon == 3) 
 	$idpemohon = "";
 
 $sql = "SELECT date_format(now(), '%Y-%m-%d') as tanggal";
 $result = QueryDb($sql);
-$row = mysqli_fetch_row($result);
+$row = mysql_fetch_row($result);
 $tglcetak = $row[0];
 
 $sql = "SELECT nokas FROM jurnal WHERE replid = '$idjurnal'";
 $result = QueryDb($sql);
-$row = mysqli_fetch_row($result);
+$row = mysql_fetch_row($result);
 $nokas = $row[0];
 
 $sql = "SELECT departemen FROM pengeluaran p, jurnal j, tahunbuku t WHERE p.replid='$idtransaksi' AND p.idjurnal=j.replid AND j.idtahunbuku=t.replid";
 $result = QueryDb($sql);
-$row = @mysqli_fetch_array($result);
-$departemen = $row['departemen'];
+$row = @mysql_fetch_array($result);
+$departemen = $row[departemen];
 
 $sql = "SELECT replid, nama, alamat1 FROM jbsumum.identitas WHERE departemen='$departemen'";
 $result = QueryDb($sql); 
-$row = @mysqli_fetch_array($result);
-$idHeader = $row['replid'];
-$namaHeader = $row['nama'];
-$alamatHeader = $row['alamat1'];
+$row = @mysql_fetch_array($result);
+$idHeader = $row[replid];
+$namaHeader = $row[nama];
+$alamatHeader = $row[alamat1];
 CloseDb();
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

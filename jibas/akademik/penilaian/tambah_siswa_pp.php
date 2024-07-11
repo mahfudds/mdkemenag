@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,21 +30,21 @@ require_once('../include/theme.php');
 require_once('../include/db_functions.php');
 require_once('../library/departemen.php');
 
-if(isset($_REQUEST['departemen'])){
-	$departemen = $_REQUEST['departemen'];
+if(isset($_REQUEST[departemen])){
+	$departemen = $_REQUEST[departemen];
 }
 
-if(isset($_REQUEST['kelas'])){
-	$kelas = $_REQUEST['kelas'];
+if(isset($_REQUEST[kelas])){
+	$kelas = $_REQUEST[kelas];
 }
-if(isset($_REQUEST['jenis_penilaian'])){
-	$jenis = $_REQUEST['jenis_penilaian'];
+if(isset($_REQUEST[jenis_penilaian])){
+	$jenis = $_REQUEST[jenis_penilaian];
 }
-if(isset($_REQUEST['pelajaran'])){
-	$pelajaran = $_REQUEST['pelajaran'];
+if(isset($_REQUEST[pelajaran])){
+	$pelajaran = $_REQUEST[pelajaran];
 }
-if(isset($_REQUEST['semester'])){
-	$semester = $_REQUEST['semester'];
+if(isset($_REQUEST[semester])){
+	$semester = $_REQUEST[semester];
 }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -122,7 +122,7 @@ openDB();
 				"AND idsemester = '$semester' ".
 				"AND idjenis = '$jenis' )";
 	
-	$result_sis = QueryDb($query) or die (mysqli_error());
+	$result_sis = QueryDb($query) or die (mysql_error());
 	?>
 	<p>
 		<table border='1' cellspacing='0' cellpadding='0' bordercolor='#5A7594' width='100%'>
@@ -133,7 +133,7 @@ openDB();
 						<td class='header' align='center' height='30'>NIS</td>
 						<td class='header' height='30'>Nama</td>
 	<?
-	$jml_data = @mysqli_num_rows($result_sis);
+	$jml_data = @mysql_num_rows($result_sis);
 	
 	if($jml_data=="0"){
 		?>
@@ -143,12 +143,12 @@ openDB();
 		<? 
 	}else{	
 	$cnt = 0;
-	while($row = @mysqli_fetch_array($result_sis)){
+	while($row = @mysql_fetch_array($result_sis)){
 	?>
 	<tr <?="bgcolor=#".($cnt%2?"ffffff":"EAECEE").""; ?>>
-		<td class='data'><input type="hidden" name="nis<?=$cnt; ?>" value="<?=$row['nis']; ?>">
-		<input type="hidden" name="nama<?=$cnt; ?>" value="<?=$row['nama']; ?>"><input name='siswa' type='radio' value='<?=$row['nis']; ?>' onclick='changeSel(<?=$cnt; ?>)' width='30%'><?=$row['nis']; ?></td>
-		<td width='70%'class='data'><?=$row['nama']; ?></td>
+		<td class='data'><input type="hidden" name="nis<?=$cnt; ?>" value="<?=$row[nis]; ?>">
+		<input type="hidden" name="nama<?=$cnt; ?>" value="<?=$row[nama]; ?>"><input name='siswa' type='radio' value='<?=$row[nis]; ?>' onclick='changeSel(<?=$cnt; ?>)' width='30%'><?=$row[nis]; ?></td>
+		<td width='70%'class='data'><?=$row[nama]; ?></td>
 	</tr>
 	<?
 	$cnt++;
@@ -168,10 +168,10 @@ openDB();
   </tr>
 </table>
 <?
-if(isset($_POST['pilih'])){
+if(isset($_POST[pilih])){
 	?>
 	<script language="javascript">
-		document.location.href = "tambah_siswa_pp2.php?nim<?=$_POST['nim'] ?>";
+		document.location.href = "tambah_siswa_pp2.php?nim<?=$_POST[nim] ?>";
 	</script>
 	<?
 	}

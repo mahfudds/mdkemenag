@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,9 +43,9 @@ OpenDb();
 
 $sql = "SELECT bulan FROM jbsvcr.gambartiny WHERE idguru='".SI_USER_ID()."' GROUP BY bulan";
 $result = QueryDb($sql);
-$num = @mysqli_num_rows($result);
+$num = @mysql_num_rows($result);
 $b = 0;
-while ($row = @mysqli_fetch_array($result))
+while ($row = @mysql_fetch_array($result))
 {
 	$bln[$b]=$row['bulan'];
 	$b++;
@@ -54,7 +54,7 @@ while ($row = @mysqli_fetch_array($result))
 $sql = "SELECT tahun FROM jbsvcr.gambartiny WHERE idguru='".SI_USER_ID()."' GROUP BY tahun";
 $result = QueryDb($sql);
 $t = 0;
-while ($row = @mysqli_fetch_array($result))
+while ($row = @mysql_fetch_array($result))
 {
 	$thn[$t]=$row['tahun'];
 	$t++;
@@ -127,7 +127,7 @@ if ($op == "09vn4230984cn2048723n98423")
 		$sql = "SELECT * FROM jbsvcr.gambartiny WHERE idguru='".SI_USER_ID()."' AND tahun=".$tahun." AND bulan=".$bulan;
 		$result = QueryDb($sql); ?>
 		<table width="75%" border="0" cellspacing="0">
-<?		while ($row = @mysqli_fetch_array($result))
+<?		while ($row = @mysql_fetch_array($result))
 		{
 			$bln = $row['bulan'];
 			$bln = strlen($bln) == 1 ? "0$bln" : $bln;
@@ -145,11 +145,11 @@ if ($op == "09vn4230984cn2048723n98423")
 					<img style="cursor:pointer;" src="../images/ico/lihat.png"
 						  onclick="OpenGambar('<?=$imgAddr?>')" title="Lihat Gambar Ini" />&nbsp;
 					<img style="cursor:pointer;" src="../images/ico/hapus.png"
-						  onclick="DelGambar('<?=$row['replid']?>')" title="Hapus Gambar Ini" />
+						  onclick="DelGambar('<?=$row[replid]?>')" title="Hapus Gambar Ini" />
 				</td>  
 			</tr>
 			<tr>
-				<td>Nama Gambar : <?=$row['namagambar']?><br />Keterangan Gambar : <?=$row['keterangan']?></td>
+				<td>Nama Gambar : <?=$row[namagambar]?><br />Keterangan Gambar : <?=$row[keterangan]?></td>  
 			</tr>
 			<tr>
 				<td><hr /></td>  

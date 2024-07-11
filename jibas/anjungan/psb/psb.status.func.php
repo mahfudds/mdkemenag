@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ function ShowDepartemenCombo()
     $res = QueryDB($sql);
     
     echo "<select name='psb_departemen' id='psb_departemen' class='inputbox' onchange='psb_StatusPsbChangeDepartemen()'>";
-	while ($row = mysqli_fetch_row($res))
+	while ($row = mysql_fetch_row($res))
     {
         if ($selDept == "")
             $selDept = $row[0];
@@ -55,7 +55,7 @@ function ShowPenerimaanCombo($selDept)
                AND departemen='$selDept'";
     $res = QueryDB($sql);
     
-    if (mysqli_num_rows($res) == 0)
+    if (mysql_num_rows($res) == 0)
     {
         echo "<input type='hidden' name='psb_proses' id='psb_proses' value='-1'>";
         echo "<em>Belum ada data proses penerimaan</em>";
@@ -63,7 +63,7 @@ function ShowPenerimaanCombo($selDept)
     else
     {
         echo "<select name='psb_proses' id='psb_proses' class='inputbox' onchange='psb_StatusPsbChangeProses()'>";
-        while ($row = mysqli_fetch_row($res))
+        while ($row = mysql_fetch_row($res))
         {
             if ($selProses == "")
                 $selProses = $row[0];
@@ -122,7 +122,7 @@ function ShowStatusPsb($idproses, $page)
     //echo $sql;         
     $res = QueryDb($sql);
     $cnt = $offset;
-    while($row = mysqli_fetch_array($res))
+    while($row = mysql_fetch_array($res))
     {
         ?>
         <tr height="24" style="background-color: #fff;">

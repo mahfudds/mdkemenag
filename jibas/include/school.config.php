@@ -3,10 +3,10 @@
  * JIBAS Education Community 
  * Jaringan Informasi Bersama Antar Sekolah 
  *  
- * @version: 31.0 (Jun 21, 2024) 
- * @notes:  
+ * @version: 29.0 (Sept 20, 2023) 
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net) 
  *  
- * Copyright (C) 2024 JIBAS (http://www.jibas.net) 
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net) 
  *  
  * This program is free software: you can redistribute it and/or modify 
  * it under the terms of the GNU General Public License as published by 
@@ -29,7 +29,7 @@
 */
 $G_LOGO_DEPAN_KIRI="tutwuri.png"; // nama file gambarnya, jika tidak ada gunakan nama file nologo.png
 $G_LOGO_DEPAN_KANAN="tutwuri.png";
-$G_JUDUL_DEPAN_1="SEKOLAH PENDIDIKAN INDONESIA";
-$G_JUDUL_DEPAN_2="YAYASAN PENDIDIKAN INDONESIA";
-$G_JUDUL_DEPAN_3="(atur kembali logo dan identitas sekolah di file school.config.php <br> untuk lebih jelasnya silahkan baca file readme.txt)";
+$G_JUDUL_DEPAN_1="KEMENTERIAN AGAMA";
+$G_JUDUL_DEPAN_2="KABUPATEN NGAWI";
+$G_JUDUL_DEPAN_3="MADRASAH DIGITAL KEMENAG NGAWI";
 ?>

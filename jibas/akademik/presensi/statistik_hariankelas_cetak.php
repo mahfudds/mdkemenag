@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@ $sql = "SELECT t.departemen, a.tahunajaran, s.semester, t.tingkat
            AND p.idsemester = s.replid AND s.replid = '$semester' AND t.replid = '$tingkat'";
 
 $result = QueryDB($sql);	
-$row = mysqli_fetch_array($result);
+$row = mysql_fetch_array($result);
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -55,7 +55,7 @@ $row = mysqli_fetch_array($result);
 <table border="0" cellpadding="10" cellpadding="5" width="780" align="left">
 <tr>
 	<td align="left" valign="top" colspan="2">
-<?=getHeader($row['departemen'])?>
+<?=getHeader($row[departemen])?>
 	
 <center>
   <font size="4"><strong>STATISTIK KEHADIRAN HARIAN SETIAP KELAS</strong></font><br />
@@ -87,7 +87,7 @@ $row = mysqli_fetch_array($result);
 	$sql = "SELECT DISTINCT k.kelas, k.replid FROM presensiharian p, kelas k WHERE p.idkelas = k.replid AND k.idtingkat = '$tingkat' AND p.idsemester = '$semester' AND ((p.tanggal1 BETWEEN '$tglawal' AND '$tglakhir') OR (p.tanggal2 BETWEEN '$tglawal' AND '$tglakhir')) ORDER BY k.kelas, p.tanggal1 ";	
 	
 	$result = QueryDb($sql);
-	$jum = mysqli_num_rows($result);
+	$jum = mysql_num_rows($result);
 	if ($jum > 0) { 
 ?>
 	<table class="tab" id="table" border="1" style="border-collapse:collapse" width="100%" align="left" bordercolor="#000000">
@@ -98,7 +98,7 @@ $row = mysqli_fetch_array($result);
     </tr>
 <?		
 	$cnt = 0;
-	while ($row = mysqli_fetch_row($result)) { ?>
+	while ($row = mysql_fetch_row($result)) { ?>
     <tr height="25">    	
     	<td align="center"><?=++$cnt?></td>
         <td align="center"><?=$row[0]?></td>

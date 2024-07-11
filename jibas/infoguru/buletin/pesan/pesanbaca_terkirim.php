@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,12 +34,12 @@ OpenDb();
 
 $sql2="SELECT DATE_FORMAT(pg.tanggalpesan, '%Y-%m-%j') as tanggal, pg.judul as judul, pg.pesan as pesan, p.nama as nama FROM jbsvcr.pesan pg, jbssdm.pegawai p WHERE pg.idguru=p.nip AND pg.replid='$replid'";
 $result2=QueryDb($sql2);
-if (@mysqli_num_rows($result2)>0){
-$row2=@mysqli_fetch_array($result2);
+if (@mysql_num_rows($result2)>0){
+$row2=@mysql_fetch_array($result2);
 } else {
 $sql4="SELECT DATE_FORMAT(pg.tanggalpesan, '%Y-%m-%j') as tanggal, pg.judul as judul, pg.pesan as pesan, p.nama as nama, pg.replid as replid FROM jbsvcr.pesan pg, jbsakad.siswa p WHERE pg.nis=p.nis AND pg.replid='$idpesan'";
 $result4=QueryDb($sql4);
-$row2=@mysqli_fetch_array($result4);
+$row2=@mysql_fetch_array($result4);
 }
 $sql3="SELECT * FROM jbsvcr.lampiranpesan WHERE idpesan='$replid'";
 $result3=QueryDb($sql3);
@@ -95,21 +95,21 @@ CloseDb();
                 <td width="11%" valign="top"><span class="style1"><span class="style5">Dari</span></span></td>
                 <td width="2%" valign="top"><span class="style5">:</span></td>
                 <td width="87%"><span class="style1">
-                  <?=$row2['nama']?>
+                  <?=$row2[nama]?>
                 </span></td>
               </tr>
               <tr>
                 <td valign="top"><span class="style6">Judul</span></td>
                 <td valign="top"><span class="style5">:</span></td>
                 <td><span class="style1">
-                  <?=$row2['judul']?>
+                  <?=$row2[judul]?>
                 </span></td>
               </tr>
               <tr>
                 <td valign="top"><span class="style5">Pesan</span></td>
                 <td valign="top"><span class="style5">:</span></td>
                 <td><font style="font-size: 11px; line-height: 18px">
-                  <?= str_replace("`", "'", $row2['pesan'])  ?>
+                  <?= str_replace("`", "'", $row2[pesan])  ?>
                 </span></td>
               </tr>
             </table>

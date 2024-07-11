@@ -4,9 +4,9 @@
  * Jaringan Informasi Bersama Antar Sekolah
  * 
  * @version: 16.2 (March 12, 2019)
- * @notes: 
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,17 +40,10 @@ $noid = $_REQUEST['noid'];
 $nama = $_REQUEST['nama'];
 $kelas = $_REQUEST['kelas'];
 
-$jenis = "";
 if ($kelompok == "siswa")
-{
     $jenisp = array("JTT" => "Iuran Wajib Siswa", "SKR" => "Iuran Sukarela Siswa");
-    $jenis = "JTT";
-}
 else
-{
     $jenisp = array("CSWJB" => "Iuran Wajib Calon Siswa", "CSSKR" => "Iuran Sukarela Calon Siswa");
-    $jenis = "CSWJB";
-}
 
 OpenDb();    
 ?>
@@ -89,7 +82,7 @@ OpenDb();
 		<tr>	
 			<td align="left" valign="top">
 			<div id="divSelectPayment">
-<?          	ShowSelectPayment($jenis, $departemen) ?>
+<?          	ShowSelectPayment() ?>
 			</div>
 			</td>
 		</tr>

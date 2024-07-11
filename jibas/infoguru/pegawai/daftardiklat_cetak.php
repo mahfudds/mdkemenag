@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@ $nip = $_REQUEST['nip'];
 
 $sql = "SELECT CONCAT(gelarawal, ' ' , nama, ' ', gelarakhir) AS nama FROM jbssdm.pegawai WHERE nip='$nip'";
 $result = QueryDb($sql);
-$row = mysqli_fetch_row($result);
+$row = mysql_fetch_row($result);
 $nama = $row[0];
 ?>
 
@@ -76,7 +76,7 @@ $nama = $row[0];
 $sql = "SELECT p.replid, p.iddiklat, d.diklat, p.tahun, p.sk, p.keterangan, p.terakhir FROM jbssdm.pegdiklat p, jbssdm.diklat d WHERE p.nip = '$nip' AND p.iddiklat = d.replid ORDER BY p.tahun DESC, p.replid DESC";
 $result = QueryDb($sql);
 $cnt = 0;
-while ($row = mysqli_fetch_array($result)) {
+while ($row = mysql_fetch_array($result)) {
 ?>
 <tr height="25">
 	<td align="center"><?=++$cnt?></td>

@@ -4,9 +4,9 @@
  * Jaringan Informasi Bersama Antar Sekolah
  * 
  * @version: 2.6.0 (January 14, 2012)
- * @notes: 
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
 require_once('../include/sessioninfo.php');
 require_once("../include/sessionchecker.php");
 
-$nis=$_REQUEST['nis'];
+$nis=$_REQUEST[nis];
 ?>
 <frameset COLS="350,*" frameborder="yes" border="1" framespacing="0" frameborder="0">
 	<frame src="../infosiswa/catatansiswamenu.php?nis=<?=$nis?>" name="catatansiswamenu" id="catatansiswamenu" scrolling="no" style="border:1px; border-bottom-color:#000000; border-bottom-style:solid">

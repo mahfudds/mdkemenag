@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -63,7 +63,7 @@ if (isset($_REQUEST['tglakhir']))
 	
 $sql1 = "SELECT kelas FROM jbsakad.kelas WHERE replid='$kelas'";
 $result1 = QueryDb($sql1);
-$row1 = @mysqli_fetch_array($result1);	
+$row1 = @mysql_fetch_array($result1);	
 
 $sql = "SELECT DISTINCT a.dasarpenilaian, d.keterangan
   	      FROM infonap i, nap n, aturannhb a, dasarpenilaian d
@@ -73,7 +73,7 @@ $sql = "SELECT DISTINCT a.dasarpenilaian, d.keterangan
 		   AND n.idaturan = a.replid 	   
 		   AND a.dasarpenilaian = d.dasarpenilaian";
 $res = QueryDb($sql);
-$naspek = mysqli_num_rows($res);
+$naspek = mysql_num_rows($res);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/aTR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -136,7 +136,7 @@ function cetak_rapor_kelas()
 	$sql = "SELECT s.nis, s.nama FROM siswa s WHERE s.idkelas = '$kelas' AND s.aktif=1 AND s.alumni=0 ORDER BY s.nama ASC";
 	$result = QueryDb($sql);		
 	$cnt = 1;
-	$jum = @mysqli_num_rows($result);
+	$jum = @mysql_num_rows($result);
 	if ($jum > 0) {
 ?>	
 
@@ -153,12 +153,12 @@ function cetak_rapor_kelas()
     <tr style="visibility: hidden; border-width: 0px; border-collapse: collapse; height: 0px;">
         <td colspan="2"></td>
     </tr>
-    <? while ($row = @mysqli_fetch_array($result)) {	?>
+    <? while ($row = @mysql_fetch_array($result)) {	?>
     <tr>        			
-        <td height="25" align="center" onclick="tampil('<?=$row['nis']?>')" style="cursor:pointer" title="Klik untuk menampilkan komentar rapor siswa ini"><?=$cnt?><input type="hidden" name="replid<?=$cnt?>" value="<?=$row['replid']?>">
+        <td height="25" align="center" onclick="tampil('<?=$row[nis]?>')" style="cursor:pointer" title="Klik untuk menampilkan komentar rapor siswa ini"><?=$cnt?><input type="hidden" name="replid<?=$cnt?>" value="<?=$row['replid']?>">
         <input type="hidden" name="nis<?=$cnt?>" value="<?=$row['nis']?>"></td>
         
-        <td height="25" onclick="tampil('<?=$row['nis']?>')" style="cursor:pointer" title="Klik untuk menampilkan komentar rapor <?=$row['nama']?>"><?=$row['nis']?><br /><b><?=$row['nama']?></b></td>
+        <td height="25" onclick="tampil('<?=$row[nis]?>')" style="cursor:pointer" title="Klik untuk menampilkan komentar rapor <?=$row['nama']?>"><?=$row['nis']?><br /><b><?=$row['nama']?></b></td>
     </tr>
     <?		$cnt++;
     } 

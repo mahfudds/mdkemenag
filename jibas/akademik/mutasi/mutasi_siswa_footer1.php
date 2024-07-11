@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -133,7 +133,7 @@ function refresh(){
       <tr>
         <td colspan="2"><div align="right">
           <input name="action" type="hidden" id="action2" value="<? if(!empty($_GET['action'])) echo $_GET['action'] ; else echo "tambahJenisMutasi" ;?>">
-          <input name="state" type="hidden" id="state2" value="jenis"><? if (mysqli_num_rows($result_mutasi)<>0) {
+          <input name="state" type="hidden" id="state2" value="jenis"><? if (mysql_num_rows($result_mutasi)<>0) {
 		  ?>
           <a href="#" onclick="cetak()"  onMouseOver="showhint('Cetak Daftar Siswa', this, event, '120px')">Cetak<img src="../images/ico/print.png" border="0"></a><? } ?><br>
           <br></div></td>
@@ -152,7 +152,7 @@ function refresh(){
 		
 	
 		  $a=0;
-		  while($row_mutasi=mysqli_fetch_row($result_mutasi)){$a++;
+		  while($row_mutasi=mysql_fetch_row($result_mutasi)){$a++;
 		  ?>
           <tr>
             <td height="25"><?=$a; ?></td>
@@ -169,7 +169,7 @@ function refresh(){
           </tr>
 		  <?
 		  }
-		  if(mysqli_num_rows($result_mutasi)==0)
+		  if(mysql_num_rows($result_mutasi)==0)
 		  	{
 		?>
 		<tr>

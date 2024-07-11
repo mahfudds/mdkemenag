@@ -13,9 +13,9 @@ $ownerid = $_REQUEST['ownerid'];
 $sql = "SELECT foto, foto IS NULL AS isnull FROM jbssdm.pegawai WHERE nip = '$ownerid'";
 $res = QueryDb($sql);
 
-if (mysqli_num_rows($res) > 0)
+if (mysql_num_rows($res) > 0)
 {
-    $row = mysqli_fetch_array($res);
+    $row = mysql_fetch_array($res);
     if ($row['isnull'] == 0)
     {
         echo $row['foto'];    

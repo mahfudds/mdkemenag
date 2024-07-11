@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -91,7 +91,7 @@ if ($iddasar==""){
 	}
 	
 	$result1 = QueryDb($query1);
-	$num = @mysqli_num_rows($result1);
+	$num = @mysql_num_rows($result1);
 	
 } elseif ($iddasar=="12"){
 
@@ -162,12 +162,12 @@ function change_urut(urut,urutan) {
     	<td width="20%" onMouseOver="background='../style/formbg2agreen.gif';height=30;" onMouseOut="background='../style/formbg2.gif';height=30;" background="../style/formbg2.gif" style="cursor:pointer;" onClick="change_urut('k.kelompok','<?=$urutan?>')">Kel. <?=change_urut('k.kelompok',$urut,$urutan)?></td>
         <td width="8%">&nbsp;</td>
 	</tr> 
-	<?  if (@mysqli_num_rows($result1)<1) { ?> 
+	<?  if (@mysql_num_rows($result1)<1) { ?> 
 					<td colspan="5" align="center"><strong>Tidak Ada Data</strong></td>
 					 
   	<? } else{
 	
-    while ($row1 = @mysqli_fetch_row($result1)) { ?>
+    while ($row1 = @mysql_fetch_row($result1)) { ?>
 	<tr height="25">
   		<td align="center"><?=++$cnt?></td>
      	<td align="center"><?=$row1[0] ?></td>

@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -75,7 +75,7 @@ if (isset($_REQUEST['op']))
     $result1 = QueryDb($sql1);
     if ($op=="lihat")
     {
-        if (@mysqli_num_rows($result1)>0)
+        if (@mysql_num_rows($result1)>0)
         {
 ?>
 	    <script language="javascript">
@@ -97,7 +97,7 @@ if (isset($_REQUEST['op']))
 
     if ($op=="show")
     {
-	    if (@mysqli_num_rows($result1)>0)
+	    if (@mysql_num_rows($result1)>0)
 	    {
 	    ?>
 	    <script language="javascript">
@@ -233,7 +233,7 @@ function lihat() {
 <?php         $sql2 = "SELECT replid,tingkat FROM tingkat WHERE aktif=1 AND departemen='$departemen' ORDER BY urutan";
               $result2 = QueryDb($sql2);
 
-              while($row2 = mysqli_fetch_array($result2))
+              while($row2 = mysql_fetch_array($result2))
               {
                   if ($tingkat == "")
                       $tingkat = $row2['replid']; ?>
@@ -258,7 +258,7 @@ function lihat() {
 <?php         $sql3 = "SELECT replid, tahunajaran FROM tahunajaran WHERE departemen = '$departemen' AND aktif=1 ORDER BY replid DESC";
               $result3 = QueryDb($sql3);
 
-              $row3 = @mysqli_fetch_array($result3);
+              $row3 = @mysql_fetch_array($result3);
               $tahunajaran = $row3['replid']; ?>
               <input type="text" name="tahun" id="tahun" size="20" readonly class="disabled" value="<?=$row3['tahunajaran']?>"  style="width:170px;"/>
               <input type="hidden" name="tahunajaran" id="tahunajaran" value="<?=$row3['replid']?>" />
@@ -269,7 +269,7 @@ function lihat() {
 <?php         $sql4 = "SELECT replid,kelas FROM kelas WHERE aktif=1 AND idtahunajaran = '$tahunajaran' AND idtingkat = '$tingkat' ORDER BY kelas";
 			  $result4 = QueryDb($sql4);
 
-			  while($row4 = mysqli_fetch_array($result4))
+			  while($row4 = mysql_fetch_array($result4))
               {
 			       if ($kelas == "")
 				       $kelas = $row4['replid'];
@@ -291,7 +291,7 @@ function lihat() {
                   $sql5 = "SELECT replid,nama FROM pelajaran WHERE departemen = '$departemen' AND aktif=1 ORDER BY nama";
                   $result5 = QueryDb($sql5);
 
-                  while ($row5 = @mysqli_fetch_array($result5)) {
+                  while ($row5 = @mysql_fetch_array($result5)) {
                       if ($pelajaran == "")
                           $pelajaran = $row5['replid'];
                       ?>
@@ -329,7 +329,7 @@ function lihat() {
                   $sql6 = "SELECT replid,semester FROM semester where departemen='$departemen' AND aktif = 1 ORDER BY replid DESC";
                   $result6 = QueryDb($sql6);
 
-                  while ($row6 = @mysqli_fetch_array($result6)) {
+                  while ($row6 = @mysql_fetch_array($result6)) {
                       if ($semester == "")
                           $semester = $row6['replid'];
 

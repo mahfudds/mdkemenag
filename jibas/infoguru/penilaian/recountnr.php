@@ -62,13 +62,13 @@ class RecountNilaiRapor
 		$sql = "SELECT replid FROM jbsakad.infonap 
 		         WHERE idpelajaran = '$this->idpelajaran' AND idsemester = '$this->idsemester' AND idkelas = '$this->idkelas'";
 		$res = QueryDb($sql);
-		if (mysqli_num_rows($res) == 0)
+		if (mysql_num_rows($res) == 0)
 		{
 			$this->idinfo = 0;
 		}
 		else
 		{
-			$row = mysqli_fetch_row($res);
+			$row = mysql_fetch_row($res);
 			$this->idinfo = $row[0];
 		}
 	}
@@ -81,13 +81,13 @@ class RecountNilaiRapor
 				   AND a.idpelajaran = '$this->idpelajaran' AND a.dasarpenilaian = '$this->aspek' 
 			  ORDER BY a.replid ASC LIMIT 1";
 		$res = QueryDb($sql);
-		if (mysqli_num_rows($res) == 0)
+		if (mysql_num_rows($res) == 0)
 		{
 			$this->idpemkon = 0;
 		}
 		else
 		{
-			$row = mysqli_fetch_row($res);
+			$row = mysql_fetch_row($res);
 			$this->idpemkon = $row[0];
 		}
 	}
@@ -104,7 +104,7 @@ class RecountNilaiRapor
 				   AND a.idpelajaran = '$this->idpelajaran' AND a.dasarpenilaian = '$this->aspek' 
 				   AND a.idjenisujian = j.replid AND a.aktif = 1 ORDER BY a.replid";
 		$res = QueryDb($sql);
-		while ($row = mysqli_fetch_array($res))
+		while ($row = mysql_fetch_array($res))
 		{
 			$this->ujian[] = array($row['replid'], $row['bobot'], $row['idjenisujian'], $this->aspek);
 		}
@@ -123,7 +123,7 @@ class RecountNilaiRapor
 		BeginTrans();
 		
 		// -- Hitung ulang semua siswa
-		while ($success && ($row = mysqli_fetch_row($res)))
+		while ($success && ($row = mysql_fetch_row($res)))
 		{
 			$nis = $row[0];
 			
@@ -135,7 +135,7 @@ class RecountNilaiRapor
 						 WHERE n.idkelas = '$this->idkelas' AND n.nis = '$nis' AND n.idsemester = '$this->idsemester' 
 						   AND n.idjenis = '$value[2]' AND n.idaturan = a.replid AND a.replid = '$value[0]'";
 				$res2 = QueryDb($sql);
-				$row2 = mysqli_fetch_row($res2);
+				$row2 = mysql_fetch_row($res2);
 				$nau = $row2[0];
 				$bobot = $value[1];
 				$nap = $nau * $bobot;
@@ -151,7 +151,7 @@ class RecountNilaiRapor
 					   AND a.nipguru = '$this->nip' AND '$nilakhirpk' BETWEEN a.nmin AND a.nmax";
 			// echo "$sql<br>";	
 			$res2 = QueryDb($sql);
-			$row2 = mysqli_fetch_row($res2);
+			$row2 = mysql_fetch_row($res2);
 			$gradepk = $row2[0];
 			
 			$sql = "UPDATE jbsakad.nap SET nilaiangka = '$nilakhirpk', nilaihuruf = '$gradepk' 

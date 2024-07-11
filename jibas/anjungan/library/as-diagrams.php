@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -542,19 +542,19 @@ td.barhead  { background-color: #3fa64b; color:#000000;
           $this->data[$kk] = $onecol;
     }
     // $array[$lenx][$lny] ready for filling with data
-    $res = mysqli_query($sqlquery);
+    $res = mysql_query($sqlquery);
     if($this->debug) {
       if($res === false)
-        echo "GatherData query error, qry: $sqlquery<br>Error:".mysqli_error();
+        echo "GatherData query error, qry: $sqlquery<br>Error:".mysql_error();
       else
-        echo "GatherData: query : $sqlquery<br>returned rows:".mysqli_affected_rows().'<br>';
+        echo "GatherData: query : $sqlquery<br>returned rows:".mysql_affected_rows().'<br>';
     }
     $cur_x = '-?-';
     $cur_y = '-?-';
     $x_pos = 0;
     $y_pos = 0;
     if($res) { //<3>
-        while(($rw = mysqli_fetch_row($res)))
+        while(($rw = mysql_fetch_row($res)))
         { //<4>
            $rcnt = count($rw);
            if($rcnt<2) return 0; // wrong sql query !
@@ -617,7 +617,7 @@ td.barhead  { background-color: #3fa64b; color:#000000;
            if($this->debug) echo "[$cur_x,$cur_y] [$x_pos][$y_pos] = $summa<br>\n";
         } //<4>
     } //<3>
-    else echo "GatherData: Error in query : $sqlquery<br>error : ".mysqli_error();
+    else echo "GatherData: Error in query : $sqlquery<br>error : ".mysql_error();
 //    var_dump($this->legendx);  var_dump($this->legendy); // debug
     return $this->data;
   } //<GatherData() function end

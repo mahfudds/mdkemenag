@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,9 +27,9 @@ function GetOwnerName($ownerid, $ownertype)
            "SELECT nama FROM jbsakad.siswa WHERE nis = '$ownerid'" :
            "SELECT nama FROM jbssdm.pegawai WHERE nip = '$ownerid'";
     $res = QueryDb($sql);
-    if (mysqli_num_rows($res) > 0)
+    if (mysql_num_rows($res) > 0)
     {
-        $row = mysqli_fetch_row($res);
+        $row = mysql_fetch_row($res);
         return $row[0];
     }
     else
@@ -46,9 +46,9 @@ function GetMaxCommentId($videoid)
              ORDER BY replid DESC
              LIMIT 1";
     $res = QueryDbEx($sql);
-    if (mysqli_num_rows($res) > 0)
+    if (mysql_num_rows($res) > 0)
     {
-        $row = mysqli_fetch_row($res);
+        $row = mysql_fetch_row($res);
         return $row[0];
     }
     
@@ -101,10 +101,10 @@ function ShowPrevComment($videoid)
                    $sqlLimit";
     
     $res = QueryDbEx($sql);
-    if (mysqli_num_rows($res) == 0)
+    if (mysql_num_rows($res) == 0)
         return;
     
-    while($row = mysqli_fetch_array($res))
+    while($row = mysql_fetch_array($res))
     {
         $replid = $row['replid'];
         $ownertype = $row['ownertype'];
@@ -173,10 +173,10 @@ function ShowComment($videoid, $maxCommentId)
                AND replid > '$maxCommentId'
                    $sqlLimit";
     $res = QueryDbEx($sql);
-    if (mysqli_num_rows($res) == 0)
+    if (mysql_num_rows($res) == 0)
         return;
     
-    while($row = mysqli_fetch_array($res))
+    while($row = mysql_fetch_array($res))
     {
         $replid = $row['replid'];
         $ownertype = $row['ownertype'];
@@ -378,7 +378,7 @@ function DeleteVideo($videoid)
               FROM jbsvcr.video
              WHERE replid = '$videoid'";
     $res = QueryDbEx($sql);
-    while($row = mysqli_fetch_array($res))
+    while($row = mysql_fetch_array($res))
     {
         $floc = $row['location'] . "/" . $row['filename'];
         $floc = "$FILESHARE_UPLOAD_DIR/$floc";

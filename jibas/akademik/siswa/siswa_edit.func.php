@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -114,7 +114,7 @@ if (isset($_REQUEST['Simpan']))
               FROM jbsakad.siswa
              WHERE NIS = '$nis' AND replid <> $replid";
     $res = QueryDb($sql);
-    $row = mysqli_fetch_row($res);
+    $row = mysql_fetch_row($res);
     $countnis = (int)$row[0];
     
 	$sql_cek = "SELECT k.kapasitas, COUNT(s.replid) 
@@ -125,7 +125,7 @@ if (isset($_REQUEST['Simpan']))
                    AND s.aktif = 1 GROUP BY kelas"; 
 	$sql_kapasitas = "SELECT kapasitas FROM kelas WHERE replid = '$kelas'";
 	$result_kapasitas = QueryDb($sql_kapasitas);
-	$row_kapasitas = mysqli_fetch_row($result_kapasitas);
+	$row_kapasitas = mysql_fetch_row($result_kapasitas);
 	$kapasitas = $row_kapasitas[0];
 	
 	$sql_siswa = "SELECT COUNT(*)
@@ -133,7 +133,7 @@ if (isset($_REQUEST['Simpan']))
                    WHERE idkelas = '$kelas'
                      AND aktif = 1";
 	$result_siswa = QueryDb($sql_siswa);
-	$row_siswa = mysqli_fetch_row($result_siswa);
+	$row_siswa = mysql_fetch_row($result_siswa);
 	$isi = $row_siswa[0];
 	
 	if ($kapasitas == $isi && $_REQUEST['kelas_lama'] != $kelas) 
@@ -146,10 +146,10 @@ if (isset($_REQUEST['Simpan']))
     }
 	else 
 	{ 
-		$date=date('j');
-		$month=date('m');
-		$year=date('Y');
-		$kumplit = date('Y')."-".date('m')."-".date('j');
+		$date=date(j);
+		$month=date(m);
+		$year=date(Y);
+		$kumplit = date(Y)."-".date(m)."-".date(j);
         
         $suku_sql = ($suku == "") ? "suku = NULL" : "suku = '$suku'";
         $agama_sql = ($agama == "") ? "agama = NULL" : "agama = '$agama'";
@@ -192,7 +192,7 @@ if (isset($_REQUEST['Simpan']))
                          WHERE nis='$nis_lama'
                            AND replid<>'$replid'";
 		$res_cek_nis = QueryDb($sql_cek_nis);
-		$num_cek_nis = @mysqli_num_rows($res_cek_nis);
+		$num_cek_nis = @mysql_num_rows($res_cek_nis);
 		
 		if ($num_cek_nis==0)
 		{
@@ -367,7 +367,7 @@ $sql_siswa = "SELECT c.tahunmasuk, c.nis, c.nama, c.panggilan, c.tahunmasuk, c.i
                  AND k.idtahunajaran = t.replid";
 
 $result=QueryDb($sql_siswa);
-$row_siswa=mysqli_fetch_array($result);
+$row_siswa=mysql_fetch_array($result);
 $departemen = $row_siswa['departemen'];
 $tahunajaran = $row_siswa['tahunajaran'];
 $tingkat = $row_siswa['tingkat'];
@@ -381,7 +381,7 @@ if ($row_siswa['asalsekolah'] <> NULL)
 	$aslSek = addslashes($row_siswa['asalsekolah']);
 	$query = "SELECT departemen FROM asalsekolah WHERE sekolah = '$aslSek'";
 	$hasil = QueryDb($query);	
-	$row = mysqli_fetch_array($hasil);
+	$row = mysql_fetch_array($hasil);
 	$dep_asal = $row['departemen'];
 	$sekolah = $row_siswa['asalsekolah'];
 } 

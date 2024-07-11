@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,17 +34,17 @@ $page=$_REQUEST['page'];
 OpenDb();
 $sql="SELECT idpesan FROM jbsvcr.tujuanpesan WHERE replid='$replid'";
 $result=QueryDb($sql);
-$row=@mysqli_fetch_array($result);
-$idpesan=$row['idpesan'];
+$row=@mysql_fetch_array($result);
+$idpesan=$row[idpesan];
 $sql2 = "SELECT DATE_FORMAT(pg.tanggalpesan, '%Y-%m-%j') as tanggal, pg.judul as judul,
 			    pg.pesan as pesan, p.nama as nama, pg.replid as replid
 		   FROM jbsvcr.pesan pg, jbssdm.pegawai p
 		  WHERE pg.idguru=p.nip AND pg.replid='$idpesan'";
 //echo "$sql2<br>";		  
 $result2=QueryDb($sql2);
-if (@mysqli_num_rows($result2)>0)
+if (@mysql_num_rows($result2)>0)
 {
-	$row2=@mysqli_fetch_array($result2);
+	$row2=@mysql_fetch_array($result2);
 	$senderstate = "guru";
 }
 else
@@ -55,7 +55,7 @@ else
 			WHERE pg.nis=p.nis AND pg.replid='$idpesan'";
 	//echo "$sql4<br>";		  		
 	$result4=QueryDb($sql4);
-	$row2=@mysqli_fetch_array($result4);
+	$row2=@mysql_fetch_array($result4);
 	$senderstate = "siswa";
 }
 $sql3="SELECT * FROM jbsvcr.lampiranpesan WHERE idpesan='$idpesan'";
@@ -98,7 +98,7 @@ function kembali(page)
 <table border="0" cellspacing="2" cellpadding="0">
           <tr>
             <td align="center"><input name="button" type="button" class="but" id="button" value="Kembali" title="Kembali ke Halaman sebelumnya" onclick="kembali('<?=$page?>')"  style="width:100px;" /></td>
-            <td align="center"><input name="balas" type="button" class="but" id="balas" value="Balas Pesan" title="Balas Pesan" onclick="balas('<?=$row2['replid']?>','<?=$senderstate?>');" style="width:100px;"/></td>
+            <td align="center"><input name="balas" type="button" class="but" id="balas" value="Balas Pesan" title="Balas Pesan" onclick="balas('<?=$row2[replid]?>','<?=$senderstate?>');" style="width:100px;"/></td>
           </tr>
       </table>
       <br />
@@ -116,28 +116,28 @@ function kembali(page)
 			</td>
 		<td width="*" background="../../images/BGNews_05.png">
             <div align="left" style="padding-bottom:10px;" ><span style="color:#339900; font-size:20px; font-weight:bold">.:</span><span style="color:#FF6600; font-family:Calibri; font-size:16px; font-weight:bold; ">Pesan dari <span class="style1">
-			  <?=$row2['nama']?>
+			  <?=$row2[nama]?>
             </span></span></div>
             <table width="95%" border="0" cellspacing="2" cellpadding="2" align="center">
               <tr>
                 <td width="11%" valign="top"><span class="style1"><span class="style5">Dari</span></span></td>
                 <td width="2%" valign="top"><span class="style5">:</span></td>
                 <td width="87%"><span class="style1">
-                  <?=$row2['nama']?>
+                  <?=$row2[nama]?>
                 </span></td>
               </tr>
               <tr>
                 <td valign="top"><span class="style6">Judul</span></td>
                 <td valign="top"><span class="style5">:</span></td>
                 <td><span class="style1">
-                  <?=$row2['judul']?>
+                  <?=$row2[judul]?>
                 </span></td>
               </tr>
               <tr>
                 <td valign="top"><span class="style5">Pesan</span></td>
                 <td valign="top"><span class="style5">:</span></td>
                 <td><font style="font-size: 11px; line-height: 18px">
-                  <?= str_replace("`", "'", $row2['pesan']) ?>
+                  <?= str_replace("`", "'", $row2[pesan]) ?>
                 </span></td>
               </tr>
             </table>

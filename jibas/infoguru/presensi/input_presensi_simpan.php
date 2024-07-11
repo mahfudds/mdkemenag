@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -55,7 +55,7 @@ OpenDb();
 
 $result_cek = QueryDb($sql_cek);
 
-if (mysqli_num_rows($result_cek) > 0) {*/
+if (mysql_num_rows($result_cek) > 0) {*/
 	$filter ="";
 	if ($_REQUEST['action'] == 'Update') 
 		$filter = "AND replid <> $replid";
@@ -63,12 +63,12 @@ if (mysqli_num_rows($result_cek) > 0) {*/
 	$sql_action = "SELECT tanggal1, tanggal2 FROM presensiharian WHERE (((tanggal1 BETWEEN '$tglawal' AND '$tglakhir') OR (tanggal2 BETWEEN '$tglawal' AND '$tglakhir')) OR (('$tglawal' BETWEEN tanggal1 AND tanggal2) OR ('$tglakhir' BETWEEN tanggal1 AND tanggal2))) AND idkelas = '$kelas' AND idsemester = '$semester' $filter";	
 		
 	$result_action = QueryDb($sql_action);
-	$sum = mysqli_num_rows($result_action);
-	$row = mysqli_fetch_array($result_action);
+	$sum = mysql_num_rows($result_action);
+	$row = mysql_fetch_array($result_action);
 	if ($sum > 0) {
 	?>
 		<script language="javascript">
-			alert ('Ada presensi antara tanggal <?=LongDateFormat($row['tanggal1'])." s/d ".LongDateFormat($row['tanggal2'])?>!');
+			alert ('Ada presensi antara tanggal <?=LongDateFormat($row[tanggal1])." s/d ".LongDateFormat($row[tanggal2])?>!');		
 			parent.isi.location.href = "blank_presensi.php?tipe='harian'";
 			//window.self.history.back();
 			//window.history.back();
@@ -108,12 +108,12 @@ if ($success) {
 	$sql1 = "SELECT LAST_INSERT_ID(replid) FROM presensiharian ORDER BY replid DESC LIMIT 1";	
 	//echo '<br>sql2'.$sql1.' '.$success;
 	$result1 = QueryDb($sql1);		
-	$row1 = mysqli_fetch_row($result1);
+	$row1 = mysql_fetch_row($result1);
 	$id = $row1[0];
 	if ($sum > 0) {
 	?>
 		<script language="javascript">
-			alert ('Ada presensi antara tanggal <?=LongDateFormat($row['tanggal1'])." s/d ".LongDateFormat($row['tanggal2'])?>!');
+			alert ('Ada presensi antara tanggal <?=LongDateFormat($row[tanggal1])." s/d ".LongDateFormat($row[tanggal2])?>!');		
 			parent.isi.location.href = "blank_presensi.php?tipe='harian'";
 			//window.self.history.back();
 			//window.history.back();

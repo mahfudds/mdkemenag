@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -226,8 +226,8 @@ function change_baris() {
 <? 	OpenDb();
 	$sql_tot = "SELECT replid,kode,nama,sifat,keterangan,aktif FROM pelajaran WHERE departemen='$departemen' ORDER BY nama";    
 	$result_tot = QueryDb($sql_tot);
-	$total=ceil(mysqli_num_rows($result_tot)/(int)$varbaris);
-	$jumlah = mysqli_num_rows($result_tot);
+	$total=ceil(mysql_num_rows($result_tot)/(int)$varbaris);
+	$jumlah = mysql_num_rows($result_tot);
 	$akhir = ceil($jumlah/5)*5;
 	
 	$sql = "SELECT p.replid, p.kode, p.nama, p.sifat, p.keterangan, p.aktif, k.kelompok 
@@ -236,7 +236,7 @@ function change_baris() {
                AND p.departemen = '$departemen' 
              ORDER BY $urut $urutan LIMIT " . (int)$page * (int)$varbaris . ", $varbaris";
 	$result = QueryDb($sql);
-	if (@mysqli_num_rows($result) > 0){
+	if (@mysql_num_rows($result) > 0){
 ?>
 	<input type="hidden" name="total" id="total" value="<?=$total?>"/>
     <td align="right">
@@ -269,7 +269,7 @@ function change_baris() {
 		else 
 			$cnt = (int)$page*(int)$varbaris;
 		
-		while ($row = @mysqli_fetch_array($result)) {
+		while ($row = @mysql_fetch_array($result)) {
 	?>
     <tr height="25">   	
        	<td align="center"><?=++$cnt ?></td>

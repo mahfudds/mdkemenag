@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -97,7 +97,7 @@ if (isset($_REQUEST['submit']) || $_REQUEST['submit'] == 1) {
 		$sql = "SELECT c.nopendaftaran, c.nama, k.kelompok, p.departemen, c.replid FROM jbsakad.calonsiswa c, jbsakad.kelompokcalonsiswa k, jbsakad.prosespenerimaansiswa p WHERE k.replid=c.idkelompok AND c.nopendaftaran LIKE '%$no%' AND c.aktif=1 AND c.idproses = p.replid $filter ORDER BY $urut3 $urutan3"; 	
 	$result = QueryDb($sql);
 	
-	if (@mysqli_num_rows($result)>0){
+	if (@mysql_num_rows($result)>0){
 ?>   
 	<br>
    	<table width="100%" id="table1" class="tab" align="center" border="1" bordercolor="#000000">
@@ -109,7 +109,7 @@ if (isset($_REQUEST['submit']) || $_REQUEST['submit'] == 1) {
     </tr>
 <?
 	$cnt = 0;
-		while($row = mysqli_fetch_row($result)) { ?>
+		while($row = mysql_fetch_row($result)) { ?>
    	<tr height="25" onClick="pilih('<?=$row[4]?>')" style="cursor:pointer" id="caloncari<?=$cnt?>">
         <td align="center" ><?=++$cnt ?></td>
         <td align="center">

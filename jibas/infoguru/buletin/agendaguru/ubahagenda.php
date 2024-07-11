@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -54,7 +54,7 @@ if (isset($_REQUEST['simpan']))
 OpenDb();
 $sql="SELECT * FROM jbsvcr.agenda WHERE replid='$replid'";
 $result=QueryDb($sql);
-$row=@mysqli_fetch_array($result);
+$row=@mysql_fetch_array($result);
 CloseDb();
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -119,18 +119,18 @@ function validate()
   <tr>
     <td scope="row"><div align="left"><strong>Tanggal</strong></div></td>
     <td scope="row"><div align="left">
-      <input title="Klik untuk membuka kalender !" type="text" name="tanggal" id="tanggal" size="25" readonly="readonly" class="disabled" value="<?=RegularDateFormat($row['tanggal']); ?>"/>
+      <input title="Klik untuk membuka kalender !" type="text" name="tanggal" id="tanggal" size="25" readonly="readonly" class="disabled" value="<?=RegularDateFormat($row[tanggal]); ?>"/>
     <img title="Klik untuk membuka kalender !" src="../../images/ico/calendar_1.png" name="btntanggal" width="16" height="16" border="0" id="btntanggal"/></div></td>
   </tr>
   <tr>
     <td  scope="row"><div align="left"><strong>Judul</strong></div></td>
     <td  scope="row"><div align="left">
-      <input type="text" name="judul" id="judul" size="50" value="<?=$row['judul']?>" />
+      <input type="text" name="judul" id="judul" size="50" value="<?=$row[judul]?>" />
 	  <input type="hidden" name="replid" id="replid" size="50" value="<?=$replid?>" />
     </div></td>
   </tr>
   <tr>
-    <th colspan="2" valign="top" scope="row"><fieldset><legend>Deskripsi</legend><textarea name="komentar" rows="20" id="komentar"><?=$row['komentar']?>
+    <th colspan="2" valign="top" scope="row"><fieldset><legend>Deskripsi</legend><textarea name="komentar" rows="20" id="komentar"><?=$row[komentar]?>
       </textarea></fieldset></th>
     </tr>
   <tr>

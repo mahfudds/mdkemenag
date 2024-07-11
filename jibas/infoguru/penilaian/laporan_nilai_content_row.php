@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -54,7 +54,7 @@ if (isset($_REQUEST['harian']))
 
 $sql_ta = "SELECT * FROM jbsakad.tahunajaran WHERE replid='$tahunajaran'";
 $result_ta = QueryDb($sql_ta);
-$row_ta = @mysqli_fetch_array($result_ta);
+$row_ta = @mysql_fetch_array($result_ta);
 $tglawal = $row_ta['tglmulai'];
 $tglakhir = $row_ta['tglakhir'];
 ?>
@@ -99,8 +99,8 @@ $tglakhir = $row_ta['tglakhir'];
 	  : <?
 	$sql_get_nama="SELECT nama FROM jbsakad.siswa WHERE nis='$nis'";
 	$result_get_nama=QueryDb($sql_get_nama);
-	$row_get_nama=@mysqli_fetch_array($result_get_nama);
-	echo $row_get_nama['nama'];
+	$row_get_nama=@mysql_fetch_array($result_get_nama);
+	echo $row_get_nama[nama];
     ?>
 	   </span></span></td>
     <td width="47%" align="right" valign="bottom"><div align="right"><a href="laporan_nilai_content_row.php?departemen=<?=$departemen?>&semester=<?=$semester?>&tingkat=<?=$tingkat?>&tahunajaran=<?=$tahunajaran?>&pelajaran=<?=$pelajaran?>&kelas=<?=$kelas?>&nis=<?=$nis?>&harian=<?=$harian?>&prespel=<?=$prespel?>">
@@ -145,7 +145,7 @@ $tglakhir = $row_ta['tglakhir'];
 		GROUP BY pel.nama";    
 	$res = QueryDb($sql);
 	$i = 0;
-	while($row = mysqli_fetch_row($res))
+	while($row = mysql_fetch_row($res))
 	{
 		$pelarr[$i++] = array($row[0], $row[1]);
 	}
@@ -161,7 +161,7 @@ $tglakhir = $row_ta['tglakhir'];
 				  AND idsemester = '$semester'
 			      AND idkelas = '$kelas'";
 		$res = QueryDb($sql);
-		$row = mysqli_fetch_row($res);
+		$row = mysql_fetch_row($res);
 		$nilaimin = $row[0];
 		
 		$sql = "SELECT DISTINCT a.dasarpenilaian, d.keterangan 
@@ -175,7 +175,7 @@ $tglakhir = $row_ta['tglakhir'];
 		$res = QueryDb($sql);				 
 		$aspekarr = array();				 
 		$j = 0;
-		while($row = mysqli_fetch_row($res))
+		while($row = mysql_fetch_row($res))
 		{
 			$na = "";
 			$nh = "";
@@ -191,9 +191,9 @@ $tglakhir = $row_ta['tglakhir'];
 					   AND n.idaturan = a.replid 	   
 					   AND a.dasarpenilaian = '$asp'";
 			$res2 = QueryDb($sql);
-			if (mysqli_num_rows($res2) > 0)
+			if (mysql_num_rows($res2) > 0)
 			{
-				$row2 = mysqli_fetch_row($res2);
+				$row2 = mysql_fetch_row($res2);
 				$na = $row2[0];
 				$nh = $row2[1];
 			}
@@ -261,14 +261,14 @@ $tglakhir = $row_ta['tglakhir'];
 	$res = QueryDb($sql);
 	$cntpel_komentar = 1;
 	
-	while ($row = @mysqli_fetch_array($res))
+	while ($row = @mysql_fetch_array($res))
 	{
 		$sql = "SELECT k.komentar 
 		          FROM jbsakad.komennap k, jbsakad.infonap i 
 				 WHERE k.nis='$nis' AND i.idpelajaran='$row[replid]' AND i.replid=k.idinfo 
 				   AND i.idsemester='$semester' AND i.idkelas='$kelas'";
 		$res2 = QueryDb($sql);
-		$row2 = @mysqli_fetch_row($res2); ?>
+		$row2 = @mysql_fetch_row($res2); ?>
 	<tr>
 	<td height="25"><?=$row['nama']?></td>
 	<td height="25"><?=$row2[0]?></td>
@@ -325,7 +325,7 @@ $tglakhir = $row_ta['tglakhir'];
   <!-- Ambil pelajaran per departemen-->
 	<?
 	$result_harian=QueryDb($sql_harian);
-	$row_harian=@mysqli_fetch_array($result_harian);
+	$row_harian=@mysql_fetch_array($result_harian);
 	$hadir=$row_harian['hadir'];
 	$sakit=$row_harian['sakit'];
 	$ijin=$row_harian['ijin'];
@@ -427,47 +427,47 @@ $tglakhir = $row_ta['tglakhir'];
 	$result_get_pelajaran_presensi=QueryDb($sql_get_pelajaran_presensi);
 	$cntpel_presensi=1;
 	
-	while ($row_get_pelajaran_presensi=@mysqli_fetch_array($result_get_pelajaran_presensi)){
+	while ($row_get_pelajaran_presensi=@mysql_fetch_array($result_get_pelajaran_presensi)){
 		//ambil semua jumlah presensi per pelajaran 
 		$sql_get_all_presensi="select count(*) as jumlah FROM jbsakad.presensipelajaran pel, jbsakad.ppsiswa pp ".
 							  "WHERE pel.idpelajaran='$row_get_pelajaran_presensi[replid]' AND pel.idsemester='$semester' AND pel.idkelas='$kelas' ".
 							  "AND pel.replid=pp.idpp AND pp.nis='$nis'";
 		$result_get_all_presensi=QueryDb($sql_get_all_presensi);
-		$row_get_all_presensi=@mysqli_fetch_array($result_get_all_presensi);
+		$row_get_all_presensi=@mysql_fetch_array($result_get_all_presensi);
 		//dapet nih jumlahnya
-		$jumlah_presensi=$row_get_all_presensi['jumlah'];
+		$jumlah_presensi=$row_get_all_presensi[jumlah];
 		
 		//ambil yang hadir
 		$sql_get_hadir="select count(*) as hadir FROM jbsakad.presensipelajaran pel, jbsakad.ppsiswa pp ".
 							  "WHERE pel.idpelajaran='$row_get_pelajaran_presensi[replid]' AND pel.idsemester='$semester' AND pel.idkelas='$kelas' ".
 							  "AND pel.replid=pp.idpp AND pp.nis='$nis' AND pp.statushadir=0";
 		$result_get_hadir=QueryDb($sql_get_hadir);
-		$row_get_hadir=@mysqli_fetch_array($result_get_hadir);
-		$hadir=$row_get_hadir['hadir'];
+		$row_get_hadir=@mysql_fetch_array($result_get_hadir);
+		$hadir=$row_get_hadir[hadir];
 		$hh[$cntpel_presensi]=$hadir;
 		//ambil yang sakit
 		$sql_get_sakit="select count(*) as sakit FROM jbsakad.presensipelajaran pel, jbsakad.ppsiswa pp ".
 							  "WHERE pel.idpelajaran='$row_get_pelajaran_presensi[replid]' AND pel.idsemester='$semester' AND pel.idkelas='$kelas' ".
 							  "AND pel.replid=pp.idpp AND pp.nis='$nis' AND pp.statushadir=1";
 		$result_get_sakit=QueryDb($sql_get_sakit);
-		$row_get_sakit=@mysqli_fetch_array($result_get_sakit);
-		$sakit=$row_get_sakit['sakit'];
+		$row_get_sakit=@mysql_fetch_array($result_get_sakit);
+		$sakit=$row_get_sakit[sakit];
 		$ss[$cntpel_presensi]=$sakit;
 		//ambil yang ijin
 		$sql_get_ijin="select count(*) as ijin FROM jbsakad.presensipelajaran pel, jbsakad.ppsiswa pp ".
 							  "WHERE pel.idpelajaran='$row_get_pelajaran_presensi[replid]' AND pel.idsemester='$semester' AND pel.idkelas='$kelas' ".
 							  "AND pel.replid=pp.idpp AND pp.nis='$nis' AND pp.statushadir=2";
 		$result_get_ijin=QueryDb($sql_get_ijin);
-		$row_get_ijin=@mysqli_fetch_array($result_get_ijin);
-		$ijin=$row_get_ijin['ijin'];
+		$row_get_ijin=@mysql_fetch_array($result_get_ijin);
+		$ijin=$row_get_ijin[ijin];
 		$ii[$cntpel_presensi]=$ijin;
 		//ambil yang alpa
 		$sql_get_alpa="select count(*) as alpa FROM jbsakad.presensipelajaran pel, jbsakad.ppsiswa pp ".
 							  "WHERE pel.idpelajaran='$row_get_pelajaran_presensi[replid]' AND pel.idsemester='$semester' AND pel.idkelas='$kelas' ".
 							  "AND pel.replid=pp.idpp AND pp.nis='$nis' AND pp.statushadir=3";
 		$result_get_alpa=QueryDb($sql_get_alpa);
-		$row_get_alpa=@mysqli_fetch_array($result_get_alpa);
-		$alpa=$row_get_alpa['alpa'];
+		$row_get_alpa=@mysql_fetch_array($result_get_alpa);
+		$alpa=$row_get_alpa[alpa];
 		$aa[$cntpel_presensi]=$alpa;
 		//hitung prosentase kalo jumlahnya gak 0
 		if ($jumlah_presensi<>0){
@@ -483,7 +483,7 @@ $tglakhir = $row_ta['tglakhir'];
 		}
 	?>
 	<tr>
-    <td height="25"><?=$row_get_pelajaran_presensi['nama']?></td>
+    <td height="25"><?=$row_get_pelajaran_presensi[nama]?></td>
     <td height="25"><div align="center">
       <?=$hadir?>
     </div></td>
@@ -527,7 +527,7 @@ $tglakhir = $row_ta['tglakhir'];
 	               "WHERE pel.idsemester='22' AND pel.idkelas='$kelas' ". 
                    "AND pel.replid=pp.idpp AND pp.nis='$nis' AND pp.statushadir=0";
     $result_all_hadir=QueryDb($sql_all_hadir);
-	$row_all_hadir=@mysqli_fetch_array($result_all_hadir);
+	$row_all_hadir=@mysql_fetch_array($result_all_hadir);
 	$all_hadir=$row_all_hadir[allhadir];
 	//echo $sql_all_hadir;
 	//sekarang hitung jumlah sakit semua pelajaran
@@ -535,7 +535,7 @@ $tglakhir = $row_ta['tglakhir'];
 	               "WHERE pel.idsemester='22' AND pel.idkelas='$kelas' ". 
                    "AND pel.replid=pp.idpp AND pp.nis='$nis' AND pp.statushadir=1";
     $result_all_sakit=QueryDb($sql_all_sakit);
-	$row_all_sakit=@mysqli_fetch_array($result_all_sakit);
+	$row_all_sakit=@mysql_fetch_array($result_all_sakit);
 	$all_sakit=$row_all_sakit[allsakit];
 
 	//sekarang hitung jumlah ijin semua pelajaran
@@ -543,7 +543,7 @@ $tglakhir = $row_ta['tglakhir'];
 	               "WHERE pel.idsemester='22' AND pel.idkelas='$kelas' ". 
                    "AND pel.replid=pp.idpp AND pp.nis='$nis' AND pp.statushadir=2";
     $result_all_ijin=QueryDb($sql_all_ijin);
-	$row_all_ijin=@mysqli_fetch_array($result_all_ijin);
+	$row_all_ijin=@mysql_fetch_array($result_all_ijin);
 	$all_ijin=$row_all_ijin[allijin];
 
 	//sekarang hitung jumlah alpa semua pelajaran
@@ -551,7 +551,7 @@ $tglakhir = $row_ta['tglakhir'];
 	               "WHERE pel.idsemester='22' AND pel.idkelas='$kelas' ". 
                    "AND pel.replid=pp.idpp AND pp.nis='$nis' AND pp.statushadir=3";
     $result_all_alpa=QueryDb($sql_all_alpa);
-	$row_all_alpa=@mysqli_fetch_array($result_all_alpa);
+	$row_all_alpa=@mysql_fetch_array($result_all_alpa);
 	$all_alpa=$row_all_alpa[allalpa];
 	*/
 	?>

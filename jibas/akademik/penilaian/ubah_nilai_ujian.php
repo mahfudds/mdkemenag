@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,7 +38,7 @@ OpenDb();
 $query = "SELECT n.idujian, n.nilaiujian, n.keterangan, u.idaturan, u.idkelas, u.idsemester, s.nama, s.nis FROM jbsakad.ujian u, jbsakad.siswa s, jbsakad.nilaiujian n WHERE n.replid = '$id' AND n.idujian = u.replid AND s.nis = n.nis";
 $result = QueryDb($query);
 
-$row = @mysqli_fetch_array($result);
+$row = @mysql_fetch_array($result);
 $idkelas = $row['idkelas'];
 $idsemester = $row['idsemester'];
 $idaturan = $row['idaturan'];
@@ -68,7 +68,7 @@ if(isset($_REQUEST["ubah"]))
 	{
 		$query = "SELECT replid FROM jbsakad.nilaiujian WHERE nis='$nis' AND idujian='$idujian'";
 		$res = QueryDb($query);
-		$row = mysqli_fetch_row($res);
+		$row = mysql_fetch_row($res);
 		$idnilai = $row[0];
 		$pengguna = SI_USER_ID() . " - ". SI_USER_NAME();
 		
@@ -78,9 +78,9 @@ if(isset($_REQUEST["ubah"]))
 					  WHERE nu.replid = '$idnilai' AND nu.idujian = u.replid AND u.idpelajaran = p.replid
 						 AND u.idjenis = ju.replid AND nu.nis = s.nis;";
 		$res = QueryDb($query);
-		if (mysqli_num_rows($res) > 0)
+		if (mysql_num_rows($res) > 0)
 		{
-			$row = mysqli_fetch_array($res);
+			$row = mysql_fetch_array($res);
 			$info = "Nilai Ujian ".$row['jenisujian']." ".$row['pelajaran']." tanggal ".$row['tanggal']." siswa ".$row['nis']." ".$row['nama'];
 		}						 
 		

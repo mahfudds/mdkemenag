@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@ function HitungRataSiswa($idkelas, $idsemester, $idaturan, $nis, &$success)
 			 WHERE idkelas = $idkelas AND idsemester = $idsemester AND idaturan = '$idaturan'";
 	$result	= QueryDb($sql);
 	$cnt = 0;
-	while ($row	= @mysqli_fetch_row($result))
+	while ($row	= @mysql_fetch_row($result))
 	{
 		$idujian = $row[0];
 		$idpelajaran = $row[1];
@@ -46,7 +46,7 @@ function HitungRataSiswa($idkelas, $idsemester, $idaturan, $nis, &$success)
 				   FROM nilaiujian 
 				  WHERE idujian='$idujian' AND nis='$nis'";
 		$result2 = QueryDb($sql2);
-		$row2 = @mysqli_fetch_row($result2);
+		$row2 = @mysql_fetch_row($result2);
 		$nilai += $row2[0];
 		$cnt++;
 	}
@@ -54,7 +54,7 @@ function HitungRataSiswa($idkelas, $idsemester, $idaturan, $nis, &$success)
 	
 	$sql = "SELECT idpelajaran,idjenisujian FROM aturannhb WHERE replid='$idaturan'";
 	$res = QueryDb($sql);
-	$row = @mysqli_fetch_row($res);
+	$row = @mysql_fetch_row($res);
 	$idpelajaran = $row[0];
 	$idjenis = $row[1];
 
@@ -62,12 +62,12 @@ function HitungRataSiswa($idkelas, $idsemester, $idaturan, $nis, &$success)
 			WHERE idsemester='$idsemester' AND idkelas='$idkelas' AND idjenis='$idjenis' 
 			AND idpelajaran='$idpelajaran'  AND idaturan='$idaturan' AND nis='$nis'";
 	$result = QueryDb($sql);
-	$num = @mysqli_num_rows($result);
+	$num = @mysql_num_rows($result);
 	if ($num == 0)
 		$sql2 = "INSERT INTO rataus SET idsemester='$idsemester', idkelas='$idkelas', idjenis='$idjenis', 
 				 idpelajaran='$idpelajaran', idaturan='$idaturan', nis='$nis', rataUS='$rataus'";
 	else {
-		$row = @mysqli_fetch_row($result);
+		$row = @mysql_fetch_row($result);
 		$idrataus = $row[0];
 		//echo $row[0];
 		//$sql2 = "UPDATE rataus SET rataUS='$rataus' WHERE idsemester='$idsemester' AND idkelas='$idkelas' 
@@ -85,7 +85,7 @@ function HitungUlangRataSiswa($idkelas, $idsemester, $idaturan, &$success)
 		
 	$sqlsiswa = "SELECT nis FROM jbsakad.siswa WHERE idkelas = '$idkelas' AND aktif = 1";
 	$ressiswa = QueryDb($sqlsiswa);
-	while($rowsiswa = mysqli_fetch_row($ressiswa))
+	while($rowsiswa = mysql_fetch_row($ressiswa))
 	{
 		if ($success)
 		{
@@ -104,7 +104,7 @@ function HitungRataKelas($idkelas, $idsemester, $idaturan, &$success)
 			  FROM ujian 
 			 WHERE idkelas=$idkelas AND idsemester=$idsemester AND idaturan=$idaturan";
 	$result	= QueryDb($sql);
-	while ($row	= @mysqli_fetch_row($result))
+	while ($row	= @mysql_fetch_row($result))
 	{
 		if ($success)
 		{
@@ -113,7 +113,7 @@ function HitungRataKelas($idkelas, $idsemester, $idaturan, &$success)
 			$result2= QueryDb($sql2);
 			$i		= 0;
 			$nilai  = 0;
-			while ($row2 = @mysqli_fetch_row($result2))
+			while ($row2 = @mysql_fetch_row($result2))
 			{
 				$nilai	+= $row2[0];
 				$i++;
@@ -122,7 +122,7 @@ function HitungRataKelas($idkelas, $idsemester, $idaturan, &$success)
 			
 			$sql2 = "SELECT replid FROM ratauk WHERE idsemester='$idsemester' AND idkelas='$idkelas' AND idujian='$idujian'";
 			$result2 = QueryDb($sql2);
-			$num2 = @mysqli_num_rows($result2);
+			$num2 = @mysql_num_rows($result2);
 			if ($num2 == 0)
 				$sql3 = "INSERT INTO ratauk SET idsemester='$idsemester', idkelas='$idkelas', idujian='$idujian', nilaiRK='$ratauk'";
 			else 
@@ -142,7 +142,7 @@ function HitungRataKelasUjian($idkelas, $idsemester, $idaturan, $idujian, &$succ
 	$result2 = QueryDb($sql2);
 	$i = 0;
 	$nilai = 0;
-	while ($row2 = @mysqli_fetch_row($result2))
+	while ($row2 = @mysql_fetch_row($result2))
 	{
 		$nilai += $row2[0];
 		$i++;
@@ -151,7 +151,7 @@ function HitungRataKelasUjian($idkelas, $idsemester, $idaturan, $idujian, &$succ
 	
 	$sql2 = "SELECT replid FROM ratauk WHERE idsemester='$idsemester' AND idkelas='$idkelas' AND idujian='$idujian'";
 	$result2 = QueryDb($sql2);
-	$num2 = @mysqli_num_rows($result2);
+	$num2 = @mysql_num_rows($result2);
 	if ($num2 == 0)
 		$sql3 = "INSERT INTO ratauk SET idsemester='$idsemester', idkelas='$idkelas', idujian='$idujian', nilaiRK='$ratauk'";
 	else 
@@ -165,8 +165,8 @@ function GetRataKelas($idkelas,$idsemester,$idujian)
 {
 	$sql	= "SELECT nilaiRK FROM ratauk WHERE idsemester='$idsemester' AND idkelas='$idkelas' AND idujian='$idujian'";
 	$result = QueryDb($sql);
-	$num	= @mysqli_num_rows($result);
-	$row	= @mysqli_fetch_row($result);
+	$num	= @mysql_num_rows($result);
+	$row	= @mysql_fetch_row($result);
 	if ($num==0)
 		echo '0';
 	else
@@ -179,8 +179,8 @@ function GetRataSiswa2($idpelajaran, $idjenis, $idkelas, $idsemester, $idaturan,
 			WHERE idsemester='$idsemester' AND idkelas='$idkelas' AND idjenis='$idjenis' 
 			AND idpelajaran='$idpelajaran' AND idaturan='$idaturan' AND nis='$nis'";
 	$result = QueryDb($sql);
-	$num = @mysqli_num_rows($result);
-	$row = @mysqli_fetch_row($result);
+	$num = @mysql_num_rows($result);
+	$row = @mysql_fetch_row($result);
 	if ($num == 0)
 		echo '0';
 	else
@@ -192,22 +192,22 @@ function GetRataSiswa($idkelas, $idsemester, $idaturan, $nis)
 	$sql = "SELECT replid, idpelajaran, idjenis FROM ujian WHERE idkelas=$idkelas AND idsemester=$idsemester AND idaturan=$idaturan";
 	$result	= QueryDb($sql);
 	$cnt	= 0;
-	while ($row	= @mysqli_fetch_row($result)){
+	while ($row	= @mysql_fetch_row($result)){
 		$idujian= $row[0];
 		$idpelajaran= $row[1];
 		$idjenis= $row[2];
 
 		$sql2	= "SELECT nilaiujian FROM nilaiujian WHERE idujian='$idujian' AND nis='$nis'";
 		$result2= QueryDb($sql2);
-		$row2	= @mysqli_fetch_row($result2);
+		$row2	= @mysql_fetch_row($result2);
 		$nilai	+= (int)$row2[0];
 		$cnt++;
 	}
 	$rataus = $nilai/$cnt;
 	$sql = "SELECT rataUS FROM rataus WHERE idsemester='$idsemester' AND idkelas='$idkelas' AND idjenis='$idjenis' AND idpelajaran='$idpelajaran'  AND idaturan='$idaturan' AND nis='$nis'";
 	$result = QueryDb($sql);
-	$num = @mysqli_num_rows($result);
-	$row	= @mysqli_fetch_row($result);
+	$num = @mysql_num_rows($result);
+	$row	= @mysql_fetch_row($result);
 	if ($num==0)
 		echo '0';
 	else

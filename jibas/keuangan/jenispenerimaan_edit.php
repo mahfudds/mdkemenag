@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@ if (isset($_REQUEST['simpan']))
 	$sql = "SELECT replid FROM datapenerimaan WHERE nama = '$_REQUEST[nama]' AND replid <> '$id'";
 	$result = QueryDb($sql);
 	
-	if (mysqli_num_rows($result) > 0)
+	if (mysql_num_rows($result) > 0)
 	{
 		$MYSQL_ERROR_MSG = "Nama $_REQUEST[nama] sudah digunakan!";
 	}
@@ -74,12 +74,12 @@ OpenDb();
 
 $sql = "SELECT kategori FROM kategoripenerimaan WHERE kode='$idkategori'";
 $result = QueryDb($sql);
-$row = mysqli_fetch_row($result);
+$row = mysql_fetch_row($result);
 $kategori = $row[0];
 
 $sql = "SELECT * FROM datapenerimaan WHERE replid = '$id'";
 $result = QueryDb($sql);
-$row = mysqli_fetch_array($result);
+$row = mysql_fetch_array($result);
 $nama = $row['nama'];
 $besar = FormatRupiah($row['besar']);
 $rekkas = $row['rekkas'];
@@ -97,22 +97,22 @@ if (isset($_REQUEST['keterangan']))
 
 $sql = "SELECT nama FROM rekakun WHERE kode = '$rekkas'";
 $result = QueryDb($sql);
-$row = mysqli_fetch_row($result);
+$row = mysql_fetch_row($result);
 $namarekkas = $row[0];
 
 $sql = "SELECT nama FROM rekakun WHERE kode = '$rekpendapatan'";
 $result = QueryDb($sql);
-$row = mysqli_fetch_row($result);
+$row = mysql_fetch_row($result);
 $namarekpendapatan = $row[0];
 
 $sql = "SELECT nama FROM rekakun WHERE kode = '$rekpiutang'";
 $result = QueryDb($sql);
-$row = mysqli_fetch_row($result);
+$row = mysql_fetch_row($result);
 $namarekpiutang = $row[0];
 
 $sql = "SELECT nama FROM rekakun WHERE kode = '$rekdiskon'";
 $result = QueryDb($sql);
-$row = mysqli_fetch_row($result);
+$row = mysql_fetch_row($result);
 $namarekdiskon = $row[0];
 
 // ========================================================

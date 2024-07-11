@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,11 +31,11 @@ header('Content-Disposition: attachment; filename=Data_Siswa.xls');
 header('Expires: 0');  
 header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 
-$kelas=$_REQUEST['kelas'];
-$tahunajaran=$_REQUEST['tahunajaran'];
-$tingkat=$_REQUEST['tingkat'];
-$urut= $_REQUEST['urut'];
-$urutan = $_REQUEST['urutan'];
+$kelas=$_REQUEST[kelas];
+$tahunajaran=$_REQUEST[tahunajaran];
+$tingkat=$_REQUEST[tingkat];
+$urut= $_REQUEST[urut];
+$urutan = $_REQUEST[urutan];
 
 OpenDb();
 $sql = "SELECT *, s.info1 AS hp2, s.info2 AS hp3, s.keterangan AS ketsiswa
@@ -49,7 +49,7 @@ $sql = "SELECT *, s.info1 AS hp2, s.info2 AS hp3, s.keterangan AS ketsiswa
 		 ORDER BY $urut $urutan";
 $result=QueryDb($sql);
 
-if (@mysqli_num_rows($result)<>0)
+if (@mysql_num_rows($result)<>0)
 {
 
 ?>
@@ -81,7 +81,7 @@ Data Siswa per Kelas
             <?
             $sql_TA="SELECT * FROM jbsakad.tahunajaran WHERE replid='$tahunajaran'";
             $result_TA=QueryDb($sql_TA);
-            $row_TA=@mysqli_fetch_array($result_TA);
+            $row_TA=@mysql_fetch_array($result_TA);
             $departemen = $row_TA['departemen'];
             ?>
             <td width="9%">Departemen</td>
@@ -98,8 +98,8 @@ Data Siswa per Kelas
             <td><strong>:</strong>&nbsp;<?
                 $sql_Tkt="SELECT * FROM jbsakad.tingkat WHERE replid='$tingkat'";
                 $result_Tkt=QueryDb($sql_Tkt);
-                $row_Tkt=@mysqli_fetch_array($result_Tkt);
-                echo $row_Tkt['tingkat'];
+                $row_Tkt=@mysql_fetch_array($result_Tkt);
+                echo $row_Tkt[tingkat];
                 ?></td>
         </tr>
         <tr>
@@ -107,8 +107,8 @@ Data Siswa per Kelas
             <td><strong>:</strong>&nbsp;<?
                 $sql_Kls="SELECT * FROM jbsakad.kelas WHERE replid='$kelas'";
                 $result_Kls=QueryDb($sql_Kls);
-                $row_Kls=@mysqli_fetch_array($result_Kls);
-                echo $row_Kls['kelas'];
+                $row_Kls=@mysql_fetch_array($result_Kls);
+                echo $row_Kls[kelas];
                 ?></td>
         </tr>
         <tr>
@@ -193,7 +193,7 @@ Data Siswa per Kelas
                        AND departemen = '$departemen'
                      ORDER BY urutan  ";
             $res = QueryDb($sql);
-            while($row = mysqli_fetch_row($res))
+            while($row = mysql_fetch_row($res))
             {
                 $arrDataTambahan[] = array($row[0], $row[1]);
                 $kolom = $row[2];
@@ -203,7 +203,7 @@ Data Siswa per Kelas
         </tr>
 <?php
             $cnt=1;
-            while ($row=@mysqli_fetch_array($result))
+            while ($row=@mysql_fetch_array($result))
             {
                 $nis = $row['nis'];
                 ?>
@@ -282,7 +282,7 @@ Data Siswa per Kelas
 
                         $data = "";
                         $res2 = QueryDb($sql);
-                        if ($row2 = mysqli_fetch_row($res2))
+                        if ($row2 = mysql_fetch_row($res2))
                             $data = $row2[0];
 
                         echo "<td align=\"left\">$data</td>";

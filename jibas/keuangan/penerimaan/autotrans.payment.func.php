@@ -4,9 +4,9 @@
  * Jaringan Informasi Bersama Antar Sekolah
  *
  * @version: 28.0 (Oct 10, 2022)
- * @notes: 
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,7 +46,7 @@ function GetSelectPayment($departemen, $kelompok)
                AND kelompok = $kelompok
              ORDER BY urutan";
     $res = QueryDb($sql);
-    $num = mysqli_num_rows($res);
+    $num = mysql_num_rows($res);
 
     if ($num == 0)
     {
@@ -58,7 +58,7 @@ function GetSelectPayment($departemen, $kelompok)
 
         $idFirst = 0;
         $data = "<select id='paymentSelect' onchange='changePayment()' style='width: 350px; font-size: 14px;'>";
-        while($row = mysqli_fetch_row($res))
+        while($row = mysql_fetch_row($res))
         {
             $arrKet[] = $row[2];
 
@@ -86,7 +86,7 @@ function GetPaymentList($idAutoTrans, $kelompok, $noid, $idTahunBuku)
               FROM jbsfina.autotrans
              WHERE replid = $idAutoTrans";
     $res = QueryDb($sql);
-    $row = mysqli_fetch_row($res);
+    $row = mysql_fetch_row($res);
     $smsinfo = $row[0];
 
     $sql = "SELECT ad.idpenerimaan, dp.nama, dp.idkategori, ad.besar, ad.keterangan
@@ -96,7 +96,7 @@ function GetPaymentList($idAutoTrans, $kelompok, $noid, $idTahunBuku)
                AND ad.aktif = 1
              ORDER BY ad.urutan";
     $res = QueryDb($sql);
-    $num = mysqli_num_rows($res);
+    $num = mysql_num_rows($res);
 
     if ($num == 0)
     {
@@ -122,7 +122,7 @@ function GetPaymentList($idAutoTrans, $kelompok, $noid, $idTahunBuku)
         $no = 0;
         $total = 0;
         $validTrans = true;
-        while($row = mysqli_fetch_row($res))
+        while($row = mysql_fetch_row($res))
         {
             $no += 1;
             $bayar = FormatRupiah($row[3]);
@@ -164,7 +164,7 @@ function GetPaymentList($idAutoTrans, $kelompok, $noid, $idTahunBuku)
                 }
 
                 $res2 = QueryDb($sql);
-                $num2 = mysqli_num_rows($res2);
+                $num2 = mysql_num_rows($res2);
                 if ($num2 == 0)
                 {
                     $validTrans = false;
@@ -172,7 +172,7 @@ function GetPaymentList($idAutoTrans, $kelompok, $noid, $idTahunBuku)
                 }
                 else
                 {
-                    $row2 = mysqli_fetch_row($res2);
+                    $row2 = mysql_fetch_row($res2);
                     $idBesarJtt = $row2[0];
                     $besar = $row2[1];
                     $lunas = $row2[2];
@@ -192,7 +192,7 @@ function GetPaymentList($idAutoTrans, $kelompok, $noid, $idTahunBuku)
                                  WHERE idbesarjttcalon = $idBesarJtt";
                     }
                     $res2 = QueryDb($sql);
-                    $row2 = mysqli_fetch_row($res2);
+                    $row2 = mysql_fetch_row($res2);
                     $jumlah = $row2[0];
 
                     $sisa = $besar - $jumlah;
@@ -302,9 +302,9 @@ function ShowAccYear()
              WHERE aktif = 1
                AND departemen='$departemen'";
     $result = QueryDb($sql);
-    if (mysqli_num_rows($result) > 0)
+    if (mysql_num_rows($result) > 0)
     {
-        $row = mysqli_fetch_array($result);
+        $row = mysql_fetch_array($result);
         echo "<input type='text' name='tahunbuku' id='tahunbuku' size='30' readonly style='background-color:#daefff; font-size:14px;' value='" . $row['tahunbuku'] . "'/>";
         echo "<input type='hidden' name='idtahunbuku' id='idtahunbuku' value='" . $row['id'] . "'/>";
     }

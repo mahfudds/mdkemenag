@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@ if(isset($_REQUEST["ujian"]))
 OpenDb();
 $sql="SELECT r.rpp, p.nama, r.idpelajaran, r.idsemester FROM pelajaran p, rpp r WHERE p.replid=r.idpelajaran AND r.replid='$rpp'";
 $result=QueryDb($sql);
-$row = mysqli_fetch_array($result);
+$row = mysql_fetch_array($result);
 $materi = $row['rpp'];
 $namapel = $row['nama'];
 $pelajaran = $row['idpelajaran'];
@@ -103,8 +103,8 @@ function cetak(){
 				//$sql_ujian = "SELECT DISTINCT j.replid, j.jenisujian FROM jbsakad.jenisujian j, jbsakad.ujian u, jbsakad.kelas k, jbsakad.tingkat t WHERE u.idjenis=j.replid AND u.idrpp = $rpp AND u.idkelas = $kelas ORDER BY jenisujian";
 				$sql_ujian = "SELECT * FROM jenisujian WHERE idpelajaran = '$pelajaran' ORDER BY jenisujian";
 				$result_ujian=QueryDb($sql_ujian);
-				$jum = mysqli_num_rows($result_ujian);	
-				while ($row_ujian=@mysqli_fetch_array($result_ujian)){
+				$jum = mysql_num_rows($result_ujian);	
+				while ($row_ujian=@mysql_fetch_array($result_ujian)){
 					if ($ujian=="")
 						$ujian=$row_ujian['replid'];
 			?>
@@ -118,7 +118,7 @@ function cetak(){
 		$sql1 = "SELECT s.nis, round(SUM(nilaiujian)/(COUNT(DISTINCT u.replid)),2), s.nama FROM nilaiujian n, siswa s, ujian u, jenisujian j WHERE n.idujian = u.replid AND u.idsemester = '$semester' AND u.idkelas = '$kelas' AND u.idjenis = '$ujian' AND u.idrpp = '$rpp' AND u.idpelajaran = '$pelajaran' AND s.nis = n.nis AND u.idjenis = j.replid AND s.idkelas = '$kelas' AND s.aktif = 1 GROUP BY s.nis UNION SELECT s.nis, 0, s.nama FROM siswa s WHERE s.idkelas = '$kelas' AND s.aktif = 1 AND s.nis NOT IN (SELECT s.nis FROM nilaiujian n, siswa s, ujian u, jenisujian j WHERE n.idujian = u.replid AND u.idsemester = '$semester' AND u.idkelas = '$kelas' AND u.idjenis = '$ujian' AND u.idrpp = '$rpp' AND u.idpelajaran = '$pelajaran' AND s.nis = n.nis AND u.idjenis = j.replid AND s.idkelas = '$kelas' AND s.aktif = 1 GROUP BY s.nis) ORDER BY nama";
 		$result1 = QueryDb($sql1);		
 			
-		if ($jum > 0 && mysqli_num_rows($result1)){ ?>
+		if ($jum > 0 && mysql_num_rows($result1)){ ?>
             <td align="right">
             <a href="#" onClick="document.location.reload()"><img src="../images/ico/refresh.png" border="0" onmouseover="showhint('Refresh!', this, event, '50px')"/>&nbsp;Refresh</a>&nbsp;&nbsp;
     		<a href="JavaScript:cetak()"><img src="../images/ico/print.png" border="0" onmouseover="showhint('Cetak!', this, event, '50px')"/>&nbsp;Cetak</a>&nbsp;
@@ -140,7 +140,7 @@ function cetak(){
         // sample data array
         //$data = array();
 		$cnt =0;
-        while($row1 = mysqli_fetch_row($result1)) {
+        while($row1 = mysql_fetch_row($result1)) {
             //$data[] = array($row1[1],$row1[2],$row1[3],$row1[4],$row1[5]);			
             //$legend_x[] = $row1[0];			
 			$legend_x[] = ++$cnt;
@@ -182,11 +182,11 @@ function cetak(){
 		 
       	$result=QueryDb($sql);
       	$cnt=0;
-      	while ($row=@mysqli_fetch_array($result)){			
+      	while ($row=@mysql_fetch_array($result)){			
 			$sql2 = "SELECT round(SUM(nilaiujian)/(COUNT(DISTINCT u.replid)),2), SUM(nilaiujian) FROM nilaiujian n, siswa s, ujian u, jenisujian j WHERE n.idujian = u.replid AND u.idsemester = '$semester' AND u.idkelas = '$kelas' AND u.idjenis = '$ujian' AND u.idrpp = '$rpp' AND u.idpelajaran = '$pelajaran' AND s.nis = n.nis AND u.idjenis = j.replid AND s.nis = '$row[nis]' AND s.aktif = 1 ORDER BY s.nama";
 			//echo $sql2;
 			$result2 = QueryDb($sql2);
-			$row2 = mysqli_fetch_row($result2);
+			$row2 = mysql_fetch_row($result2);
     ?>
       	<tr>
         	<td height="25" align="center"><?=++$cnt?></td>

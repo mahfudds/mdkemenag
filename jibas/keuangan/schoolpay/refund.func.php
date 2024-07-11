@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  *
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ function ShowCbVendor()
     $res = QueryDb($sql);
 
     echo "<select id='vendor' name='vendor' onchange='changeVendor()' style='width: 250px'>";
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         if ($selVendorId == "") $selVendorId = $row[0];
         echo "<option value='$row[0]'>$row[1]</option>";
@@ -55,7 +55,7 @@ function ShowCbDepartemen()
     $res = QueryDb($sql);
 
     echo "<select id='departemen' name='departemen' onchange='changeDepartemen()' style='width: 250px'>";
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         if ($selDepartemen == "") $selDepartemen = $row[0];
         echo "<option value='$row[0]'>$row[0]</option>";
@@ -72,7 +72,7 @@ function ShowTahunBuku($dept)
              WHERE departemen = '$dept'
                AND aktif = 1";
     $res = QueryDb($sql);
-    if ($row = mysqli_fetch_row($res))
+    if ($row = mysql_fetch_row($res))
     {
         if ($selIdTahunBuku == "")
             $selIdTahunBuku = $row[0];
@@ -102,7 +102,7 @@ function ShowLastRefundDate($vendorId, $idTahunBuku)
              ORDER BY rd.tanggal DESC
              LIMIT 1";
     $res = QueryDb($sql);
-    if ($row = mysqli_fetch_row($res))
+    if ($row = mysql_fetch_row($res))
         echo $row[0];
     else
         echo "(belum pernah refund)";
@@ -115,7 +115,7 @@ function ShowTagihanVendor($vendorId, $dept)
               FROM jbsfina.paymenttabungan
              WHERE jenis = 1";
     $res = QueryDb($sql);
-    if ($row = mysqli_fetch_row($res))
+    if ($row = mysql_fetch_row($res))
         $deptPeg = $row[0];
 
     $tagihan = 0;
@@ -130,7 +130,7 @@ function ShowTagihanVendor($vendorId, $dept)
                AND p.idrefund IS NULL
                AND p.tanggal <= CURDATE()";
     $res = QueryDb($sql);
-    if ($row = mysqli_fetch_row($res))
+    if ($row = mysql_fetch_row($res))
         $tagihan = $row[0];
 
     if ($deptPeg == $dept)
@@ -143,7 +143,7 @@ function ShowTagihanVendor($vendorId, $dept)
                    AND p.idrefund IS NULL
                    AND p.tanggal <= CURDATE()";
         $res = QueryDb($sql);
-        if ($row = mysqli_fetch_row($res))
+        if ($row = mysql_fetch_row($res))
             $tagihan = $tagihan + $row[0];
     }
 
@@ -190,7 +190,7 @@ function ShowRefundHistory($showMenu)
     $res = QueryDb($sql);
 
     $no = 0;
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         $no += 1;
 
@@ -201,7 +201,7 @@ function ShowRefundHistory($showMenu)
                  ORDER BY tanggal";
         $res2 = QueryDb($sql);
         $stTanggal = "";
-        while($row2 = mysqli_fetch_row($res2))
+        while($row2 = mysql_fetch_row($res2))
         {
             if ($stTanggal <> "") $stTanggal .= "<br>";
             $stTanggal .= $row2[0];

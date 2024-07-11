@@ -13,8 +13,8 @@ function getHeader($dep)
 			FROM jbsumum.identitas
 		   WHERE departemen='$dep'";
 	$result = QueryDb($sql); 
-	$num = @mysqli_num_rows($result);
-	$row = @mysqli_fetch_row($result);
+	$num = @mysql_num_rows($result);
+	$row = @mysql_fetch_row($result);
 	
 	$replid  = $row[0];
 	$nama	 = $row[1];

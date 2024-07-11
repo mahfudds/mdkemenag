@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  *
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,13 +39,13 @@ $sql = "SELECT nomor
           FROM jbsfina.pgtranslebih
          WHERE id = $idPgTransLebih";
 $res = QueryDb($sql);
-if (mysqli_num_rows($res) == 0)
+if (mysql_num_rows($res) == 0)
 {
     echo "Data tidak ditemukan";
     return;
 }
 
-$row = mysqli_fetch_row($res);
+$row = mysql_fetch_row($res);
 $nomor = $row[0];
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -88,7 +88,7 @@ $nomor = $row[0];
               LEFT JOIN jbsakad.siswa s ON p.nis = s.nis
              WHERE p.nomor = '$nomor'";
     $res = QueryDb($sql);
-    $row = mysqli_fetch_array($res);
+    $row = mysql_fetch_array($res);
     $idPgTrans = $row["replid"];
 ?>
     <table border="0" cellpadding="5" cellspacing="0">
@@ -152,7 +152,7 @@ $nomor = $row[0];
         $no = 0;
         $total = 0;
         $res2 = QueryDb($sql);
-        while($row2 = mysqli_fetch_array($res2))
+        while($row2 = mysql_fetch_array($res2))
         {
             $no += 1;
             $kategori = $row2["kategori"];

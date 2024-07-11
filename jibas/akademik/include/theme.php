@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,8 +30,8 @@ function GetThemeDir() {
 	OpenDb();
 	$sql_tema="Select theme from jbsuser.hakakses where login='".SI_USER_ID()."' AND modul='SIMAKA'";
 	$hasil=QueryDb($sql_tema);
-	$row_tema=mysqli_fetch_array($hasil);
-	$row_tema2=mysqli_num_rows($hasil);
+	$row_tema=mysql_fetch_array($hasil);
+	$row_tema2=mysql_num_rows($hasil);
 
 	if ($row_tema2==0){
 		$theme=3;

@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -60,7 +60,7 @@ if ($op=='SavePresensi'){
 		}
 		$res = QueryDb($sql);
 		$NIS = "";
-		while ($row = @mysqli_fetch_row($res)){
+		while ($row = @mysql_fetch_row($res)){
 			if ($NIS == "")
 				$NIS = $row[0];
 			else
@@ -69,8 +69,8 @@ if ($op=='SavePresensi'){
 	}
 	
 	$smsgeninfo = "";
-	$x = explode(' ',$SendDate);
-	$dt = explode('-',$x[0]);
+	$x = split(' ',$SendDate);
+	$dt = split('-',$x[0]);
 	$smsgeninfo .= $dt[2].'-'.$SMonth[$dt[1]-1].'-'.$dt[0]."<br>";
 	if ($Type=='0'){
 		$smsgeninfo .= "NIS : ".$NIS;
@@ -81,7 +81,7 @@ if ($op=='SavePresensi'){
 		} else {
 			$sql = "SELECT kelas FROM $db_name_akad.kelas WHERE replid='$Kls'";
 			$res = QueryDb($sql);
-			$row = @mysqli_fetch_row($res);
+			$row = @mysql_fetch_row($res);
 			$smsgeninfo .= $row[0];
 		}
 	}
@@ -97,7 +97,7 @@ if ($op=='SavePresensi'){
 	$res = QueryDb($sql);
 	
 	$NIS2 = "";
-	$ALLNIS	= explode(',',$NIS);
+	$ALLNIS	= split(',',$NIS);
 	for ($i=0;$i<count($ALLNIS);$i++)
 	{
 		if ($NIS2 == "")
@@ -106,13 +106,13 @@ if ($op=='SavePresensi'){
 			$NIS2 = $NIS2.",'".trim($ALLNIS[$i])."'";
 	}
 	$Dt1  = $Date1;
-	$x	= explode('-',$Date1);
+	$x	= split('-',$Date1);
 	$Tgl1 = (int)$x[2];
 	$Bln1 = (int)$x[1];
 	$Thn1 = (int)$x[0];
 	
 	$Dt2  = $Date2;
-	$x	= explode('-',$Date2);
+	$x	= split('-',$Date2);
 	$Tgl2 = (int)$x[2];
 	$Bln2 = (int)$x[1];
 	$Thn2 = (int)$x[0];
@@ -123,7 +123,7 @@ if ($op=='SavePresensi'){
 				  FROM format
 				 WHERE tipe = 0";
 		$res = QueryDb($sql);
-		$row = @mysqli_fetch_row($res);
+		$row = @mysql_fetch_row($res);
 		$format = $row[0];
 
 		$sql =	"SELECT SUM(hadir) AS H, SUM(ijin) AS I, SUM(sakit) AS S, SUM(cuti) AS C, SUM(alpa) AS A,
@@ -136,7 +136,7 @@ if ($op=='SavePresensi'){
 					AND p.nis IN ($NIS2)
 				  GROUP BY p.nis";
 		$res = QueryDb($sql);	
-		while ($row = @mysqli_fetch_array($res))
+		while ($row = @mysql_fetch_array($res))
 		{
 			//Configuring SMS Text Message
 
@@ -173,7 +173,7 @@ if ($op=='SavePresensi'){
 						 FROM $db_name_akad.siswa
 						WHERE nis = '$row[nis]'";
 			$result = QueryDb($query);
-			$data	= @mysqli_fetch_row($result);
+			$data	= @mysql_fetch_row($result);
 			
 			if ($KeOrtu == 1)
 			{
@@ -233,7 +233,7 @@ if ($op=='SavePresensi'){
 	{
 		$sql = "SELECT format FROM format WHERE tipe=0";
 		$res = QueryDb($sql);
-		$row = @mysqli_fetch_row($res);
+		$row = @mysql_fetch_row($res);
 		$format = $row[0];
 		
 		$sql = "SELECT pp.idpp,	pp.nis
@@ -243,7 +243,7 @@ if ($op=='SavePresensi'){
 				 GROUP BY pp.nis, pp.statushadir, p.replid";
 		$res = QueryDb($sql);
 		$IDPP = "";
-		while ($row = @mysqli_fetch_row($res))
+		while ($row = @mysql_fetch_row($res))
 		{
 			if ($IDPP == "")
 				$IDPP = $row[0];
@@ -257,7 +257,7 @@ if ($op=='SavePresensi'){
 					  FROM $db_name_akad.ppsiswa 
 					 WHERE nis='$ALLNIS[$i]' AND idpp IN ($IDPP) AND statushadir=0";
 			$res = QueryDb($sql);
-			$row = @mysqli_fetch_row($res);
+			$row = @mysql_fetch_row($res);
 			$NumHadir = $row[0];
 				
 			$sql = "SELECT statushadir, COUNT(replid)  
@@ -269,7 +269,7 @@ if ($op=='SavePresensi'){
 			$res = QueryDb($sql);
 			$NumAbsen = 0;
 			$TextAbsen = "";
-			while($row = @mysqli_fetch_row($res))
+			while($row = @mysql_fetch_row($res))
 			{
 				$NumAbsen += $row[1];
 				
@@ -302,7 +302,7 @@ if ($op=='SavePresensi'){
 						 FROM $db_name_akad.siswa
 						WHERE nis='$ALLNIS[$i]'";
 			$result = QueryDb($query);
-			$data	= @mysqli_fetch_row($result);
+			$data	= @mysql_fetch_row($result);
 			
 			$newformat = str_replace('[SISWA]', 'pelajaran ' . $data[3], $newformat);
 			$TextMsg = CQ($newformat);

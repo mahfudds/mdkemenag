@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,12 +37,12 @@ if (isset($_REQUEST['departemen']))
 //Ini tuk ngecek user sudah punya login apa belum
 $sql_cek = "SELECT * FROM jbsuser.login WHERE login = '$_REQUEST[nip]'";
 $res_cek = QueryDb($sql_cek);
-$jum_cek = @mysqli_num_rows($res_cek);
+$jum_cek = @mysql_num_rows($res_cek);
 
 $query_cek2 = "SELECT * FROM jbsuser.hakakses WHERE login = '$_REQUEST[nip]' AND modul='SIMAKA'";
 $result_cek2 = QueryDb($query_cek2);
-$num_cek2 = @mysqli_num_rows($result_cek2);
-$row_cek2 = @mysqli_fetch_array($result_cek2);
+$num_cek2 = @mysql_num_rows($result_cek2);
+$row_cek2 = @mysql_fetch_array($result_cek2);
 $dd1 = "";
 if($jum_cek == 0) {
 	$dis = "";
@@ -70,11 +70,11 @@ if (isset($_REQUEST['simpan'])) {
   	//cek apakah sudah ada account yang sama di SIMAKA
 	$query_c = "SELECT * FROM jbsuser.hakakses WHERE login = '$_REQUEST[nip]' AND tingkat = $tingkat AND modul = 'SIMAKA' $sql_dep";
 	$result_c = QueryDb($query_c);
-    $num_c = @mysqli_num_rows($result_c);
+    $num_c = @mysql_num_rows($result_c);
 	
 	$query_cek = "SELECT * FROM jbsuser.login WHERE login = '$_REQUEST[nip]'";
 	$result_cek = QueryDb($query_cek);
-    $num_cek = @mysqli_num_rows($result_cek);
+    $num_cek = @mysql_num_rows($result_cek);
 	
 	
 		
@@ -130,7 +130,7 @@ if($status_user == 1 || $status_user == "") {
 	$fokus = "onKeyPress=\"return focusNext('keterangan', event)\"";
 } else {
 	$dd = "";
-	$departemen=$row_cek2['departemen'];
+	$departemen=$row_cek2[departemen];
 	$fokus = "onKeyPress=\"return focusNext('tt', event)\"";
 }
 
@@ -316,14 +316,14 @@ function panggil(elem){
 		$result_pro = QueryDb($query_pro);
 	
 		$i = 0;
-		while($row_pro = @mysqli_fetch_array($result_pro)) {
+		while($row_pro = @mysql_fetch_array($result_pro)) {
 			if($departemen == "") {
-				$departemen = $row_pro['departemen'];
+				$departemen = $row_pro[departemen];
 				if ($status_user == 1 || $status_user == "")
 					$sel[$i] = "";
 				else
 					$sel[$i] = "selected";
-			} elseif ($departemen == $row_pro['departemen']) {
+			} elseif ($departemen == $row_pro[departemen]) {
 				if ($status_user == 1 || $status_user == "")
 					$sel[$i] = "";
 				else

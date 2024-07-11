@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -57,7 +57,7 @@ if (isset($_REQUEST['urutan']))
 OpenDb();
 $sql_ajaran = "SELECT a.replid,a.tglmulai,t.tingkat FROM jbsakad.tahunajaran a, jbsakad.tingkat t WHERE a.replid='$tahunajaranawal' AND t.replid = '$tingkatawal'";
 $result_ajaran = QueryDb($sql_ajaran);
-$row_ajaran = mysqli_fetch_array($result_ajaran);
+$row_ajaran = mysql_fetch_array($result_ajaran);
 $tglmulai = $row_ajaran['tglmulai'];
 $namatingkat = $row_ajaran['tingkat'];
 
@@ -66,13 +66,13 @@ $namatingkat = $row_ajaran['tingkat'];
 OpenDb();
 $sql_tahunajaranawal="SELECT replid,tahunajaran,tglmulai FROM jbsakad.tahunajaran WHERE replid='$tahunajaranawal'";
 $result_tahunajaranawal=QueryDb($sql_tahunajaranawal);
-if ($row_tahunajaranawal=@mysqli_fetch_array($result_tahunajaranawal)){
+if ($row_tahunajaranawal=@mysql_fetch_array($result_tahunajaranawal)){
 $tglmulaiawal=$row_tahunajaranawal['tglmulai'];
 }
 
 $sql_tingkatawal="SELECT replid,urutan,tingkat FROM jbsakad.tingkat WHERE replid='$tingkatawal'";
 $result_tingkatawal=QueryDb($sql_tingkatawal);
-if ($row_tingkatawal=@mysqli_fetch_array($result_tingkatawal)){
+if ($row_tingkatawal=@mysql_fetch_array($result_tingkatawal)){
 $tingkat_awal=$row_tingkatawal['tingkat'];
 $tingkat=$row_tingkatawal[replid];
 //$tktlama=$row_tingkatlama[replid];
@@ -98,7 +98,7 @@ if ($op=="hgiu82kjs98uqjq89wuj89sga"){
 	if ($success){
 		$sql_rwyt_get="SELECT idkelas FROM jbsakad.riwayatkelassiswa WHERE nis='$nis' ORDER BY mulai DESC LIMIT 1";
 		$result_rwyt_get=QueryDbTrans($sql_rwyt_get, $success);
-		$row_rwyt_get=mysqli_fetch_row($result_rwyt_get);
+		$row_rwyt_get=mysql_fetch_row($result_rwyt_get);
 	}
 	if ($success){
 		$sql_rwyt_upd="UPDATE jbsakad.riwayatkelassiswa SET aktif=1 WHERE nis='$nis' AND idkelas='$row_rwyt_get[0]'";
@@ -114,6 +114,7 @@ if ($op=="hgiu82kjs98uqjq89wuj89sga"){
 		
 		?>
 		<script language="javascript">
+			//document.location.href="siswa_tidak_naik_tujuan.php?departemen=<?=$_REQUEST[departemen]?>&tingkatawal=<?=$_REQUEST[tingkatawal]?>&tahunajaranawal=<?=$_REQUEST[tahunajaranawal]?>&kelas=<?=$kelas?>&pilihan=<?=$pilihan?>";
 			parent.siswa_tidak_naik_menu.location.href="siswa_tidak_naik_menu.php?kelas=<?=$row_rwyt_get[0]?>&departemen=<?=$departemen?>&tahunajaran=<?=$tahunajaranawal?>&tingkat=<?=$tingkatawal?>&pilihan=2&jenis=combo";
 			parent.siswa_tidak_naik_pilih.location.href="siswa_tidak_naik_pilih.php?kelas=<?=$row_rwyt_get[0]?>&pilihan=2&jenis=combo&departemen=<?=$departemen?>&tahunajaran=<?=$tahunajaranawal?>&tingkat=<?=$tingkatawal?>";
 		</script>
@@ -136,19 +137,19 @@ if ($op=="x2378e23dkofh73n25ki9234"){
 	OpenDb();
 	$sql_kap_kelas_tujuan="SELECT kapasitas FROM jbsakad.kelas WHERE replid='$kelas'";
 	$result_kap_kelas_tujuan=QueryDb($sql_kap_kelas_tujuan);
-	$row_kap_kelas_tujuan=mysqli_fetch_array($result_kap_kelas_tujuan);
+	$row_kap_kelas_tujuan=mysql_fetch_array($result_kap_kelas_tujuan);
 	$kap_kelas_tujuan=$row_kap_kelas_tujuan['kapasitas'];
 	
 	$sql_jum_kelas_tujuan="SELECT COUNT(nis) FROM jbsakad.siswa WHERE idkelas='$kelas' AND aktif = 1";
 	$result_jum_kelas_tujuan=QueryDb($sql_jum_kelas_tujuan);
-	$row_jum_kelas_tujuan=mysqli_fetch_row($result_jum_kelas_tujuan);
+	$row_jum_kelas_tujuan=mysql_fetch_row($result_jum_kelas_tujuan);
 	
 	if ((int)$kap_kelas_tujuan <= (int)$row_jum_kelas_tujuan[0]){
 		$ERROR_MSG = "Kapasitas kelas tujuan sudah penuh.  Silahkan pilih kelas tujuan lain!";
 	} else { // Jika jumlah murid kelas tujuan < dari kapasitasnya 
-		$tahunsekarang=date('Y');
-		$bulansekarang=date('m');
-		$tanggalsekarang=date('j');
+		$tahunsekarang=date(Y);
+		$bulansekarang=date(m);
+		$tanggalsekarang=date(j);
 		$sekarang=$tahunsekarang."-".$bulansekarang."-".$tanggalsekarang;
 		OpenDb();
 		BeginTrans();
@@ -315,7 +316,7 @@ function focusNext(elemName, evt) {
         <?	OpenDb();
 			$sql_tahunajaran="SELECT replid,tahunajaran,aktif FROM jbsakad.tahunajaran WHERE departemen='$departemen' AND tglmulai > '$tglmulai' ORDER BY aktif DESC, tglmulai DESC";
 			$result_tahunajaran=QueryDb($sql_tahunajaran);
-			while ($row_tahunajaran=@mysqli_fetch_array($result_tahunajaran)){
+			while ($row_tahunajaran=@mysql_fetch_array($result_tahunajaran)){
 				if ($tahunajaran=="")
 					$tahunajaran=$row_tahunajaran['replid'];
 				if ($row_tahunajaran['aktif']) 
@@ -343,13 +344,13 @@ function focusNext(elemName, evt) {
    		<? 	OpenDb();
 			$sql_kelas="SELECT replid,kelas,kapasitas FROM jbsakad.kelas WHERE idtahunajaran='$tahunajaran' AND idtingkat='$tingkatawal' AND aktif=1";
 			$result_kelas=QueryDb($sql_kelas);
-			while ($row_kelas=@mysqli_fetch_array($result_kelas)){
+			while ($row_kelas=@mysql_fetch_array($result_kelas)){
 				if ($kelas=="")
-					$kelas=$row_kelas['replid'];
+					$kelas=$row_kelas[replid];
 				
 				$sql_terisi="SELECT COUNT(*) FROM jbsakad.siswa WHERE idkelas='$row_kelas[replid]' AND aktif = 1";
 				$result_terisi=QueryDb($sql_terisi);
-				$row_terisi=@mysqli_fetch_row($result_terisi);
+				$row_terisi=@mysql_fetch_row($result_terisi);
 		?>  
 			  <option value="<?=$row_kelas['replid']?>" <?=IntIsSelected($row_kelas['replid'], $kelas)?>>
 			  <?=$row_kelas['kelas'].", kapasitas: ".$row_kelas['kapasitas'].", terisi: ".$row_terisi[0]?>
@@ -373,19 +374,19 @@ function focusNext(elemName, evt) {
 	
 		$sql_tot = "SELECT s.replid,s.nis,s.nama FROM jbsakad.siswa s, jbsakad.kelas k, jbsakad.tahunajaran t WHERE s.idkelas = '$kelas' AND k.idtahunajaran = '$tahunajaran' AND k.idtingkat = '$tingkatawal' AND s.idkelas = k.replid AND t.replid = k.idtahunajaran AND s.aktif=1";
 		$result_tot = QueryDb($sql_tot);
-		$total=ceil(mysqli_num_rows($result_tot)/(int)$varbaris);
-		$jumlah = mysqli_num_rows($result_tot);
+		$total=ceil(mysql_num_rows($result_tot)/(int)$varbaris);
+		$jumlah = mysql_num_rows($result_tot);
 		$akhir = ceil($jumlah/5)*5;
 		
 		$sql_siswa = "SELECT s.replid,s.nis,s.nama FROM jbsakad.siswa s, jbsakad.kelas k, jbsakad.tahunajaran t WHERE s.idkelas = '$kelas' AND k.idtahunajaran = '$tahunajaran' AND k.idtingkat = '$tingkatawal' AND s.idkelas = k.replid AND t.replid = k.idtahunajaran AND s.aktif=1 ORDER BY $urut $urutan LIMIT ".(int)$page*(int)$varbaris.",$varbaris";
 		
 		$result_siswa = QueryDb($sql_siswa);
-		$jum = @mysqli_num_rows($result_siswa);
+		$jum = @mysql_num_rows($result_siswa);
 		
 		$sql5 = "SELECT kelas FROM jbsakad.kelas WHERE replid = '$kelas' ";
 		$result5 = QueryDb($sql5);
-		$row5 = @mysqli_fetch_array($result5);
-		$nama_kelas = $row5['kelas'];
+		$row5 = @mysql_fetch_array($result5);
+		$nama_kelas = $row5[kelas];
 		
 		if ($jum > 0) { ?> 
 	
@@ -403,10 +404,10 @@ function focusNext(elemName, evt) {
 	else 
 		$cnt = (int)$page*(int)$varbaris+1;
 		
-	while ($row_siswa=@mysqli_fetch_array($result_siswa)){
+	while ($row_siswa=@mysql_fetch_array($result_siswa)){
 		$sql_riwayat_kelas="SELECT keterangan,status FROM jbsakad.riwayatkelassiswa WHERE nis='$row_siswa[nis]' AND idkelas='$kelas'";
         $result_riwayat_kelas=QueryDb($sql_riwayat_kelas);
-        $row_riwayat = mysqli_fetch_array($result_riwayat_kelas);
+        $row_riwayat = mysql_fetch_array($result_riwayat_kelas);
 		
 	?>
     <tr height="25">
@@ -416,7 +417,7 @@ function focusNext(elemName, evt) {
         <? if ($row_riwayat['keterangan'] <> "") { ?>
         <td><?=$row_riwayat['keterangan']?>&nbsp;&nbsp;
         	<? if ($row_riwayat['status'] == 2) {?>
-        	<a href="#" onClick="JavaScript:ubah_ket('<?=$row_siswa['nis']?>',<?=$kelas?>)"><img src="../images/ico/ubah.png" width="16" height="16" border="0" onMouseOver="showhint('Ubah Keterangan Siswa!', this, event, '100px')"/></a>
+        	<a href="#" onClick="JavaScript:ubah_ket('<?=$row_siswa[nis]?>',<?=$kelas?>)"><img src="../images/ico/ubah.png" width="16" height="16" border="0" onMouseOver="showhint('Ubah Keterangan Siswa!', this, event, '100px')"/></a>    
         	<? } ?>
         </td>
         <? } else { ?>

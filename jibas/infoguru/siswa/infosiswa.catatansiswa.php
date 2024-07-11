@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,13 +44,13 @@ $bulan_pjg = array(1=>'Januari','Februari','Maret','April','Mei','Juni','Juli','
     <td width="150" height="30" valign="top">
     <div id="thn_catatan">Tahun
     <select name="tahun" id="tahun" onChange="ChangeTahunCatatanSiswa('<?=$nis?>')">
-<?	if (@mysqli_num_rows($res_year) > 0)
+<?	if (@mysql_num_rows($res_year) > 0)
     {
-        while ($row_year=@mysqli_fetch_array($res_year))
+        while ($row_year=@mysql_fetch_array($res_year))
         {
             if ($tahun == "")
-                $tahun=$row_year['tahun']; ?>
-            <option value="<?=$row_year['tahun']?>"><?=$row_year['tahun']?></option>
+                $tahun=$row_year[tahun]; ?>
+            <option value="<?=$row_year[tahun]?>"><?=$row_year[tahun]?></option>
 <?  	}
 	}
     else
@@ -71,17 +71,17 @@ $bulan_pjg = array(1=>'Januari','Februari','Maret','April','Mei','Juni','Juli','
              WHERE YEAR(tanggal)='$tahun' AND nis='$nis'
              GROUP BY MONTH(tanggal)";
     $result=QueryDb($sql);
-    if (@mysqli_num_rows($result)>0)
+    if (@mysql_num_rows($result)>0)
     {
-       	while ($row=@mysqli_fetch_array($result))
+       	while ($row=@mysql_fetch_array($result))
         {
 		  	$sql_cnt = "SELECT COUNT(*)
                           FROM jbsvcr.catatansiswa
                          WHERE nis='$nis' AND MONTH(tanggal)='$row[bulan]' AND YEAR(tanggal)='$tahun'";
 		  	$res_cnt = QueryDb($sql_cnt);
-			$row_cnt = @mysqli_fetch_row($res_cnt); ?>
-            <tr onClick="ShowCatatanSiswa('<?=$nis?>', '<?=$row['bulan']?>', '<?=$tahun?>')" style="cursor:pointer;" title="Klik untuk menampilkan daftar Catatan Siswa">
-                <td width="50"><?=$bulan_pjg[$row['bulan']]?></td>
+			$row_cnt = @mysql_fetch_row($res_cnt); ?>
+            <tr onClick="ShowCatatanSiswa('<?=$nis?>', '<?=$row[bulan]?>', '<?=$tahun?>')" style="cursor:pointer;" title="Klik untuk menampilkan daftar Catatan Siswa">
+                <td width="50"><?=$bulan_pjg[$row[bulan]]?></td>
                 <td><div align="center"><?=$row_cnt[0]?></div></td>
             </tr>
 <?   	}

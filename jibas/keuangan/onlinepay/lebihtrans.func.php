@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  *
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -61,7 +61,7 @@ function ShowLebihTransSudah()
                AND p.prstatus = $status
              ORDER BY p.tanggal DESC, p.id DESC";
     $res = QueryDb($sql);
-    if (0 == mysqli_num_rows($res))
+    if (0 == mysql_num_rows($res))
     {
         echo "<br><br><i>Tidak ditemukan data</i>";
         return;
@@ -79,7 +79,7 @@ function ShowLebihTransSudah()
     echo "</tr>";
 
     $no = 0;
-    while($row = mysqli_fetch_array($res))
+    while($row = mysql_fetch_array($res))
     {
         $no += 1;
 
@@ -201,7 +201,7 @@ function ShowLebihTransBelum()
                AND p.prstatus = $status
              ORDER BY p.id";
     $res = QueryDb($sql);
-    if (0 == mysqli_num_rows($res))
+    if (0 == mysql_num_rows($res))
     {
         echo "<br><br><i>Tidak ditemukan data</i>";
         return;
@@ -220,7 +220,7 @@ function ShowLebihTransBelum()
     echo "</tr>";
 
     $no = 0;
-    while($row = mysqli_fetch_array($res))
+    while($row = mysql_fetch_array($res))
     {
         $no += 1;
 

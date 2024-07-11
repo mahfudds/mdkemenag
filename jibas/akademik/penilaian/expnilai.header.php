@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  *
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -72,7 +72,7 @@ ReadParams();
         <td>
             <?  $sql = "SELECT replid, tahunajaran FROM tahunajaran WHERE departemen='$departemen' AND aktif=1 ORDER BY replid DESC";
             $result = QueryDb($sql);
-            $row = @mysqli_fetch_array($result);
+            $row = @mysql_fetch_array($result);
             $tahunajaran = $row['replid'];
             ?>
             <input type="hidden" name="tahunajaran" id="tahunajaran" value="<?=$row['replid']?>">
@@ -86,7 +86,7 @@ ReadParams();
             <select name="tingkat" id="tingkat" onChange="change_sel2()" style="width:60px;" onkeypress="return focusNext('kelas', event)">
                 <?	$sql="SELECT * FROM tingkat WHERE departemen='$departemen' AND aktif = 1 ORDER BY urutan";
                 $result=QueryDb($sql);
-                while ($row=@mysqli_fetch_array($result)){
+                while ($row=@mysql_fetch_array($result)){
                     if ($tingkat=="")
                         $tingkat=$row['replid'];
                     ?>
@@ -98,7 +98,7 @@ ReadParams();
                 <?
                 $sql="SELECT * FROM kelas WHERE idtahunajaran='$tahunajaran' AND idtingkat='$tingkat' AND aktif = 1 ORDER BY kelas";
                 $result=QueryDb($sql);
-                while ($row=@mysqli_fetch_array($result)){
+                while ($row=@mysql_fetch_array($result)){
                     if ($kelas=="")
                         $kelas=$row['replid'];
                     ?>
@@ -110,7 +110,7 @@ ReadParams();
         <td>
             <?	$sql = "SELECT replid,semester FROM semester where departemen='$departemen' AND aktif = 1 ORDER BY replid DESC";
             $result = QueryDb($sql);
-            $row = @mysqli_fetch_array($result);
+            $row = @mysql_fetch_array($result);
             ?>
             <input type="text" name="sem" id="sem" class="disabled" style="width:150px" readonly value="<?=$row['semester']?>" />
             <input type="hidden" name="semester" id="semester" value="<?=$row['replid']?>">

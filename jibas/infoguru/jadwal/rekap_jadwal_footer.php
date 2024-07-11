@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ if (isset($_REQUEST['info']))
 OpenDb();	
 $sql1 = "SELECT i.deskripsi, t.replid, t.departemen, t.tglmulai, t.tglakhir FROM infojadwal i, tahunajaran t  WHERE i.replid = '$info' AND t.replid = i.idtahunajaran";
 $result1 = QueryDb($sql1);
-$row1 = mysqli_fetch_array($result1); 
+$row1 = mysql_fetch_array($result1); 
 $info_jadwal = $row1['deskripsi'];
 $departemen = $row1['departemen'];
 $tahunajaran = $row1['replid'];
@@ -80,7 +80,7 @@ function cetak() {
 	$sql = "SELECT p.nip, p.nama, SUM(IF(j.status = 0, 1, 0)), SUM(IF(j.status = 1, 1, 0)), SUM(IF(j.status = 2, 1, 0)), SUM(j.njam), COUNT(DISTINCT(j.idkelas)), COUNT(DISTINCT(j.hari)) FROM jadwal j, jbssdm.pegawai p WHERE j.nipguru = p.nip AND j.infojadwal = '$info' GROUP BY j.nipguru ORDER BY p.nama";	
 	
 	$result = QueryDb($sql);
-	$jum = mysqli_num_rows($result);
+	$jum = mysql_num_rows($result);
 	if ($jum > 0) { 
 ?>	
     <table width="100%" border="0" align="center">
@@ -112,7 +112,7 @@ function cetak() {
         <td width="8%" class="header" align="center">Hari</td>
     </tr>
     <? $cnt = 0;
-		while ($row = mysqli_fetch_row($result)) {
+		while ($row = mysql_fetch_row($result)) {
 	?>
     <tr height="25">
     	<td align="center"><?=++$cnt?></td>

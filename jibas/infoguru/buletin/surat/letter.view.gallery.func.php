@@ -7,7 +7,7 @@ function ShowControl()
               FROM jbsletter.berkassurat
              WHERE idsurat = $idsurat";
     $res = QueryDb($sql);
-    $row = mysqli_fetch_row($res);
+    $row = mysql_fetch_row($res);
     $ndata = $row[0];
     
     echo "<input onclick='movePrev()' class='inputbox' type='button' value=' < '>";
@@ -32,7 +32,7 @@ function ShowImage()
              WHERE idsurat = $idsurat";
     $res = QueryDb($sql);
     $n = 1;
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         $deskripsi = str_replace("'", '"', $row[1]);
         

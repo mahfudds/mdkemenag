@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -83,7 +83,7 @@ $arrpen = array();
 $sql = "SELECT replid, nama FROM datapenerimaan WHERE departemen='$departemen' AND idkategori='JTT'";
 $res = QueryDb($sql);
 $i = 0;
-while($row = mysqli_fetch_row($res))
+while($row = mysql_fetch_row($res))
 {
 	$arrpen[$i][0] = $row[0];
 	$arrpen[$i][1] = $row[1];
@@ -168,12 +168,12 @@ $width = 1180 + $n_arrpen * 600;
 	$arrtotal = array();
 	for($i = 0; $i < $n_arrpen; $i++)
 		for($j = 0; $j < 8; $j++)
-			if ($j >= 0 && $j <= 4)
+			if ($j > 0 && $j < 5)
 				$arrtotal[$i * 8 + $j] = 0;
 			else
 				$arrtotal[$i * 8 + $j] = "";
 
-	while ($row = mysqli_fetch_array($res))
+	while ($row = mysql_fetch_array($res))
 	{ 
 		$n++; 
 		$nis = $row['nis'];
@@ -207,21 +207,21 @@ $width = 1180 + $n_arrpen * 600;
 					 WHERE b.replid = p.idbesarjtt AND b.idpenerimaan = '$idpenerimaan' AND b.nis = '$nis' AND b.info2 = '$idtahunbuku'
 				  GROUP BY b.nis";
 			$res2 = QueryDb($sql);
-			$row2 = mysqli_fetch_row($res2);
+			$row2 = mysql_fetch_row($res2);
 			$besar = $row2[1];
 			$jumlah = $row2[2] + $row2[4];
 			$bcicilan = $row2[3];
 			$diskon = $row2[4];
 			$sisa = $besar - $jumlah;
-			if (0 == mysqli_num_rows($res2))
+			if (0 == mysql_num_rows($res2))
 			{
 				$sql = "SELECT b.besar, b.cicilan
 					 	  FROM besarjtt b
 						 WHERE b.idpenerimaan = '$idpenerimaan' AND b.nis = '$nis' AND b.info2 = '$idtahunbuku'";
 				$res2 = QueryDb($sql);
-				if (0 != mysqli_num_rows($res2))
+				if (0 != mysql_num_rows($res2))
 				{
-					$row2 = mysqli_fetch_row($res2);
+					$row2 = mysql_fetch_row($res2);
 					$besar = $row2[0];
 					$jumlah = 0;
 					$bcicilan = $row2[1];
@@ -236,7 +236,7 @@ $width = 1180 + $n_arrpen * 600;
 				  ORDER BY tanggal DESC, p.replid DESC
 				     LIMIT 1";
 			$res2 = QueryDb($sql);
-			$row2 = mysqli_fetch_row($res2);
+			$row2 = mysql_fetch_row($res2);
 			$tglakhir = $row2[0];
 			$jumakhir = $row2[1];
 			$ketakhir = $row2[2];

@@ -41,7 +41,7 @@ function ShowAgamaCombo()
 	$res = QueryDB($sql);
     
     echo "<select name='agama' id='agama' class='inputbox'>";
-	while ($row = mysqli_fetch_array($res))
+	while ($row = mysql_fetch_array($res))
     {
 		echo "<option value='" . $row['agama'] . "' >" . $row['agama'] . "</option>";
 	}
@@ -56,7 +56,7 @@ function ShowSukuCombo()
 	$res = QueryDB($sql);
     
     echo "<select name='suku' id='suku' class='inputbox'>";
-	while ($row = mysqli_fetch_array($res))
+	while ($row = mysql_fetch_array($res))
     {
 		echo "<option value='" . $row['suku'] . "' >" . $row['suku'] . "</option>";
 	}
@@ -71,7 +71,7 @@ function ShowStatusCombo()
 	$res = QueryDB($sql);
     
     echo "<select name='status' id='status' class='inputbox'>";
-	while ($row = mysqli_fetch_array($res))
+	while ($row = mysql_fetch_array($res))
     {
 		echo "<option value='" . $row['status'] . "' >" . $row['status'] . "</option>";
 	}
@@ -86,7 +86,7 @@ function ShowKondisiCombo()
 	$res = QueryDB($sql);
     
     echo "<select name='kondisi' id='kondisi' class='inputbox'>";
-	while ($row = mysqli_fetch_array($res))
+	while ($row = mysql_fetch_array($res))
     {
 		echo "<option value='" . $row['kondisi'] . "' >" . $row['kondisi'] . "</option>";
 	}
@@ -121,7 +121,7 @@ function ShowAsalSekolahCombo($jenjang)
              WHERE departemen = '$jenjang'
              ORDER BY sekolah ASC";
 	$res = QueryDB($sql);
-    $ndata = mysqli_num_rows($res);
+    $ndata = mysql_num_rows($res);
     
     if ($ndata == 0)
     {
@@ -132,7 +132,7 @@ function ShowAsalSekolahCombo($jenjang)
     else
     {
         echo "<select name='sekolah' id='sekolah' class='inputbox' onchange='changeAsalSekolah()'>";
-        while($row = mysqli_fetch_row($res))
+        while($row = mysql_fetch_row($res))
         {
             echo "<option value='" . $row[0] . "'>" . $row[0] . "</option>";
         }
@@ -161,7 +161,7 @@ function ShowPendidikanCombo($id)
 	$res = QueryDB($sql);
     
     echo "<select name='$id' id='$id' class='inputbox'>";
-	while ($row = mysqli_fetch_row($res))
+	while ($row = mysql_fetch_row($res))
     {
 		echo "<option value='" . $row[0] . "' >" . $row[0] . "</option>";
 	}
@@ -176,7 +176,7 @@ function ShowPekerjaanCombo($id)
 	$res = QueryDB($sql);
     
     echo "<select name='$id' id='$id' class='inputbox'>";
-	while ($row = mysqli_fetch_row($res))
+	while ($row = mysql_fetch_row($res))
     {
 		echo "<option value='" . $row[0] . "' >" . $row[0] . "</option>";
 	}

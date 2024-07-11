@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -66,7 +66,7 @@ if ($op == "xm8r389xemx23xb2378e23") {
 	OpenDb();
 	$sql="SELECT a.tktakhir, a.klsakhir, a.nis, k.idtahunajaran FROM alumni a, kelas k WHERE a.replid='$_REQUEST[replid]' AND a.klsakhir = k.replid AND k.idtingkat=a.tktakhir";
 	$result=QueryDb($sql);
-	$row = mysqli_fetch_array($result);
+	$row = mysql_fetch_array($result);
 	$nis = $row['nis'];
 	$idtingkat = $row['tktakhir'];
 	$idkelas = $row['klsakhir'];
@@ -236,8 +236,8 @@ function change_baris() {
 		<?  OpenDb();
             $sql="SELECT YEAR(tgllulus) AS tahun FROM alumni WHERE departemen='$departemen' GROUP BY tahun ORDER BY tahun DESC";
             $result=QueryDb($sql);
-  			$jum_tahun = mysqli_num_rows($result);         
-            while ($row=@mysqli_fetch_array($result)){
+  			$jum_tahun = mysql_num_rows($result);         
+            while ($row=@mysql_fetch_array($result)){
 				if ($tahun=="")
 					$tahun=$row['tahun'];
         ?>
@@ -257,15 +257,15 @@ if ($jum_tahun > 0){
 	$sql_tot = "SELECT s.replid, s.nis, s.nama, k.kelas, al.tgllulus, al.klsakhir, al.tktakhir, al.replid, t.tingkat, a.angkatan FROM alumni al, kelas k, tingkat t, siswa s, angkatan a WHERE k.idtingkat=t.replid AND t.replid=al.tktakhir AND k.replid=al.klsakhir AND YEAR(al.tgllulus) = '$tahun' AND al.departemen = '$departemen' AND s.nis = al.nis AND s.idangkatan = a.replid";
 	//echo $sql_tot;
 	$result_tot = QueryDb($sql_tot);
-	$total=ceil(mysqli_num_rows($result_tot)/(int)$varbaris);
-	$jumlah = mysqli_num_rows($result_tot);
+	$total=ceil(mysql_num_rows($result_tot)/(int)$varbaris);
+	$jumlah = mysql_num_rows($result_tot);
 	$akhir = ceil($jumlah/5)*5;
 	
 	$sql_siswa = "SELECT s.replid AS replidsiswa, s.nis, s.nama, k.kelas, al.tgllulus, al.klsakhir, al.tktakhir, al.replid, t.tingkat, a.angkatan FROM alumni al, kelas k, tingkat t, siswa s, angkatan a WHERE k.idtingkat=t.replid AND t.replid=al.tktakhir AND k.replid=al.klsakhir AND YEAR(al.tgllulus) = '$tahun' AND al.departemen = '$departemen' AND s.nis = al.nis AND s.idangkatan = a.replid ORDER BY $urut $urutan LIMIT ".(int)$page*(int)$varbaris.",$varbaris";
 	
 	$result_siswa = QueryDb($sql_siswa);
 	
-	if (@mysqli_num_rows($result_siswa) > 0) {
+	if (@mysql_num_rows($result_siswa) > 0) {
 	?> 
     	<input type="hidden" name="total" id="total" value="<?=$total?>"/>
     	<td align="right">
@@ -294,7 +294,7 @@ if ($jum_tahun > 0){
 		else
 			$cnt = (int)$page*(int)$varbaris;
 		
-		while ($row = mysqli_fetch_array($result_siswa)) { ?>
+		while ($row = mysql_fetch_array($result_siswa)) { ?>
     <tr height="25">
     	<td align="center"><?=++$cnt ?></td>
         <td align="center"><?=$row['nis'] ?></td>

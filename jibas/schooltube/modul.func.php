@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  *
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -84,7 +84,7 @@ function GetFollowerCount($idModul)
               FROM jbsel.modul
              WHERE id = $idModul";
     $res = QueryDb($sql);
-    if ($row = mysqli_fetch_row($res))
+    if ($row = mysql_fetch_row($res))
         return $row[0];
 
     return 0;
@@ -114,7 +114,7 @@ function GetVideoList($idModul, $urutan)
 
     $idList = "";
     $res = QueryDb($sql);
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         if ($idList != "") $idList .= ",";
         $idList .= $row[0];
@@ -173,7 +173,7 @@ function ShowSearchMediaCount($idMedia)
               FROM jbsel.media
              WHERE id = $idMedia";
     $res = QueryDbEx($sql);
-    if ($row = mysqli_fetch_array($res))
+    if ($row = mysql_fetch_array($res))
     {
         $nlike = $row["nlike"];
         $nview = $row["nview"];
@@ -191,7 +191,7 @@ function ShowMediaVideo($idMedia)
               FROM jbsel.media
              WHERE id = $idMedia";
     $res = QueryDbEx($sql);
-    if ($row = mysqli_fetch_array($res))
+    if ($row = mysql_fetch_array($res))
     {
         $idMedia = $row["id"];
         ?>
@@ -210,7 +210,7 @@ function ShowMediaInfo($idMedia)
              WHERE m.id = $idMedia";
 
     $res = QueryDbEx($sql);
-    if ($row = mysqli_fetch_array($res))
+    if ($row = mysql_fetch_array($res))
     {
         $idKategori = $row['idkategori'];
         $kateValue = "(tidak ada kategori)";
@@ -221,7 +221,7 @@ function ShowMediaInfo($idMedia)
                       FROM jbscbe.kategori
                      WHERE id = $idKategori";
             $res2 = QueryDb($sql);
-            if ($row2 = mysqli_fetch_row($res2))
+            if ($row2 = mysql_fetch_row($res2))
                 $kateValue = $row2[0];
         }
 

@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,20 +41,20 @@ $sql = "SELECT YEAR(b.tanggal) as thn, MONTH(b.tanggal) as bln, DAY(b.tanggal) a
 			WHERE b.replid='$replid'";
 
 $result = QueryDb($sql);
-$row = @mysqli_fetch_array($result);
+$row = @mysql_fetch_array($result);
 $sql_sis="SELECT nama FROM jbsakad.siswa WHERE nis='$row[idpengirim]'";
 $result_sis=QueryDb($sql_sis);
-if (@mysqli_num_rows($result_sis) > 0)
+if (@mysql_num_rows($result_sis) > 0)
 {
-	$row_sis=@mysqli_fetch_array($result_sis);
-	$nama=$row_sis['nama'];
+	$row_sis=@mysql_fetch_array($result_sis);
+	$nama=$row_sis[nama];
 }
 else
 {
 	$sql_peg="SELECT nama FROM jbssdm.pegawai WHERE nip='$row[idpengirim]'";
 	$result_peg=QueryDb($sql_peg);
-	$row_peg=@mysqli_fetch_array($result_peg);
-	$nama=$row_peg['nama'];
+	$row_peg=@mysql_fetch_array($result_peg);
+	$nama=$row_peg[nama];
 }
 CloseDb();
 

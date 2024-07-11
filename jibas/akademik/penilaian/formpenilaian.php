@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -86,7 +86,7 @@ function change_dep() {
 	var departemen = document.getElementById("departemen").value;
 	var tahunajaran = document.getElementById("tahunajaran").value;
 	var semester = document.getElementById("semester").value;
-	var pelajaran = ""; //document.getElementById("pelajaran").value;
+	var pelajaran = document.getElementById("pelajaran").value;
 		
 	document.location.href = "formpenilaian.php?departemen="+departemen+"&tahunajaran="+tahunajaran+"&semester="+semester+"&pelajaran="+pelajaran;
 }
@@ -239,7 +239,7 @@ function d(){
     	<td><select name="tingkat" id="tingkat" onChange="change_tingkat()" style="width:225px" onkeypress="return focusNext('kelas', event)">
           <? $sql = "SELECT replid,tingkat FROM tingkat WHERE aktif=1 AND departemen='$departemen' ORDER BY urutan";	
 			 $result = QueryDb($sql);
-			 while($row = mysqli_fetch_array($result)) 
+			 while($row = mysql_fetch_array($result)) 
 			 {
 				if ($tingkat == "")
 					$tingkat = $row['replid'];				
@@ -255,7 +255,7 @@ function d(){
        	<td>
 <?  		$sql = "SELECT replid,tahunajaran FROM tahunajaran WHERE departemen = '$departemen' AND aktif=1 ORDER BY replid DESC";
 			$result = QueryDb($sql);
-			$row = @mysqli_fetch_array($result);	
+			$row = @mysql_fetch_array($result);	
 			$tahunajaran = $row['replid']; ?>
         	<input type="text" name="tahun" id="tahun" size="22" readonly value="<?=$row['tahunajaran']?>" class="disabled" />
         	<input type="hidden" name="tahunajaran" id="tahunajaran" value="<?=$row['replid']?>">        </td>
@@ -264,7 +264,7 @@ function d(){
    			<select name="kelas" id="kelas" onChange="change()" style="width:225px" onKeyPress="return focusNext('pelajaran', event)">
 <?			$sql = "SELECT replid,kelas FROM kelas WHERE aktif=1 AND idtahunajaran = '$tahunajaran' AND idtingkat = '$tingkat' ORDER BY kelas ";	
 			$result = QueryDb($sql);
-			while($row = mysqli_fetch_array($result)) 
+			while($row = mysql_fetch_array($result)) 
 			{
 				if ($kelas == "")
 					$kelas = $row['replid'];
@@ -279,7 +279,7 @@ function d(){
     	<td>
 <?          $sql = "SELECT replid,semester FROM semester where departemen='$departemen' AND aktif = 1";
             $result = QueryDb($sql);
-            $row = @mysqli_fetch_array($result);  	?>   	
+            $row = @mysql_fetch_array($result);  	?>   	
             <input type="text" name="sem" size="22" value="<?=$row['semester'] ?>" readonly class="disabled"/>
             <input type="hidden" name="semester" id="semester" value="<?=$row['replid']?>">            </td>
         <td align="left"><strong>Pelajaran</strong></td>      	
@@ -287,7 +287,7 @@ function d(){
         	<select name="pelajaran" id="pelajaran" onChange="change()" style="width:225px" onKeyPress="return focusNext('nip', event)">
 <?			$sql = "SELECT replid,nama FROM pelajaran WHERE departemen = '$departemen' AND aktif=1 ORDER BY nama";
 			$result = QueryDb($sql);
-			while ($row = @mysqli_fetch_array($result)) 
+			while ($row = @mysql_fetch_array($result)) 
 			{
 				if ($pelajaran == "") 				
 					$pelajaran = $row['replid'];			
@@ -304,7 +304,7 @@ function d(){
       		<select name="nip" id="nip" onChange="change()" style="width:465px">
 <?			$sql = "SELECT DISTINCT p.nip,p.nama FROM jbssdm.pegawai p, guru g, pelajaran l WHERE p.nip = g.nip AND g.idpelajaran = '$pelajaran' AND g.aktif = 1  ORDER BY p.nama  ";
 			$result = QueryDb($sql);
-			while ($row = @mysqli_fetch_array($result)) 
+			while ($row = @mysql_fetch_array($result)) 
 			{
 				if ($nip == "") 				
 					$nip = $row['nip'];			
@@ -341,7 +341,7 @@ if (isset($_REQUEST['jenis']))
 	$sql = "SELECT nis, nama FROM siswa WHERE idkelas = '$kelas' ORDER BY nama";
 	$result = QueryDb($sql);
 	
-	if (mysqli_num_rows($result) > 0) 
+	if (mysql_num_rows($result) > 0) 
 	{	
 		switch($_REQUEST['jenis']) {
 			case 1 :
@@ -355,7 +355,7 @@ if (isset($_REQUEST['jenis']))
 			case 2 :
 				$sql1="SELECT * FROM jbsakad.aturannhb WHERE idtingkat='$tingkat' AND idpelajaran='$pelajaran' AND aktif=1 AND nipguru='$nip'";
 				$result1=QueryDb($sql1);
-				if (mysqli_num_rows($result1) > 0) {
+				if (mysql_num_rows($result1) > 0) {
 			?>
         	<!--<script language="javascript" src="../script/tools.js"></script>-->
 			<script language="javascript">				

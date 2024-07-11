@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -102,7 +102,7 @@ function ShowSetoranInput()
                      WHERE kategori = 'HARTA'
                      ORDER BY nama";        
             $res = QueryDb($sql);
-            while($row = mysqli_fetch_row($res))
+            while($row = mysql_fetch_row($res))
             {
                 $sel = $row[0] == $defrekkas ? "selected" : "";
                 echo "<option value='$row[0]' $sel>$row[0] $row[1]</option>";
@@ -175,7 +175,7 @@ function ShowTarikanInput()
                      WHERE kategori = 'HARTA'
                      ORDER BY nama";        
             $res = QueryDb($sql);
-            while($row = mysqli_fetch_row($res))
+            while($row = mysql_fetch_row($res))
             {
                 $sel = $row[0] == $defrekkas ? "selected" : "";
                 echo "<option value='$row[0]' $sel>$row[0] $row[1]</option>";
@@ -277,7 +277,7 @@ function ShowTransaksiList($page)
     {
         echo "<tr height='100'><td colspan='7' align='center' valign='middle'><i>Belum ada data tabungan</i></td></tr>";
     }
-    else if (mysqli_num_rows($result) == 0)
+    else if (mysql_num_rows($result) == 0)
     {
         echo "";
     }
@@ -285,7 +285,7 @@ function ShowTransaksiList($page)
     {
         
         $cnt = $startIndex;
-        while ($row = mysqli_fetch_array($result))
+        while ($row = mysql_fetch_array($result))
         {
             $kredit = (int) $row['kredit'];
             $bgcolor = $kredit != 0 ? "#E0F3FF" : "#F9F6EA";
@@ -298,10 +298,10 @@ function ShowTransaksiList($page)
                       FROM jbsfina.paymenttrans
                      WHERE idtabunganp = $idTabungan";
             $res2 = QueryDb($sql);
-            $isSchoolPay = mysqli_num_rows($res2) > 0;
+            $isSchoolPay = mysql_num_rows($res2) > 0;
 
             $infoSchoolPay = "";
-            if ($row2 = mysqli_fetch_row($res2))
+            if ($row2 = mysql_fetch_row($res2))
             {
                 $jenisTrans = $row2[0];
                 if ($jenisTrans == 0)
@@ -346,7 +346,7 @@ function ShowInfoTabungan()
              WHERE nip = '$nip'
                AND idtabungan = '$idtabungan'";
     $res = QueryDb($sql);
-    $row = mysqli_fetch_row($res);
+    $row = mysql_fetch_row($res);
     $jsetor = $row[1];
     $jtarik = $row[0];
     $jsaldo = $jsetor - $jtarik;
@@ -359,7 +359,7 @@ function ShowInfoTabungan()
              ORDER BY replid DESC
              LIMIT 1";
     $res = QueryDb($sql);
-    $row = mysqli_fetch_row($res);             
+    $row = mysql_fetch_row($res);             
     $tglsetorakhir = $row[0];
     $setorakhir = $row[1];
     
@@ -371,7 +371,7 @@ function ShowInfoTabungan()
              ORDER BY replid DESC
              LIMIT 1";
     $res = QueryDb($sql);
-    $row = mysqli_fetch_row($res);             
+    $row = mysql_fetch_row($res);             
     $tgltarikakhir = $row[0];
     $tarikakhir = $row[1];
     ?>

@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,10 +28,10 @@ require_once('../inc/db_functions.php');
 require_once('../lib/GetHeaderCetak.php');
 OpenDb();
 $departemen='yayasan';
-$rak = $_REQUEST['rak'];
+$rak = $_REQUEST[rak];
 $sql = "SELECT rak FROM rak WHERE replid='$rak'";
 $result = QueryDb($sql);
-$row = @mysqli_fetch_row($result);
+$row = @mysql_fetch_row($result);
 $namarak = $row[0];
 if ($namarak=='')
 	$namarak='Semua Rak';
@@ -69,18 +69,18 @@ Rak : <?=$namarak?></strong></div>
 			exit;
 	  $sql = "SELECT * FROM katalog WHERE rak=".$rak." ORDER BY kode";
 	  $result = QueryDb($sql);
-	  $num = @mysqli_num_rows($result);
+	  $num = @mysql_num_rows($result);
 	  if ($num>0){
-		  while ($row=@mysqli_fetch_array($result)){
-				$num_judul = @mysqli_num_rows(QueryDb("SELECT * FROM pustaka p, katalog k WHERE k.replid='$row[replid]' AND k.replid=p.katalog"));
-				$num_pustaka = @mysqli_fetch_row(QueryDb("SELECT COUNT(d.replid) FROM pustaka p, daftarpustaka d, katalog k WHERE d.pustaka=p.replid AND k.replid='$row[replid]' AND p.katalog=k.replid"));
+		  while ($row=@mysql_fetch_array($result)){
+				$num_judul = @mysql_num_rows(QueryDb("SELECT * FROM pustaka p, katalog k WHERE k.replid='$row[replid]' AND k.replid=p.katalog"));
+				$num_pustaka = @mysql_fetch_row(QueryDb("SELECT COUNT(d.replid) FROM pustaka p, daftarpustaka d, katalog k WHERE d.pustaka=p.replid AND k.replid='$row[replid]' AND p.katalog=k.replid"));
 		  ?>
 		  <tr>
-			<td height="25" align="center"><?=$row['kode']?></td>
-			<td height="25">&nbsp;<?=$row['nama']?></td>
+			<td height="25" align="center"><?=$row[kode]?></td>
+			<td height="25">&nbsp;<?=$row[nama]?></td>
 			<td height="25" align="center">&nbsp;<?=$num_judul?></td>
 			<td height="25" align="center">&nbsp;<?=(int)$num_pustaka[0]?></td>
-			<td height="25">&nbsp;<?=$row['keterangan']?></td>
+			<td height="25">&nbsp;<?=$row[keterangan]?></td>
 		  </tr>
 		  <?
 		  }

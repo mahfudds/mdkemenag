@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
  * You should have received a copy of the GNU General Public License
  **[N]**/ ?>
 <?
-if(isset($_GET['departemen'])){
+if(isset($_GET[departemen])){
 	$file1 = "filter_penentuan.php?departemen=$_GET[departemen]&tingkat=$_GET[tingkat]&semester=$_GET[semester]&kelas=$_GET[kelas]";
 	$file2 = "penentuan_footer.php?departemen=$_GET[departemen]&tingkat=$_GET[tingkat]&semester=$_GET[semester]&kelas=$_GET[kelas]";
 }else{

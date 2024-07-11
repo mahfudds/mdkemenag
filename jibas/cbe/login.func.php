@@ -4,9 +4,9 @@
  * Jaringan Informasi Bersama Antar Sekolah
  *
  * @version: 24.0 (April 01, 2021)
- * @notes: 
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -112,9 +112,9 @@ function processLogin($jsonSession, $jsonData)
               FROM jbsumum.identitas
              WHERE departemen = '$session->UserDept'";
     $res = QueryDb($sql);
-    if (mysqli_num_rows($res) > 0)
+    if (mysql_num_rows($res) > 0)
     {
-        $row = mysqli_fetch_row($res);
+        $row = mysql_fetch_row($res);
         $_SESSION["Departemen"] = $row[0];
     }
     else
@@ -123,9 +123,9 @@ function processLogin($jsonSession, $jsonData)
                   FROM jbsumum.identitas
                  WHERE departemen = 'yayasan'";
         $res = QueryDb($sql);
-        if (mysqli_num_rows($res) > 0)
+        if (mysql_num_rows($res) > 0)
         {
-            $row = mysqli_fetch_row($res);
+            $row = mysql_fetch_row($res);
             $_SESSION["Departemen"] = $row[0];
         }
         else
@@ -145,7 +145,7 @@ function processLogin($jsonSession, $jsonData)
              WHERE TABLE_SCHEMA = 'jbscbe'
                AND TABLE_NAME = 'timadmin'";
     $res = QueryDb($sql);
-    $row = mysqli_fetch_row($res);
+    $row = mysql_fetch_row($res);
     $ndata = (int) $row[0];
     if ($ndata > 0)
     {
@@ -153,7 +153,7 @@ function processLogin($jsonSession, $jsonData)
                   FROM jbscbe.timadmin
                  WHERE userid = '$session->UserId'";
         $res = QueryDb($sql);
-        $row = mysqli_fetch_row($res);
+        $row = mysql_fetch_row($res);
         $ndata = (int)$row[0];
 
         $_SESSION["TimAdmin"] = $ndata > 0;
@@ -211,7 +211,7 @@ function testDbConnection()
 {
     global $db_host, $db_user, $db_pass, $db_name, $mysqlconnection;
 
-    $mysqlconnection = @mysqli_connect($db_host, $db_user, $db_pass);
+    $mysqlconnection = @mysql_connect($db_host, $db_user, $db_pass);
     if (!$mysqlconnection)
         $result = new GenericReturn(-99, "Tidak dapat terhubung dengan server database JIBAS di $db_host", "");
     else

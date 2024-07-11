@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,20 +23,20 @@
 <?
 class CAktivitas{
 	function OnStart(){
-		$op=$_REQUEST['op'];
+		$op=$_REQUEST[op];
 		if ($op=="del"){
 			$sql = "DELETE FROM aktivitas WHERE replid='$_REQUEST[id]'";
 			QueryDb($sql);
 		}
 		$sqlDate = "SELECT DATE_FORMAT(now(),'%d-%m-%Y')";
 		$resultDate = QueryDb($sqlDate);
-		$rowDate = @mysqli_fetch_row($resultDate);
+		$rowDate = @mysql_fetch_row($resultDate);
 		$this->tglAwal = $rowDate[0];
-		if (isset($_REQUEST['tglAwal']))
-			$this->tglAwal = $_REQUEST['tglAwal'];
+		if (isset($_REQUEST[tglAwal]))
+			$this->tglAwal = $_REQUEST[tglAwal];
 		$this->tglAkhir = $rowDate[0];
-		if (isset($_REQUEST['tglAkhir']))
-			$this->tglAkhir = $_REQUEST['tglAkhir'];
+		if (isset($_REQUEST[tglAkhir]))
+			$this->tglAkhir = $_REQUEST[tglAkhir];	
 	}
 	function OnFinish(){
 		?>
@@ -48,7 +48,7 @@ class CAktivitas{
     function Content(){
 		$sql = "SELECT * FROM aktivitas WHERE tanggal BETWEEN '".MysqlDateFormat($this->tglAwal)." 00:00:00' AND '".MysqlDateFormat($this->tglAkhir)." 23:59:59' ORDER BY tanggal DESC";
 		$result = QueryDb($sql);
-		$num = @mysqli_num_rows($result);
+		$num = @mysql_num_rows($result);
 		?>
 		<link href="../sty/style.css" rel="stylesheet" type="text/css">
 		<div class="filter">
@@ -80,16 +80,16 @@ class CAktivitas{
           <?
 		  if ($num>0){
 		  	  $cnt=0;	
-			  while ($row=@mysqli_fetch_array($result)){
+			  while ($row=@mysql_fetch_array($result)){
 			  ?>
 			  <tr>
 				<td width="50" height="25" align="center"><?=++$cnt?></td>
-				<td width="150" height="25" align="left">&nbsp;<?=substr($row['tanggal'],8,2)."-".substr($row['tanggal'],5,2)."-".substr($row['tanggal'],0,4)." ".substr($row['tanggal'],11,8)?></td>
+				<td width="150" height="25" align="left">&nbsp;<?=substr($row[tanggal],8,2)."-".substr($row[tanggal],5,2)."-".substr($row[tanggal],0,4)." ".substr($row[tanggal],11,8)?></td>
 				<td height="25" align="left">
-			    <div align="justify"><?=chg_p_to_div(stripslashes($row['aktivitas']))?></div>
+			    <div align="justify"><?=chg_p_to_div(stripslashes($row[aktivitas]))?></div>
                 </td>
 				<? if (IsAdmin()) { ?>
-				<td width="50" height="25" align="center" bgcolor="#FFFFFF"><a href="javascript:ubah('<?=$row['replid']?>')"><img src="../img/ico/ubah.png" width="16" height="16" border="0"></a>&nbsp;<a href="javascript:hapus('<?=$row['replid']?>')"><img src="../img/ico/hapus.png" border="0"></a></td>
+				<td width="50" height="25" align="center" bgcolor="#FFFFFF"><a href="javascript:ubah('<?=$row[replid]?>')"><img src="../img/ico/ubah.png" width="16" height="16" border="0"></a>&nbsp;<a href="javascript:hapus('<?=$row[replid]?>')"><img src="../img/ico/hapus.png" border="0"></a></td>
 				<? } ?>
 			  </tr>
 			  <?

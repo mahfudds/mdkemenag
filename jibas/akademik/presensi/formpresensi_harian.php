@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -200,7 +200,7 @@ function cetaklah()
                 $sql = "SELECT replid,tahunajaran FROM tahunajaran where departemen='$departemen' AND aktif = 1";
                 $result = QueryDb($sql);
 				CloseDb();
-				$row = mysqli_fetch_array($result);
+				$row = mysql_fetch_array($result);
 				$tahun = $row['tahunajaran'];
 				$tahunajaran = $row['replid'];
 				?>
@@ -219,7 +219,7 @@ function cetaklah()
                 $sql = "SELECT replid,semester FROM semester where departemen='$departemen' AND aktif = 1";
                 $result = QueryDb($sql);
                 CloseDb();
-               	$row = @mysqli_fetch_array($result);
+               	$row = @mysql_fetch_array($result);
                 
                 ?>
                 <input type="text" name="sem" size="22" value="<?=$row['semester'] ?>" readonly class="disabled"/>
@@ -235,7 +235,7 @@ function cetaklah()
                 $result = QueryDb($sql);
                 CloseDb();
         
-                while($row = mysqli_fetch_array($result)) {
+                while($row = mysql_fetch_array($result)) {
                 if ($tingkat == "")
                     $tingkat = $row['replid'];				
                 ?>
@@ -255,7 +255,7 @@ function cetaklah()
                 $result = QueryDb($sql);
                 CloseDb();
         
-                while($row = mysqli_fetch_array($result)) {
+                while($row = mysql_fetch_array($result)) {
                 if ($kelas == "")
                     $kelas = $row['replid'];
                 $kls = $row['kelas'];			 
@@ -275,7 +275,7 @@ function cetaklah()
             $sql = "SELECT nis, nama FROM siswa WHERE idkelas = '$kelas' ORDER BY nama";
             $result = QueryDb($sql);
             
-            if (mysqli_num_rows($result) > 0) {
+            if (mysql_num_rows($result) > 0) {
                 if ($result) { ?>
                    <div align="center"><br /><input type="button" name="Cetak" id="cetak" value="Cetak" onclick="cetaklah()" class="but" style="width:80px;" /></div>
         <?		}

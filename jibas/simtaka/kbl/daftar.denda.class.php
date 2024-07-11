@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,39 +25,39 @@ class CDaftarDenda
 {
 	function OnStart()
 	{
-		$op=$_REQUEST['op'];
+		$op=$_REQUEST[op];
 	
 		$this->kriteria='all';
-		if (isset($_REQUEST['kriteria']))
-			$this->kriteria=$_REQUEST['kriteria'];
+		if (isset($_REQUEST[kriteria]))
+			$this->kriteria=$_REQUEST[kriteria];
 			
 		if ($this->kriteria=='nip')
 			$this->statuspeminjam=0;
 		elseif ($this->kriteria=='nis')
 			$this->statuspeminjam=1;
 			
-		$this->noanggota = $_REQUEST['noanggota'];
-		$this->nama = $_REQUEST['nama'];
+		$this->noanggota = $_REQUEST[noanggota];
+		$this->nama = $_REQUEST[nama];
 		
 		$sqlDate="SELECT DAY(now()),MONTH(now()),YEAR(now())";
 		$resultDate = QueryDb($sqlDate);
-		$rDate = @mysqli_fetch_row($resultDate);
+		$rDate = @mysql_fetch_row($resultDate);
 		
 		$this->tglAwal = $rDate[0]."-".$rDate[1]."-".$rDate[2];
-		if (isset($_REQUEST['tglAwal']))
-			$this->tglAwal = $_REQUEST['tglAwal'];
+		if (isset($_REQUEST[tglAwal]))
+			$this->tglAwal = $_REQUEST[tglAwal];
 			
 		$this->tglAkhir = $rDate[0]."-".$rDate[1]."-".$rDate[2];	
-		if (isset($_REQUEST['tglAkhir']))
-			$this->tglAkhir = $_REQUEST['tglAkhir'];
+		if (isset($_REQUEST[tglAkhir]))
+			$this->tglAkhir = $_REQUEST[tglAkhir];
 			
 		$this->denda=0;
-		if (isset($_REQUEST['denda']))
-			$this->denda=$_REQUEST['denda'];
+		if (isset($_REQUEST[denda]))
+			$this->denda=$_REQUEST[denda];
 			
 		$this->telat=1;
-		if (isset($_REQUEST['telat']) && $_REQUEST['telat']!="")
-			$this->telat=$_REQUEST['telat'];
+		if (isset($_REQUEST[telat]) && $_REQUEST[telat]!="")
+			$this->telat=$_REQUEST[telat];
 	}
 	
 	function OnFinish()
@@ -73,7 +73,7 @@ class CDaftarDenda
 	{
 		$sql = "SELECT DATE_FORMAT(now(),'%Y-%m-%d')";
 		$result = QueryDb($sql);
-		$row = @mysqli_fetch_row($result);
+		$row = @mysql_fetch_row($result);
 		$now = $row[0];
 		
 		if ($this->kriteria=='all')
@@ -146,7 +146,7 @@ class CDaftarDenda
 					 ORDER BY p.tglditerima DESC";
 		}
 		$result = QueryDb($sql);
-		$num = @mysqli_num_rows($result);
+		$num = @mysql_num_rows($result);
 		?>
         <div class="filter">
         <table width="100%" border="0" cellpadding="2" cellspacing="2">
@@ -264,7 +264,7 @@ class CDaftarDenda
 		{
 			$totaldenda=0;
 			$cnt = 0;
-			while ($row=@mysqli_fetch_array($result))
+			while ($row=@mysql_fetch_array($result))
 			{
 				$cnt += 1;
 				
@@ -274,7 +274,7 @@ class CDaftarDenda
 						 WHERE dp.pustaka = p.replid
 						   AND dp.kodepustaka = '$kodepustaka'";
 				$res2 = QueryDb($sql);
-				$row2 = @mysqli_fetch_array($res2);
+				$row2 = @mysql_fetch_array($res2);
 				$judul = $row2['judul'];
 				
 				$sql = "SELECT pi.idanggota, pi.kodepustaka, pi.info1
@@ -284,15 +284,15 @@ class CDaftarDenda
 						   AND pi.replid='$row[idpinjam]'";
 				//echo $sql;
 				$res = QueryDb($sql);
-				$r = @mysqli_fetch_row($res);
+				$r = @mysql_fetch_row($res);
 				$this->idanggota = $r[0];
 				$this->jenisanggota = $r[2];
 				
 				$NamaAnggota = $this->GetMemberName();
-				$totaldenda += $row['denda'];  ?>
+				$totaldenda += $row[denda];  ?>
 				<tr height="25" style="color:<?=$color?>; <?=$weight?>">
 					<td align="center"><?=$cnt?></td>
-					<td align="center"><?=LongDateFormat($row['tglditerima'])?></td>
+					<td align="center"><?=LongDateFormat($row[tglditerima])?></td>
 					<td align="left">
 						<font style='font-size: 9px'><?=$r[0]?></font><br>
 						<font style='font-size: 11px; font-weight: bold;'><?=$this->GetMemberName()?></font>
@@ -301,9 +301,9 @@ class CDaftarDenda
 						<font style='font-size: 9px'><?=$kodepustaka?></font><br>
 						<font style='font-size: 11px; font-weight: bold;'><?=$judul?></font>
 					</td>
-					<td align="center"><?=$row['telat']?> hari</td>
-					<td align="right"><?=FormatRupiah($row['denda'])?></td>
-					<td align="center"><?=$row['keterangan']?></td>
+					<td align="center"><?=$row[telat]?> hari</td>
+					<td align="right"><?=FormatRupiah($row[denda])?></td>
+					<td align="center"><?=$row[keterangan]?></td>
 				</tr>
 <?		  	}  ?>
 			<tr style="color:<?=$color?>; <?=$weight?>">
@@ -342,7 +342,7 @@ class CDaftarDenda
 					 WHERE noregistrasi = '$this->idanggota'";
 		}
 		$res = QueryDb($sql);
-		$row = mysqli_fetch_row($res);
+		$row = mysql_fetch_row($res);
 		$namaanggota = $row[0];
 		
 		return $namaanggota;

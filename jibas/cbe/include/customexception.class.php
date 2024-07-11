@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  *
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,8 +28,8 @@ abstract class CustomException extends Exception implements IException
     protected $message = 'Unknown exception';     // Exception message
     private   $string;                            // Unknown
     protected $code    = 0;                       // User-defined exception code
-    protected string $file;                              // Source filename of exception
-    protected int $line;                              // Source line of exception
+    protected $file;                              // Source filename of exception
+    protected $line;                              // Source line of exception
     private   $trace;                             // Unknown
 
     public function __construct($message = null, $code = 0)

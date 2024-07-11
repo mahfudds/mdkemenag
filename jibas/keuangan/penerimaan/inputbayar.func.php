@@ -4,9 +4,9 @@
  * Jaringan Informasi Bersama Antar Sekolah
  *
  * @version: 15 (January 02, 2019)
- * @notes: 
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -63,7 +63,7 @@ function ShowSelectPenerimaan($departemen, $idKategori)
              ORDER BY nama"; ?>
     <select name="penerimaan" id="penerimaan" style="font-size: 14px; background-color: #fdffc7; width:200px">
 <?      $res = QueryDb($sql);
-        while($row = mysqli_fetch_row($res))
+        while($row = mysql_fetch_row($res))
         {
             ?>
             <option value="<?= $row[0] ?>" ><?= $row[1] ?></option>
@@ -84,7 +84,7 @@ function ShowSelectTingkatSiswa($departemen)
     ?>
     <select name="tingkat" id="tingkat" style="width:200px" onchange="change_tingkat()">
 <?      $res = QueryDb($sql);
-        while($row = mysqli_fetch_row($res))
+        while($row = mysql_fetch_row($res))
         {
             if ($idTingkat == 0) $idTingkat = $row[0];
             ?>
@@ -101,10 +101,10 @@ function ShowSelectKelasSiswa($departemen, $idTingkat)
              WHERE departemen = '$departemen'
                AND aktif = 1";
     $res = QueryDb($sql);
-    if (mysqli_num_rows($res) == 0)
+    if (mysql_num_rows($res) == 0)
         return "";
 
-    $row = mysqli_fetch_row($res);
+    $row = mysql_fetch_row($res);
     $idTahunAjaran = $row[0];
 
     $sql = "SELECT replid, kelas
@@ -116,7 +116,7 @@ function ShowSelectKelasSiswa($departemen, $idTingkat)
     $res = QueryDb($sql);
     echo "<table border='0' cellpadding='4' cellspacing='0'>";
     $n = 0;
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         $n += 1;
 
@@ -145,7 +145,7 @@ function ShowSelectProsesCalonSiswa($departemen)
     ?>
     <select name="tingkat" id="tingkat" style="width:200px" onchange="change_tingkat()">
 <?      $res = QueryDb($sql);
-        while($row = mysqli_fetch_row($res))
+        while($row = mysql_fetch_row($res))
         {
             if ($idTingkat == 0) $idTingkat = $row[0];
             ?>
@@ -164,7 +164,7 @@ function ShowSelectKelompokCalonSiswa($departemen, $idTingkat)
     $res = QueryDb($sql);
     echo "<table border='0' cellpadding='4' cellspacing='0'>";
     $n = 0;
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         $n += 1;
 
@@ -188,10 +188,10 @@ function SimpanBesarSiswa($departemen, $idPenerimaan, $idTingkat, $idKelas, $bes
              WHERE aktif = 1
                AND departemen = '$departemen'";
     $res = QueryDb($sql);
-    if (mysqli_num_rows($res) == 0)
+    if (mysql_num_rows($res) == 0)
         return "SIMPAN: Tidak ada tahun buku yang aktif di departemen $departemen";
 
-    $row = mysqli_fetch_row($res);
+    $row = mysql_fetch_row($res);
     $idTahunBuku = $row[0];
 
     $sql = "SELECT DISTINCT nis
@@ -199,11 +199,11 @@ function SimpanBesarSiswa($departemen, $idPenerimaan, $idTingkat, $idKelas, $bes
              WHERE idkelas IN ($idKelas)
                AND aktif = 1";
     $res = QueryDb($sql);
-    if (mysqli_num_rows($res) == 0)
+    if (mysql_num_rows($res) == 0)
         return "SIMPAN: Tidak ditemukan data siswa";
 
     $lsNis = array();
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         $nis = $row[0];
 
@@ -213,7 +213,7 @@ function SimpanBesarSiswa($departemen, $idPenerimaan, $idTingkat, $idKelas, $bes
                    AND idpenerimaan = '$idPenerimaan'
                    AND info2 = '$idTahunBuku'";
         $res2 = QueryDb($sql);
-        $row2 = mysqli_fetch_row($res2);
+        $row2 = mysql_fetch_row($res2);
         $ndata = $row2[0];
 
         if ($ndata == 0)
@@ -241,9 +241,9 @@ function SimpanBesarSiswa($departemen, $idPenerimaan, $idTingkat, $idKelas, $bes
              WHERE departemen = '$departemen'
                AND aktif = 1";
     $res = QueryDb($sql);
-    if (mysqli_num_rows($res) == 0)
+    if (mysql_num_rows($res) == 0)
         return "SIMPAN: Belum ada tahun buku yang aktif untuk departemen $departemen!";
-    $row = mysqli_fetch_row($res);
+    $row = mysql_fetch_row($res);
     $idTahunBuku = $row[0];
     $awalan = $row[1];
     $cacah = $row[2];
@@ -354,10 +354,10 @@ function SimpanBesarCalonSiswa($departemen, $idPenerimaan, $idTingkat, $idKelas,
              WHERE aktif = 1
                AND departemen = '$departemen'";
     $res = QueryDb($sql);
-    if (mysqli_num_rows($res) == 0)
+    if (mysql_num_rows($res) == 0)
         return "SIMPAN: Tidak ada tahun buku yang aktif di departemen $departemen";
 
-    $row = mysqli_fetch_row($res);
+    $row = mysql_fetch_row($res);
     $idTahunBuku = $row[0];
 
     $sql = "SELECT DISTINCT replid
@@ -365,11 +365,11 @@ function SimpanBesarCalonSiswa($departemen, $idPenerimaan, $idTingkat, $idKelas,
              WHERE idkelompok IN ($idKelas)
                AND aktif = 1";
     $res = QueryDb($sql);
-    if (mysqli_num_rows($res) == 0)
+    if (mysql_num_rows($res) == 0)
         return "SIMPAN: Tidak ditemukan data calon siswa";
 
     $lsIdCalon = array();
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         $idCalon = $row[0];
 
@@ -379,7 +379,7 @@ function SimpanBesarCalonSiswa($departemen, $idPenerimaan, $idTingkat, $idKelas,
                    AND idpenerimaan = '$idPenerimaan'
                    AND info2 = '$idTahunBuku'";
         $res2 = QueryDb($sql);
-        $row2 = mysqli_fetch_row($res2);
+        $row2 = mysql_fetch_row($res2);
         $ndata = $row2[0];
 
         if ($ndata == 0)

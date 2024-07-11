@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *  
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,35 +26,30 @@ require_once("errorhandler.php");
 require_once("dbexception.class.php");
 
 $mysqlconnection = NULL;
-$mysqlclosed = false;
 
 // Buka koneksi ke Database
 function OpenDb() 
 {
 	global $db_host, $db_user, $db_pass, $db_name, $mysqlconnection;
-
-    // -- v31 -- 2025-05-26
-    // force mysqli to not report any errors
-    mysqli_report(MYSQLI_REPORT_OFF);
 	
-	$mysqlconnection = @mysqli_connect($db_host, $db_user, $db_pass);
+	$mysqlconnection = @mysql_connect($db_host, $db_user, $db_pass);
 	if (!$mysqlconnection)
 	{
 		HandleQueryError("Tidak dapat terhubung dengan server database JIBAS di $db_host", 
-						 mysqli_errno($mysqlconnection), mysqli_error($mysqlconnection), false);
+						 mysql_errno(), mysql_error(), false);
 		exit();
 	} 
 	else 
 	{
-		$select = @mysqli_select_db($mysqlconnection, $db_name);
+		$select = @mysql_select_db($db_name, $mysqlconnection);
 		if (!$select)
 		{
 			HandleQueryError("Tidak dapat membuka database $db_name",
-                             mysqli_errno($mysqlconnection), mysqli_error($mysqlconnection), false);
+                             mysql_errno(), mysql_error(), false);
 			exit();
 		}
 				  
-		mysqli_query($mysqlconnection, "SET lc_time_names = 'id_ID';");
+		mysql_query("SET lc_time_names = 'id_ID';");
 		
 		return $mysqlconnection;
 	}
@@ -73,9 +68,7 @@ function OpenDbi()
 // Buat query
 function QueryDbi($sql) 
 {
-    global $mysqlconnection;
-
-	$result = mysqli_query($mysqlconnection, $sql) or trigger_error("Failed to execute sql query: $sql", E_USER_ERROR);
+	$result = mysqli_query($sql) or trigger_error("Failed to execute sql query: $sql", E_USER_ERROR);
 	
 	return $result;
 }
@@ -84,17 +77,8 @@ function QueryDbi($sql)
 function CloseDb() 
 {
 	global $mysqlconnection;
-	global $mysqlclosed;
-
-	if ($mysqlconnection == null)
-	    return;
-
-	if ($mysqlclosed)
-	    return;
-
-	@mysqli_close($mysqlconnection);
-
-	$mysqlclosed = true;
+	
+	@mysql_close($mysqlconnection);
 }
 
 function HandleQueryError($sql, $errno, $errmsg, $issend)
@@ -120,13 +104,13 @@ function QueryDb($sql)
 {
 	global $mysqlconnection;
 	
-	$result = @mysqli_query($mysqlconnection, $sql);
+	$result = @mysql_query($sql, $mysqlconnection);
 	
-	if (mysqli_errno($mysqlconnection) > 0)
+	if (mysql_errno() > 0)
 	{
 		// Save Error Information
-		$errmsg = mysqli_error($mysqlconnection);
-		$errno = mysqli_errno($mysqlconnection);
+		$errmsg = mysql_error();
+		$errno = mysql_errno();
 		
 		// Force Closing Database Connection
 		CloseDb();
@@ -143,14 +127,14 @@ function QueryDbTrans($sql, &$success)
 {
 	global $mysqlconnection;
 	
-	$result = @mysqli_query($mysqlconnection, $sql);
+	$result = @mysql_query($sql, $mysqlconnection);
 	$success = ($result && 1); 
 	
 	if (!$success)
 	{
 		// Save Error Information
-		$errmsg = mysqli_error($mysqlconnection);
-		$errno = mysqli_errno($mysqlconnection);
+		$errmsg = mysql_error();
+		$errno = mysql_errno();
 		
 		// Force Rolling Back and Closing Database Connection
 		RollbackTrans();
@@ -168,13 +152,13 @@ function QueryDbEx($sql)
 {
 	global $mysqlconnection;
 		
-    $result = @mysqli_query($mysqlconnection, $sql);
+    $result = @mysql_query($sql, $mysqlconnection);
 	LogQuery($sql);
 	
-	if (mysqli_errno($mysqlconnection) > 0)
+	if (mysql_errno() > 0)
 	{
 		LogIfError($sql);
-		throw new DbException(mysqli_error($mysqlconnection), mysqli_errno($mysqlconnection));
+		throw new DbException(mysql_error(), mysql_errno());
 	}
 		
     return $result;
@@ -186,9 +170,9 @@ function FetchSingleEx($sql)
 	LogQuery($sql);
 	LogIfError($sql);
 	
-	if (mysqli_num_rows($res) > 0)
+	if (mysql_num_rows($res) > 0)
 	{
-		$row = mysqli_fetch_row($res);
+		$row = mysql_fetch_row($res);
 		return $row[0];
 	}
 	else
@@ -199,13 +183,11 @@ function FetchSingleEx($sql)
 
 function LogIfError($sql)
 {
-    global $mysqlconnection;
-
-	if (mysqli_errno($mysqlconnection) == 0)
+	if (mysql_errno() == 0)
 		return;
 	
-	echo "<font style='color:red; font-weight:bold'>SQL Error Logged</font><br>";
-	LogError($sql, mysqli_errno($mysqlconnection), mysqli_error($mysqlconnection));
+	echo "<font style='color:red; font-weight:boldl'>SQL Error Logged</font><br>";	
+	LogError($sql, mysql_errno(), mysql_error());
 }
 
 function LogError($sql, $errno, $error)
@@ -262,46 +244,50 @@ function BeginTrans()
 {
 	global $mysqlconnection;
 	
-	@mysqli_query($mysqlconnection,"SET AUTOCOMMIT=0");
-	@mysqli_query($mysqlconnection, "BEGIN");
+	@mysql_query("SET AUTOCOMMIT=0", $mysqlconnection);
+	@mysql_query("BEGIN", $mysqlconnection);
 }
 
 function CommitTrans() 
 {
 	global $mysqlconnection;
 	
-	@mysqli_query($mysqlconnection,"COMMIT");
-	@mysqli_query($mysqlconnection,"SET AUTOCOMMIT=1");
+	@mysql_query("COMMIT", $mysqlconnection);
+	@mysql_query("SET AUTOCOMMIT=1", $mysqlconnection);
 }
 
 function RollbackTrans() 
 {
 	global $mysqlconnection;
 	
-	@mysqli_query($mysqlconnection,"ROLLBACK");
-	@mysqli_query($mysqlconnection,"SET AUTOCOMMIT=1");
+	@mysql_query("ROLLBACK", $mysqlconnection);
+	@mysql_query("SET AUTOCOMMIT=1", $mysqlconnection);
 }
 
 function GetValue($tablename, $column, $where) 
 {
 	$sql = "SELECT $column FROM $tablename WHERE $where";
 	$result_get_value = QueryDb($sql);
-	$row_get_value = mysqli_fetch_row($result_get_value);
+	$row_get_value = mysql_fetch_row($result_get_value);
 	
 	return $row_get_value[0];
 }
 
 function FetchSingle($sql)
 {
+	global $mysqlconnection;
+	
 	$res = QueryDb($sql);
-	$row = @mysqli_fetch_row($res);
+	$row = @mysql_fetch_row($res);
 	return $row[0];
 }
 
 function FetchRow($sql)
 {
+	global $mysqlconnection;
+	
 	$res = QueryDb($sql);
-	$row = @mysqli_fetch_row($res);
+	$row = @mysql_fetch_row($res);
 	return $row;
 }
 ?>

@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,18 +35,18 @@ $NoIn		= $_REQUEST['NoIn'];
 $pin1		= $_REQUEST['Pin1'];
 $pin2		= $_REQUEST['Pin2'];
 $Nama		= $_REQUEST['Nama'];
-$X			= explode(' ',$SendTime);
+$X			= split(' ',$SendTime);
 $smsgeninfo	  = "Pengumuman";	
 
 $idsmsgeninfo = GetLastId('replid','smsgeninfo');	
 $sql = "INSERT INTO smsgeninfo SET replid='$idsmsgeninfo',tanggal='$X[0]',tipe='2',info='$smsgeninfo',pengirim='$Sender'";
 $res = QueryDb($sql);
 
-$No		= explode('>',$NoPe);
-$Nama	= explode('>',$Nama);
-$NoID	= explode('>',$NoIn);
-$PIN1	= explode('>',$pin1);
-$PIN2	= explode('>',$pin2);
+$No		= split('>',$NoPe);
+$Nama	= split('>',$Nama);
+$NoID	= split('>',$NoIn);
+$PIN1	= split('>',$pin1);
+$PIN2	= split('>',$pin2);
 
 $Receiver = 0;
 for ($i=0; $i<count($No);$i++)

@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -132,7 +132,7 @@ function focusNext(elemName, evt) {
    	  	<td>
 		<?  $sql = "SELECT replid,tahunajaran FROM tahunajaran WHERE departemen = '$departemen' AND aktif=1 ORDER BY replid DESC";
 			$result = QueryDb($sql);
-			$row = @mysqli_fetch_array($result);	
+			$row = @mysql_fetch_array($result);	
 			$tahunajaran = $row['replid']; ?>
         	<input type="text" name="tahun" id="tahun" size="20" readonly class="disabled" value="<?=$row['tahunajaran']?>" style="width:250px;"/>
         	<input type="hidden" name="tahunajaran" id="tahunajaran" value="<?=$row['replid']?>">       	</td>
@@ -142,7 +142,7 @@ function focusNext(elemName, evt) {
         <td><select name="tingkat" id="tingkat" onchange="change_tingkat()" style="width:55px;" onKeyPress="return focusNext('kelas', event)">
  		 <? $sql = "SELECT replid,tingkat FROM tingkat where departemen='$departemen' AND aktif = 1 ORDER BY urutan";
 			$result = QueryDb($sql);
-			while ($row = @mysqli_fetch_array($result)) {
+			while ($row = @mysql_fetch_array($result)) {
 			if ($tingkat == "") 
 				$tingkat = $row['replid'];	?>
     		<option value="<?=urlencode($row['replid'])?>" <?=IntIsSelected($row['replid'], $tingkat)?> ><?=$row['tingkat']?></option>
@@ -152,12 +152,12 @@ function focusNext(elemName, evt) {
         
 		<?	$sql = "SELECT replid, kelas, kapasitas FROM kelas where idtingkat='$tingkat' AND idtahunajaran='$tahunajaran' AND aktif = 1 ORDER BY kelas";
 			$result = QueryDb($sql);
-			while ($row = @mysqli_fetch_array($result)) {
+			while ($row = @mysql_fetch_array($result)) {
 				if ($kelas == "")
 					$kelas = $row['replid'];
 				$sql1 = "SELECT COUNT(*) FROM siswa WHERE idkelas = '$row[0]' AND aktif = 1";				
 				$result1 = QueryDb($sql1);
-				$row1 = @mysqli_fetch_row($result1); 				
+				$row1 = @mysql_fetch_row($result1); 				
 		?>
         	<option value="<?=urlencode($row['replid'])?>" <?=IntIsSelected($row['replid'], $kelas)?> >
             <?=$row['kelas'].', kapasitas: '.$row['kapasitas'].', terisi: '.$row1[0]?>

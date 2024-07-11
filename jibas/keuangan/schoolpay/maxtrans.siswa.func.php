@@ -4,9 +4,9 @@
  * Jaringan Informasi Bersama Antar Sekolah
  *
  * @version: 23.0 (November 12, 2020)
- * @notes: 
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -54,7 +54,7 @@ function ShowCbTingkat($departemen)
     $res = QueryDb($sql);
 
     echo "<select id='tingkat' name='tingkat' style='width: 150px' onchange='changeTingkat()'>";
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         if ($selIdTingkat == "") $selIdTingkat = $row[0];
         $sel = $selIdTingkat == $row[0] ? "selected" : "";
@@ -73,7 +73,7 @@ function ShowCbKelas($departemen, $idTingkat)
              WHERE departemen = '$departemen'
                AND aktif = 1";
     $res = QueryDb($sql);
-    if ($row = mysqli_fetch_row($res))
+    if ($row = mysql_fetch_row($res))
         $idTahunAjaran = $row[0];
 
     $sql = "SELECT replid, kelas
@@ -83,7 +83,7 @@ function ShowCbKelas($departemen, $idTingkat)
              ORDER BY kelas";
     $res = QueryDb($sql);
     echo "<select id='kelas' name='kelas' style='width: 250px' onchange='clearReport()'>";
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         echo "<option value='$row[0]'>$row[1]</option>";
     }
@@ -103,7 +103,7 @@ function ShowDaftarBatasan($showMenu)
 
     $lsUser = array();
     $res = QueryDb($sql);
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         $lsUser[] = array($row[0], $row[1]);
     }
@@ -113,7 +113,7 @@ function ShowDaftarBatasan($showMenu)
               FROM jbsfina.paymenttabungan
              WHERE departemen = '$departemen'";
     $res = QueryDb($sql);
-    if ($row = mysqli_fetch_row($res))
+    if ($row = mysql_fetch_row($res))
     {
         $defaultMaxValue = $row[0];
     }
@@ -141,7 +141,7 @@ function ShowDaftarBatasan($showMenu)
                   FROM jbsfina.paymentmaxtrans
                  WHERE nis = '$nis'";
         $res = QueryDb($sql);
-        if ($row = mysqli_fetch_row($res))
+        if ($row = mysql_fetch_row($res))
         {
             $selMaxType = 1;
             $maxValue =$row[0];
@@ -195,7 +195,7 @@ function SaveMaxValue($sel, $val, $nis)
     {
         $sql = "SELECT COUNT(replid) FROM jbsfina.paymentmaxtrans WHERE nis = '$nis'";
         $res = QueryDb($sql);
-        $row = mysqli_fetch_row($res);
+        $row = mysql_fetch_row($res);
         $nData = $row[0];
 
         if ($nData != 0)

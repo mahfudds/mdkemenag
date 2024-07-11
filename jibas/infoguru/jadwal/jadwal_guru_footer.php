@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -57,7 +57,7 @@ if ($op == "xm8r389xemx23xb2378e23") {
 OpenDb();	
 $sql1 = "SELECT t.replid, t.departemen FROM infojadwal i, tahunajaran t  WHERE i.replid = '$info' AND t.replid = i.idtahunajaran";
 $result1 = QueryDb($sql1);
-$row1 = mysqli_fetch_array($result1); 
+$row1 = mysql_fetch_array($result1); 
 $departemen = $row1['departemen'];
 $tahunajaran = $row1['replid'];
 
@@ -66,11 +66,11 @@ function loadJam($id) {
 	       "FROM jam WHERE departemen = '$id' ORDER BY jamke";
 	
 	$result = QueryDb($sql);
-	$GLOBALS['maxJam'] = mysqli_num_rows($result);
+	$GLOBALS[maxJam] = mysql_num_rows($result);
 	
-	while($row = mysqli_fetch_array($result)) {
-		$GLOBALS['jam']['row'][$row[0]]['jam1'] = $row[1];
-		$GLOBALS['jam']['row'][$row[0]]['jam2'] = $row[2];
+	while($row = mysql_fetch_array($result)) {
+		$GLOBALS[jam][row][$row[0]][jam1] = $row[1];
+		$GLOBALS[jam][row][$row[0]][jam2] = $row[2];
 	}
 	return true;
 }
@@ -88,13 +88,13 @@ function loadJadwal() {
 	
 	$result = QueryDb($sql);
 	
-	while($row = mysqli_fetch_assoc($result)) {
-		$GLOBALS['jadwal']['row'][$row['hari']][$row['jam']]['id'] = $row['id'];
-		$GLOBALS['jadwal']['row'][$row['hari']][$row['jam']]['njam'] = $row['njam'];
-		$GLOBALS['jadwal']['row'][$row['hari']][$row['jam']]['pelajaran'] = $row['pelajaran'];
-		$GLOBALS['jadwal']['row'][$row['hari']][$row['jam']]['kelas'] = $row['kelas'];
-		$GLOBALS['jadwal']['row'][$row['hari']][$row['jam']]['status'] = $row['status'];
-		$GLOBALS['jadwal']['row'][$row['hari']][$row['jam']]['ket'] = $row['ket'];
+	while($row = mysql_fetch_assoc($result)) {
+		$GLOBALS[jadwal][row][$row[hari]][$row[jam]][id] = $row[id];
+		$GLOBALS[jadwal][row][$row[hari]][$row[jam]][njam] = $row[njam];
+		$GLOBALS[jadwal][row][$row[hari]][$row[jam]][pelajaran] = $row[pelajaran];
+		$GLOBALS[jadwal][row][$row[hari]][$row[jam]][kelas] = $row[kelas];
+		$GLOBALS[jadwal][row][$row[hari]][$row[jam]][status] = $row[status];
+		$GLOBALS[jadwal][row][$row[hari]][$row[jam]][ket] = $row[ket];
 	}
 	return true;
 }
@@ -102,17 +102,17 @@ function loadJadwal() {
 function getCell($r, $c) {
 	global $mask, $jadwal;
 	if($mask[$c] == 0) {
-		if(isset($jadwal['row'][$c][$r])) {
-			$mask[$c] = $jadwal['row'][$c][$r]['njam'] - 1;
+		if(isset($jadwal[row][$c][$r])) {
+			$mask[$c] = $jadwal[row][$c][$r][njam] - 1;
 			
-			$s = "<td class='jadwal' rowspan='{$jadwal['row'][$c][$r]['njam']}' width='110px'>";
-			$s.= "{$jadwal['row'][$c][$r]['kelas']}<br>";
-			$s.= "<b>{$jadwal['row'][$c][$r]['pelajaran']}</b><br>";
-			$s.= "<i>{$jadwal['row'][$c][$r]['status']}</i><br>{$jadwal['row'][$c][$r]['ket']}<br>";
+			$s = "<td class='jadwal' rowspan='{$jadwal[row][$c][$r][njam]}' width='110px'>";
+			$s.= "{$jadwal[row][$c][$r][kelas]}<br>";
+			$s.= "<b>{$jadwal[row][$c][$r][pelajaran]}</b><br>";
+			$s.= "<i>{$jadwal[row][$c][$r][status]}</i><br>{$jadwal[row][$c][$r][ket]}<br>";
 			//$s.= "<img src='../images/ico/ubah.png' style='cursor:pointer' ";
-			//$s.= " onclick='edit({$jadwal['row'][$c][$r][id]})'> &nbsp;";
+			//$s.= " onclick='edit({$jadwal[row][$c][$r][id]})'> &nbsp;";
 			//$s.= "<img src='../images/ico/hapus.png' style='cursor:pointer' ";
-			//$s.= " onclick='hapus({$jadwal['row'][$c][$r][id]},0)'>";
+			//$s.= " onclick='hapus({$jadwal[row][$c][$r][id]},0)'>";
 			$s.= "</td>";
 			
 			return $s;
@@ -130,7 +130,7 @@ function getCell($r, $c) {
 
 $mask = NULL;
 for($i = 1; $i <= 7; $i++) {
-	$mask[$i] = 0;
+	$mask[i] = 0;
 }
 
 loadJam($departemen);
@@ -218,7 +218,7 @@ function refresh() {
 	
 	$result = QueryDb($sql);
 	CloseDb();      
-	if (@mysqli_num_rows($result)>0){			
+	if (@mysql_num_rows($result)>0){			
 ?>
     <table width="95%" border="0" align="center">
   	<tr>
@@ -243,12 +243,12 @@ function refresh() {
     </tr>
 	<?
 	
-		if(isset($jam['row'])) {
+		if(isset($jam[row])) {
 			
-			foreach($jam['row'] as $k => $v) {
+			foreach($jam[row] as $k => $v) {
 	?> 
     <tr>
-        <td class="jam" width="110px"><b><?=++$j ?>.</b> <?=$v['jam1'] ?> - <?=$v['jam2'] ?></td>
+        <td class="jam" width="110px"><b><?=++$j ?>.</b> <?=$v[jam1] ?> - <?=$v[jam2] ?></td>
         <? for($i = 1; $i <= 7; $i++) {?> 
         <?=getCell($k, $i); ?> 
         <? }?>  

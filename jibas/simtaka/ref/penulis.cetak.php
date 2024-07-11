@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,7 +49,7 @@ $departemen='yayasan';
 	<?
 	$sql = "SELECT * FROM penulis ORDER BY nama";
 	$result = QueryDb($sql);
-	$num = @mysqli_num_rows($result);
+	$num = @mysql_num_rows($result);
 	?>
 	<table width="100%" border="1" cellspacing="0" cellpadding="0" class="tab" id="table">
 	  <tr>
@@ -62,17 +62,17 @@ $departemen='yayasan';
 	  </tr>
 	  <?
 	  if ($num>0){
-		  while ($row=@mysqli_fetch_array($result)){
-				$num_judul = @mysqli_num_rows(QueryDb("SELECT * FROM pustaka p, penulis pn WHERE pn.replid=$row[replid] AND pn.replid=p.penulis"));
-				$num_pustaka = @mysqli_fetch_row(QueryDb("SELECT COUNT(d.replid) FROM pustaka p, daftarpustaka d, penulis pn WHERE d.pustaka=p.replid AND pn.replid='$row[replid]' AND p.penulis=pn.replid"));	
+		  while ($row=@mysql_fetch_array($result)){
+				$num_judul = @mysql_num_rows(QueryDb("SELECT * FROM pustaka p, penulis pn WHERE pn.replid=$row[replid] AND pn.replid=p.penulis"));
+				$num_pustaka = @mysql_fetch_row(QueryDb("SELECT COUNT(d.replid) FROM pustaka p, daftarpustaka d, penulis pn WHERE d.pustaka=p.replid AND pn.replid='$row[replid]' AND p.penulis=pn.replid"));	
 		  ?>
 		  <tr>
-			<td height="25" align="center"><?=$row['kode']?></td>
-			<td height="25"><div class="tab_content"><?=$row['nama']?></div></td>
+			<td height="25" align="center"><?=$row[kode]?></td>
+			<td height="25"><div class="tab_content"><?=$row[nama]?></div></td>
 			<td height="25" align="center">&nbsp;<?=$num_judul?></td>
 			<td height="25" align="center">&nbsp;<?=(int)$num_pustaka[0]?></td>
-			<td height="25"><div class="tab_content"><?=$row['kontak']?></div></td>
-			<td height="25"><div class="tab_content"><?=$row['keterangan']?></div></td>
+			<td height="25"><div class="tab_content"><?=$row[kontak]?></div></td>
+			<td height="25"><div class="tab_content"><?=$row[keterangan]?></div></td>
 		  </tr>
 		  <?
 		  }

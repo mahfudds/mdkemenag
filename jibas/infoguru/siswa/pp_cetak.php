@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ OpenDb();
 $sql = "SELECT t.departemen, a.tahunajaran, k.kelas, t.tingkat, s.nama, a.tglmulai, a.tglakhir FROM tahunajaran a, kelas k, tingkat t, siswa s WHERE k.idtingkat = t.replid AND k.idtahunajaran = a.replid AND k.replid = '$kelas' AND s.nis = '$nis'";  
 
 $result = QueryDB($sql);	
-$row = mysqli_fetch_array($result);
+$row = mysql_fetch_array($result);
 $tglmulai = $row['tglmulai'];
 $tglakhir = $row['tglakhir'];
 $nama = $row['nama'];
@@ -92,11 +92,11 @@ $kls = $row['kelas'];
 	$sql1 = "SELECT CONCAT(DATE_FORMAT(tanggal,'%b'),' ',YEAR(tanggal)) AS blnthn, SUM(IF(statushadir = 0,1,0)), SUM(IF(statushadir = 1,1,0)), SUM(IF(statushadir = 2,1,0)), SUM(IF(statushadir = 4,1,0)), SUM(IF(statushadir = 3,1,0)), MONTH(tanggal) FROM presensipelajaran p, ppsiswa pp WHERE pp.nis = '$nis' AND pp.idpp = p.replid AND p.idkelas = '$kelas' AND p.tanggal BETWEEN '$tglawal' AND '$tglakhir' GROUP BY blnthn ORDER BY YEAR(tanggal), MONTH(tanggal)";
 
 	$result1 = QueryDb($sql1);
-	$num = mysqli_num_rows($result1);
+	$num = mysql_num_rows($result1);
 	
 	$data = array();
 
-	while($row1 = mysqli_fetch_row($result1)) {
+	while($row1 = mysql_fetch_row($result1)) {
 		$data[] = array($row1[1],$row1[2],$row1[3],$row1[4],$row1[5]);
 		$legend_x[] = $row1[0];			
     }
@@ -128,7 +128,7 @@ $kls = $row['kelas'];
 	<? 
     
     $result2 = QueryDb($sql1);
-    while ($row2 = @mysqli_fetch_row($result2)) {		
+    while ($row2 = @mysql_fetch_row($result2)) {		
         $waktu = explode(" ",$row2[0]);
     ?>	
     <tr height="25">        			

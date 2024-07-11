@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -90,7 +90,7 @@ if (isset($_REQUEST['idtahunbuku']))
     OpenDb();
 	$sql = "SELECT ra.nama, ra.kode, k.kategori, SUM(jd.debet) AS debet, SUM(jd.kredit) AS kredit FROM rekakun ra, katerekakun k, jurnal j, jurnaldetail jd WHERE jd.idjurnal = j.replid AND jd.koderek = ra.kode AND ra.kategori = k.kategori AND j.idtahunbuku = '$idtahunbuku' AND j.tanggal BETWEEN '$tanggal1' AND '$tanggal2' GROUP BY ra.nama, ra.kode, k.kategori ORDER BY k.urutan, ra.kode;";
 	$result = QueryDb($sql);
-	if (mysqli_num_rows($result) > 0) {
+	if (mysql_num_rows($result) > 0) {
 	?>
     <table class="tab" style="border-collapse:collapse" id="table" border="1" cellpadding="2"  width="100%" bordercolor="#000000" />
     <tr height="30">
@@ -104,7 +104,7 @@ if (isset($_REQUEST['idtahunbuku']))
     $cnt = 0;
     $totaldebet = 0;
     $totalkredit = 0;
-    while($row = mysqli_fetch_array($result)) {
+    while($row = mysql_fetch_array($result)) {
         $kategori = $row['kategori'];
         switch($kategori) {
             case 'HARTA':

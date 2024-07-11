@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,17 +26,17 @@ require_once('../inc/db_functions.php');
 require_once('../inc/sessioninfo.php');
 require_once('../inc/common.php');
 $op = "";
-if (isset($_REQUEST['op']))
-	$op = $_REQUEST['op'];
+if (isset($_REQUEST[op]))
+	$op = $_REQUEST[op];
 $kriteria = "";
-if (isset($_REQUEST['kriteria']))
-	$kriteria = $_REQUEST['kriteria'];
+if (isset($_REQUEST[kriteria]))
+	$kriteria = $_REQUEST[kriteria];
 $keyword = "";
-if (isset($_REQUEST['keyword']))
-	$keyword = $_REQUEST['keyword'];
+if (isset($_REQUEST[keyword]))
+	$keyword = $_REQUEST[keyword];
 $perpustakaan = "";
-if (isset($_REQUEST['perpustakaan']))
-	$perpustakaan = $_REQUEST['perpustakaan'];
+if (isset($_REQUEST[perpustakaan]))
+	$perpustakaan = $_REQUEST[perpustakaan];	
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -104,7 +104,7 @@ function pilih(id){
                     if (SI_USER_LEVEL()!=2){
                         echo "<option value='-1' ".IntIsSelected('-1',$perpustakaan).">(Semua)</option>";
                     }
-                    while ($row = @mysqli_fetch_row($result)){
+                    while ($row = @mysql_fetch_row($result)){
                     if ($perpustakaan == "")
                         $perpustakaan = $row[0];	
                     ?>
@@ -159,10 +159,10 @@ function pilih(id){
 	  }
 	  //echo $sql;
 	  $result = QueryDb($sql);	  
-	  $num = @mysqli_num_rows($result);
+	  $num = @mysql_num_rows($result);
 	  if ($num>0){
 		  $cnt=1;
-		  while ($row = @mysqli_fetch_row($result)){
+		  while ($row = @mysql_fetch_row($result)){
 		  ?>
           <input type="hidden" name="replid<?=$cnt?>" id="replid<?=$cnt?>" value="<?=$row[0]?>" />
           <input type="hidden" name="kodepustaka<?=$cnt?>" id="kodepustaka<?=$cnt?>" value="<?=$row[2]?>" />

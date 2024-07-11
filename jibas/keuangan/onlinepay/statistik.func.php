@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  *
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -101,7 +101,7 @@ function ShowSelectBank()
 
     echo "<select id='bankno' class='inputbox' style='width: 250px' onchange='clearContent()'>";
     echo "<option value='ALL' selected>Semua Bank</option>";
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         echo "<option value='$row[0]'>$row[1] $row[0]</option>";
     }
@@ -121,7 +121,7 @@ function ShowSelectPetugas()
 
     echo "<select id='idpetugas' class='inputbox' style='width: 250px' onchange='clearContent()'>";
     echo "<option value='ALL' selected>Semua Petugas</option>";
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         echo "<option value='$row[0]'>$row[1] $row[0]</option>";
     }
@@ -162,14 +162,14 @@ function StatistikPembayaranHarian()
 
         //echo $sql;
         $res = QueryDbEx($sql);
-        if (mysqli_num_rows($res) == 0)
+        if (mysql_num_rows($res) == 0)
         {
             echo "Belum ada data transaksi pembayaran online";
             return;
         }
 
         $lsTanggal = array();
-        while($row = mysqli_fetch_row($res))
+        while($row = mysql_fetch_row($res))
         {
             $lsTanggal[] = $row[0];
         }
@@ -204,7 +204,7 @@ function StatistikPembayaranHarian()
             if ($idPetugas != "ALL") $sql .= " AND idpetugas = '$idPetugas'";
             if ($metode != "0") $sql .= " AND jenis = '$metode'";
             $res = QueryDbEx($sql);
-            $row = mysqli_fetch_row($res);
+            $row = mysql_fetch_row($res);
             $nSiswa = $row[0];
 
             $sql = "SELECT COUNT(replid)
@@ -215,7 +215,7 @@ function StatistikPembayaranHarian()
             if ($idPetugas != "ALL") $sql .= " AND idpetugas = '$idPetugas'";
             if ($metode != "0") $sql .= " AND jenis = '$metode'";
             $res = QueryDbEx($sql);
-            $row = mysqli_fetch_row($res);
+            $row = mysql_fetch_row($res);
             $nTransaksi = $row[0];
 
             $sql = "SELECT SUM(pd.jumlah)
@@ -227,7 +227,7 @@ function StatistikPembayaranHarian()
             if ($idPetugas != "ALL") $sql .= " AND p.idpetugas = '$idPetugas'";
             if ($metode != "0") $sql .= " AND p.jenis = '$metode'";
             $res = QueryDbEx($sql);
-            $row = mysqli_fetch_row($res);
+            $row = mysql_fetch_row($res);
             $sumTransaksi = $row[0];
 
             echo "<tr style='height: 30px'>";
@@ -252,7 +252,7 @@ function StatistikPembayaranHarian()
         if ($idPetugas != "ALL") $sql .= " AND idpetugas = '$idPetugas'";
         if ($metode != "0") $sql .= " AND jenis = '$metode'";
         $res = QueryDbEx($sql);
-        $row = mysqli_fetch_row($res);
+        $row = mysql_fetch_row($res);
         $nSiswa = $row[0];
 
         $sql = "SELECT COUNT(replid)
@@ -263,7 +263,7 @@ function StatistikPembayaranHarian()
         if ($idPetugas != "ALL") $sql .= " AND idpetugas = '$idPetugas'";
         if ($metode != "0") $sql .= " AND jenis = '$metode'";
         $res = QueryDbEx($sql);
-        $row = mysqli_fetch_row($res);
+        $row = mysql_fetch_row($res);
         $nTransaksi = $row[0];
 
         $sql = "SELECT SUM(pd.jumlah)
@@ -275,7 +275,7 @@ function StatistikPembayaranHarian()
         if ($idPetugas != "ALL") $sql .= " AND p.idpetugas = '$idPetugas'";
         if ($metode != "0") $sql .= " AND p.jenis = '$metode'";
         $res = QueryDbEx($sql);
-        $row = mysqli_fetch_row($res);
+        $row = mysql_fetch_row($res);
         $sumTransaksi = $row[0];
 
         echo "<tr style='height: 30px'>";
@@ -327,14 +327,14 @@ function StatistikPembayaranBulanan()
 
         //echo $sql;
         $res = QueryDbEx($sql);
-        if (mysqli_num_rows($res) == 0)
+        if (mysql_num_rows($res) == 0)
         {
             echo "Belum ada data transaksi pembayaran online";
             return;
         }
 
         $lsBulan = array();
-        while($row = mysqli_fetch_row($res))
+        while($row = mysql_fetch_row($res))
         {
             $lsBulan[] = array($row[0], $row[1]);
         }
@@ -369,7 +369,7 @@ function StatistikPembayaranBulanan()
             if ($idPetugas != "ALL") $sql .= " AND idpetugas = '$idPetugas'";
             if ($metode != "0") $sql .= " AND jenis = '$metode'";
             $res = QueryDbEx($sql);
-            $row = mysqli_fetch_row($res);
+            $row = mysql_fetch_row($res);
             $nSiswa = $row[0];
 
             $sql = "SELECT COUNT(replid)
@@ -380,7 +380,7 @@ function StatistikPembayaranBulanan()
             if ($idPetugas != "ALL") $sql .= " AND idpetugas = '$idPetugas'";
             if ($metode != "0") $sql .= " AND jenis = '$metode'";
             $res = QueryDbEx($sql);
-            $row = mysqli_fetch_row($res);
+            $row = mysql_fetch_row($res);
             $nTransaksi = $row[0];
 
             $sql = "SELECT SUM(pd.jumlah)
@@ -392,7 +392,7 @@ function StatistikPembayaranBulanan()
             if ($idPetugas != "ALL") $sql .= " AND p.idpetugas = '$idPetugas'";
             if ($metode != "0") $sql .= " AND p.jenis = '$metode'";
             $res = QueryDbEx($sql);
-            $row = mysqli_fetch_row($res);
+            $row = mysql_fetch_row($res);
             $sumTransaksi = $row[0];
 
             echo "<tr style='height: 30px'>";
@@ -418,7 +418,7 @@ function StatistikPembayaranBulanan()
         if ($idPetugas != "ALL") $sql .= " AND idpetugas = '$idPetugas'";
         if ($metode != "0") $sql .= " AND jenis = '$metode'";
         $res = QueryDbEx($sql);
-        $row = mysqli_fetch_row($res);
+        $row = mysql_fetch_row($res);
         $nSiswa = $row[0];
 
         $sql = "SELECT COUNT(replid)
@@ -430,7 +430,7 @@ function StatistikPembayaranBulanan()
         if ($idPetugas != "ALL") $sql .= " AND idpetugas = '$idPetugas'";
         if ($metode != "0") $sql .= " AND jenis = '$metode'";
         $res = QueryDbEx($sql);
-        $row = mysqli_fetch_row($res);
+        $row = mysql_fetch_row($res);
         $nTransaksi = $row[0];
 
         $sql = "SELECT SUM(pd.jumlah)
@@ -443,7 +443,7 @@ function StatistikPembayaranBulanan()
         if ($idPetugas != "ALL") $sql .= " AND p.idpetugas = '$idPetugas'";
         if ($metode != "0") $sql .= " AND p.jenis = '$metode'";
         $res = QueryDbEx($sql);
-        $row = mysqli_fetch_row($res);
+        $row = mysql_fetch_row($res);
         $sumTransaksi = $row[0];
 
         echo "<tr style='height: 30px'>";

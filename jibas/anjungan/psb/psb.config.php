@@ -1,3 +1,3 @@
 <?
-define("PSB_ENABLE_INPUT", 1);
+define(PSB_ENABLE_INPUT, 1);
 ?>

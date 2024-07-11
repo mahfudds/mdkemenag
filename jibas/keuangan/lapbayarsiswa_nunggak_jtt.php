@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -158,7 +158,7 @@ $sql = "SELECT replid
          WHERE departemen='$departemen' 
            AND aktif=1";
 $res = QueryDb($sql);
-$row = @mysqli_fetch_row($res);
+$row = @mysql_fetch_row($res);
 $idtahunbuku = $row[0];
 if ($idtahunbuku=="")
 {
@@ -211,7 +211,7 @@ else
 
 $result = QueryDb($sql);
 $idstr = "";
-while($row = mysqli_fetch_row($result))
+while($row = mysql_fetch_row($result))
 {
 	if (strlen($idstr) > 0)
 		$idstr = $idstr . ",";
@@ -221,7 +221,7 @@ while($row = mysqli_fetch_row($result))
 //Dapatkan namapenerimaan
 $sql = "SELECT nama FROM datapenerimaan WHERE replid=$idpenerimaan";
 $result = QueryDb($sql);
-$row = mysqli_fetch_row($result);
+$row = mysql_fetch_row($result);
 $namapenerimaan = $row[0];
 ?>
 
@@ -237,7 +237,7 @@ $namapenerimaan = $row[0];
                     WHERE idbesarjtt IN ($idstr) 
                     GROUP BY idbesarjtt) AS X";
 	$result = QueryDb($sql);
-	$row = mysqli_fetch_row($result);
+	$row = mysql_fetch_row($result);
 	$max_n_cicilan = $row[0];
 	$table_width = 810 + $max_n_cicilan * 90;
 ?>
@@ -282,8 +282,8 @@ $sql = "SELECT b.nis, s.nama, k.kelas, b.replid AS id, b.besar, b.keterangan, b.
          ORDER BY $urut $urutan LIMIT ".(int)$page*(int)$varbaris.",$varbaris";
 
 $result_tot = QueryDb($sql_tot);
-$total=ceil(mysqli_num_rows($result_tot)/(int)$varbaris);
-$jumlah = mysqli_num_rows($result_tot);
+$total=ceil(mysql_num_rows($result_tot)/(int)$varbaris);
+$jumlah = mysql_num_rows($result_tot);
 $akhir = ceil($jumlah/5)*5;
 
 $result = QueryDb($sql);
@@ -300,7 +300,7 @@ $totalbayarallB = 0;
 $totaldiskonallB = 0;
 $besarjttallA = 0;
 $x = 1;
-while ($rowA = @mysqli_fetch_array($result_tot)) {
+while ($rowA = @mysql_fetch_array($result_tot)) {
 	$besarjttA = 0;
 	$idbesarjttA = $rowA['id'];
 	$besarjttA = $rowA['besar'];
@@ -308,7 +308,7 @@ while ($rowA = @mysqli_fetch_array($result_tot)) {
 	$resultB = QueryDb($sqlB);
 	$totalbayarB = 0;
 	$totaldiskonB = 0;
-	while ($rowB = @mysqli_fetch_row($resultB)) {
+	while ($rowB = @mysql_fetch_row($resultB)) {
 		$totalbayarB = $totalbayarB + $rowB[1];
         $totaldiskonB = $totaldiskonB + $rowB[2];
 	}
@@ -317,7 +317,7 @@ while ($rowA = @mysqli_fetch_array($result_tot)) {
 	$besarjttallA += $besarjttA;
 }
 
-while ($row = mysqli_fetch_array($result)) {
+while ($row = mysql_fetch_array($result)) {
 	$idbesarjtt = $row['id'];
 	$besarjtt = $row['besar'];
 	$ketjtt = $row['keterangan'];
@@ -337,7 +337,7 @@ while ($row = mysqli_fetch_array($result)) {
     <?
 	$sql = "SELECT count(*) FROM penerimaanjtt WHERE idbesarjtt = $idbesarjtt";
 	$result2 = QueryDb($sql);
-	$row2 = mysqli_fetch_row($result2);
+	$row2 = mysql_fetch_row($result2);
 	$nbayar = $row2[0];
 	$nblank = $max_n_cicilan - $nbayar;
 	$totalbayar = 0;
@@ -346,7 +346,7 @@ while ($row = mysqli_fetch_array($result)) {
 		$sql = "SELECT date_format(tanggal, '%d-%b-%y'), jumlah, info1 FROM penerimaanjtt WHERE idbesarjtt = $idbesarjtt ORDER BY tanggal";
 		$result2 = QueryDb($sql);
 		
-		while ($row2 = mysqli_fetch_row($result2)) {
+		while ($row2 = mysql_fetch_row($result2)) {
 			$totalbayar = $totalbayar + $row2[1];
             $totaldiskon = $totaldiskon + $row2[2]; ?>
             <td>
@@ -370,7 +370,7 @@ while ($row = mysqli_fetch_array($result)) {
 <?	$sql = "SELECT datediff('$tgl', max(tanggal)) FROM penerimaanjtt WHERE idbesarjtt = $idbesarjtt";
 	//echo  $sql;
 	$result2 = QueryDb($sql);
-	$row2 = mysqli_fetch_row($result2);
+	$row2 = mysql_fetch_row($result2);
 	echo  $row2[0]; ?>
         </td>
         <td align="right"><?=FormatRupiah($besarjtt) ?></td>

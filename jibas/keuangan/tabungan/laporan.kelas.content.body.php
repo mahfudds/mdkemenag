@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -113,7 +113,7 @@ $akhir = ceil($ndata / 5) * 5;
 $nislist = "";
 
 $res = QueryDb($sql);
-if (mysqli_num_rows($res) == 0)
+if (mysql_num_rows($res) == 0)
 {
 	echo "<tr height='80'><td colspan='9' align='center' valign='middle'><i>Tidak ditemukan data tabungan di kelas terpilih</i></td></tr>";
 }
@@ -124,7 +124,7 @@ else
 	else 
 		$cnt = (int)$page*(int)$varbaris;
 
-	while($rowsis = mysqli_fetch_row($res))
+	while($rowsis = mysql_fetch_row($res))
 	{
 		$nis = $rowsis[0];
 		$nama = $rowsis[1];
@@ -142,7 +142,7 @@ else
 				 WHERE idtabungan = '$idtabungan'
 				   AND nis = '$nis'";
 		$result = QueryDb($sql);
-		if ($row = mysqli_fetch_row($result))
+		if ($row = mysql_fetch_row($result))
 		{
 			$totaltarik = $row[0];
 			$totalsetor = $row[1];
@@ -160,7 +160,7 @@ else
 				 ORDER BY replid
 				 LIMIT 1";
 		$result = QueryDb($sql);
-		if ($row = mysqli_fetch_row($result))
+		if ($row = mysql_fetch_row($result))
 		{
 			$tglsetorakhir = $row[0];
 			$setorakhir = $row[1];
@@ -177,7 +177,7 @@ else
 				 ORDER BY replid
 				 LIMIT 1";
 		$result = QueryDb($sql);
-		if ($row = mysqli_fetch_row($result))
+		if ($row = mysql_fetch_row($result))
 		{
 			$tgltarikakhir = $row[0];
 			$tarikakhir = $row[1];
@@ -218,7 +218,7 @@ else
              WHERE idtabungan = '$idtabungan'
                AND nis IN ($nislist)";
             $result = QueryDb($sql);
-            if ($row = mysqli_fetch_row($result))
+            if ($row = mysql_fetch_row($result))
             {
                 $alltarik = $row[0];
                 $allsetor = $row[1];

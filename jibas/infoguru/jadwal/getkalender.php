@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,8 +44,8 @@ if ($kalender==""){
 <?	
 	$sql_kalender = "SELECT * FROM jbsakad.kalenderakademik WHERE departemen = '$departemen' ORDER BY tglmulai";
 	$result_kalender = QueryDb($sql_kalender);
-	if (mysqli_num_rows($result_kalender)>0){
-	while($row_kalender = mysqli_fetch_array($result_kalender)) {
+	if (mysql_num_rows($result_kalender)>0){
+	while($row_kalender = mysql_fetch_array($result_kalender)) {
 	if ($kalender == "")
 	$kalender = $row_kalender['replid'];
 ?>
@@ -57,7 +57,7 @@ if ($kalender==""){
 </select>
 <img src="../images/ico/tambah.png" onclick="tambah_kalender('<?=$departemen?>');" />
     <?
-	if (@mysqli_num_rows($result_kalender)==0){
+	if (@mysql_num_rows($result_kalender)==0){
 	?>
 
 	<?

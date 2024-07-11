@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,10 +27,10 @@ require_once('../inc/config.php');
 require_once('../inc/db_functions.php');
 require_once('../lib/GetHeaderCetak.php');
 OpenDb();
-$asal=$_REQUEST['asal'];
-$kategori=$_REQUEST['kategori'];
-$keywords=$_REQUEST['keywords'];
-$perpustakaan=$_REQUEST['perpustakaan'];
+$asal=$_REQUEST[asal];
+$kategori=$_REQUEST[kategori];
+$keywords=$_REQUEST[keywords];
+$perpustakaan=$_REQUEST[perpustakaan];
 switch ($kategori){
 	case 'judul':
 		$kat = "Judul Pustaka";
@@ -38,22 +38,22 @@ switch ($kategori){
 		break;
 	case 'rak':
 		$kat = "Rak";
-		$row = @mysqli_fetch_row(QueryDb("SELECT rak FROM rak WHERE replid='$keywords'"));
+		$row = @mysql_fetch_row(QueryDb("SELECT rak FROM rak WHERE replid='$keywords'"));
 		$key = $row[0];
 		break;	
 	case 'katalog':
 		$kat = "Katalog";
-		$row = @mysqli_fetch_row(QueryDb("SELECT kode,nama FROM katalog WHERE replid='$keywords'"));
+		$row = @mysql_fetch_row(QueryDb("SELECT kode,nama FROM katalog WHERE replid='$keywords'"));
 		$key = $row[0]." - ".$row[1];
 		break;
 	case 'penerbit':
 		$kat = "Penerbit";
-		$row = @mysqli_fetch_row(QueryDb("SELECT kode,nama FROM penerbit WHERE replid='$keywords'"));
+		$row = @mysql_fetch_row(QueryDb("SELECT kode,nama FROM penerbit WHERE replid='$keywords'"));
 		$key = $row[0]." - ".$row[1];
 		break;
 	case 'penulis':
 		$kat = "Penulis";
-		$row = @mysqli_fetch_row(QueryDb("SELECT kode,nama FROM penulis WHERE replid='$keywords'"));
+		$row = @mysql_fetch_row(QueryDb("SELECT kode,nama FROM penulis WHERE replid='$keywords'"));
 		$key = $row[0]." - ".$row[1];
 		break;	
 	case 'tahun':
@@ -106,7 +106,7 @@ switch ($kategori){
 		if ($perpustakaan!='-1'){
 			$sql = "SELECT nama FROM perpustakaan WHERE replid='$perpustakaan'";
 			$result = QueryDb($sql);
-			$row = @mysqli_fetch_row($result);
+			$row = @mysql_fetch_row($result);
 			echo $row[0];
 		} else {
 			echo "<i>Semua perpustakaan</i>";
@@ -170,24 +170,24 @@ switch ($kategori){
   }
   //echo $sql;
   $result = QueryDb($sql);
-  $num = @mysqli_num_rows($result);
+  $num = @mysql_num_rows($result);
   if ($num>0){
       $cnt=1;
-      while ($row = @mysqli_fetch_row($result))
+      while ($row = @mysql_fetch_row($result))
 	  {
 		$kode = "";
 		$katalog = "";
 		$sql = "SELECT kode, nama FROM katalog WHERE replid = $row[3]";
 		$res = QueryDb($sql);
-		if (mysqli_num_rows($res) > 0)
+		if (mysql_num_rows($res) > 0)
 		{
-			$row2 = mysqli_fetch_row($res);
+			$row2 = mysql_fetch_row($res);
 			$kode = $row2[0];
 			$katalog = $row2[1];
 		}
 		
-		$rdipinjam = @mysqli_num_rows(QueryDb("SELECT * FROM daftarpustaka d WHERE d.pustaka='$row[0]' $sqlpus AND d.status=0"));
-		$rtersedia = @mysqli_num_rows(QueryDb("SELECT * FROM daftarpustaka d WHERE d.pustaka='$row[0]' $sqlpus AND d.status=1"));
+		$rdipinjam = @mysql_num_rows(QueryDb("SELECT * FROM daftarpustaka d WHERE d.pustaka='$row[0]' $sqlpus AND d.status=0"));
+		$rtersedia = @mysql_num_rows(QueryDb("SELECT * FROM daftarpustaka d WHERE d.pustaka='$row[0]' $sqlpus AND d.status=1"));
       ?>
       <tr height="25">
         <td align="center"><?=$cnt?></td>

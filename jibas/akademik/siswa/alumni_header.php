@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -139,14 +139,14 @@ function focusNext(elemName, evt) {
 			$sql_tahunajaran = "SELECT * FROM tahunajaran where departemen='$departemen' ORDER BY aktif DESC, tglmulai DESC";
 			$result_tahunajaran = QueryDb($sql_tahunajaran);
 			CloseDb();
-			while ($row_tahunajaran = @mysqli_fetch_array($result_tahunajaran)) {
+			while ($row_tahunajaran = @mysql_fetch_array($result_tahunajaran)) {
 				if ($tahunajaran == "")
 					$tahunajaran = $row_tahunajaran['replid'];
 				$ada = "";
 				if ($row_tahunajaran['aktif'])
 					$ada = "(Aktif)";	
 		?>
-        <option value="<?=urlencode($row_tahunajaran['replid'])?>" <?=IntIsSelected($row_tahunajaran['replid'], $tahunajaran)?> >
+        <option value="<?=urlencode($row_tahunajaran[replid])?>" <?=IntIsSelected($row_tahunajaran['replid'], $tahunajaran)?> >
 		<?=$row_tahunajaran['tahunajaran']." ".$ada?></option>
         <?  } ?>
       	</select>
@@ -160,11 +160,11 @@ function focusNext(elemName, evt) {
 			$sql_tingkat = "SELECT replid,tingkat FROM tingkat where departemen='$departemen' AND aktif = 1 ORDER BY urutan";
 			$result_tingkat = QueryDb($sql_tingkat);
 			
-			while ($row_tingkat = mysqli_fetch_array($result_tingkat)) {
+			while ($row_tingkat = mysql_fetch_array($result_tingkat)) {
 			if ($tingkat == "") 
 				$tingkat = $row_tingkat['replid'];	
 		?>
-  		<option value="<?=$row_tingkat['replid']?>" <?=IntIsSelected($row_tingkat['replid'], $tingkat)?>>
+  		<option value="<?=$row_tingkat[replid]?>" <?=IntIsSelected($row_tingkat['replid'], $tingkat)?>>
 		<?=$row_tingkat['tingkat']?></option>
   		<?
   			} //while
@@ -177,7 +177,7 @@ function focusNext(elemName, evt) {
         	$sql_kelas="SELECT k.replid,k.kelas FROM jbsakad.kelas k WHERE k.idtingkat='$tingkat' AND k.idtahunajaran='$tahunajaran' AND k.aktif=1 ORDER BY k.kelas";
 			
         	$result_kelas=QueryDb($sql_kelas);
-			$total = mysqli_num_rows($result_kelas);
+			$total = mysql_num_rows($result_kelas);
 		}
 	?>
         <input type="hidden" name="kelas" id="kelas" value="<?=$total?>" />

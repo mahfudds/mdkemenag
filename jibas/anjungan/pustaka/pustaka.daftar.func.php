@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ function ShowCbPustaka()
     $res = QueryDb($sql);
     
     echo "<select id='ptkadaftar_perpus' name='ptkadaftar_perpus' class='inputbox' onchange='ptkadaftar_perpus_change()'>\r\n";
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         echo "<option value='$row[0]'>$row[1]</option>\r\n";
     }
@@ -69,7 +69,7 @@ function ShowCbKriteria($choice)
     $res = QueryDb($sql);
     
     echo "<select id='ptkadaftar_kriteria' name='ptkadaftar_kriteria' class='inputbox' style='width: 300px;' onchange='ptkadaftar_kriteria_change()'>\r\n";
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         echo "<option value='$row[0]'>$row[1]</option>\r\n";
     }
@@ -193,7 +193,7 @@ function ShowList($perpus, $pilih, $kriteria, $halaman)
     
     $res = QueryDb($sql);        
     $cnt = ($halaman - 1) * $Pustaka_NItemPerView;
-    while($row = mysqli_fetch_array($res))
+    while($row = mysql_fetch_array($res))
     {
         $idpustaka = $row['replid'];
         if ($perpus == -1)
@@ -252,13 +252,13 @@ function ShowDetailPustaka($cnt, $idpustaka)
               FROM jbsperpus.pustaka
              WHERE replid = '$idpustaka'";
     $res = QueryDb($sql);
-    if (mysqli_num_rows($res) == 0)
+    if (mysql_num_rows($res) == 0)
     {
         echo "-";
         return;
     }
     
-    $row = mysqli_fetch_array($res);
+    $row = mysql_fetch_array($res);
     echo "<font style='color: #444;'><strong>Kata Kunci:</strong></font><br>";
     echo $row['keyword'];
     echo "<br><br>";

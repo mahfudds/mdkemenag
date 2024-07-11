@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,10 +42,10 @@ if (isset($_REQUEST['simpan'])){
 	$sql2="SELECT proses from jbsakad.prosespenerimaansiswa where kodeawalan='".CQ($_REQUEST['kode'])."' AND departemen='$_REQUEST[departemen]' AND replid <>'$replid'";
 	$hasil2 = QueryDb($sql2);
 	
-	if (mysqli_fetch_array($hasil1) > 0){
+	if (mysql_fetch_array($hasil1) > 0){
 		CloseDb();		
 		$ERROR_MSG = "Nama proses $_REQUEST[proses] sudah digunakan!";
-	} else if (mysqli_fetch_array($hasil2) > 0){
+	} else if (mysql_fetch_array($hasil2) > 0){
 		CloseDb();		
 		$ERROR_MSG = "Kode awalan $_REQUEST[kode] sudah digunakan!";
 		$cek = 1;
@@ -72,7 +72,7 @@ switch ($cek) {
 OpenDb();
 $sql_tampil = "SELECT * FROM jbsakad.prosespenerimaansiswa WHERE replid='$replid' ORDER BY proses";
 $result_tampil = QueryDb($sql_tampil);
-$row_tampil = mysqli_fetch_array($result_tampil);
+$row_tampil = mysql_fetch_array($result_tampil);
 $proses = $row_tampil['proses'];
 $kode = $row_tampil['kodeawalan'];
 $keterangan = $row_tampil['keterangan'];

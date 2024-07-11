@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,25 +30,25 @@ require_once('../library/imageresizer.php');
 OpenDb();
 $sql = "SELECT * FROM jbsfina.barang WHERE replid='$_REQUEST[idbarang]'";
 $result = QueryDb($sql);
-$row = mysqli_fetch_array($result);
-$kode = $row['kode'];
-$nama = $row['nama'];
-$jumlah = (int)$row['jumlah'];
-$kondisi = $row['kondisi'];
-$keterangan = $row['keterangan'];
-$satuan = $row['satuan'];
-$tgl = substr($row['tglperolehan'],8,2)."-".substr($row['tglperolehan'],5,2)."-".substr($row['tglperolehan'],0,4);
-$harga = (int)$row['info1'];
+$row = mysql_fetch_array($result);
+$kode = $row[kode];
+$nama = $row[nama];
+$jumlah = (int)$row[jumlah];
+$kondisi = $row[kondisi];
+$keterangan = $row[keterangan];
+$satuan = $row[satuan];
+$tgl = substr($row[tglperolehan],8,2)."-".substr($row[tglperolehan],5,2)."-".substr($row[tglperolehan],0,4);
+$harga = (int)$row[info1];
 $total = $harga * $jumlah;
 
-if (isset($_REQUEST['Simpan'])){
+if (isset($_REQUEST[Simpan])){
 	$sql = "SELECT kode FROM jbsfina.barang WHERE kode='$_REQUEST[kode]' AND replid<>'$_REQUEST[idbarang]'";
 	$result = QueryDb($sql);
-	$num = @mysqli_num_rows($result);
+	$num = @mysql_num_rows($result);
 	if ($num>0){
 		?>
 		<script language="javascript">
-			alert('Kode Barang \'<?=$_REQUEST['kode']?>\' sudah digunakan!');
+			alert('Kode Barang \'<?=$_REQUEST[kode]?>\' sudah digunakan!');
         </script>
 		<?
 	} else {
@@ -75,12 +75,12 @@ if (isset($_REQUEST['Simpan'])){
 			$isifoto = "";
 		}
 		
-		$tgl = MySqlDateFormat($_REQUEST['tgl']);
+		$tgl = MySqlDateFormat($_REQUEST[tgl]);
 		
 		$sql = "UPDATE jbsfina.barang
-				   SET kode='".trim($_REQUEST['kode'])."', nama='".trim($_REQUEST['nama'])."',
-					   jumlah='".trim($_REQUEST['jumlah'])."',kondisi='".addslashes(trim($_REQUEST['kondisi']))."',tglperolehan='$tgl',
-					   keterangan='".addslashes(trim($_REQUEST['keterangan']))."',idkelompok='$_REQUEST[idkelompok]',
+				   SET kode='".trim($_REQUEST[kode])."', nama='".trim($_REQUEST[nama])."',
+					   jumlah='".trim($_REQUEST[jumlah])."',kondisi='".addslashes(trim($_REQUEST[kondisi]))."',tglperolehan='$tgl',
+					   keterangan='".addslashes(trim($_REQUEST[keterangan]))."',idkelompok='$_REQUEST[idkelompok]',
 					   satuan='$_REQUEST[satuan]', info1='$_REQUEST[angkaharga]' $isifoto
 				 WHERE replid='$_REQUEST[idbarang]'";
 		$result = QueryDb($sql);
@@ -217,13 +217,13 @@ function salinharga()
 <fieldset style="border:#336699 1px solid; background-color:#eaf4ff" >
 <legend style="background-color:#336699; color:#FFFFFF; font-size:10px; font-weight:bold; padding:5px">&nbsp;Ubah&nbsp;Barang&nbsp;</legend>
 <form action="EditBarang.php" method="post" enctype="multipart/form-data" onSubmit="return validate()">
-<input type="hidden" name="idkelompok" id="idkelompok" value="<?=$_REQUEST['idkelompok']?>" />
-<input type="hidden" name="idbarang" id="idbarang" value="<?=$_REQUEST['idbarang']?>" />
+<input type="hidden" name="idkelompok" id="idkelompok" value="<?=$_REQUEST[idkelompok]?>" />
+<input type="hidden" name="idbarang" id="idbarang" value="<?=$_REQUEST[idbarang]?>" />
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
     <td width="14%" align="right"><strong>Kode&nbsp;Barang</strong></td>
     <td width="86%"><input type="text" id="kode" name="kode" maxlength="20" value="<?=stripslashes($kode)?>" /></td>
-    <td width="86%" rowspan="5" align="center" valign="middle"><img src="gambar.php?table=jbsfina.barang&replid=<?=$_REQUEST['idbarang']?>" style="padding:2px" /></td>
+    <td width="86%" rowspan="5" align="center" valign="middle"><img src="gambar.php?table=jbsfina.barang&replid=<?=$_REQUEST[idbarang]?>" style="padding:2px" /></td>
   </tr>
   <tr>
     <td align="right"><strong>Nama&nbsp;Barang</strong></td>

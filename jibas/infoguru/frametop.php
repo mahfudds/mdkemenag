@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@ if (isset($_REQUEST['menu']))
 $content = "";
 if (isset($_REQUEST['content']))
 	$content = $_REQUEST['content'];
-
+	
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -124,18 +124,15 @@ function ganti()
 }
 </style>
 </head>
-
 <body style="background-color:#6a6a6a" topmargin="0" leftmargin="0" marginheight="0" marginwidth="0" onload="buletin()">
 
 <div id="waitBox" style="position:absolute; visibility:hidden;">
 <img src="images/ico/movewait.gif" border="0" />Silahkan&nbsp;tunggu...
 </div>
-
 <form name="top">
-<input type="hidden" value="" id="theme" name="theme">
+<input type="hidden" value="<?=$theme?>" id="theme" name="theme">
 <input type="hidden" id="login" value="<?=trim(SI_USER_NAME())?>">
 </form>
-
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
 <tr>
 	<td width="20">
@@ -148,7 +145,6 @@ function ganti()
             &nbsp;|&nbsp;
             <a href="javascript:akademik();" style="font-family:Verdana; color:#FFFFFF; font-size:10px; font-weight:bold; text-decoration:none">Akademik</a>&nbsp;
 <? 		} ?>
-
 <? 		if (SI_USER_LEVEL() != 0) { ?>
             &nbsp;|&nbsp;
 			<a href="javascript:kepegawaian();" style="font-family:Verdana; color:#FFFFFF; font-size:10px; font-weight:bold; text-decoration:none">Kepegawaian</a>&nbsp;|&nbsp;

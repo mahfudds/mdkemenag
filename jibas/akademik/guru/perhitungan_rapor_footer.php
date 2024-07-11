@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@ if (isset($_REQUEST['nip'])){ //0
 		$sql = "SELECT p.nama from jbssdm.pegawai p WHERE p.nip=$nip ";    
 		$result = QueryDb($sql);
 		$cnt = 0;
-		if ($row = @mysqli_fetch_array($result)) {
+		if ($row = @mysql_fetch_array($result)) {
 		$nama=$row[0];
 		}
 		CloseDb();*/
@@ -64,11 +64,11 @@ OpenDb();
 $sql="SELECT DISTINCT pel.departemen FROM pelajaran pel, guru g, departemen  d WHERE g.nip='$_REQUEST[nip]' AND pel.replid=g.idpelajaran AND pel.departemen = d.departemen ORDER BY d.urutan";
 $result = QueryDb($sql);
 $cnt = 0;
-if ((@mysqli_num_rows($result))>0){
+if ((@mysql_num_rows($result))>0){
 ?>
 		<div align="left"><strong>Pelajaran yang diajar oleh guru<br /><?=$_REQUEST['nama']?></strong></div></strong><br />
 	<?
-	while ($row = @mysqli_fetch_array($result)) {
+	while ($row = @mysql_fetch_array($result)) {
 		$departemen=$row[0];
 		
 	?>
@@ -80,7 +80,7 @@ if ((@mysqli_num_rows($result))>0){
 		$sql2="SELECT pel.nama,pel.departemen,pel.replid FROM pelajaran pel, guru g WHERE g.nip='$_REQUEST[nip]' AND pel.replid=g.idpelajaran AND pel.departemen='$departemen' GROUP BY pel.nama";
 		$result2 = QueryDb($sql2);
 		$cnt2 = 0;
-		while ($row2 = @mysqli_fetch_array($result2)) {
+		while ($row2 = @mysql_fetch_array($result2)) {
 			$nama_pelajaran=$row2[0];
 		?>
 		<tr>

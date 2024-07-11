@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ class CPustaka
 {
 	function OnStart()
 	{
-		$op = $_REQUEST['op'];
+		$op = $_REQUEST[op];
 		if ($op == "del")
 		{
 			$sql = "DELETE FROM format
@@ -33,7 +33,7 @@ class CPustaka
 			QueryDb($sql);
 		}
 		
-		if (isset($_REQUEST['simpan']))
+		if (isset($_REQUEST[simpan]))
 			$this->save();
 	}
 	
@@ -53,12 +53,12 @@ class CPustaka
 	
 	function GetKatalog()
 	{
-		$this->katalog = $_REQUEST['katalog'];
+		$this->katalog = $_REQUEST[katalog];
 		
 		$sql = "SELECT MAX(LENGTH(kode))
 			      FROM katalog";
 		$result = QueryDb($sql);
-		$row = mysqli_fetch_row($result);
+		$row = mysql_fetch_row($result);
 		$maxlen = $row[0];
 		?>
 		
@@ -68,7 +68,7 @@ class CPustaka
 			      FROM katalog
 				 ORDER BY nama";
 		$result = QueryDb($sql);
-		while ($row = @mysqli_fetch_row($result))
+		while ($row = @mysql_fetch_row($result))
 		{
 			$len = strlen(trim($row[1]));
 			$space = $this->GetSpace($maxlen, $len);
@@ -85,12 +85,12 @@ class CPustaka
 	
 	function GetPenulis()
 	{
-		$this->penulis = $_REQUEST['penulis'];
+		$this->penulis = $_REQUEST[penulis];
 		
 		$sql = "SELECT MAX(LENGTH(kode))
 			      FROM penulis";
 		$result = QueryDb($sql);
-		$row = mysqli_fetch_row($result);
+		$row = mysql_fetch_row($result);
 		$maxlen = $row[0];	?>
 		
 		<select name="penulis" id="penulis" class="cmbfrm" style="width:100%; font-family:'Courier New'; font-size: 14px;">
@@ -99,7 +99,7 @@ class CPustaka
 			      FROM penulis
 				 ORDER BY nama";
 		$result = QueryDb($sql);
-		while ($row = @mysqli_fetch_row($result))
+		while ($row = @mysql_fetch_row($result))
 		{
 			$len = strlen(trim($row[1]));
 			$space = $this->GetSpace($maxlen, $len);
@@ -118,12 +118,12 @@ class CPustaka
 	
 	function GetPenerbit()
 	{
-		$this->penerbit = $_REQUEST['penerbit'];
+		$this->penerbit = $_REQUEST[penerbit];
 		
 		$sql = "SELECT MAX(LENGTH(kode))
 			      FROM penerbit";
 		$result = QueryDb($sql);
-		$row = mysqli_fetch_row($result);
+		$row = mysql_fetch_row($result);
 		$maxlen = $row[0];	?>
 		
 		<select name="penerbit" id="penerbit" class="cmbfrm" style="width:100%; font-family:'Courier New'; font-size: 14px;">
@@ -132,7 +132,7 @@ class CPustaka
 				  FROM penerbit
 				 ORDER BY nama";
 		$result = QueryDb($sql);
-		while ($row = @mysqli_fetch_row($result))
+		while ($row = @mysql_fetch_row($result))
 		{
 			$len = strlen(trim($row[1]));
 			$space = $this->GetSpace($maxlen, $len);
@@ -148,12 +148,12 @@ class CPustaka
 	
 	function GetFormat()
 	{
-		$this->format = $_REQUEST['format'];
+		$this->format = $_REQUEST[format];
 		
 		$sql = "SELECT MAX(LENGTH(kode))
 			      FROM format";
 		$result = QueryDb($sql);
-		$row = mysqli_fetch_row($result);
+		$row = mysql_fetch_row($result);
 		$maxlen = $row[0]; ?>
 		
 		<select name="format" id="format" class="cmbfrm" style="width:100%; font-family:'Courier New'; font-size: 14px;">
@@ -163,7 +163,7 @@ class CPustaka
 				 ORDER BY nama";
 		$result = QueryDb($sql);
 		
-		while ($row = @mysqli_fetch_row($result))
+		while ($row = @mysql_fetch_row($result))
 		{
 			$len = strlen(trim($row[1]));
 			$space = $this->GetSpace($maxlen, $len);
@@ -325,14 +325,14 @@ class CPustaka
 		<table width="60%" border="0" cellspacing="0" cellpadding="2" class="tab" style="border-width: 1px; border-collapse: collapse; border-color: #ececec;">
 
 <?		$cnt = 0;
-		while ($row = @mysqli_fetch_array($result))
+		while ($row = @mysql_fetch_array($result))
 		{
 			?>
             <tr>
-               <td width="70%" valign="middle">&nbsp;<?=$row['nama']?></td>
+               <td width="70%" valign="middle">&nbsp;<?=$row[nama]?></td>
                <td width="30%" align="left" valign="middle">
                		<input type="text" name="jumlah<?=$cnt?>" maxlength='3' size='4' id="jumlah<?=$cnt?>" class="inputtxt" style="height: 22px; font-size: 16px;" />&nbsp;buah
- 		            <input type="hidden" name="replid<?=$cnt?>" id="replid<?=$cnt?>" class="inputtxt" value="<?=$row['replid']?>" />
+ 		            <input type="hidden" name="replid<?=$cnt?>" id="replid<?=$cnt?>" class="inputtxt" value="<?=$row[replid]?>" />     
                </td>
              </tr>
 <?	 		$cnt++;
@@ -344,9 +344,9 @@ class CPustaka
 			$sql = "SELECT * FROM perpustakaan WHERE replid<>".SI_USER_IDPERPUS()." ORDER BY nama";
 			$result = QueryDb($sql);
 			$cnt=1;
-			while ($row = @mysqli_fetch_array($result)){ ?>
+			while ($row = @mysql_fetch_array($result)){ ?>
 					<input type="hidden" name="jumlah<?=$cnt?>" id="jumlah<?=$cnt?>" class="inputtxt" />
- 		            <input type="hidden" name="replid<?=$cnt?>" id="replid<?=$cnt?>" class="inputtxt" value="<?=$row['replid']?>" />
+ 		            <input type="hidden" name="replid<?=$cnt?>" id="replid<?=$cnt?>" class="inputtxt" value="<?=$row[replid]?>" />
 			<?
             $cnt++;
 			}
@@ -357,7 +357,7 @@ class CPustaka
 	{
 		$sql = "SELECT * FROM perpustakaan ORDER BY nama";
 		$result = QueryDb($sql);
-		$num = @mysqli_num_rows($result);
+		$num = @mysql_num_rows($result);
 		
 		return $num;
 	}
@@ -386,7 +386,7 @@ class CPustaka
 					  FROM daftarpustaka
 					 WHERE info1 = '$barcode'";
 			$res = QueryDb($sql);
-			$row = mysqli_fetch_row($res);
+			$row = mysql_fetch_row($res);
 			$ndata = (int)$row[0];		 
 		}
 		while($ndata != 0);
@@ -396,17 +396,17 @@ class CPustaka
 	
 	function save()
 	{
-		$judul = trim(addslashes($_REQUEST['judul']));
-		$abstraksi = trim(addslashes($_REQUEST['abstraksi']));
-		$keyword = trim(addslashes($_REQUEST['keyword']));
-		$harga = UnformatRupiah(trim(addslashes($_REQUEST['harga'])));
-		$tahun = trim(addslashes($_REQUEST['tahun']));
-		$keteranganfisik = trim(addslashes($_REQUEST['keteranganfisik']));
-		$penulis = trim(addslashes($_REQUEST['penulis']));
-		$penerbit = trim(addslashes($_REQUEST['penerbit']));
-		$format = trim(addslashes($_REQUEST['format']));
-		$katalog = trim(addslashes($_REQUEST['katalog']));
-		$keterangan = trim(addslashes($_REQUEST['keterangan']));
+		$judul = trim(addslashes($_REQUEST[judul]));
+		$abstraksi = trim(addslashes($_REQUEST[abstraksi]));
+		$keyword = trim(addslashes($_REQUEST[keyword]));
+		$harga = UnformatRupiah(trim(addslashes($_REQUEST[harga])));
+		$tahun = trim(addslashes($_REQUEST[tahun]));
+		$keteranganfisik = trim(addslashes($_REQUEST[keteranganfisik]));
+		$penulis = trim(addslashes($_REQUEST[penulis]));
+		$penerbit = trim(addslashes($_REQUEST[penerbit]));
+		$format = trim(addslashes($_REQUEST[format]));
+		$katalog = trim(addslashes($_REQUEST[katalog]));
+		$keterangan = trim(addslashes($_REQUEST[keterangan]));
 		$cover = $_FILES['cover'];
 		$uploadedfile = $cover['tmp_name'];
 		$uploadedfile_name = $cover['name'];
@@ -440,7 +440,7 @@ class CPustaka
 				   AND penerbit='$penerbit'";
 		//echo "$sql<br>";		   
 		$result = QueryDbTrans($sql, $success);
-		$num = @mysqli_num_rows($result);
+		$num = @mysql_num_rows($result);
 		$goon = 0;
 		
 		if ($success)
@@ -459,7 +459,7 @@ class CPustaka
 					$sql = "SELECT LAST_INSERT_ID()";
 					//echo "$sql<br>";
 					$result = QueryDb($sql);
-					$row = @mysqli_fetch_row($result);
+					$row = @mysql_fetch_row($result);
 					$lastid = $row[0];
 					
 					$goon = 1;
@@ -478,7 +478,7 @@ class CPustaka
 						 LIMIT 1";
 				//echo "$sql<br>";		 
 				$result = QueryDbTrans($sql, $success);
-				$row = @mysqli_fetch_row($result);
+				$row = @mysql_fetch_row($result);
 				$lastid = $row[0];
 				
 				$goon = 1;
@@ -492,7 +492,7 @@ class CPustaka
 					 WHERE replid = '$katalog'";
 			//echo "$sql<br>";		 
 			$result = QueryDbTrans($sql, $success);
-			$r = @mysqli_fetch_row($result);
+			$r = @mysql_fetch_row($result);
 			$counter = $r[0];
 			for ($i = 0; $success && $i < $this->CountPustaka(); $i++)
 			{
@@ -544,17 +544,17 @@ class CPustaka
 	{
 		$sql = "SELECT kode FROM katalog WHERE replid='$katalog'";
 		$result = QueryDb($sql);
-		$ktlg = @mysqli_fetch_row($result);
+		$ktlg = @mysql_fetch_row($result);
 
 		$sql = "SELECT kode FROM penulis WHERE replid='$penulis'";
 		$result = QueryDb($sql);
-		$pnls = @mysqli_fetch_row($result);
+		$pnls = @mysql_fetch_row($result);
 		
 		$jdl = substr($judul, 0, 1);
 	
 		$sql = "SELECT kode FROM format WHERE replid='$format'";
 		$result = QueryDb($sql);
-		$frmt = @mysqli_fetch_row($result);
+		$frmt = @mysql_fetch_row($result);
 		
 		$cnt = str_pad($counter, 5, "0", STR_PAD_LEFT);
 
@@ -566,7 +566,7 @@ class CPustaka
 			
 			$sql = "SELECT COUNT(replid) FROM daftarpustaka WHERE kodepustaka = '$kode'";
 			$result = QueryDb($sql);
-			$row = mysqli_fetch_row($result);
+			$row = mysql_fetch_row($result);
 			
 			if ($row[0] > 0)
 			{

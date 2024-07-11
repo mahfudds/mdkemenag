@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@ function GetUserGroup()
                AND aktif = 1";
     
     $res = QueryDb($sql);
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         if ($UserGroupList != "")
             $UserGroupList .= ",";
@@ -80,7 +80,7 @@ function GetFromInDst()
         //echo "$sql<br>";
         
         $res = QueryDb($sql);
-        while($row = mysqli_fetch_row($res))
+        while($row = mysql_fetch_row($res))
         {
             $found = false;
             for($j = 0; !$found && $j < count($UserLetterIdList); $j++)
@@ -130,7 +130,7 @@ function GetFromSuratOutDst()
             $sql .= " AND s.idkategori = '$kategori'";
             
         $res = QueryDb($sql);
-        while($row = mysqli_fetch_row($res))
+        while($row = mysql_fetch_row($res))
         {
             $found = false;
             for($j = 0; !$found && $j < count($UserLetterIdList); $j++)
@@ -182,7 +182,7 @@ function GetFromSuratOutSrc()
             $sql .= " AND s.idkategori = '$kategori'";
             
         $res = QueryDb($sql);
-        while($row = mysqli_fetch_row($res))
+        while($row = mysql_fetch_row($res))
         {
             $found = false;
             for($j = 0; !$found && $j < count($UserLetterIdList); $j++)
@@ -209,7 +209,7 @@ function GetSumberSurat($idsurat, $jenissurat)
                  WHERE src.idsumber = si.replid
                    AND src.idsurat = $idsurat";
         $res = QueryDb($sql);
-        $row = mysqli_fetch_row($res);
+        $row = mysql_fetch_row($res);
         $sumber = $row[0];    
     }
     else
@@ -228,7 +228,7 @@ function GetSumberSurat($idsurat, $jenissurat)
                 ) AS X
                 ORDER BY nama";
         $res = QueryDb($sql);
-        while($row = mysqli_fetch_row($res))
+        while($row = mysql_fetch_row($res))
         {
             if ($sumber != "")
                 $sumber .= ", ";
@@ -241,7 +241,7 @@ function GetSumberSurat($idsurat, $jenissurat)
                    AND idsurat = $idsurat
                  ORDER BY k.kelompok";
         $res = QueryDb($sql);
-        while($row = mysqli_fetch_row($res))
+        while($row = mysql_fetch_row($res))
         {
             if ($sumber != "")
                 $sumber .= ", ";
@@ -272,7 +272,7 @@ function GetTujuanSurat($idsurat, $jenissurat)
                 ) AS X
                 ORDER BY nama";
         $res = QueryDb($sql);
-        while($row = mysqli_fetch_row($res))
+        while($row = mysql_fetch_row($res))
         {
             if ($tujuan != "")
                 $tujuan .= ", ";
@@ -285,7 +285,7 @@ function GetTujuanSurat($idsurat, $jenissurat)
                    AND dst.idsurat = $idsurat
                  ORDER BY k.kelompok";
         $res = QueryDb($sql);
-        while($row = mysqli_fetch_row($res))
+        while($row = mysql_fetch_row($res))
         {
             if ($tujuan != "")
                 $tujuan .= ", ";
@@ -319,7 +319,7 @@ function GetTujuanSurat($idsurat, $jenissurat)
                 AS X
                 ORDER BY nama";
         $res = QueryDb($sql);
-        while($row = mysqli_fetch_row($res))
+        while($row = mysql_fetch_row($res))
         {
             if ($tujuan != "")
                 $tujuan .= ", ";
@@ -351,7 +351,7 @@ function GetTembusanSurat($idsurat, $jenissurat)
     
     $tembusan = "";
     $res = QueryDb($sql);
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         if ($tembusan != "")
             $tembusan .= ", ";
@@ -367,7 +367,7 @@ function GetNBerkas($idsurat)
               FROM jbsletter.berkassurat
              WHERE idsurat = $idsurat";
     $res = QueryDb($sql);
-    $row = mysqli_fetch_row($res);
+    $row = mysql_fetch_row($res);
     
     return $row[0];
 }
@@ -378,7 +378,7 @@ function GetNComment($idsurat)
               FROM jbsletter.comment
              WHERE idsurat = $idsurat";
     $res = QueryDb($sql);
-    $row = mysqli_fetch_row($res);
+    $row = mysql_fetch_row($res);
     
     return $row[0];
 }
@@ -390,7 +390,7 @@ function GetLastActive($idsurat)
               FROM jbsletter.surat
              WHERE replid = $idsurat";
     $res = QueryDb($sql);
-    $row = mysqli_fetch_row($res);
+    $row = mysql_fetch_row($res);
     
     return SecToAgeDate($row[0], $row[2]);
 }
@@ -466,7 +466,7 @@ function ShowListSurat()
     }
     $res = QueryDb($sql);
     
-    if (0 == mysqli_num_rows($res))
+    if (0 == mysql_num_rows($res))
     {
         echo "<tr height='45' style='background-color: $fff'>";
         echo "<td align='center' colspan='9' style='border-color: #bbb; border-width: 1px;' valign='middle'><em>Tidak ditemukan data surat</em></td>";
@@ -476,7 +476,7 @@ function ShowListSurat()
     }
     
     $no = 0;
-    while($row = mysqli_fetch_array($res))
+    while($row = mysql_fetch_array($res))
     {
         $no += 1;
         

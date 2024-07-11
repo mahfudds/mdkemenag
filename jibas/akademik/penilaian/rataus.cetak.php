@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,37 +38,37 @@ $dp = $_REQUEST['dp'];
 
 $sql = "SELECT departemen FROM pelajaran WHERE replid='$pel'";
 $res = QueryDb($sql);
-$row = @mysqli_fetch_row($res);
+$row = @mysql_fetch_row($res);
 $departemen = $row[0];
 
 $sql = "SELECT tingkat FROM tingkat WHERE replid='$tkt'";
 $res = QueryDb($sql);
-$row = @mysqli_fetch_row($res);
+$row = @mysql_fetch_row($res);
 $tingkat = $row[0];
 
 $sql = "SELECT semester FROM semester WHERE replid='$sem'";
 $res = QueryDb($sql);
-$row = @mysqli_fetch_row($res);
+$row = @mysql_fetch_row($res);
 $semester = $row[0];
 
 $sql = "SELECT nama FROM pelajaran WHERE replid='$pel'";
 $res = QueryDb($sql);
-$row = @mysqli_fetch_row($res);
+$row = @mysql_fetch_row($res);
 $pelajaran = $row[0];
 
 $sql = "SELECT kelas FROM kelas WHERE replid='$kls'";
 $res = QueryDb($sql);
-$row = @mysqli_fetch_row($res);
+$row = @mysql_fetch_row($res);
 $kelas = $row[0];
 
 $sql = "SELECT nama FROM siswa WHERE nis='$nis'";
 $res = QueryDb($sql);
-$row = @mysqli_fetch_row($res);
+$row = @mysql_fetch_row($res);
 $nama = $row[0];
 
 $sql = "SELECT keterangan FROM dasarpenilaian WHERE dasarpenilaian = '$dp'";
 $res = QueryDb($sql);
-$row = @mysqli_fetch_row($res);
+$row = @mysql_fetch_row($res);
 $namadp = $row[0];
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -124,17 +124,17 @@ $namadp = $row[0];
 		$sql = "SELECT j.replid, j.jenisujian, a.replid FROM aturannhb a, jenisujian j WHERE  a.idpelajaran='$pel' AND a.dasarpenilaian='$dp' AND a.idjenisujian=j.replid AND a.idtingkat='$tkt' ORDER BY j.jenisujian";
 		//$sql = "SELECT replid, jenisujian FROM jenisujian WHERE idpelajaran = '$pel' ORDER BY jenisujian";
 		$res = QueryDb($sql);
-		while ($row = @mysqli_fetch_row($res)){
+		while ($row = @mysql_fetch_row($res)){
 			$rata = 0;
 			$numnilai = 0;
 			$sql2 = "SELECT u.tanggal,u.deskripsi, n.nilaiujian,u.replid, n.keterangan FROM ujian u, nilaiujian n WHERE u.idkelas = $kls AND u.idsemester = '$sem' AND u.idjenis = $row[0] AND u.replid = n.idujian  AND u.idaturan='$row[2]' AND n.nis = '$nis' ORDER BY u.tanggal";
 			$res2 = QueryDb($sql2);
-			$num2 = @mysqli_num_rows($res2);
+			$num2 = @mysql_num_rows($res2);
 			$content = array();
-			while ($row2 = @mysqli_fetch_row($res2)){
+			while ($row2 = @mysql_fetch_row($res2)){
 				$sql3 = "SELECT nilaiRK FROM ratauk WHERE idkelas='$kls' AND idsemester='$sem' AND idujian='$row2[3]'";
 				$res3 = QueryDb($sql3);
-				$row3 = @mysqli_fetch_row($res3);
+				$row3 = @mysql_fetch_row($res3);
 				$ratauk = $row[0];
 				$prosen = round((($row2[2]  - $row3[0]) / $row3[0]) * 100, 2) . "%";
 				//if ($prosen>0)
@@ -148,7 +148,7 @@ $namadp = $row[0];
 			
 			$sql2 = "SELECT nilaiAU FROM nau WHERE idkelas = '$kls' AND idsemester = '".$sem."' AND idjenis = '$row[0]' AND nis = '$nis' AND idpelajaran = '$pel' AND idaturan='$row[2]'";
 			$res2 = QueryDb($sql2);
-			$row2 = @mysqli_fetch_row($res2);
+			$row2 = @mysql_fetch_row($res2);
 			$nilaiakhir = $row2[0];	
 			?>
 			<div style="padding-bottom:10px">

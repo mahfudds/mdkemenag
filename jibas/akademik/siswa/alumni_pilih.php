@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -143,7 +143,7 @@ if (isset($_REQUEST['alumnikan']))
 					  WHERE s.nis = '$nis'
 					    AND s.idkelas = k.replid";
 			$result1 = QueryDb($sql1);
-			$row1 = @mysqli_fetch_array($result1);
+			$row1 = @mysql_fetch_array($result1);
 			$idtingkat = $row1['idtingkat'];
 			$idkelas = $row1['replid'];
 			
@@ -380,8 +380,8 @@ if ($jenis <> "")
 				   AND k.idtingkat = t.replid
 				   AND t.replid = '$tingkat'"; 
 	$result_tot = QueryDb($sql_tot);
-	$total=ceil(mysqli_num_rows($result_tot)/(int)$varbaris);
-	$jumlah = mysqli_num_rows($result_tot);
+	$total=ceil(mysql_num_rows($result_tot)/(int)$varbaris);
+	$jumlah = mysql_num_rows($result_tot);
 	$akhir = ceil($jumlah/5)*5;	
 	
 	$sql_siswa = "SELECT s.nis,s.nama,s.idkelas,k.kelas,s.replid,t.tingkat
@@ -394,7 +394,7 @@ if ($jenis <> "")
 				   LIMIT ".(int)$page*(int)$varbaris.",$varbaris";
 	
 	$result_siswa = QueryDb($sql_siswa);
-	if (@mysqli_num_rows($result_siswa)>0)
+	if (@mysql_num_rows($result_siswa)>0)
 	{
 ?>	
 <input type="hidden" name="total" id="total" value="<?=$jumlah?>">
@@ -449,10 +449,10 @@ if ($jenis <> "")
 			$cnt = 1;
 		else 
 			$cnt = (int)$page*(int)$varbaris+1;
-		while ($row_siswa=@mysqli_fetch_row($result_siswa)){
+		while ($row_siswa=@mysql_fetch_row($result_siswa)){
             $sql_kelas="SELECT replid,kelas FROM jbsakad.kelas WHERE replid='$row_siswa[2]'";
             $result_kelas=QueryDb($sql_kelas);
-            $row_kelas=@mysqli_fetch_row($result_kelas);
+            $row_kelas=@mysql_fetch_row($result_kelas);
 ?>
 	<tr height="25">
         <td align="center"><?=$cnt?></td>

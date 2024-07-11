@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  *
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,9 +37,9 @@ function getWelcome()
               FROM jbscbe.welcome
              WHERE departemen = '$dept'";
     $res = QueryDb($sql);
-    if (mysqli_num_rows($res) > 0)
+    if (mysql_num_rows($res) > 0)
     {
-        $row = mysqli_fetch_row($res);
+        $row = mysql_fetch_row($res);
         $welcome = $row[0];
     }
     CloseDb();
@@ -101,7 +101,7 @@ function getLastUjian($page)
              WHERE us.$userCol = '$userId'
                AND us.status IN (1,2)";
     $res = QueryDb($sql);
-    $row = mysqli_fetch_row($res);
+    $row = mysql_fetch_row($res);
     $ndata = $row[0];
 
     $sql = "SELECT id, tanggal, judul, nilai, status, skalanilai, idujianremed, viewresult, belumhasil, tanggalsort FROM
@@ -129,7 +129,7 @@ function getLastUjian($page)
     $table = "";
 
     $count = $startIndex;
-    while($row = mysqli_fetch_array($res))
+    while($row = mysql_fetch_array($res))
     {
         $no = $ndata - $count;
         $viewresult = $row["viewresult"];
@@ -155,7 +155,7 @@ function getLastUjian($page)
         {
             $sql = "SELECT judul FROM jbscbe.ujian WHERE id = $idujianremed";
             $res2 = QueryDb($sql);
-            if ($row2 = mysqli_fetch_row($res2))
+            if ($row2 = mysql_fetch_row($res2))
                 $judul = $row2[0];
         }
 

@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -139,7 +139,7 @@ function change_baris() {
                    AND idtahunbuku = '$idtahunbuku'";
 
 	$result_tot = QueryDb($sql_tot);
-	$row_tot = mysqli_fetch_row($result_tot);
+	$row_tot = mysql_fetch_row($result_tot);
 	$jumlah = $row_tot[0];
 	$total=ceil($jumlah/(int)$varbaris);
 	$akhir = ceil($jumlah/5)*5;
@@ -155,7 +155,7 @@ function change_baris() {
              ORDER BY $urut $urutan LIMIT ".(int)$page*(int)$varbaris.",$varbaris";
 		
 	$result = QueryDb($sql);	
-	if (mysqli_num_rows($result) > 0) {
+	if (mysql_num_rows($result) > 0) {
 ?>    
     <input type="hidden" name="total" id="total" value="<?=$total?>"/>
     <table border="0" width="100%" align="center">
@@ -182,7 +182,7 @@ function change_baris() {
         else 
             $cnt = (int)$page*(int)$varbaris;
         
-		while($row = mysqli_fetch_array($result)) {
+		while($row = mysql_fetch_array($result)) {
 			
 ?>
     <tr height="25">

@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *  
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,7 +53,7 @@ require_once('../include/mainconfig.php');
 <script type="text/javascript" language="javascript" src="../script/bgstretcher.js"></script>
 <script type="text/javascript" language="javascript" src="../script/footer.js"></script>
 <script type="text/javascript" language="javascript" src="beranda/beranda.js"></script>
-<script type="text/javascript" language="javascript" src="beranda/beranda.listbg.js?r="<?php filemtime("beranda/beranda.listbg.js") ?>></script>
+<script type="text/javascript" language="javascript" src="beranda/beranda.listbg.js"></script>
 <script type="text/javascript" language="javascript" src="berita/berita.js"></script>
 <script type="text/javascript" language="javascript" src="infosiswa/infosiswa.js"></script>
 <script type="text/javascript" language="javascript" src="infosiswa/infosiswa.cbe.js"></script>
@@ -74,33 +74,33 @@ require_once('../include/mainconfig.php');
 <input type="text" id="debug2">
 <input type="text" id="debug3">
 //-->
-<table border="0" cellpadding="0" cellspacing="0" align="center" width="980" >
-<tr>
-	<td align="center" valign="middle">
-	<table border="0" cellpadding="5">
-	<tr>
-		<td>
-			<img src="../images/<?= $G_LOGO_DEPAN_KIRI ?>">
-		</td>
-		<td width="*" align="center">
-			<font style="font-family:Arial; font-size:14px; color:#fff; font-weight: bold; ">
-			ANJUNGAN INFORMASI
-			</font><br>
-			<font style="font-family:Tahoma; font-size:16px; color:#fff; ">
-			<?= $G_JUDUL_DEPAN_1 ?>
-			</font><br>
-			<font style="font-family:Tahoma; font-size:11px; color:#fff; ">
-			<?= $G_JUDUL_DEPAN_2 ?>
-			</font><br>
-		</td>
-		<td>
-			<img src="../images/<?= $G_LOGO_DEPAN_KANAN ?>">
-		</td>
-	</tr>
-	</table>		
-	<br>
-    </td>
-</tr>
+<table border="0" cellpadding="0" cellspacing="0" align="center" width="100%" >
+<!--<tr>-->
+<!--	<td align="center" valign="middle">-->
+<!--	<table border="0" cellpadding="5">-->
+<!--	<tr>-->
+<!--		<td>-->
+<!--			<img src="../images/<?= $G_LOGO_DEPAN_KIRI ?>">-->
+<!--		</td>-->
+<!--		<td width="*" align="center">-->
+<!--			<font style="font-family:Arial; font-size:14px; color:#fff; font-weight: bold; ">-->
+<!--			ANJUNGAN INFORMASI-->
+<!--			</font><br>-->
+<!--			<font style="font-family:Tahoma; font-size:16px; color:#fff; ">-->
+<!--			<?= $G_JUDUL_DEPAN_1 ?>-->
+<!--			</font><br>-->
+<!--			<font style="font-family:Tahoma; font-size:11px; color:#fff; ">-->
+<!--			<?= $G_JUDUL_DEPAN_2 ?>-->
+<!--			</font><br>-->
+<!--		</td>-->
+<!--		<td>-->
+<!--			<img src="../images/<?= $G_LOGO_DEPAN_KANAN ?>">-->
+<!--		</td>-->
+<!--	</tr>-->
+<!--	</table>		-->
+<!--	<br>-->
+<!--    </td>-->
+<!--</tr>-->
 <tr>
 	<td align="center">
 <?	include('index.tab.php'); ?>		
@@ -116,11 +116,7 @@ include('../partner.php');
 ?>
 </div>
 
-<div id="Footer">
-<?
-include('../footer.php');
-?>
-</div>
+
 
 </div>
 </body>

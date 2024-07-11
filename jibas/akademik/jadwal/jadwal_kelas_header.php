@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -201,11 +201,11 @@ function focusNext(elemName, evt) {
         <?
             $sql_tingkat="SELECT * FROM jbsakad.tingkat WHERE departemen='$departemen' AND aktif = 1 ORDER BY urutan";
             $result_tingkat=QueryDb($sql_tingkat);
-            while ($row_result_tingkat=@mysqli_fetch_array($result_tingkat)){
+            while ($row_result_tingkat=@mysql_fetch_array($result_tingkat)){
                 if ($tingkat=="")
-                    $tingkat=$row_result_tingkat['replid'];
+                    $tingkat=$row_result_tingkat[replid];
         ?> 
-            <option value="<?=$row_result_tingkat['replid']?>" <?=StringIsSelected($row_result_tingkat['replid'], $tingkat)?>><?=$row_result_tingkat['tingkat']?></option>
+            <option value="<?=$row_result_tingkat[replid]?>" <?=StringIsSelected($row_result_tingkat[replid], $tingkat)?>><?=$row_result_tingkat['tingkat']?></option>
         <? 	} ?> 
             </select></td>       
     </tr>	
@@ -215,11 +215,11 @@ function focusNext(elemName, evt) {
 			<select name="tahunajaran" id="tahunajaran" onChange="change_ajaran()"  style="width:120px" onkeypress="return focusNext('tingkat', event)">
 <?          $sql_tahunajaran="SELECT * FROM jbsakad.tahunajaran WHERE departemen='$departemen' AND aktif=1 ORDER BY replid DESC";
             $result_tahunajaran=QueryDb($sql_tahunajaran);
-            while ($row_result_tahunajaran=@mysqli_fetch_array($result_tahunajaran))
+            while ($row_result_tahunajaran=@mysql_fetch_array($result_tahunajaran))
 			{
                 if ($tahunajaran=="")
-                    $tahunajaran=$row_result_tahunajaran['replid']; ?>
-				<option value="<?=$row_result_tahunajaran['replid']?>" <?=StringIsSelected($row_result_tahunajaran['replid'], $tahunajaran)?>>
+                    $tahunajaran=$row_result_tahunajaran[replid]; ?> 
+				<option value="<?=$row_result_tahunajaran[replid]?>" <?=StringIsSelected($row_result_tahunajaran[replid], $tahunajaran)?>>
 				<?=$row_result_tahunajaran['tahunajaran']?>
 				</option>
 <?			}	?> 
@@ -230,11 +230,11 @@ function focusNext(elemName, evt) {
 			<select name="kelas" id="kelas" onChange="change(0)"  style="width:100px" onkeypress="return focusNext('info_jadwal', event)">
 <?          $sql_kelas="SELECT * FROM jbsakad.kelas WHERE idtahunajaran='$tahunajaran' AND idtingkat='$tingkat' ORDER BY kelas";
             $result_kelas=QueryDb($sql_kelas);
-            while ($row_result_kelas=@mysqli_fetch_array($result_kelas))
+            while ($row_result_kelas=@mysql_fetch_array($result_kelas))
 			{
 				if ($kelas=="")
-				    $kelas=$row_result_kelas['replid'];  ?>
-				<option value="<?=$row_result_kelas['replid']?>" <?=StringIsSelected($row_result_kelas['replid'], $kelas)?>>
+				    $kelas=$row_result_kelas[replid];  ?> 
+				<option value="<?=$row_result_kelas[replid]?>" <?=StringIsSelected($row_result_kelas[replid], $kelas)?>>
 				<?=$row_result_kelas['kelas']?>
 				</option>
 <? 			} ?> 
@@ -246,7 +246,7 @@ function focusNext(elemName, evt) {
         <td colspan="3"><select name="info_jadwal" id="info_jadwal" onChange="change(0)" style="width:285px">
 <?  		$sql_info_jadwal="SELECT * FROM jbsakad.infojadwal WHERE idtahunajaran = '$tahunajaran' AND aktif=1 ORDER BY aktif DESC";
             $result_info_jadwal=QueryDb($sql_info_jadwal);
-            while ($row_info_jadwal=@mysqli_fetch_array($result_info_jadwal))
+            while ($row_info_jadwal=@mysql_fetch_array($result_info_jadwal))
 			{
                 if ($info_jadwal=="")
                     $info_jadwal=$row_info_jadwal['replid'];

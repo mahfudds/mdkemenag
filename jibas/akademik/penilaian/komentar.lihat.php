@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  *
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -79,7 +79,7 @@ $sql = "SELECT DISTINCT a.dasarpenilaian, d.keterangan
            AND d.aktif = 1";
 $res = QueryDb($sql);
 $i = 0;
-while($row = mysqli_fetch_row($res))
+while($row = mysql_fetch_row($res))
 {
     $aspekarr[$i++] = array($row[0], $row[1]);
 }
@@ -116,7 +116,7 @@ $sql = "SELECT s.nis, s.nama
          ORDER BY s.nama";
 $res = QueryDb($sql);
 $no = 0;
-while($row = mysqli_fetch_row($res))
+while($row = mysql_fetch_row($res))
 {
     $no += 1;
     $nis = $row[0];
@@ -146,9 +146,9 @@ while($row = mysqli_fetch_row($res))
         $nh = "";
         $idnap = 0;
         $komentar = "";
-        if (mysqli_num_rows($res2) > 0)
+        if (mysql_num_rows($res2) > 0)
         {
-            $row2 = mysqli_fetch_row($res2);
+            $row2 = mysql_fetch_row($res2);
             $na = $row2[0];
             $nh = $row2[1];
             $idnap = $row2[2];
@@ -176,7 +176,7 @@ while($row = mysqli_fetch_row($res))
         $komentar = "";
         $predikat = "";
         $nilaiExist = false;
-        if ($row2 = mysqli_fetch_row($res2))
+        if ($row2 = mysql_fetch_row($res2))
         {
             $nilaiExist = true;
             $komentar = $row2[1];

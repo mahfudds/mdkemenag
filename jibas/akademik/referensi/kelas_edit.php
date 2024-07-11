@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,15 +33,15 @@ $replid = $_REQUEST['replid'];
 OpenDb();
 /*$sql_get_namatahunajaran = "SELECT tahunajaran FROM jbsakad.tahunajaran WHERE replid = '$tahunajaran'";
 $result_get_namatahunajaran = QueryDb($sql_get_namatahunajaran);
-$row_get_namatahunajaran =@mysqli_fetch_array($result_get_namatahunajaran);
+$row_get_namatahunajaran =@mysql_fetch_array($result_get_namatahunajaran);
 
 $sql_get_namatingkat = "SELECT tingkat, departemen FROM jbsakad.tingkat WHERE replid = '$tingkat'";
 $result_get_namatingkat = QueryDb($sql_get_namatingkat);
-$row_get_namatingkat =@mysqli_fetch_array($result_get_namatingkat);
+$row_get_namatingkat =@mysql_fetch_array($result_get_namatingkat);
 */
 $sql_get_kelas = "SELECT k.kelas, k.kapasitas, k.keterangan, a.tahunajaran, a.departemen, t.tingkat, k.nipwali, k.idtahunajaran, k.idtingkat FROM jbsakad.kelas k, tahunajaran a, tingkat t WHERE k.replid = '$replid' AND k.idtingkat = t.replid AND k.idtahunajaran = a.replid";
 $result_get_kelas = QueryDb($sql_get_kelas);
-$row_get_kelas =@mysqli_fetch_array($result_get_kelas);
+$row_get_kelas =@mysql_fetch_array($result_get_kelas);
 $departemen = $row_get_kelas['departemen'];
 $idtahunajaran = $row_get_kelas['idtahunajaran'];
 $idtingkat = $row_get_kelas['idtingkat'];
@@ -60,7 +60,7 @@ if (isset($_REQUEST['keterangan']))
 
 $sql_get_pegawai = "SELECT * FROM jbssdm.pegawai WHERE nip = '$row_get_kelas[nipwali]'";
 $result_get_pegawai = QueryDb($sql_get_pegawai);
-$row_get_pegawai =@mysqli_fetch_array($result_get_pegawai);
+$row_get_pegawai =@mysql_fetch_array($result_get_pegawai);
 $nipwali = $row_get_pegawai['nip'];
 $namawali = $row_get_pegawai['nama'];
 
@@ -73,11 +73,11 @@ $ERROR_MSG = "";
 if (isset($_REQUEST['Simpan'])) {
 	$sql_cek = "SELECT * FROM kelas WHERE kelas = '$kelas' AND idtahunajaran = '$idtahunajaran' AND idtingkat = '$idtingkat' AND replid <>  '$replid'";
 	$result_cek = QueryDb($sql_cek);
-	if (@mysqli_num_rows($result_cek) > 0) {
+	if (@mysql_num_rows($result_cek) > 0) {
 		CloseDb();
 		$ERROR_MSG = "Kelas ".$kelas." sudah digunakan!";
 	} else {
-		$sql = "UPDATE kelas SET kelas='$kelas',kapasitas='$_REQUEST[kapasitas]', nipwali='".trim($_REQUEST['nipwali'])."', keterangan='$keterangan' WHERE replid= '$replid'";
+		$sql = "UPDATE kelas SET kelas='$kelas',kapasitas='$_REQUEST[kapasitas]', nipwali='".trim($_REQUEST[nipwali])."', keterangan='$keterangan' WHERE replid= '$replid'";
 		
 		$result = QueryDb($sql);
 		if ($result) { ?>

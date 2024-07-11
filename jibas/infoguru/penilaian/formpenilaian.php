@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -243,7 +243,7 @@ function d(){
 			$result = QueryDb($sql);
 			CloseDb();
 	
-			while($row = mysqli_fetch_array($result)) {
+			while($row = mysql_fetch_array($result)) {
 			if ($tingkat == "")
 				$tingkat = $row['replid'];				
 			$nama_tingkat = $row['tingkat'];
@@ -263,7 +263,7 @@ function d(){
 			$sql = "SELECT replid,tahunajaran FROM tahunajaran WHERE departemen = '$departemen' AND aktif=1 ORDER BY replid DESC";
 			$result = QueryDb($sql);
 			CloseDb();
-			$row = @mysqli_fetch_array($result);	
+			$row = @mysql_fetch_array($result);	
 			$tahunajaran = $row['replid'];				
 		?>
         	<input type="text" name="tahun" id="tahun" size="22" readonly value="<?=$row['tahunajaran']?>" class="disabled" />
@@ -276,7 +276,7 @@ function d(){
 			$result = QueryDb($sql);
 			CloseDb();
 	
-			while($row = mysqli_fetch_array($result)) {
+			while($row = mysql_fetch_array($result)) {
 			if ($kelas == "")
 				$kelas = $row['replid'];
 			$nama_kelas = $row['kelas'];			 
@@ -296,7 +296,7 @@ function d(){
             $sql = "SELECT replid,semester FROM semester where departemen='$departemen' AND aktif = 1";
             $result = QueryDb($sql);
             CloseDb();
-            $row = @mysqli_fetch_array($result);
+            $row = @mysql_fetch_array($result);
             
        	?>   	
             <input type="text" name="sem" size="22" value="<?=$row['semester'] ?>" readonly class="disabled"/>
@@ -310,7 +310,7 @@ function d(){
 			
 			$result = QueryDb($sql);
 			CloseDb();
-			while ($row = @mysqli_fetch_array($result)) {
+			while ($row = @mysql_fetch_array($result)) {
 			if ($pelajaran == "") 				
 				$pelajaran = $row['replid'];			
 			$nama_pelajaran = $row['nama'];
@@ -333,7 +333,7 @@ function d(){
 			//$sql = "SELECT DISTINCT p.nip,p.nama FROM jbssdm.pegawai p, guru g, pelajaran l WHERE p.nip = g.nip AND g.idpelajaran = $pelajaran AND g.aktif = 1  ORDER BY p.nama  ";
 			//$result = QueryDb($sql);
 			//CloseDb();
-			//while ($row = @mysqli_fetch_array($result)) {
+			//while ($row = @mysql_fetch_array($result)) {
 			//if ($nip == "") 				
 			//	$nip = $row['nip'];			
 			?>
@@ -370,7 +370,7 @@ if (isset($_REQUEST['jenis'])) {
 	$sql = "SELECT nis, nama FROM siswa WHERE idkelas = '$kelas' ORDER BY nama";
 	$result = QueryDb($sql);
 	
-	if (mysqli_num_rows($result) > 0) {	
+	if (mysql_num_rows($result) > 0) {	
 		switch($_REQUEST['jenis']) {
 			case 1 :
 ?>
@@ -383,7 +383,7 @@ if (isset($_REQUEST['jenis'])) {
 			case 2 :
 				$sql1="SELECT * FROM jbsakad.aturannhb WHERE idtingkat='$tingkat' AND idpelajaran='$pelajaran' AND aktif=1 AND nipguru='$nip'";
 				$result1=QueryDb($sql1);
-				if (mysqli_num_rows($result1) > 0) {
+				if (mysql_num_rows($result1) > 0) {
 			?>
         	<!--<script language="javascript" src="../script/tools.js"></script>-->
 			<script language="javascript">				

@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@ if(isset($_REQUEST["ujian"]))
 OpenDb();
 $sql="SELECT r.rpp, p.nama, r.idpelajaran, r.idsemester, t.tingkat FROM pelajaran p, rpp r, tingkat t WHERE p.replid=r.idpelajaran AND r.replid='$rpp' AND r.idtingkat = t.replid";
 $result=QueryDb($sql);
-$row = mysqli_fetch_array($result);
+$row = mysql_fetch_array($result);
 $materi = $row['rpp'];
 $namapel = $row['nama'];
 $namatingkat = $row['tingkat'];
@@ -106,7 +106,7 @@ function cetak(){
 				$sql_ujian = "SELECT * FROM jenisujian WHERE idpelajaran = '$pelajaran' ORDER BY jenisujian";
 				$result_ujian=QueryDb($sql_ujian);
 
-				while ($row_ujian=@mysqli_fetch_array($result_ujian)){
+				while ($row_ujian=@mysql_fetch_array($result_ujian)){
 					if ($ujian=="")
 						$ujian=$row_ujian['replid'];
 			?>
@@ -119,7 +119,7 @@ function cetak(){
         	//$sql1 = "SELECT k.kelas, round(SUM(nilaiujian)/(COUNT(DISTINCT u.replid)*COUNT(DISTINCT s.nis)),2) FROM nilaiujian n, siswa s, ujian u, jenisujian j, kelas k, tahunajaran a WHERE n.idujian = u.replid AND u.idsemester = $semester AND u.idkelas = k.replid AND u.idjenis = $ujian AND u.idrpp = $rpp AND u.idpelajaran = $pelajaran AND s.nis = n.nis AND u.idjenis = j.replid AND j.replid = $ujian AND s.idkelas = k.replid AND s.aktif = 1 AND k.idtingkat = $tingkat AND k.aktif = 1 AND k.idtahunajaran = a.replid AND a.aktif = 1 GROUP BY k.replid ORDER BY k.kelas, u.tanggal, s.nama";
 			$sql1 = "SELECT k.kelas, round(SUM(nilaiujian)/(COUNT(DISTINCT u.replid)*COUNT(DISTINCT s.nis)),2) FROM nilaiujian n, siswa s, ujian u, kelas k, tahunajaran a WHERE n.idujian = u.replid AND u.idsemester = '$semester' AND u.idkelas = k.replid AND u.idjenis = '$ujian' AND u.idrpp = '$rpp' AND u.idpelajaran = '$pelajaran' AND s.nis = n.nis AND s.idkelas = k.replid AND s.aktif = 1 AND k.idtingkat = '$tingkat' AND k.aktif = 1 AND k.idtahunajaran = a.replid AND a.aktif = 1 GROUP BY k.replid ORDER BY k.kelas, u.tanggal, s.nama";
         	$result1 = QueryDb($sql1);	
-			if (mysqli_num_rows($result1) > 0) {
+			if (mysql_num_rows($result1) > 0) {
 		
 		?>
              <td align="right">
@@ -145,7 +145,7 @@ function cetak(){
         // sample data array
         //$data = array();
 
-        while($row1 = mysqli_fetch_row($result1)) {
+        while($row1 = mysql_fetch_row($result1)) {
             //$data[] = array($row1[1],$row1[2],$row1[3],$row1[4],$row1[5]);			
             $legend_x[] = $row1[0];			
 			$data[] = array($row1[1]);
@@ -179,14 +179,14 @@ function cetak(){
 		
       	$result_kls=QueryDb($sql_kls);
       	$cnt=0;
-      	while ($row_kls=@mysqli_fetch_array($result_kls)){			
+      	while ($row_kls=@mysql_fetch_array($result_kls)){			
 			$sql = "SELECT SUM(nilaiujian), COUNT(DISTINCT u.replid)*COUNT(DISTINCT s.nis) FROM nilaiujian n, siswa s, ujian u, jenisujian j WHERE n.idujian = u.replid AND u.idsemester = $semester AND u.idkelas = $row_kls[replid] AND u.idjenis = $ujian AND u.idrpp = $rpp AND u.idpelajaran = $pelajaran AND s.nis = n.nis AND u.idjenis = j.replid AND s.idkelas = $row_kls[replid] AND s.aktif = 1 ORDER BY tanggal, s.nama";
 			$result = QueryDb($sql);
-			$row = mysqli_fetch_row($result);*/
+			$row = mysql_fetch_row($result);*/
     ?>
       	<!--<tr>
         	<td height="25" align="center"><?=++$cnt?></td>
-        	<td height="25"><div align="center"><?=$row_kls['kelas']?></div></td>
+        	<td height="25"><div align="center"><?=$row_kls[kelas]?></div></td>
         	<td height="25" align="center"><?=round(($row[0]/$row[1]),2);?></td>
       	</tr>-->
   <? 	//}  ?>

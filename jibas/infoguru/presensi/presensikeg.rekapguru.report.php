@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ $sql = "SELECT DISTINCT pk.idkegiatan
            AND pk.nip = '$nip'";
 $res = QueryDb($sql);
 
-if (mysqli_num_rows($res) == 0)
+if (mysql_num_rows($res) == 0)
 {
     CloseDb();
     
@@ -78,7 +78,7 @@ if ($showbutton)
 </tr>
 <?
 $cnt = 0;
-while($row = mysqli_fetch_row($res))
+while($row = mysql_fetch_row($res))
 {
     $idkegiatan = $row[0];
     
@@ -88,10 +88,10 @@ while($row = mysqli_fetch_row($res))
              WHERE replid = $idkegiatan";
     $res2 = QueryDb($sql);
     
-    if (mysqli_num_rows($res2) == 0)
+    if (mysql_num_rows($res2) == 0)
         continue;
     
-    $row2 = mysqli_fetch_array($res2);
+    $row2 = mysql_fetch_array($res2);
     
     $jenispeserta = $row2['jenispeserta'];
     $iddepartemen = $row2['iddepartemen'];
@@ -102,7 +102,7 @@ while($row = mysqli_fetch_row($res))
                AND YEAR(pk.date_in) = $tahun
                AND pk.idkegiatan = $idkegiatan";
     $res3 = QueryDb($sql);
-    $row3 = mysqli_fetch_row($res3);
+    $row3 = mysql_fetch_row($res3);
     $nhari = $row3[0];
     
     $sql = "SELECT COUNT(pk.replid)
@@ -112,7 +112,7 @@ while($row = mysqli_fetch_row($res))
                AND pk.nip = '$nip'
                AND pk.idkegiatan = $idkegiatan";
     $res3 = QueryDb($sql);
-    $row3 = mysqli_fetch_row($res3);
+    $row3 = mysql_fetch_row($res3);
     $nhadir = $row3[0];
     
     $persen = $nhari == 0 ? 0 : 100 * round($nhadir / $nhari, 2);
@@ -161,9 +161,9 @@ function GetPeserta($idkegiatan, $jenispeserta, $iddepartemen)
                  WHERE k.idtingkat = t.replid
                    AND k.replid = $idkegiatan";
         $res = QueryDb($sql);
-        if (mysqli_num_rows($res) > 0)
+        if (mysql_num_rows($res) > 0)
         {
-            $row = mysqli_fetch_row($res);
+            $row = mysql_fetch_row($res);
             
             $tingkat = $row[0];
             $dept = $row[1];
@@ -182,9 +182,9 @@ function GetPeserta($idkegiatan, $jenispeserta, $iddepartemen)
                    AND k.replid = $idkegiatan";
         
         $res = QueryDb($sql);
-        if (mysqli_num_rows($res) > 0)
+        if (mysql_num_rows($res) > 0)
         {
-            $row = mysqli_fetch_row($res);
+            $row = mysql_fetch_row($res);
             
             $kelas = $row[0];
             $tingkat = $row[1];
@@ -211,9 +211,9 @@ function GetPeserta($idkegiatan, $jenispeserta, $iddepartemen)
                    AND k.replid = $idkegiatan";
                    
         $res = QueryDb($sql);
-        if (mysqli_num_rows($res) > 0)
+        if (mysql_num_rows($res) > 0)
         {
-            $row = mysqli_fetch_row($res);
+            $row = mysql_fetch_row($res);
             
             $kelompok = $row[0];
             

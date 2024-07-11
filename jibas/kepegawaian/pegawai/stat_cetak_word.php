@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *  
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -515,7 +515,7 @@ table.MsoTableGrid
 		
 		OpenDb();
 		$result = QueryDb($sql);
-		while($row = mysqli_fetch_row($result)) {
+		while($row = mysql_fetch_row($result)) {
 			$data[] = array($row[1], $row[2]);
 			$legend_x[] = $row[0];
 		}
@@ -542,7 +542,7 @@ table.MsoTableGrid
 		
 		OpenDb();
 		$result = QueryDb($sql);
-		while($row = mysqli_fetch_row($result)) {
+		while($row = mysql_fetch_row($result)) {
 			$data[] = array($row[1], $row[2]);
 			$legend_x[] = $row[0];
 		}
@@ -568,7 +568,7 @@ table.MsoTableGrid
 		
 		OpenDb();
 		$result = QueryDb($sql);
-		while($row = mysqli_fetch_row($result)) {
+		while($row = mysql_fetch_row($result)) {
 			$data[] = array($row[1], $row[2]);
 			$legend_x[] = $row[0];
 		}
@@ -628,7 +628,7 @@ $sql = "SELECT j.satker, COUNT(p.nip) FROM pegawai p, peglastdata pl, pegjab pj,
 $result = QueryDb($sql);
 $cnt = 0;
 $total = 0;
-while ($row = mysqli_fetch_row($result)) 
+while ($row = mysql_fetch_row($result)) 
 {
 	$cnt++;
 	$data[$cnt-1][0] = $row[0];
@@ -667,14 +667,14 @@ if ($stat==2){
 OpenDb();
 $sql = "SELECT tingkat FROM pendidikan ORDER BY urutan";
 $result = QueryDb($sql);
-while ($row = mysqli_fetch_row($result)) {
+while ($row = mysql_fetch_row($result)) {
 	$tingkat[] = $row[0];
 }
 $width = floor(60 / count($tingkat));
 
 $sql = "SELECT satker FROM satker";
 $result = QueryDb($sql);
-while ($row = mysqli_fetch_array($result)) {
+while ($row = mysql_fetch_array($result)) {
 	$satker[] = $row['satker'];
 }
 
@@ -684,7 +684,7 @@ $sql = "SELECT j.satker, ps.tingkat, COUNT(p.nip) AS cnt FROM
         pl.idpegjab = pj.replid AND pj.idjabatan = j.replid AND NOT j.satker IS NULL GROUP BY j.satker, ps.sekolah 
         ORDER BY pd.urutan";
 $result = QueryDb($sql);
-while ($row = mysqli_fetch_array($result)) {
+while ($row = mysql_fetch_array($result)) {
 	$s = $row['satker'];
 	$t = $row['tingkat'];
 	$data[$s][$t] = $row['cnt'];
@@ -768,14 +768,14 @@ for($i = 0; $i < count($satker); $i++) {
 OpenDb();
 $sql = "SELECT golongan FROM golongan ORDER BY urutan";
 $result = QueryDb($sql);
-while ($row = mysqli_fetch_row($result)) {
+while ($row = mysql_fetch_row($result)) {
 	$gol[] = $row[0];
 }
 $width = floor(75 / count($gol));
 
 $sql = "SELECT satker FROM satker";
 $result = QueryDb($sql);
-while ($row = mysqli_fetch_array($result)) {
+while ($row = mysql_fetch_array($result)) {
 	$satker[] = $row['satker'];
 }
 
@@ -784,7 +784,7 @@ $sql = "SELECT j.satker, pg.golongan, count(p.nip) AS cnt FROM
  		WHERE p.aktif = 1 AND p.pns = 1 AND p.nip = pl.nip AND pl.idpeggol = pg.replid AND pl.idpegjab = pj.replid AND pj.idjabatan = j.replid        AND NOT j.satker IS NULL 
 		GROUP BY j.satker, pg.golongan";
 $result = QueryDb($sql);
-while ($row = mysqli_fetch_array($result)) {
+while ($row = mysql_fetch_array($result)) {
 	$s = $row['satker'];
 	$g = $row['golongan'];
 	$data[$s][$g] = $row['cnt'];
@@ -896,7 +896,7 @@ WHERE XX.nip = pl.nip AND pl.idpegjab = pj.replid AND pj.idjabatan = j.replid  A
 GROUP BY XX.G, j.satker";
 
 $result = QueryDb($sql);
-while ($row = mysqli_fetch_array($result)) 
+while ($row = mysql_fetch_array($result)) 
 {
 	$g = $row['G'];
 	$s = $row['satker'];
@@ -907,7 +907,7 @@ $usia = array("<24", "24-29", "30-34", "35-39", "40-44", "45-49", "50-55", ">56"
 
 $sql = "SELECT satker FROM satker";
 $result = QueryDb($sql);
-while ($row = mysqli_fetch_array($result)) 
+while ($row = mysql_fetch_array($result)) 
 {
 	$satker[] = $row['satker'];
 }
@@ -995,8 +995,8 @@ function traversediklat($idxgroup, $rootid) {
 	
 	$sql = "SELECT replid, diklat FROM diklat WHERE rootid=$rootid";
 	$result = QueryDb($sql);
-	if (mysqli_num_rows($result) > 0) {
-		while($row = mysqli_fetch_row($result)) {
+	if (mysql_num_rows($result) > 0) {
+		while($row = mysql_fetch_row($result)) {
 			if (strlen($iddiklat[$idxgroup]) > 0)
 				$iddiklat[$idxgroup] = $iddiklat[$idxgroup] . ",";
 			$iddiklat[$idxgroup] = $iddiklat[$idxgroup] . $row[0];
@@ -1021,8 +1021,8 @@ function traversediklatf($idxgroup, $rootid) {
 	
 	$sql = "SELECT replid, diklat FROM diklat WHERE rootid=$rootid";
 	$result = QueryDb($sql);
-	if (mysqli_num_rows($result) > 0) {
-		while($row = mysqli_fetch_row($result)) {
+	if (mysql_num_rows($result) > 0) {
+		while($row = mysql_fetch_row($result)) {
 			if (strlen($iddiklatf[$idxgroup]) > 0)
 				$iddiklatf[$idxgroup] = $iddiklatf[$idxgroup] . ",";
 			$iddiklatf[$idxgroup] = $iddiklatf[$idxgroup] . $row[0];
@@ -1053,7 +1053,7 @@ function traversediklatf($idxgroup, $rootid) {
 <?
 $sql = "SELECT replid, diklat FROM diklat WHERE tingkat=2 AND jenis='S' ORDER BY diklat";
 $result = QueryDb($sql);
-while ($row = mysqli_fetch_row($result)) {
+while ($row = mysql_fetch_row($result)) {
 	$idgroup[] = $row[0];
 	
 	$namadiklat[] = $row[1] . "";
@@ -1065,7 +1065,7 @@ for($i = 0; $i < count($idgroup); $i++) {
 
 $sql = "SELECT replid, diklat FROM diklat WHERE tingkat=2 AND jenis='F' ORDER BY diklat";
 $result = QueryDb($sql);
-while ($row = mysqli_fetch_row($result)) {
+while ($row = mysql_fetch_row($result)) {
 	$idgroupf[] = $row[0];
 	
 	$namadiklatf[] = $row[1] . "";
@@ -1092,7 +1092,7 @@ $jpeg;
 
 $sql = "SELECT DISTINCT eselon FROM jabatan ORDER BY eselon";
 $result = QueryDb($sql);
-while($row = mysqli_fetch_row($result)) 
+while($row = mysql_fetch_row($result)) 
 	$eselon[] = $row[0];			
 
 $data;
@@ -1107,7 +1107,7 @@ for($i = 0; $i < $neselon; $i++) {
 			  AND pj.idjabatan = j.replid AND pj.jenis = jj.jenis 
 			  AND j.eselon ='$es' AND jj.jabatan = 'S'";
 	$result = QueryDb($sql);
-	$row = mysqli_fetch_row($result);
+	$row = mysql_fetch_row($result);
 	$jp = $row[0];
 	
 	$data[$i][0] = $jp;
@@ -1123,7 +1123,7 @@ for($i = 0; $i < $neselon; $i++) {
 	    	    WHERE  p.aktif = 1 AND p.pns = 1 AND p.nip = pl.nip AND pl.idpegjab = pj.replid AND pj.idjabatan = j.replid AND pj.jenis = jj.jenis
 				AND jj.jabatan = 'S' AND j.eselon = '$es' AND pl.idpegdiklat = pd.replid AND pd.iddiklat IN ($idstr)";
 		$result = QueryDb($sql);
-		$row = mysqli_fetch_row($result);	
+		$row = mysql_fetch_row($result);	
 		$cnt = "-";
 		if ($row[0] > 0) {	
 			$cnt = $row[0];	
@@ -1164,7 +1164,7 @@ for($i = 0; $i < $neselon; $i++) {
 $sql = "SELECT jenis FROM jenisjabatan WHERE jabatan='F' ORDER BY jenis";
 $result = QueryDb($sql);
 $jabf;
-while ($row = mysqli_fetch_row($result)) 
+while ($row = mysql_fetch_row($result)) 
 	$jabf[] = $row[0];
 $njabf = count($jabf);
 
@@ -1179,7 +1179,7 @@ for($i = 0; $i < $njabf; $i++) {
 			  AND pj.jenis = jj.jenis AND pj.jenis ='$jab' AND jj.jabatan = 'F'";
 			  
 	$result = QueryDb($sql);
-	$row = mysqli_fetch_row($result);
+	$row = mysql_fetch_row($result);
 	$jp = $row[0];
 	$totpeg += $jp;
 	
@@ -1198,7 +1198,7 @@ for($i = 0; $i < $njabf; $i++) {
 				AND jj.jabatan = 'F' AND pj.jenis = '$jab' AND pl.idpegdiklat = pd.replid AND pd.iddiklat IN ($idstr)";
 						
 		$result = QueryDb($sql);
-		$row = mysqli_fetch_row($result);	
+		$row = mysql_fetch_row($result);	
 		$cnt = "-";
 		if ($row[0] > 0) {	
 			$cnt = $row[0];	
@@ -1258,7 +1258,7 @@ $sql = "SELECT j.satker, SUM(IF(p.kelamin = 'L', 1, 0)) AS Pria, SUM(IF(p.kelami
 		  WHERE p.aktif = 1 AND p.pns = 1 AND p.nip = pl.nip AND pl.idpegjab = pj.replid AND pj.idjabatan = j.replid
 		  GROUP BY j.satker HAVING NOT j.satker IS NULL";	
 $result = QueryDb($sql);
-while ($row = mysqli_fetch_row($result)) {
+while ($row = mysql_fetch_row($result)) {
 	$jpeg = $row[1] + $row[2];
 	$tpeg = $tpeg + $jpeg;
 	
@@ -1323,7 +1323,7 @@ $sql = "SELECT j.satker, SUM(IF(p.nikah = 'Nikah', 1, 0)) AS Nikah, SUM(IF(p.nik
 		  AND NOT j.satker IS NULL 
 		  GROUP BY j.satker";	
 $result = QueryDb($sql);
-while ($row = mysqli_fetch_row($result)) {
+while ($row = mysql_fetch_row($result)) {
 	$jpeg = $row[1] + $row[2];
 	
 	$tpeg = $tpeg + $jpeg;

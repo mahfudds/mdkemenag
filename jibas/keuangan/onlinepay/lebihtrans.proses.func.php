@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  *
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ function ShowSelectPetugasTf($id)
     $res = QueryDb($sql);
 
     echo "<select id='$id' class='inputbox' style='width: 250px'>";
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         echo "<option value='$row[0]'>$row[1]</option>";
     }
@@ -51,7 +51,7 @@ function ShowSelectTabungan()
     $res = QueryDb($sql);
 
     echo "<select id='seltabungan' class='inputbox' style='width: 250px'>";
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         echo "<option value='$row[0]'>$row[1]</option>";
     }
@@ -87,13 +87,13 @@ function SimpanTransferBalik()
                    AND p.id = $idPgTransLebih";
         //$log->Log($sql);
         $res = QueryDbEx($sql);
-        if (mysqli_num_rows($res) == 0)
+        if (mysql_num_rows($res) == 0)
         {
             echo "[-1,\"ERROR: data transaksi tidak ditemukan\"]";
             return;
         }
 
-        $row = mysqli_fetch_array($res);
+        $row = mysql_fetch_array($res);
         $metode = $row["metode"];
         $nomor = $row["nomor"];
         $jLebihTrans = $row["jlebihtrans"];
@@ -116,13 +116,13 @@ function SimpanTransferBalik()
                  WHERE departemen = '$departemen'
                    AND aktif = 1";
         $res = QueryDbEx($sql);
-        if (mysqli_num_rows($res) == 0)
+        if (mysql_num_rows($res) == 0)
         {
             echo "[-1,\"ERROR: tidak ditemukan data tahun buku\"]";
             return;
         }
 
-        $row = mysqli_fetch_row($res);
+        $row = mysql_fetch_row($res);
         $idTahunBuku = $row[0];
         $awalan = $row[1];
         $cacah = $row[2];
@@ -153,7 +153,7 @@ function SimpanTransferBalik()
 
         $sql = "SELECT LAST_INSERT_ID()";
         $res = QueryDbEx($sql);
-        $row = mysqli_fetch_row($res);
+        $row = mysql_fetch_row($res);
         $idMutasi = $row[0];
 
         $sql = "INSERT INTO jbsfina.bankmutasidata
@@ -236,13 +236,13 @@ function SimpanTabungan()
                    AND p.id = $idPgTransLebih";
         //$log->Log($sql);
         $res = QueryDbEx($sql);
-        if (mysqli_num_rows($res) == 0)
+        if (mysql_num_rows($res) == 0)
         {
             echo "[-1,\"ERROR: data transaksi tidak ditemukan\"]";
             return;
         }
 
-        $row = mysqli_fetch_array($res);
+        $row = mysql_fetch_array($res);
         $metode = $row["metode"];
         $nomor = $row["nomor"];
         $jLebihTrans = $row["jlebihtrans"];
@@ -265,12 +265,12 @@ function SimpanTabungan()
                  INNER JOIN jbsakad.siswa s ON p.nis = s.nis
                  WHERE p.nomor = '$nomor'";
         $res = QueryDbEx($sql);
-        if (mysqli_num_rows($res) == 0)
+        if (mysql_num_rows($res) == 0)
         {
             echo "[-1,\"ERROR: tidak ditemukan data siswa\"]";
             return;
         }
-        $row = mysqli_fetch_row($res);
+        $row = mysql_fetch_row($res);
         $nis = $row[0];
         $namaSiswa = $row[1];
 
@@ -279,13 +279,13 @@ function SimpanTabungan()
                  WHERE departemen = '$departemen'
                    AND aktif = 1";
         $res = QueryDbEx($sql);
-        if (mysqli_num_rows($res) == 0)
+        if (mysql_num_rows($res) == 0)
         {
             echo "[-1,\"ERROR: tidak ditemukan data tahun buku\"]";
             return;
         }
 
-        $row = mysqli_fetch_row($res);
+        $row = mysql_fetch_row($res);
         $idTahunBuku = $row[0];
         $awalan = $row[1];
         $cacah = $row[2];
@@ -294,13 +294,13 @@ function SimpanTabungan()
                   FROM jbsfina.datatabungan
                  WHERE replid = $idTabungan";
         $res = QueryDbEx($sql);
-        if (mysqli_num_rows($res) == 0)
+        if (mysql_num_rows($res) == 0)
         {
             echo "[-1,\"ERROR: tidak ditemukan data tabungan\"]";
             return;
         }
 
-        $row = mysqli_fetch_row($res);
+        $row = mysql_fetch_row($res);
         $rekKasTab = $row[0];
         $rekUtangTab = $row[1];
         $aktifTab = $row[2];
@@ -333,7 +333,7 @@ function SimpanTabungan()
 
         $sql = "SELECT LAST_INSERT_ID()";
         $res = QueryDbEx($sql);
-        $row = mysqli_fetch_row($res);
+        $row = mysql_fetch_row($res);
         $idMutasi = $row[0];
 
         $sql = "INSERT INTO jbsfina.bankmutasidata

@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  *
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -58,7 +58,7 @@ function ShowRandomVideo($dept)
     }
 
     $res = QueryDb($sql);
-    if (mysqli_num_rows($res) == 0)
+    if (mysql_num_rows($res) == 0)
     {
         echo "belum ada video";
         return;
@@ -67,7 +67,7 @@ function ShowRandomVideo($dept)
     $cnt = 0;
     echo "<table border='0' cellpadding='2' cellspacing='0' style='margin-top: 10px; margin-left: 10px'>";
 
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         $idMedia = $row[0];
 
@@ -114,11 +114,11 @@ function GetMostLikedList($dept)
     }
 
     $res = QueryDb($sql);
-    if (mysqli_num_rows($res) == 0)
+    if (mysql_num_rows($res) == 0)
         return "";
 
     $idList = "";
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         if ($idList != "") $idList .= ",";
         $idList .= $row[0];
@@ -203,11 +203,11 @@ function GetMostViewedList($dept)
 
 
     $res = QueryDb($sql);
-    if (mysqli_num_rows($res) == 0)
+    if (mysql_num_rows($res) == 0)
         return "";
 
     $idList = "";
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         if ($idList != "") $idList .= ",";
         $idList .= $row[0];
@@ -222,7 +222,7 @@ function ShowMedia($idMedia)
               FROM jbsel.media
              WHERE id = $idMedia";
     $res2 = QueryDbEx($sql);
-    if ($row2 = mysqli_fetch_array($res2))
+    if ($row2 = mysql_fetch_array($res2))
     {
         ?>
         <a style="cursor: pointer;" onclick="cn_playVideo('<?=$idMedia?>')">
@@ -244,7 +244,7 @@ function ShowCbHomeDepartemen($dept)
     echo "<select id='homeDept' style='font-size: 12px; height: 27px; width: 170px; background-color: #fff6d0' onchange='hm_changeDept()'>";
     $selected = "ALLDEPT" == $dept ? "selected" : "";
     echo "<option value='ALLDEPT' $selected>(all departement)</option>";
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         $selected = $row[0] == $dept ? "selected" : "";
         echo "<option value='$row[0]' $selected>$row[0]</option>";

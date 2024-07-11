@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -76,8 +76,8 @@ if (isset($_REQUEST['Simpan'])) {
 	$success = 0;
 	
 	$sql = "SELECT * FROM jurnal WHERE replid = $idjurnal";
-	$result = QueryDbTrans($sql, $success);
-	$row = mysqli_fetch_array($result);
+	$result = QueryDbTrans($sql);
+	$row = mysql_fetch_array($result);
 	$idtahunbuku = $row['idtahunbuku'];
 	$nokas = $row['nokas'];
 	$sumberjurnal = $row['sumber'];
@@ -94,7 +94,7 @@ if (isset($_REQUEST['Simpan'])) {
 		$sql = "SELECT LAST_INSERT_ID()";
 		$result = QueryDbTrans($sql, $success);
 		//echo  "$success $sql<br>";
-		$row = mysqli_fetch_row($result);
+		$row = mysql_fetch_row($result);
 		$idaudit = $row[0];
 	};
 	
@@ -109,7 +109,7 @@ if (isset($_REQUEST['Simpan'])) {
 	if ($success) {
 		$sql = "SELECT * FROM jurnaldetail WHERE idjurnal='$idjurnal'";
 		$result = QueryDb($sql);
-		while($row = mysqli_fetch_array($result)) {
+		while($row = mysql_fetch_array($result)) {
 			$sql = "INSERT INTO auditjurnaldetail SET status=0, idaudit=" . $idaudit . ", idjurnal=". $idjurnal . ", " .
 				   " koderek='" . $row['koderek'] . "', debet=" . $row['debet'] . ", kredit=" . $row['kredit'];
 			if ($success) QueryDbTrans($sql, $success);
@@ -175,7 +175,7 @@ OpenDb();
 $sql = "SELECT date_format(tanggal, '%d-%m-%Y') as tanggal, transaksi, petugas, nokas, idtahunbuku, keterangan FROM jurnal WHERE replid = '$idjurnal'";
 
 $result = QueryDb($sql);
-$row = mysqli_fetch_row($result);
+$row = mysql_fetch_row($result);
 $tanggal = $row[0];
 $transaksi = $row[1];
 $petugas = $row[2];
@@ -411,7 +411,7 @@ function focusNext(elemName, evt) {
         <? $sql = "SELECT replid, tahunbuku FROM tahunbuku WHERE aktif = 1 AND departemen = '$departemen'";
            $result = QueryDb($sql);
                 
-           $row = mysqli_fetch_row($result);
+           $row = mysql_fetch_row($result);
         ?>
          <input type="text" name="tahunbuku" id="tahunbuku" size="27" readonly style="background-color:#CCCC99" value="<?=$row[1] ?>">
         <input type="hidden" name="idtahunbuku" id="idtahunbuku" value="<?=$row[0] ?>" />
@@ -459,7 +459,7 @@ function focusNext(elemName, evt) {
 		$i = 1;
 		$jumdeb = 0;
 		$jumkre = 0;
-		while ($row = mysqli_fetch_row($result)) { 
+		while ($row = mysql_fetch_row($result)) { 
 			$koderek[$i] = $row[0];
 			$namarek[$i] = $row[1];
 			$debet[$i] = $row[2];

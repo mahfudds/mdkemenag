@@ -1,7 +1,7 @@
 .vtabs {
 	/* a border is required for IE otherwise the tab panels will not be aligned correctly. */
 	position: relative;  border: 0px solid #ffffff;
-	width: 980px;
+	width: 100%;
 	margin: auto;
 }
 .vtabs .vtabs-tab-column {

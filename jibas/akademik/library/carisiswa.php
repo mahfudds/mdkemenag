@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ $replid = $_REQUEST['replid'];
 OpenDb();
 $sql_kelas="SELECT k.kelas,k.idtahunajaran,k.idtingkat,t.departemen,t.tahunajaran FROM jbsakad.kelas k, jbsakad.tahunajaran t WHERE k.replid='$replid' AND t.replid=k.idtahunajaran";
 $result_kelas=QueryDb($sql_kelas);
-if ($row_kelas=@mysqli_fetch_row($result_kelas)){
+if ($row_kelas=@mysql_fetch_row($result_kelas)){
 	$departemen=$row_kelas[3];
 	$namatahunajaran=$row_kelas[4];
 	$kelas=$row_kelas[0];
@@ -75,7 +75,7 @@ CloseDb();
 	$sql = "SELECT * FROM jbsakad.siswa WHERE idkelas='$replid' AND aktif=1 ORDER BY nama";
 	$result = QueryDB($sql);
 	$cnt = 0;
-	while ($row = mysqli_fetch_array($result)) { ?>
+	while ($row = mysql_fetch_array($result)) { ?>
     <tr height="25">    	
     	<td align="center"><?=++$cnt ?></td>
         <td><?=$row['nis'] ?></td>        

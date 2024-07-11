@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -134,7 +134,7 @@ function change_urut(urut,urutan) {
 	$sql = "SELECT s.nis, s.nama, SUM(ph.hadir) AS hadir, SUM(ph.ijin) AS ijin, SUM(ph.sakit) AS sakit, SUM(ph.alpa) AS alpa, SUM(ph.cuti) AS cuti, s.idkelas, s.aktif FROM siswa s LEFT JOIN (phsiswa ph INNER JOIN presensiharian p ON p.replid = ph.idpresensi) ON ph.nis = s.nis WHERE s.idkelas = '$kelas' AND p.idsemester = '$semester' AND (((p.tanggal1 BETWEEN '$tglawal' AND '$tglakhir') OR (p.tanggal2 BETWEEN '$tglawal' AND '$tglakhir')) OR (('$tglawal' BETWEEN p.tanggal1 AND p.tanggal2) OR ('$tglakhir' BETWEEN p.tanggal1 AND p.tanggal2))) GROUP BY s.nis ORDER BY $urut $urutan";
 	
 	$result = QueryDb($sql);			 
-	$jum = mysqli_num_rows($result);
+	$jum = mysql_num_rows($result);
 	if ($jum > 0) { 
 	?>  
     <table width="100%" border="0" align="center">
@@ -163,7 +163,7 @@ function change_urut(urut,urutan) {
     </tr>
     <? 
     $cnt = 0;
-    while ($row = @mysqli_fetch_row($result)) {
+    while ($row = @mysql_fetch_row($result)) {
     if ($row[8] == 0) { 
 		$pesan = "Status siswa tidak aktif lagi!";
 	?>

@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  *
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ function ShowCbDepartemen()
     $res = QueryDb($sql);
 
     $ret = "<select id='departemen' name='departemen' style='width: 200px;' onchange='changeDept()'>";
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         if ($selDept == "")
             $selDept = $row[0];
@@ -55,7 +55,7 @@ function ShowDaftarStatistik($dept)
                AND p.departemen = '$dept'
              ORDER BY p.nama";
     $res = QueryDb($sql);
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         $pelList[] = array($row[0], $row[1]);
     }
@@ -77,10 +77,10 @@ function ShowDaftarStatistik($dept)
                  WHERE c.nip = p.nip
                    AND c.idpelajaran = $idPelajaran";
         $res = QueryDb($sql);
-        $nGuru = mysqli_num_rows($res) + 1;
+        $nGuru = mysql_num_rows($res) + 1;
 
         $first = true;
-        while($row = mysqli_fetch_row($res))
+        while($row = mysql_fetch_row($res))
         {
             $idChannel = $row[0];
             $nip = $row[1];

@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -66,14 +66,14 @@ if (1 == (int)$_REQUEST['issubmit'])
 	$rekpiutang = "";
 	$sql = "SELECT nama, rekkas, rekpendapatan, rekpiutang FROM datapenerimaan WHERE replid='$idpenerimaan'";
 	$result = QueryDb($sql);
-	if (mysqli_num_rows($result) == 0) 
+	if (mysql_num_rows($result) == 0) 
 	{
 		CloseDb();
 		trigger_error("Tidak ditemukan data penerimaan!", E_USER_ERROR);
 	} 
 	else 
 	{
-		$row = mysqli_fetch_row($result);
+		$row = mysql_fetch_row($result);
 		$namapenerimaan = $row[0];
 		$rekkas = $row[1];
 		$rekpendapatan = $row[2];
@@ -87,14 +87,14 @@ if (1 == (int)$_REQUEST['issubmit'])
 	//Ambil awalan dan cacah tahunbuku untuk bikin nokas;
 	$sql = "SELECT awalan, cacah FROM tahunbuku WHERE replid = '$idtahunbuku'";
 	$result = QueryDb($sql);
-	if (mysqli_num_rows($result) == 0) 
+	if (mysql_num_rows($result) == 0) 
 	{
 		CloseDb();
 		trigger_error("Tidak ditemukan data tahun buku!", E_USER_ERROR);
 	} 
 	else 
 	{
-		$row = mysqli_fetch_row($result);
+		$row = mysql_fetch_row($result);
 		$awalan = $row[0];
 		$cacah = $row[1];
 	}
@@ -144,7 +144,7 @@ if (1 == (int)$_REQUEST['issubmit'])
 //Muncul pertama kali
 $sql = "SELECT nama FROM datapenerimaan WHERE replid = '$idpenerimaan'";
 $result = QueryDb($sql);
-$row = mysqli_fetch_row($result);
+$row = mysql_fetch_row($result);
 $namapenerimaan = $row[0];
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -311,7 +311,7 @@ function panggil(elem){
 								 WHERE kategori = 'HARTA'
 								 ORDER BY nama";        
 						$res = QueryDb($sql);
-						while($row = mysqli_fetch_row($res))
+						while($row = mysql_fetch_row($res))
 						{
 							$sel = $row[0] == $defrekkas ? "selected" : "";
 							echo "<option value='$row[0]' $sel>$row[0] $row[1]</option>";
@@ -352,7 +352,7 @@ function panggil(elem){
 				   AND ra.kategori = 'HARTA'
 				 ORDER BY p.tanggal, p.replid DESC";
         $result = QueryDb($sql);
-        if (mysqli_num_rows($result) > 0) 
+        if (mysql_num_rows($result) > 0) 
 		{ ?>            
             <table class="tab" id="table" width="100%" cellpadding="5" cellspacing="0">
             <tr height="30" align="center">
@@ -367,7 +367,7 @@ function panggil(elem){
             </tr>
 <?          $cnt = 0;
             $total = 0;
-            while ($row = mysqli_fetch_array($result)) 
+            while ($row = mysql_fetch_array($result)) 
 			{
                 $total += $row['jumlah']; ?>
             <tr>

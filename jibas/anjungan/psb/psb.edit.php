@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,6 @@ require_once("../include/common.php");
 require_once("../include/rupiah.php");
 require_once("../include/db_functions.php");
 require_once("../library/datearith.php");
-require_once("../library/debugger.php");
 require_once("psb.edit.func.php");
 
 OpenDb();
@@ -52,7 +51,7 @@ $sql = "SELECT k.idproses, p.departemen
          WHERE k.idproses = p.replid
            AND k.replid = $idkelompok";
 $res = QueryDb($sql);
-$row = mysqli_fetch_row($res);
+$row = mysql_fetch_row($res);
 $selProses = $row[0];
 $selDept = $row[1];
 $selKelompok = $idkelompok;
@@ -61,7 +60,7 @@ $sql = "SELECT *
           FROM jbsakad.calonsiswa
          WHERE nopendaftaran = '$nocalon'";
 $res = QueryDb($sql);
-$row = mysqli_fetch_array($res);
+$row = mysql_fetch_array($res);
 $replid = $row['replid'];
 $asalsekolah = $row['asalsekolah'];
 
@@ -69,7 +68,7 @@ $sql = "SELECT departemen
           FROM jbsakad.asalsekolah
          WHERE sekolah = '$asalsekolah'";
 $res2 = QueryDb($sql);
-$row2 = mysqli_fetch_array($res2);
+$row2 = mysql_fetch_array($res2);
 $jenjangsekolah = $row2['departemen'];
 ?>
 <form name="psb_form" id="psb_form" method="post">
@@ -204,7 +203,7 @@ $jenjangsekolah = $row2['departemen'];
         $bln = date('n');
         $tgl = date('j');
         
-        $date = explode("-", $row['tgllahir']);
+        $date = split("-", $row['tgllahir']);
         if (count($date) == 3)
         {
             $thn = $date[0];
@@ -514,7 +513,7 @@ $jenjangsekolah = $row2['departemen'];
         $bln = date('n');
         $tgl = date('j');
         
-        $date = explode("-", $row['tgllahirayah']);
+        $date = split("-", $row['tgllahirayah']);
         if (count($date) == 3)
         {
             $thn = $date[0];
@@ -532,7 +531,7 @@ $jenjangsekolah = $row2['departemen'];
         $bln = date('n');
         $tgl = date('j');
         
-        $date = explode("-", $row['tgllahiribu']);
+        $date = split("-", $row['tgllahiribu']);
         if (count($date) == 3)
         {
             $thn = $date[0];
@@ -740,13 +739,13 @@ $jenjangsekolah = $row2['departemen'];
              WHERE aktif = 1
                AND departemen = '$selDept'
              ORDER BY urutan";
-    $res2 = QueryDb($sql);
+    $res = QueryDb($sql);
     $idtambahan = "";
-    while($row2 = mysqli_fetch_row($res2))
+    while($row = mysql_fetch_row($res))
     {
-        $replid = $row2[0];
-        $kolom = $row2[1];
-        $jenis = $row2[2];
+        $replid = $row[0];
+        $kolom = $row[1];
+        $jenis = $row[2];
 
         if ($jenis == 2) continue;
 
@@ -758,21 +757,21 @@ $jenjangsekolah = $row2['departemen'];
         if ($jenis == 1)
         {
             $sql = "SELECT replid, teks FROM tambahandatacalon WHERE nopendaftaran = '$nocalon' AND idtambahan = '$replid'";
-            $res3 = QueryDb($sql);
-            if ($row3 = mysqli_fetch_row($res3))
+            $res2 = QueryDb($sql);
+            if ($row2 = mysql_fetch_row($res2))
             {
-                $replid_data = $row3[0];
-                $data = $row3[1];
+                $replid_data = $row2[0];
+                $data = $row2[1];
             }
         }
         else if ($jenis == 3)
         {
             $sql = "SELECT replid, teks FROM tambahandatacalon WHERE nopendaftaran = '$nocalon' AND idtambahan = '$replid'";
-            $res3 = QueryDb($sql);
-            if ($row3 = mysqli_fetch_row($res3))
+            $res2 = QueryDb($sql);
+            if ($row2 = mysql_fetch_row($res2))
             {
-                $replid_data = $row3[0];
-                $data = $row3[1];
+                $replid_data = $row2[0];
+                $data = $row2[1];
             }
 
             $sql = "SELECT pilihan 
@@ -780,15 +779,15 @@ $jenjangsekolah = $row2['departemen'];
                      WHERE idtambahan = '$replid'
                        AND aktif = 1
                      ORDER BY urutan";
-            $res3 = QueryDb($sql);
+            $res2 = QueryDb($sql);
 
             $arrList = array();
-            if (mysqli_num_rows($res3) == 0)
+            if (mysql_num_rows($res2) == 0)
                 $arrList[] = "-";
 
-            while($row3 = mysqli_fetch_row($res3))
+            while($row2 = mysql_fetch_row($res2))
             {
-                $arrList[] = $row3[0];
+                $arrList[] = $row2[0];
             }
 
             $opt = "";

@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  *
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -116,7 +116,7 @@ function NamaPenerimaan($kategori, $idPenerimaan)
                   FROM jbsfina.datapenerimaan
                  WHERE replid = $idPenerimaan";
         $res = QueryDb($sql);
-        if ($row = mysqli_fetch_row($res))
+        if ($row = mysql_fetch_row($res))
             return $row[0];
 
         return "-";
@@ -128,7 +128,7 @@ function NamaPenerimaan($kategori, $idPenerimaan)
                   FROM jbsfina.datatabungan
                  WHERE replid = $idPenerimaan";
         $res = QueryDb($sql);
-        if ($row = mysqli_fetch_row($res))
+        if ($row = mysql_fetch_row($res))
             return $row[0];
 
         return "-";
@@ -140,7 +140,7 @@ function NamaPenerimaan($kategori, $idPenerimaan)
                   FROM jbsfina.datatabunganp
                  WHERE replid = $idPenerimaan";
         $res = QueryDb($sql);
-        if ($row = mysqli_fetch_row($res))
+        if ($row = mysql_fetch_row($res))
             return $row[0];
 
         return "-";
@@ -152,7 +152,7 @@ function NamaPenerimaan($kategori, $idPenerimaan)
                   FROM jbsfina.bankdeposit
                  WHERE replid = $idPenerimaan";
         $res = QueryDb($sql);
-        if ($row = mysqli_fetch_row($res))
+        if ($row = mysql_fetch_row($res))
             return $row[0];
 
         return "-";

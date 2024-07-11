@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -71,7 +71,7 @@ if ($op=='SavePenilaian')
 		
 		$res = QueryDb($sql);
 		$NIS = "";
-		while ($row = @mysqli_fetch_row($res))
+		while ($row = @mysql_fetch_row($res))
 		{
 			if ($NIS == "")
 				$NIS = $row[0];
@@ -81,8 +81,8 @@ if ($op=='SavePenilaian')
 	}
 	
 	$smsgeninfo = "";
-	$x = explode(' ',$SendDate);
-	$dt = explode('-',$x[0]);
+	$x = split(' ',$SendDate);
+	$dt = split('-',$x[0]);
 	$smsgeninfo .= $dt[2].'-'.$SMonth[$dt[1]-1].'-'.$dt[0]."<br>";
 	if ($Type=='0'){
 		$smsgeninfo .= "NIS : ".$NIS;
@@ -93,7 +93,7 @@ if ($op=='SavePenilaian')
 		} else {
 			$sql = "SELECT kelas FROM $db_name_akad.kelas WHERE replid='$Kls'";
 			$res = QueryDb($sql);
-			$row = @mysqli_fetch_row($res);
+			$row = @mysql_fetch_row($res);
 			$smsgeninfo .= $row[0];
 		}
 	}
@@ -103,7 +103,7 @@ if ($op=='SavePenilaian')
 	} else {
 		$sql = "SELECT nama FROM $db_name_akad.pelajaran WHERE replid='$IDPel'";
 		$res = QueryDb($sql);
-		$row = @mysqli_fetch_row($res);
+		$row = @mysql_fetch_row($res);
 		$smsgeninfo .= ", Penilaian : ".$row[0];
 	}
 
@@ -112,7 +112,7 @@ if ($op=='SavePenilaian')
 	} else {
 		$sql = "SELECT jenisujian FROM $db_name_akad.jenisujian WHERE replid='$IDUjian'";
 		$res = QueryDb($sql);
-		$row = @mysqli_fetch_row($res);
+		$row = @mysql_fetch_row($res);
 		$smsgeninfo .= ", Jenis Ujian : ".$row[0];
 	}
 	
@@ -123,7 +123,7 @@ if ($op=='SavePenilaian')
 	$res = QueryDb($sql);
 	
 	$NIS2 = "";
-	$ALLNIS	= explode(',',$NIS);
+	$ALLNIS	= split(',',$NIS);
 	for ($i=0;$i<count($ALLNIS);$i++){
 		if ($NIS2 == "")
 			$NIS2 = "'".trim($ALLNIS[$i])."'";
@@ -132,19 +132,19 @@ if ($op=='SavePenilaian')
 	}
 	//echo "Jumlah".count($ALLNIS);
 	//exit;
-	$x	= explode('-',$Date1);
+	$x	= split('-',$Date1);
 	$Tgl1 = (int)$x[2];
 	$Bln1 = (int)$x[1];
 	$Thn1 = $x[0];
 	
-	$x	= explode('-',$Date2);
+	$x	= split('-',$Date2);
 	$Tgl2 = (int)$x[2];
 	$Bln2 = (int)$x[1];
 	$Thn2 = $x[0];
 
 	$sql = "SELECT format FROM format WHERE tipe=1";
 	$res = QueryDb($sql);
-	$row = @mysqli_fetch_row($res);
+	$row = @mysql_fetch_row($res);
 	$format = $row[0];
 	
 	$TextMsg = "";
@@ -163,7 +163,7 @@ if ($op=='SavePenilaian')
 					AND k.idtahunajaran = ta.replid ";
 		
 		$res = QueryDb($sql);
-		$row = @mysqli_fetch_row($res);
+		$row = @mysql_fetch_row($res);
 		$idkelas = $row[0];
 		$departemen = $row[1];
 		$namasiswa = $row[2];
@@ -173,7 +173,7 @@ if ($op=='SavePenilaian')
 				 WHERE aktif = 1
 				   AND departemen = '$departemen'";
 		$res = QueryDb($sql);
-		$row = @mysqli_fetch_row($res);
+		$row = @mysql_fetch_row($res);
 		$idsemester	= $row[0];
 
 		//Set Filter
@@ -184,7 +184,7 @@ if ($op=='SavePenilaian')
 			
 			$sql1 = "SELECT kode FROM $db_name_akad.pelajaran WHERE replid='$IDPel'";
 			$res1 = QueryDb($sql1);
-			$row1 = @mysqli_fetch_row($res1);
+			$row1 = @mysql_fetch_row($res1);
 			$namapelajaran	= $row1[0];
 			$filterpesan = ", $namapelajaran : ";
 			
@@ -192,7 +192,7 @@ if ($op=='SavePenilaian')
 			{
 				$sql2 = "SELECT info1 FROM $db_name_akad.jenisujian WHERE replid='$IDUjian'";
 				$res2 = QueryDb($sql2);
-				$row2 = @mysqli_fetch_row($res2);
+				$row2 = @mysql_fetch_row($res2);
 				$namajenisujian	= $row2[0];
 				$filter .= " AND idjenis='".$IDUjian."' ";
 				$filterpesan = ", $namajenisujian $namapelajaran : ";
@@ -208,23 +208,23 @@ if ($op=='SavePenilaian')
 		
 		
 		$res = QueryDb($sql);
-		$x = @mysqli_num_rows($res);
-		while ($row = @mysqli_fetch_row($res))
+		$x = @mysql_num_rows($res);
+		while ($row = @mysql_fetch_row($res))
 		{
 			$sql1 = "SELECT kode FROM $db_name_akad.pelajaran WHERE replid='$row[1]'";
 			$res1 = QueryDb($sql1);
-			$row1 = @mysqli_fetch_row($res1);
+			$row1 = @mysql_fetch_row($res1);
 			$namapelajaran	= $row1[0];
 
 			$sql2 = "SELECT info1 FROM $db_name_akad.jenisujian WHERE replid='$row[2]'";
 			$res2 = QueryDb($sql2);
-			$row2 = @mysqli_fetch_row($res2);
+			$row2 = @mysql_fetch_row($res2);
 			$namajenisujian	= $row2[0];
 			
 			$idujian = $row[0];
 			$sql2 = "SELECT nilaiujian FROM $db_name_akad.nilaiujian WHERE idujian='$idujian' AND nis='$nisnya'";
 			$res2 = QueryDb($sql2);
-			$row2 = @mysqli_fetch_row($res2);
+			$row2 = @mysql_fetch_row($res2);
 			$nilai = $row2[0];
 			if ($nilai=='')
 				$nilai = '0';	
@@ -263,7 +263,7 @@ if ($op=='SavePenilaian')
 						FROM $db_name_akad.siswa
 					   WHERE nis='$nisnya'";
 			$result = QueryDb($query);
-			$data = @mysqli_fetch_row($result);
+			$data = @mysql_fetch_row($result);
 		
 			if ($KeOrtu == 1)
 			{

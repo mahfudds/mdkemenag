@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,13 +48,13 @@ if (SI_USER_ID()=="")
 	exit;
 OpenDb();
 $res=QueryDb("SELECT * FROM jbsvcr.profil WHERE nip='".SI_USER_ID()."'");
-$row=@mysqli_fetch_array($res);
+$row=@mysql_fetch_array($res);
 CloseDb();
 
 $op="";
-if (isset($_REQUEST['op']))
-	$op=trim($_REQUEST['op']);
-if (isset($_REQUEST['simpan'])){
+if (isset($_REQUEST[op]))
+	$op=trim($_REQUEST[op]);
+if (isset($_REQUEST[simpan])){
 	
 	$foto=$_FILES["foto"];
 	$uploadedfile = $foto['tmp_name'];
@@ -126,7 +126,7 @@ if (isset($_REQUEST['simpan'])){
 OpenDb();
 $sql="SELECT * FROM jbsvcr.profil WHERE nip='".SI_USER_ID()."'";
 $result=QueryDb($sql);
-$ada=@mysqli_num_rows($result);
+$ada=@mysql_num_rows($result);
 CloseDb();
 if ($ada>0){
 OpenDb();
@@ -141,7 +141,7 @@ if ($result)
 OpenDb();
 $sql_client="SELECT * FROM jbsclient.localinfo ORDER BY region,location,clientid";
 	$result_client=QueryDb($sql_client);
-	$row_client=@mysqli_fetch_array($result_client);
+	$row_client=@mysql_fetch_array($result_client);
 	
 $sql="INSERT INTO jbsvcr.profil SET region='$row_client[region]',location='$row_client[location]',clientid='$row_client[clientid]',nip='".SI_USER_ID()."',nama='$_REQUEST[nama]',alamat='$_REQUEST[alamat]',".
 	 " telpon='$_REQUEST[telpon]', hp='$_REQUEST[hp]', email='$_REQUEST[email]',hobi='$_REQUEST[hobi]',".
@@ -205,7 +205,7 @@ function change_page(page) {
 }
 </script>
 </head>
-<body style="background-attachment:fixed;"  background="../library/gambarlatar.php?replid=<?=$row['replid']?>&table=jbsvcr.profil"  onLoad="document.getElementById('nama').focus();rbInit();"  onResize="rbResize()" bgcolor="#000000" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<body style="background-attachment:fixed;"  background="../library/gambarlatar.php?replid=<?=$row[replid]?>&table=jbsvcr.profil"  onLoad="document.getElementById('nama').focus();rbInit();"  onResize="rbResize()" bgcolor="#000000" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <script>
 // "true" means "keep the proportions of the original image."
 // If you pass "false" the image fills the whole window,
@@ -213,7 +213,7 @@ function change_page(page) {
 //rbOpen(true);
 </script>
 <form action="profile_edit.php" method="POST" enctype="multipart/form-data">
-<input name="replid" id="replid" type="hidden" value="<?=$row['replid']?>" />
+<input name="replid" id="replid" type="hidden" value="<?=$row[replid]?>" />
 <!-- ImageReady Slices (back_login.psd) -->
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
@@ -235,55 +235,55 @@ function change_page(page) {
     <th width="57" height="25" scope="row"><div align="left">Nama </div></th>
     <th width="2" scope="row">:</th>
     <td width="294" height="25"><div align="left">
-    <input name="nama" id="nama" type="text" value="<?=$row['nama']?>" />
+    <input name="nama" id="nama" type="text" value="<?=$row[nama]?>" />
     </div></td>
   </tr>
   <tr>
     <th height="25" scope="row"><div align="left">Alamat </div></th>
     <th width="2" height="25" scope="row">:</th>
     <td height="25"><div align="left">
-    <input name="alamat" id="alamat" type="text" value="<?=$row['alamat']?>" />
+    <input name="alamat" id="alamat" type="text" value="<?=$row[alamat]?>" />
     </div></td>
   </tr>
   <tr>
     <th height="25" scope="row"><div align="left">Telepon </div></th>
     <th width="2" height="25" scope="row">:</th>
     <td height="25"><div align="left">
-    <input name="telpon" id="telpon" type="text" value="<?=$row['telpon']?>" /></div></td>
+    <input name="telpon" id="telpon" type="text" value="<?=$row[telpon]?>" /></div></td>
   </tr>
   <tr>
     <th height="25" scope="row"><div align="left">HP </div></th>
     <th width="2" height="25" scope="row">:</th>
     <td height="25"><div align="left">
-    <input name="hp" id="hp" type="text" value="<?=$row['hp']?>" /></div></td>
+    <input name="hp" id="hp" type="text" value="<?=$row[hp]?>" /></div></td>
   	</tr>
   <tr>
     <th height="25" scope="row"><div align="left">Email </div></th>
     <th width="2" height="25" scope="row">:</th>
     <td height="25"><div align="left">
   
-    <input name="email" id="email" type="text" value="<?=$row['email']?>" /></div></td>
+    <input name="email" id="email" type="text" value="<?=$row[email]?>" /></div></td>
   </tr>
    <tr>
     <th width="57" valign="top" scope="row"><div align="left">Hobby </div>      
       <div align="left"></div></th>
     <th width="2" valign="top" scope="row">:</th>
     <th width="294" align="left" valign="top" scope="row"><div align="left">
-      <textarea name="hobi" ><?=$row['hobi']?></textarea>
+      <textarea name="hobi" ><?=$row[hobi]?></textarea>
      
     </div></th>
   </tr>
   <tr>
     <th valign="top" scope="row"><div align="left">Foto</div></th>
     <th width="2" valign="top" scope="row">:</th>
-    <th align="left" valign="top" scope="row"><img id="gambar" src="../library/gambar.php?replid=<?=$row['replid']?>&table=jbsvcr.profil" width="57" height="57" /><input name="foto" id="foto" type="file" size="20" title="Ganti Foto" /><br>
+    <th align="left" valign="top" scope="row"><img id="gambar" src="../library/gambar.php?replid=<?=$row[replid]?>&table=jbsvcr.profil" width="57" height="57" /><input name="foto" id="foto" type="file" size="20" title="Ganti Foto" /><br>
       <span class="style1 style5">(Isi untuk mengganti gambar profil..)      </span></th>
     </tr>
   <tr>
     <th valign="top" scope="row"><div align="left">Latar<br>
       Belakang</div></th>
     <th valign="top" scope="row">:</th>
-    <th align="left" valign="top" scope="row"><img id="gambarlatar" src="../library/gambarlatar.php?replid=<?=$row['replid']?>&table=jbsvcr.profil" width="57" height="57" /><input name="latar" id="latar" type="file" size="20" title="Ganti Gambar Latar" /><br>
+    <th align="left" valign="top" scope="row"><img id="gambarlatar" src="../library/gambarlatar.php?replid=<?=$row[replid]?>&table=jbsvcr.profil" width="57" height="57" /><input name="latar" id="latar" type="file" size="20" title="Ganti Gambar Latar" /><br>
       <span class="style1 style5">(Isi untuk mengganti gambar latar belakang ..)      </span></th>
   </tr>
   <tr>
@@ -298,7 +298,7 @@ function change_page(page) {
     <th width="2" valign="top" scope="row">:</th>
     <th align="left" valign="top" scope="row"><div align="left">
       
-      <textarea name="buku" ><?=$row['buku']?></textarea>
+      <textarea name="buku" ><?=$row[buku]?></textarea>
      
     </div></th>
   </tr>
@@ -308,14 +308,14 @@ function change_page(page) {
     <th width="2" valign="top" scope="row">:</th>
     <th align="left" valign="top" scope="row"><div align="left">
       
-      		<textarea name="riwayat" ><?=$row['riwayat']?></textarea>
+      		<textarea name="riwayat" ><?=$row[riwayat]?></textarea>
       
     </div></th>
   </tr>
   <tr>
     <th valign="top" scope="row"><div align="left">Tentang&nbsp;Saya</div></th>
     <th width="2" valign="top" scope="row">:</th>
-    <th align="left" valign="top" scope="row"><textarea name="tentang" ><?=$row['tentang']?></textarea></th>
+    <th align="left" valign="top" scope="row"><textarea name="tentang" ><?=$row[tentang]?></textarea></th>
   </tr>
   <tr>
     
@@ -347,7 +347,7 @@ function change_page(page) {
 <!-- End ImageReady Slices -->
 </form>
 <script>
-	//rbClose("../library/gambarlatar.php?replid=<?=$row['replid']?>&table=jbsvcr.profil");
+	//rbClose("../library/gambarlatar.php?replid=<?=$row[replid]?>&table=jbsvcr.profil");
 </script>
 </body>
 </html>

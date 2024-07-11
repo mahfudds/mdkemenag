@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -64,13 +64,13 @@ if (1 == (int)$_REQUEST['issubmit'])
 	$rekpiutang = "";
 	$sql = "SELECT nama, rekkas, rekpendapatan, rekpiutang FROM datapenerimaan WHERE replid='$idpenerimaan'";
 	$result = QueryDb($sql);
-	if (mysqli_num_rows($result) == 0) 
+	if (mysql_num_rows($result) == 0) 
 	{
 		trigger_error("Tidak ditemukan data penerimaan!", E_USER_ERROR);
 	} 
 	else 
 	{
-		$row = mysqli_fetch_row($result);
+		$row = mysql_fetch_row($result);
 		$namapenerimaan = $row[0];
 		$rekkas = $row[1];
 		$rekpendapatan = $row[2];
@@ -85,28 +85,28 @@ if (1 == (int)$_REQUEST['issubmit'])
 	$namasiswa = "";
 	$sql = "SELECT nama FROM jbsakad.siswa WHERE nis='$nis'";
 	$result = QueryDb($sql);
-	if (mysqli_num_rows($result) == 0) 
+	if (mysql_num_rows($result) == 0) 
 	{
 		//CloseDb();
 		trigger_error("Tidak ditemukan data siswa!", E_USER_ERROR);
 	} 
 	else 
 	{
-		$row = mysqli_fetch_row($result);
+		$row = mysql_fetch_row($result);
 		$namasiswa = $row[0];
 	}
 	
 	//Ambil awalan dan cacah tahunbuku untuk bikin nokas;
 	$sql = "SELECT awalan, cacah FROM tahunbuku WHERE replid = '$idtahunbuku'";
 	$result = QueryDb($sql);
-	if (mysqli_num_rows($result) == 0) 
+	if (mysql_num_rows($result) == 0) 
 	{
 		//CloseDb();
 		trigger_error("Tidak ditemukan data tahun buku!", E_USER_ERROR);
 	} 
 	else 
 	{
-		$row = mysqli_fetch_row($result);
+		$row = mysql_fetch_row($result);
 		$awalan = $row[0];
 		$cacah = $row[1];
 	}
@@ -179,14 +179,14 @@ $sql = "SELECT s.replid, nama, telponsiswa as telpon, hpsiswa as hp, kelas, alam
 		  WHERE s.idkelas = k.replid AND k.idtingkat = t.replid AND nis = '$nis'";
 	
 $result = QueryDb($sql);
-if (mysqli_num_rows($result) == 0) 
+if (mysql_num_rows($result) == 0) 
 {
 	CloseDb();
 	exit();
 } 
 else 
 {
-	$row = mysqli_fetch_array($result);
+	$row = mysql_fetch_array($result);
 	$replid = $row['replid'];
 	$nama = $row['nama'];
 	$telpon = $row['telpon'];
@@ -199,7 +199,7 @@ else
 	
 $sql = "SELECT nama FROM datapenerimaan WHERE replid = '$idpenerimaan'";
 $result = QueryDb($sql);
-$row = mysqli_fetch_row($result);
+$row = mysql_fetch_row($result);
 $namapenerimaan = $row[0];
 
 $tanggal = date('d-m-Y');
@@ -352,7 +352,7 @@ function focusNext(elemName, evt) {
 								 WHERE kategori = 'HARTA'
 								 ORDER BY nama";        
 						$res = QueryDb($sql);
-						while($row = mysqli_fetch_row($res))
+						while($row = mysql_fetch_row($res))
 						{
 							$sel = $row[0] == $defrekkas ? "selected" : "";
 							echo "<option value='$row[0]' $sel>$row[0] $row[1]</option>";
@@ -457,7 +457,7 @@ function focusNext(elemName, evt) {
 			ORDER BY p.tanggal, p.replid";
 	
 	$result = QueryDb($sql);    
-	if (mysqli_num_rows($result) > 0) {
+	if (mysql_num_rows($result) > 0) {
 ?>
     <tr>
         <td align="center" colspan="2">
@@ -486,7 +486,7 @@ function focusNext(elemName, evt) {
           
             $cnt = 0;
             $total = 0;
-            while ($row = mysqli_fetch_array($result))
+            while ($row = mysql_fetch_array($result))
             {
                 $total += $row['jumlah'];
 
@@ -496,9 +496,9 @@ function focusNext(elemName, evt) {
                           FROM jbsfina.paymenttrans
                          WHERE idpenerimaaniuran = $id";
                 $res2 = QueryDb($sql);
-                $isSchoolPay = mysqli_num_rows($res2) > 0;
+                $isSchoolPay = mysql_num_rows($res2) > 0;
                 $infoSchoolPay = "";
-                if ($row2 = mysqli_fetch_row($res2))
+                if ($row2 = mysql_fetch_row($res2))
                 {
                     $jenisTrans = $row2[0];
                     if ($jenisTrans == 0)
@@ -518,7 +518,7 @@ function focusNext(elemName, evt) {
                               FROM jbsfina.pgtransdata
                              WHERE idpenerimaaniuran = $id";
                     $res2 = QueryDb($sql);
-                    $row2 = mysqli_fetch_row($res2);
+                    $row2 = mysql_fetch_row($res2);
                     if ($row2[0] > 0)
                     {
                         $infoSchoolPay = "<span style='background-color: #43b9c9; color: #ffffff; font-size: 10px;'>&nbsp;OnlinePay&nbsp;</span>";

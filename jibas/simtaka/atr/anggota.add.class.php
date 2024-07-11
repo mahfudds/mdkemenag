@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,22 +23,22 @@
 <?
 class CAnggotaAdd{
 	function OnStart(){
-		if (isset($_REQUEST['simpan'])){
+		if (isset($_REQUEST[simpan])){
 			$sql = "SELECT noregistrasi FROM anggota WHERE noregistrasi='$_REQUEST[noreg]' ";
 			$result = QueryDb($sql);
-			$num = @mysqli_num_rows($result);
+			$num = @mysql_num_rows($result);
 			if ($num>0){
 				$this->exist();
 			} else {
-				$nama = trim(addslashes($_REQUEST['nama']));
-				$alamat = trim(addslashes($_REQUEST['alamat']));
-				$kodepos = trim(addslashes($_REQUEST['kodepos']));
-				$email = trim(addslashes($_REQUEST['email']));
-				$telpon = trim(addslashes($_REQUEST['telpon']));
-				$hp = trim(addslashes($_REQUEST['hp']));
-				$kerja = trim(addslashes($_REQUEST['kerja']));
-				$institusi = trim(addslashes($_REQUEST['institusi']));
-				$keterangan = trim(addslashes($_REQUEST['keterangan']));
+				$nama = trim(addslashes($_REQUEST[nama]));
+				$alamat = trim(addslashes($_REQUEST[alamat]));
+				$kodepos = trim(addslashes($_REQUEST[kodepos]));
+				$email = trim(addslashes($_REQUEST[email]));
+				$telpon = trim(addslashes($_REQUEST[telpon]));
+				$hp = trim(addslashes($_REQUEST[hp]));
+				$kerja = trim(addslashes($_REQUEST[kerja]));
+				$institusi = trim(addslashes($_REQUEST[institusi]));
+				$keterangan = trim(addslashes($_REQUEST[keterangan]));
 				$foto = $_FILES['foto'];
 				$uploadedfile = $foto['tmp_name'];
 				$uploadedfile_name = $foto['name'];
@@ -50,7 +50,7 @@ class CAnggotaAdd{
 					$foto_binary = addslashes(fread(fopen($filename,"r"),filesize($filename)));
 					$fill_foto = ", foto='$foto_binary'"; 
 				}
-				$date = @mysqli_fetch_row(QueryDb("SELECT now()"));
+				$date = @mysql_fetch_row(QueryDb("SELECT now()"));
 				$sql = "INSERT INTO anggota SET noregistrasi='$_REQUEST[noreg]', nama='$nama', alamat='$alamat', kodepos='$kodepos', email='$email', telpon='$telpon', hp='$hp', pekerjaan='$kerja', institusi='$institusi', keterangan='$keterangan', tgldaftar='$date[0]' $fill_foto";
 				$result = QueryDb($sql);
 				if ($result)
@@ -136,7 +136,7 @@ class CAnggotaAdd{
 		<?
 	}
 	function get_noreg(){
-		return "ANG".date('YmdHis');
+		return "ANG".date(YmdHis);
 	}
 }
 ?>

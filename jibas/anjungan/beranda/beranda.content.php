@@ -1,4 +1,4 @@
-<p style="text-align: center;"><span style="font-size: medium;"><strong>ANJUNGAN INFORMASI 123</strong></span><br /><span style="font-size: medium;"><strong>SEKOLAH PENDIDIKAN INDONESIA</strong></span></p>
+<p style="text-align: center;"><span style="font-size: medium;"><strong>ANJUNGAN INFORMASI</strong></span><br /><span style="font-size: medium;"><strong>SEKOLAH PENDIDIKAN INDONESIA</strong></span></p>
 <p><br /><span style="font-size: small;">Selamat datang di Ajungan Informasi Sekolah Pendidikan Indonesia. Sekolah dapat menyediakan layar yang ditempatkan di lingkungan Sekolah supaya dapat menampilkan layanan Anjungan Informasi Sekolah ini.</span></p>
 <p><span style="font-size: small;">Layanan ini dapat digunakan oleh <strong>siswa</strong> atau <strong>orangtua siswa</strong> untuk mengetahui:</span></p>
 <ol>

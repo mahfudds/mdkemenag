@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -116,9 +116,9 @@ $result = QueryDB($sql);
         <td width="10%" class="header" align="center" colspan="2">Last Login</td>
     </tr>
 <? 	
-	if (@mysqli_num_rows($result)>0){
+	if (@mysql_num_rows($result)>0){
 	$cnt = 0;
-	while ($row = mysqli_fetch_array($result)) { ?>
+	while ($row = mysql_fetch_array($result)) { ?>
     <tr height="25">
     	<td align="center"><?=++$cnt ?></td>
         <td><?=$row['login'] ?></td>
@@ -127,16 +127,16 @@ $result = QueryDB($sql);
 		$sql_get_lvl="SELECT DATE_FORMAT(lastlogin,'%d-%m-%Y') as tanggal, TIME(lastlogin) as jam FROM jbsuser.hakakses WHERE login='$row[login]' AND modul='INFOGURU'";
 		//echo $sql_get_lvl;
 		$result_get_lvl=QueryDb($sql_get_lvl);
-		$row_get_lvl=@mysqli_fetch_array($result_get_lvl);
+		$row_get_lvl=@mysql_fetch_array($result_get_lvl);
 		$sql_get_nama="SELECT nama FROM jbssdm.pegawai WHERE nip='$row[login]'";
 		//echo $sql_get_nama;
 		$result_get_nama=QueryDb($sql_get_nama);
-		$row_get_nama=@mysqli_fetch_array($result_get_nama);
-		echo $row_get_nama['nama'];
+		$row_get_nama=@mysql_fetch_array($result_get_nama);
+		echo $row_get_nama[nama];
 		?></td>
         <td><?=$row['keterangan'] ?>
         </td>
-        <td ><?=$row_get_lvl['tanggal']?><br><?=$row_get_lvl['jam']?></td>
+        <td ><?=$row_get_lvl[tanggal]?><br><?=$row_get_lvl[jam]?></td>
         
            </tr>
 <?	} } else {

@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  *
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,24 +48,24 @@ OpenDb();
 
 $sql = "SELECT tahunajaran FROM tahunajaran WHERE replid = '$tahunajaran'";
 $res = QueryDb($sql);
-$row = mysqli_fetch_row($res);
+$row = mysql_fetch_row($res);
 $ta  = $row[0];
 
 $sql = "SELECT kelas FROM kelas WHERE replid = '$kelas'";
 $res = QueryDb($sql);
-$row = mysqli_fetch_row($res);
+$row = mysql_fetch_row($res);
 $kls = $row[0];
 
 $sql = "SELECT semester FROM semester WHERE replid = '$semester'";
 $res = QueryDb($sql);
-$row = mysqli_fetch_row($res);
+$row = mysql_fetch_row($res);
 $sem = $row[0];
 
 if ($pelajaran != 0)
 {
     $sql = "SELECT nama FROM pelajaran WHERE replid = '$pelajaran'";
     $res = QueryDb($sql);
-    $row = mysqli_fetch_row($res);
+    $row = mysql_fetch_row($res);
     $pel = $row[0];
 }
 else
@@ -208,10 +208,10 @@ for($i = 0; $i < $nSiswa; $i++)
                        AND i.idkelas = $kelas
                        AND a.dasarpenilaian = '$kdAspek'";
             $res = QueryDb($sql);
-            $nData = mysqli_num_rows($res);
+            $nData = mysql_num_rows($res);
 
             $nilai = "";
-            if ($row = mysqli_fetch_row($res))
+            if ($row = mysql_fetch_row($res))
             {
                 $nilai = $row[0];
 

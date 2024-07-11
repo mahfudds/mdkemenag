@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,9 +47,9 @@ OpenDb();
 	$sql_kalender = "SELECT MONTH(t.tglmulai), YEAR(t.tglmulai), MONTH(t.tglakhir), YEAR(t.tglakhir), t.tglakhir FROM jbsakad.kalenderakademik k, jbsakad.tahunajaran t where k.replid='$kalender' AND k.idtahunajaran = t.replid";
 	$result = QueryDb($sql_kalender);
 	//echo "sql ".$sql_kalender;
-	//if (mysqli_num_rows($result) > 0) {
+	//if (mysql_num_rows($result) > 0) {
 	
-		$row = mysqli_fetch_row($result);
+		$row = mysql_fetch_row($result);
 		
 		$bulan1 = $row[0];
 		$tahun1 = $row[1];
@@ -103,14 +103,14 @@ function loadKalender1($kalender) {
 	
 	$result = QueryDb($sql);
 	$i = 0;	
-	while($row = mysqli_fetch_row($result)) {		
+	while($row = mysql_fetch_row($result)) {		
 		$tgl1 = explode('-',$row[2]);
 		$tgl2 = explode('-',$row[3]);
 		$awal = $tgl1[2].'/'.$tgl1[1].'/'.substr($tgl1[0],2,2).' - '.$tgl2[2].'/'.$tgl2[1].'/'.substr($tgl2[0],2,2);
 		
-		$GLOBALS['keg']['row'][$i]['id'] = $row[0];
-		$GLOBALS['keg']['row'][$i]['judul'] = $row[1];
-		$GLOBALS['keg']['row'][$i]['tanggal'] = $awal;
+		$GLOBALS[keg][row][$i][id] = $row[0];				
+		$GLOBALS[keg][row][$i][judul] = $row[1];				
+		$GLOBALS[keg][row][$i][tanggal] = $awal;
 		++$i;
 	}
 	return true;
@@ -125,7 +125,7 @@ function loadKalender2($kalender, $bulan1, $tahun1, $bulan2, $tahun2) {
 	//echo "<br>".$sql;
 	$result = QueryDb($sql);
 	
-	while($row = mysqli_fetch_row($result)) {
+	while($row = mysql_fetch_row($result)) {
 				
 		if ($row[6]<= 7)
 			$awal = 1;				
@@ -207,13 +207,13 @@ function loadKalender2($kalender, $bulan1, $tahun1, $bulan2, $tahun2) {
 			//$tanggal = $row[6].'/'.$row[4];
 		}
 		
-		for ($j=0;$j< count($keg['row']); $j++) {
-			if ($keg['row'][$j]['id'] == $row[0])
+		for ($j=0;$j< count($keg[row]); $j++) {
+			if ($keg[row][$j][id] == $row[0]) 				
 				$baris = $j;
 		}	
 		
-		$GLOBALS['jadwal']['row'][$row[0]][$baris][$kolom]['njam'] = $selisih;
-		$GLOBALS['jadwal']['row'][$row[0]][$baris][$kolom]['awal'] = $tanggal;
+		$GLOBALS[jadwal][row][$row[0]][$baris][$kolom][njam] = $selisih;
+		$GLOBALS[jadwal][row][$row[0]][$baris][$kolom][awal] = $tanggal;
 	}
 	return true;
 }
@@ -221,16 +221,16 @@ function loadKalender2($kalender, $bulan1, $tahun1, $bulan2, $tahun2) {
 function getCell1($r, $c, $id, $m) {
 	global $mask, $jadwal, $color;	
 	if($mask[$c] == 0) {
-		if(isset($jadwal['row'][$id][$r][$c])) {	
+		if(isset($jadwal[row][$id][$r][$c])) {	
 			
-			$mask[$c+1] = $jadwal['row'][$id][$r][$c]['njam'] - 1;
+			$mask[$c+1] = $jadwal[row][$id][$r][$c][njam] - 1;
 			
-			$dt=explode("-",$jadwal['row'][$id][$r][$c]['awal']);
-			$dt1=explode("/",$dt[0]);
-			$dt2=explode("/",$dt[1]);
+			$dt=split("-",$jadwal[row][$id][$r][$c][awal]);
+			$dt1=split("/",$dt[0]);
+			$dt2=split("/",$dt[1]);
 								
-			$s = "<td align='center' valign='middle' style='background-color: {$color[$m][1]}' colspan='{$jadwal['row'][$id][$r][$c]['njam']}'>";
-			//$s.= "<font class='thismonth'>{$jadwal['row'][$id][$r][$c]['awal']}</font>";						
+			$s = "<td align='center' valign='middle' style='background-color: {$color[$m][1]}' colspan='{$jadwal[row][$id][$r][$c][njam]}'>";
+			//$s.= "<font class='thismonth'>{$jadwal[row][$id][$r][$c][awal]}</font>";						
 			$s.= "<font class='thismonth'>$dt1[0] - $dt2[0]</font>";
 			$s.= "<br><img src='../images/ico/lihat.png' style='cursor:pointer'";
 			$s.= " onclick='lihat($id)'> &nbsp;";			
@@ -351,7 +351,7 @@ function refresh() {
 		$sql = "SELECT * FROM aktivitaskalender WHERE idkalender = '$kalender'";
 		$result = QueryDb($sql);
 		
-		if (@mysqli_num_rows($result)>0){
+		if (@mysql_num_rows($result)>0){
 	
     
 	?>
@@ -359,7 +359,7 @@ function refresh() {
     <tr>
         <td width="*" align="right">
             <a href="#" onClick="document.location.reload()"><img src="../images/ico/refresh.png" border="0" onMouseOver="showhint('Refresh!', this, event, '50px')"/>&nbsp;Refresh</a>&nbsp;&nbsp;
-            <? if (!isset($_REQUEST[$bln])){ ?>
+            <? if (!isset($_REQUEST[bln])){ ?>
 			<a href="JavaScript:cetak1()"><img src="../images/ico/print.png" border="0" onMouseOver="showhint('Cetak!', this, event, '50px')" />&nbsp;Cetak</a>&nbsp;&nbsp;
 			<? } else { ?>
 			<a href="JavaScript:cetak1()"><img src="../images/ico/print.png" border="0" onMouseOver="showhint('Cetak!', this, event, '50px')" />&nbsp;Cetak</a>&nbsp;&nbsp;
@@ -390,7 +390,7 @@ function refresh() {
 								WHERE idkalender = '$kalender' AND tanggalakhir > '$batas'";
 						
 						$result = QueryDb($sql);
-						if (mysqli_num_rows($result) > 0) {
+						if (mysql_num_rows($result) > 0) {
 			?>   
             		<input type="button" class="but" onClick="GoToNextMonth()" value=" Bulan berikutnya > " style="width:150px">  
         			<? } ?>
@@ -453,12 +453,12 @@ function refresh() {
     $mask[1] = 0;
         
     loadKalender1($kalender);
-    ?> <input type="hidden" name="kegiatan" id="kegiatan" value="<?=$keg['row']?>"> <?
+    ?> <input type="hidden" name="kegiatan" id="kegiatan" value="<?=$keg[row]?>"> <?
     loadKalender2($kalender,$bln,$thn,$n,$batasthn);
-    if (isset($keg['row'])) {
+    if (isset($keg[row])) {
 		$m = -1;
-        for ($i = 0; $i < count($keg['row']); $i++ ){
-            $id = $keg['row'][$i]['id'];
+        for ($i = 0; $i < count($keg[row]); $i++ ){
+            $id = $keg[row][$i][id];
             //$m = $i;			
             //if ($i > count($color)-1) 
 			//	$m = $i - ((count($color)-1)*(int)substr($i,0,1)+1);
@@ -472,9 +472,9 @@ function refresh() {
     <tr>
         <td style="background-color:<?=$color[$m][0]?> ; color:#FFFFFF" align="center" width="5%"><b><?=($i+1).'. '?></b></td>
         <td style="background-color:<?=$color[$m][0]?> ; color:#FFFFFF">
-        <b><?=$keg['row'][$i]['judul'];
-            if (!isset($jadwal['row'][$id]))	
-                echo '<br>'.$keg['row'][$i]['tanggal'];
+        <b><?=$keg[row][$i][judul];
+            if (!isset($jadwal[row][$id]))	
+                echo '<br>'.$keg[row][$i][tanggal];
             
             ?>
         </b></td>

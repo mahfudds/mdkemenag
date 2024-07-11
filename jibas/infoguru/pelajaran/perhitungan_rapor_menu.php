@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ if (isset($_REQUEST['nip'])){ //0
 		$sql = "SELECT p.nama from jbssdm.pegawai p WHERE p.nip='$nip' ";    
 		$result = QueryDb($sql);
 		$cnt = 0;
-		if ($row = @mysqli_fetch_array($result)) {
+		if ($row = @mysql_fetch_array($result)) {
 		$nama=$row[0];
 		}
 		CloseDb();
@@ -81,7 +81,7 @@ OpenDb();
 $sql="SELECT DISTINCT pel.departemen FROM pelajaran pel, guru g WHERE g.nip='$nip' AND pel.replid=g.idpelajaran";
 $result = QueryDb($sql);
 		$cnt = 0;
-		while ($row = @mysqli_fetch_array($result)) {
+		while ($row = @mysql_fetch_array($result)) {
 		$departemen=$row[0];
 		
 		?>
@@ -94,7 +94,7 @@ $result = QueryDb($sql);
 		$sql2="SELECT pel.nama,pel.departemen,pel.replid FROM pelajaran pel, guru g WHERE g.nip='$nip' AND pel.replid=g.idpelajaran AND pel.departemen='$departemen' GROUP BY pel.nama";
 		$result2 = QueryDb($sql2);
 		$cnt2 = 0;
-		while ($row2 = @mysqli_fetch_array($result2)) {
+		while ($row2 = @mysql_fetch_array($result2)) {
 		$nama_pelajaran=$row2[0];
 		?>
 		<tr onclick="parent.perhitungan_rapor_content.location.href='perhitungan_rapor_content.php?nip=<?=$nip?>&id_pelajaran=<?=$row2[2]?>&departemen=<?=$departemen?>';"><td align="right"><input type="hidden" name="departemen" id="departemen" value="<?=$departemen?>" /><input type="hidden" name="nip" id="nip" value="<?=$nip?>" /><input type="hidden" name="id_pelajaran" id="id_pelajaran" value="<?=$row2[0]?>" /><!--<a href="perhitungan_rapor_content.php?nip=<?=$nip?>&id_pelajaran=<?=$row2[2]?>&departemen=<?=$departemen?>" target="perhitungan_rapor_content">--><?=$nama_pelajaran?><!--</a>--></td></tr>

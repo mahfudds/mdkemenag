@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,17 +23,17 @@
 <?
 class CKatalogAdd{
 	function OnStart(){
-		if (isset($_REQUEST['simpan'])){
+		if (isset($_REQUEST[simpan])){
 			$sql = "SELECT kode FROM katalog WHERE kode='$_REQUEST[kode]' ";
 			$result = QueryDb($sql);
-			$num = @mysqli_num_rows($result);
+			$num = @mysql_num_rows($result);
 			if ($num>0){
 				$this->exist();
 			} else {
 				$sql = "INSERT INTO katalog SET rak='$_REQUEST[rak]', kode='".CQ($_REQUEST['kode'])."', nama='".CQ($_REQUEST['nama'])."', keterangan='".CQ($_REQUEST['keterangan'])."'";
 				$result = QueryDb($sql);
 				if ($result)
-					$this->success($_REQUEST['rak']);
+					$this->success($_REQUEST[rak]);
 			}
 		}
 	}
@@ -54,13 +54,13 @@ class CKatalogAdd{
         <?
 	}
 	function GetRak(){
-		$this->rak = $_REQUEST['rak'];
+		$this->rak = $_REQUEST[rak];
 		$sql = "SELECT replid,rak FROM rak ORDER BY rak";
 		$result = QueryDb($sql);
 		?>
 		<select name="rak" id="rak" class="cmbfrm">
 		<?
-		while ($row = @mysqli_fetch_row($result)){
+		while ($row = @mysql_fetch_row($result)){
 		if ($this->rak=="")
 			$this->rak = $row[0];	
 		?>

@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,7 +49,7 @@ if (isset($_REQUEST['Simpan'])) {
 	$sql = "SELECT * FROM rpp WHERE koderpp = '$kode' AND replid <> '$replid'";
 	$result = QueryDb($sql);
 	
-	if (mysqli_num_rows($result) > 0) {
+	if (mysql_num_rows($result) > 0) {
 		CloseDb();
 		$ERROR_MSG = "Kode pembelajaran $kode sudah digunakan!";	
 	} else {
@@ -70,7 +70,7 @@ OpenDb();
 $sql = "SELECT r.koderpp, r.rpp, r.deskripsi, r.idsemester, r.idtingkat, r.idpelajaran, s.semester, t.tingkat, p.nama, s.departemen FROM rpp r, semester s, tingkat t, pelajaran p WHERE r.replid = '$replid' AND s.replid = r.idsemester AND t.replid = r.idtingkat AND p.replid = r.idpelajaran";
 
 $result = QueryDb($sql);
-$row = mysqli_fetch_array($result);
+$row = mysql_fetch_array($result);
 $kode = $row['koderpp'];
 if (isset($_REQUEST['kode']))
 	$kode = $_REQUEST['kode'];

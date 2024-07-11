@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *  
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -83,7 +83,7 @@ switch ($stat)
 		
 		OpenDb();
 		$result = QueryDb($sql);
-		while($row = mysqli_fetch_row($result))
+		while($row = mysql_fetch_row($result))
 		{
 			$data[] = array($row[1], $row[2]);
 			$legend_x[] = $row[0];
@@ -111,7 +111,7 @@ switch ($stat)
 		
 		OpenDb();
 		$result = QueryDb($sql);
-		while($row = mysqli_fetch_row($result))
+		while($row = mysql_fetch_row($result))
 		{
 			$data[] = array($row[1], $row[2]);
 			$legend_x[] = $row[0];
@@ -141,7 +141,7 @@ switch ($stat)
 		
 		OpenDb();
 		$result = QueryDb($sql);
-		while($row = mysqli_fetch_row($result))
+		while($row = mysql_fetch_row($result))
 		{
 			$data[] = array($row[1], $row[2]);
 			$legend_x[] = $row[0];
@@ -192,7 +192,7 @@ switch ($stat)
 					WHERE p.aktif = 1 AND pl.nip = p.nip AND pl.idpegjab = pj.replid 
 					AND pj.idjabatan = j.replid AND pj.jenis = jj.jenis AND jj.jabatan = 'S' GROUP BY j.eselon ORDER BY j.eselon";	
 		$result = QueryDb($sql);
-		while ($row = mysqli_fetch_row($result)) {
+		while ($row = mysql_fetch_row($result)) {
 		?>
 		<tr height="20">
 			<td align="center" valign="top"><?=++$cnt?></td>
@@ -229,7 +229,7 @@ switch ($stat)
                   WHERE p.aktif = 1  AND p.nip = pl.nip AND pl.idpegjab = pj.replid AND pj.idjabatan = j.replid  AND NOT j.satker IS NULL
                   GROUP BY j.satker";	
         $result = QueryDb($sql);
-        while ($row = mysqli_fetch_row($result)) {
+        while ($row = mysql_fetch_row($result)) {
         ?>
         <tr height="20">
             <td align="center" valign="top"><?=++$cnt?></td>
@@ -259,7 +259,7 @@ switch ($stat)
                   WHERE p.aktif = 1 AND p.nip = pl.nip AND pl.idpegjab = pj.replid AND pj.idjabatan = j.replid  AND NOT j.satker IS NULL
                   GROUP BY j.satker";	
         $result = QueryDb($sql);
-        while ($row = mysqli_fetch_row($result)) {
+        while ($row = mysql_fetch_row($result)) {
         ?>
         <tr height="20">
             <td align="center" valign="top"><?=++$cnt?></td>
@@ -335,7 +335,7 @@ switch ($stat)
 		<?
 		OpenDb();
 		$result = QueryDb($sql);
-		while ($row = mysqli_fetch_row($result))
+		while ($row = mysql_fetch_row($result))
 		{
 		?>
 		<tr height="20">

@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -96,7 +96,7 @@ $sql="SELECT replid,nip,nama FROM jbssdm.pegawai WHERE DAY(tgllahir)='$tanggal' 
 $result=QueryDb($sql);
 $sql2="SELECT replid,nis,nama FROM jbsakad.siswa WHERE DAY(tgllahir)='$tanggal' AND MONTH(tgllahir)='$bulan' ORDER BY nama";
 $result2=QueryDb($sql2);
-if (@mysqli_num_rows($result)>0 || @mysqli_num_rows($result2)>0){
+if (@mysql_num_rows($result)>0 || @mysql_num_rows($result2)>0){
 ?>
 <table width="150" border="0" cellspacing="0">
   <tr>
@@ -115,16 +115,16 @@ if (@mysqli_num_rows($result)>0 || @mysqli_num_rows($result2)>0){
 	//echo $tanggal;
 	//exit;
 
-	while ($row=@mysqli_fetch_array($result)){
+	while ($row=@mysql_fetch_array($result)){
 	echo "<tr>
-    <td class=\"style8\"><a class=\"style11\" style=\"text-decoration:none; color:#666666\" href='#' onclick=tampil('".$row['replid']."')>".$row['nip']."-".substr($row['nama'],0,20)."</a></td>
+    <td class=\"style8\"><a class=\"style11\" style=\"text-decoration:none; color:#666666\" href='#' onclick=tampil('".$row[replid]."')>".$row[nip]."-".substr($row[nama],0,20)."</a></td>
   </tr><tr>
     <td background=\"../../images/box_hr1.gif\" style=\"background-repeat:repeat-x; background-position:center\">&nbsp;</td>
   </tr>";
 	}
-	while ($row2=@mysqli_fetch_array($result2)){
+	while ($row2=@mysql_fetch_array($result2)){
 	echo "<tr>
-    <td class=\"style8\"><a class=\"style11\" style=\"text-decoration:none; color:#666666\" href='#' onclick=tampilsiswa('".$row2['replid']."')>".$row2['nis']."-".$row2['nama']."</a></td>
+    <td class=\"style8\"><a class=\"style11\" style=\"text-decoration:none; color:#666666\" href='#' onclick=tampilsiswa('".$row2[replid]."')>".$row2[nis]."-".$row2[nama]."</a></td>
   </tr><tr>
     <td background=\"../../images/box_hr1.gif\" style=\"background-repeat:repeat-x; background-position:center\">&nbsp;</td>
   </tr>";

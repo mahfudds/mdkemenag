@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -55,7 +55,7 @@ if ($op == "348328947234923") {
 	if ($idbesarjtt > 0) {
 		$sql = "SELECT sum(jumlah) FROM penerimaanjtt WHERE idbesarjtt = '$idbesarjtt'";
 		$result = QueryDb($sql);
-		$row = mysqli_fetch_row($result);
+		$row = mysql_fetch_row($result);
 		$totalbayaran = $row[0];
 		
 		if ($totalbayaran > $besar) {
@@ -98,11 +98,11 @@ if ($op == "348328947234923") {
 	$rekpiutang = "";
 	$sql = "SELECT nama, rekkas, rekpendapatan, rekpiutang FROM datapenerimaan WHERE replid = '$idpenerimaan'";
 	$result = QueryDb($sql);
-	if (mysqli_num_rows($result) == 0) {
+	if (mysql_num_rows($result) == 0) {
 		CloseDb();
 		trigger_error("Tidak ditemukan data penerimaan", E_USER_ERROR);
 	} else {
-		$row = mysqli_fetch_row($result);
+		$row = mysql_fetch_row($result);
 		$namapenerimaan = $row[0];
 		$rekkas = $row[1];
 		$rekpendapatan = $row[2];
@@ -113,11 +113,11 @@ if ($op == "348328947234923") {
 	$namasiswa = "";
 	$sql = "SELECT nama FROM jbsakad.siswa WHERE nis = '$nis'";
 	$result = QueryDb($sql);
-	if (mysqli_num_rows($result) == 0) {
+	if (mysql_num_rows($result) == 0) {
 		CloseDb();
 		trigger_error("Tidak ditemukan data siswa", E_USER_ERROR);
 	} else {
-		$row = mysqli_fetch_row($result);
+		$row = mysql_fetch_row($result);
 		$namasiswa = $row[0];
 	}
 	
@@ -125,11 +125,11 @@ if ($op == "348328947234923") {
 	$besarjtt = 0;
 	$sql = "SELECT besar FROM besarjtt WHERE replid = '$idbesarjtt'";
 	$result = QueryDb($sql); 
-	if (mysqli_num_rows($result) == 0) {
+	if (mysql_num_rows($result) == 0) {
 		CloseDb();
 		trigger_error("Tidak ditemukan data besarnya pembayaran", E_USER_ERROR);
 	} else {
-		$row = mysqli_fetch_row($result);
+		$row = mysql_fetch_row($result);
 		$besarjtt = $row[0];
 	}
 	
@@ -138,7 +138,7 @@ if ($op == "348328947234923") {
 	$result = QueryDb($sql);
 	$jml = 0;
 	$cicilan = 0;
-	while ($row = mysqli_fetch_row($result)) {
+	while ($row = mysql_fetch_row($result)) {
 		$jml += $row[0];
 		$cicilan++;
 	}
@@ -162,11 +162,11 @@ if ($op == "348328947234923") {
 	//Ambil awalan dan cacah tahunbuku untuk bikin nokas;
 	$sql = "SELECT awalan, cacah FROM tahunbuku WHERE replid = '$idtahunbuku'";
 	$result = QueryDb($sql);
-	if (mysqli_num_rows($result) == 0) {
+	if (mysql_num_rows($result) == 0) {
 		CloseDb();
 		trigger_error("Tidak ditemukan data tahunbuku", E_USER_ERROR);
 	} else {
-		$row = mysqli_fetch_row($result);
+		$row = mysql_fetch_row($result);
 		$awalan = $row[0];
 		$cacah = $row[1];
 	}
@@ -231,11 +231,11 @@ if ($op == "348328947234923") {
 	$sql = "SELECT s.replid as replid, nama, telponsiswa as telpon, hpsiswa as hp, kelas as namakelas, alamatsiswa as alamattinggal FROM jbsakad.siswa s, jbsakad.kelas k WHERE s.idkelas = k.replid AND nis = '$nis'";
 	
 	$result = QueryDb($sql);
-	if (mysqli_num_rows($result) == 0) {
+	if (mysql_num_rows($result) == 0) {
 		CloseDb();
 		exit();
 	} else {
-		$row = mysqli_fetch_array($result);
+		$row = mysql_fetch_array($result);
 		$replid = $row['replid'];
 		$nama = $row['nama'];
 		$telpon = $row['telpon'];
@@ -246,7 +246,7 @@ if ($op == "348328947234923") {
 	
 	$sql = "SELECT nama FROM datapenerimaan WHERE replid = '$idpenerimaan'";
 	$result = QueryDb($sql);
-	$row = mysqli_fetch_row($result);
+	$row = mysql_fetch_row($result);
 	$namapenerimaan = $row[0];
 	
 }
@@ -419,8 +419,8 @@ function cetak() {
         $lunas = "";
         $idbesarjtt = 0;
     
-        if (mysqli_num_rows($result) > 0) {
-            $row = mysqli_fetch_array($result);
+        if (mysql_num_rows($result) > 0) {
+            $row = mysql_fetch_array($result);
             
             $besar = $row['besar'];
             $keterangan = $row['keterangan'];
@@ -470,7 +470,7 @@ function cetak() {
     if ($idbesarjtt > 0) { 
         $sql = "SELECT count(*) FROM penerimaanjtt WHERE idbesarjtt = '$idbesarjtt'";
         $result = QueryDb($sql);
-        $row = mysqli_fetch_row($result);
+        $row = mysql_fetch_row($result);
         $nbayar = $row[0];
         
         $info = "Pembayaran Cicilan";
@@ -503,7 +503,7 @@ function cetak() {
         $result = QueryDb($sql);
         $cnt = 0;
         $total = 0;
-        while ($row = mysqli_fetch_array($result)) {
+        while ($row = mysql_fetch_array($result)) {
             $total += $row['jumlah'];
         ?>
         <tr>

@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,19 +37,19 @@ if (isset($_REQUEST['simpan']))
 	OpenDb();
 	$tanggalmulai = MySqlDateFormat($_REQUEST['tcicilan']);
 	
-	$sql = "SELECT * FROM tahunbuku WHERE tahunbuku = '".CQ($_REQUEST['tahunbuku'])."' AND departemen = '$_REQUEST[departemen]' AND replid <> '$id'";
+	$sql = "SELECT * FROM tahunbuku WHERE tahunbuku = '".CQ($_REQUEST[tahunbuku])."' AND departemen = '$_REQUEST[departemen]' AND replid <> '$id'";
 	$result = QueryDb($sql);
 	
-	$sql1 = "SELECT * FROM tahunbuku WHERE awalan = '".CQ($_REQUEST['awalan'])."' AND departemen = '$_REQUEST[departemen]' AND replid <> '$id'";
+	$sql1 = "SELECT * FROM tahunbuku WHERE awalan = '".CQ($_REQUEST[awalan])."' AND departemen = '$_REQUEST[departemen]' AND replid <> '$id'";
 	$result1 = QueryDb($sql1);
 	
-	if (mysqli_num_rows($result) > 0) 
+	if (mysql_num_rows($result) > 0) 
 	{
 		CloseDb();
 		$MYSQL_ERROR_MSG = "Nama $_REQUEST[tahunbuku] sudah digunakan";
 		$cek = 0;
 	} 
-	else if (mysqli_num_rows($result1) > 0) 
+	else if (mysql_num_rows($result1) > 0) 
 	{
 		CloseDb();
 		$MYSQL_ERROR_MSG = "Awalan $_REQUEST[awalan] sudah digunakan";
@@ -102,7 +102,7 @@ switch ($cek) {
 OpenDb();
 $sql = "SELECT tahunbuku, departemen, awalan, keterangan, date_format(tanggalmulai, '%d-%m-%Y') AS tanggalmulai FROM tahunbuku WHERE replid = '$id'";
 $result = QueryDb($sql);
-$row = mysqli_fetch_array($result);
+$row = mysql_fetch_array($result);
 CloseDb();
 	
 $tahunbuku = $row['tahunbuku'];

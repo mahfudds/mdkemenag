@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,7 +44,7 @@ $sql = "SELECT DISTINCT YEAR(p.tglpinjam)
 		 WHERE p.idanggota = '$nis'
 		 ORDER BY YEAR(p.tglpinjam) DESC";
 $result = QueryDb($sql);
-$ntahun = mysqli_num_rows($result);
+$ntahun = mysql_num_rows($result);
 
 if ($ntahun == 0)
 {
@@ -54,7 +54,7 @@ if ($ntahun == 0)
 }
 
 echo "Tahun: <select name='tahun' class='cmbfrm' id='tahun' style='width:150px' onChange=\"ChangePerpusOption('tahun')\">";
-while($row = mysqli_fetch_row($result))
+while($row = mysql_fetch_row($result))
 {
   if ($tahun == 0)
 	$tahun = $row[0];
@@ -84,8 +84,8 @@ $cnt=1;
 	<td width='15%' align="center" class="header">Jadwal<br>Kembali</td>
 	<td width='15%' align="center" class="header">Tanggal Kembali</td>
   </tr>
-  <? if (@mysqli_num_rows($result)>0) { ?>
-  <? while ($row = @mysqli_fetch_row($result)) { ?>
+  <? if (@mysql_num_rows($result)>0) { ?>
+  <? while ($row = @mysql_fetch_row($result)) { ?>
   <tr>
     <td height="20" align="center"><?=$cnt?></td>
     <td height="20">

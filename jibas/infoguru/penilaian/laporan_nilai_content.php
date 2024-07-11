@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -107,8 +107,8 @@ if (isset($_REQUEST['tglakhir']))
 	      <span class="style1">:
 <?          $sql_get_nama="SELECT nama FROM jbsakad.siswa WHERE nis='$nis'";
 	        $result_get_nama=QueryDb($sql_get_nama);
-	        $row_get_nama=@mysqli_fetch_array($result_get_nama);
-	        echo $row_get_nama['nama'];?>
+	        $row_get_nama=@mysql_fetch_array($result_get_nama);
+	        echo $row_get_nama[nama];?>
 	      </span>
           </span>
       </td>

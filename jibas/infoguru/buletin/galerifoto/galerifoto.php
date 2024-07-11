@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,24 +29,24 @@ require_once('../../include/fileutil.php');
 require_once('../../include/sessionchecker.php');
 
 $op = "";
-if (isset($_REQUEST['op']))
-	$op=$_REQUEST['op'];
+if (isset($_REQUEST[op]))
+	$op=$_REQUEST[op];
   
 $page = 't';
-if (isset($_REQUEST['page']))
-	$page = $_REQUEST['page'];
+if (isset($_REQUEST[page]))
+	$page = $_REQUEST[page];
 	
 OpenDb();
 $sql = "SELECT * FROM jbsvcr.galerifoto WHERE idguru='".SI_USER_ID()."'";
 $result = QueryDb($sql);
-$num = @mysqli_num_rows($result);
+$num = @mysql_num_rows($result);
 $cnt = 1;
-while ($row = @mysqli_fetch_array($result))
+while ($row = @mysql_fetch_array($result))
 {
-	$ket[$cnt] = $row['keterangan'];
-	$nama[$cnt] = $row['nama'];
-	$fn[$cnt] = $row['filename'];
-	$rep[$cnt] = $row['replid'];
+	$ket[$cnt] = $row[keterangan];
+	$nama[$cnt] = $row[nama];
+	$fn[$cnt] = $row[filename];
+	$rep[$cnt] = $row[replid];
 	
 	$cnt++;
 }
@@ -57,13 +57,13 @@ if ($op == "14075BUSYCODACALLDIFF")
 	OpenDb();
 	$sql = "SELECT * FROM jbsvcr.galerifoto WHERE replid = '$_REQUEST[replid]'";
 	$res = QueryDb($sql);
-	$r = mysqli_fetch_array($res);
+	$r = mysql_fetch_array($res);
 	
-	$fimage = "$FILESHARE_UPLOAD_DIR/galeriguru/photos/" . $r['filename'];
+	$fimage = "$FILESHARE_UPLOAD_DIR/galeriguru/photos/" . $r[filename];
 	if (file_exists($fimage))
 	   delete($fimage);
 	   
-	$fimage = "$FILESHARE_UPLOAD_DIR/galeriguru/thumbnails/" . $r['filename'];
+	$fimage = "$FILESHARE_UPLOAD_DIR/galeriguru/thumbnails/" . $r[filename];
 	if (file_exists($fimage))
 	   delete($fimage);   
 	   

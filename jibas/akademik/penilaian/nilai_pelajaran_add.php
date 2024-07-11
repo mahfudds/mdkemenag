@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,7 +48,7 @@ $sql_get_nhb =
 	  WHERE a.replid='$idaturan' AND k.idtingkat = t.replid AND k.replid = '$kelas' AND s.replid = '$semester' 
 	    AND p.replid = a.idpelajaran AND j.replid = a.idjenisujian AND ta.replid = k.idtahunajaran";
 $result_get_nhb = QueryDb($sql_get_nhb);
-$row = @mysqli_fetch_array($result_get_nhb);
+$row = @mysql_fetch_array($result_get_nhb);
 $departemen = $row['departemen'];
 $namakelas = $row['kelas'];
 $namatingkat = $row['tingkat'];
@@ -277,7 +277,7 @@ function simpan(evt) {
       		<option value="" <?=IntIsSelected("", $idrpp) ?> >Tanpa RPP</option>
 		<? $sql_rpp="SELECT * FROM rpp WHERE idtingkat='$tingkat' AND idsemester='$semester' AND idpelajaran='$pelajaran' AND aktif=1 ORDER BY rpp";
       		$result_rpp=QueryDb($sql_rpp);
-      		while ($row_rpp=@mysqli_fetch_array($result_rpp)){
+      		while ($row_rpp=@mysql_fetch_array($result_rpp)){
 				if ($idrpp == "")
 					$idrpp = $row_rpp['replid'];
       	?>
@@ -309,14 +309,14 @@ function simpan(evt) {
     </tr>
 <?  $sql_siswa="SELECT * FROM siswa WHERE idkelas='$kelas' AND aktif=1 AND alumni=0 ORDER BY nama ASC";
     $result_siswa=QueryDb($sql_siswa);
-    $numsiswa=@mysqli_num_rows($result_siswa);
-    while ($row_siswa=@mysqli_fetch_array($result_siswa)){
+    $numsiswa=@mysql_num_rows($result_siswa);
+    while ($row_siswa=@mysql_fetch_array($result_siswa)){
 
 ?>
     <tr height="25">
         <td align="center"><?=++$i ?></td>
         <td align="center"><?=$row_siswa['nis'] ?></td>
-        <td><?=$row_siswa['nama'] ?></td>
+        <td><?=$row_siswa[nama] ?></td>
         <td align="center">
             <input type="text" name="nilaiujian[<?=$row_siswa['nis']?>][0]" id="nilaiujian<?=$i?>" size="5" maxlength="5" onKeyPress="return focusNext('keterangan<?=$i?>', event);" ></td>
         <td align="center">

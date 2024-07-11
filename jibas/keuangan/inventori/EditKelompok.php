@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,25 +24,25 @@
 require_once('../include/config.php');
 require_once('../include/db_functions.php');
 OpenDb();
-$idkelompok = $_REQUEST['idkelompok'];
+$idkelompok = $_REQUEST[idkelompok];
 $sql = "SELECT * FROM jbsfina.kelompokbarang WHERE replid='$_REQUEST[idkelompok]'";
 $result = QueryDb($sql);
-$row = @mysqli_fetch_array($result);
-$idgroup = $row['idgroup'];
-if (isset($_REQUEST['idgroup']))
-	$idgroup = $_REQUEST['idgroup'];
-$kelompokname = $row['kelompok'];
-if (isset($_REQUEST['kelompokname']))
-	$kelompokname = $_REQUEST['kelompokname'];
-$keterangan = $row['keterangan'];
-if (isset($_REQUEST['keterangan']))
-	$keterangan = $_REQUEST['keterangan'];
+$row = @mysql_fetch_array($result);
+$idgroup = $row[idgroup];
+if (isset($_REQUEST[idgroup]))
+	$idgroup = $_REQUEST[idgroup];
+$kelompokname = $row[kelompok];
+if (isset($_REQUEST[kelompokname]))
+	$kelompokname = $_REQUEST[kelompokname];
+$keterangan = $row[keterangan];
+if (isset($_REQUEST[keterangan]))
+	$keterangan = $_REQUEST[keterangan];
 if (isset($_REQUEST['Simpan'])){
 	$sql = "SELECT * FROM jbsfina.kelompokbarang WHERE kelompok='$kelompokname' AND idgroup='$idgroup'";
-	if (@mysqli_num_rows(QueryDb($sql))>0){
+	if (@mysql_num_rows(QueryDb($sql))>0){
 		?>
         <script language="javascript">
-			alert ('Kelompok <?=$_REQUEST['kelompokname']?> sudah digunakan!');
+			alert ('Kelompok <?=$_REQUEST[kelompokname]?> sudah digunakan!');
         </script>
         <?
 	} else {
@@ -78,7 +78,7 @@ function validate(){
 <fieldset style="border:#336699 1px solid; background-color:#eaf4ff" >
 <legend style="background-color:#336699; color:#FFFFFF; font-size:12px; font-weight:bold; padding:5px; ">&nbsp;Ubah&nbsp;Kelompok&nbsp;</legend>
 <form action="EditKelompok.php" onSubmit="return validate()" method="post">
-<input type="hidden" name="idkelompok" id="idkelompok" value="<?=$_REQUEST['idkelompok']?>" />
+<input type="hidden" name="idkelompok" id="idkelompok" value="<?=$_REQUEST[idkelompok]?>" />
 <input type="hidden" name="idgroup" id="idgroup" value="<?=$idgroup?>" />
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>

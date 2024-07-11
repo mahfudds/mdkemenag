@@ -9,7 +9,7 @@ function ReadRequest()
               FROM jbssdm.pegawai
              WHERE nip='$nip'";
     $result = QueryDb($sql);
-    $row = mysqli_fetch_row($result);
+    $row = mysql_fetch_row($result);
     $nama = $row[0];
     
     if (!isset($_REQUEST['tahun30']) || !isset($_REQUEST['tahun']))
@@ -19,7 +19,7 @@ function ReadRequest()
                        DAY(DATE_SUB(NOW(), INTERVAL 30 DAY)),
                        YEAR(NOW()), MONTH(NOW()), DAY(NOW())";
         $res = QueryDb($sql);
-        $row = mysqli_fetch_row($res);
+        $row = mysql_fetch_row($res);
         $tahun30 = $row[0];
         $bulan30 = $row[1];
         $tanggal30 = $row[2];
@@ -152,7 +152,7 @@ function ShowDetail()
     $no = 0;
     $totjkerja = 0;
     $totmkerja = 0;
-    while($row = mysqli_fetch_array($res))
+    while($row = mysql_fetch_array($res))
     {
         $no += 1;
         $status = $row["status"];

@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,12 +26,12 @@ require_once('include/db_functions.php');
 require_once('include/sessioninfo.php');
 require_once('include/common.php');
 require_once('include/config.php');
-$nip = $_REQUEST['nip'];
+$nip = $_REQUEST[nip];
 OpenDb();
 $sql = "SELECT * FROM jbsuser.login WHERE login='$nip'";
 //echo  $sql;
 $result = QueryDb($sql);
-$num = @mysqli_num_rows($result);
+$num = @mysql_num_rows($result);
 ?>
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
 <?

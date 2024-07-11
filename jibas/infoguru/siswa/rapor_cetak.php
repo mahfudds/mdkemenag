@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,7 +38,7 @@ OpenDb();
 $sql = "SELECT t.departemen, a.tahunajaran, k.kelas, t.tingkat, s.nama, a.tglmulai, a.tglakhir FROM tahunajaran a, kelas k, tingkat t, siswa s WHERE k.idtingkat = t.replid AND k.idtahunajaran = a.replid AND k.replid = '$kelas' AND s.nis = '$nis'";  
 
 $result = QueryDB($sql);	
-$row = mysqli_fetch_array($result);
+$row = mysql_fetch_array($result);
 $tglmulai = $row['tglmulai'];
 $tglakhir = $row['tglakhir'];
 $nama = $row['nama'];
@@ -49,8 +49,8 @@ $kls = $row['kelas'];
 $sql = "SELECT replid FROM semester WHERE departemen = '$departemen' AND aktif=1";  
 
 $result = QueryDB($sql);	
-$row = mysqli_fetch_array($result);
-$semester = $row['replid'];
+$row = mysql_fetch_array($result);
+$semester = $row[replid];
 
 $sql_get_pelajaran_laporan=	"SELECT pel.replid as replid,pel.nama as nama FROM ujian uji, nilaiujian niluji, siswa sis, pelajaran pel WHERE uji.replid=niluji.idujian AND niluji.nis=sis.nis AND uji.idpelajaran=pel.replid AND uji.idsemester='$semester' AND uji.idkelas='$kelas' AND sis.nis='$nis' ".
 								"GROUP BY pel.nama";
@@ -143,16 +143,16 @@ function ShowKomentar()
 				 GROUP BY pel.nama";
 			$result_get_pelajaran_komentar = QueryDb($sql_get_pelajaran_komentar);
 			$cntpel_komentar=1;
-			while ($row_get_pelajaran_komentar=@mysqli_fetch_array($result_get_pelajaran_komentar))
+			while ($row_get_pelajaran_komentar=@mysql_fetch_array($result_get_pelajaran_komentar))
 			{
 				$sql_get_komentar = "SELECT k.komentar 
 		          FROM jbsakad.komennap k, jbsakad.infonap i 
 				 WHERE k.nis='$nis' AND i.idpelajaran='$row_get_pelajaran_komentar[replid]' AND i.replid = k.idinfo 
 				   AND i.idsemester = '$semester' AND i.idkelas = '$kelas'";
 				$result_get_komentar=QueryDb($sql_get_komentar);
-				$row_get_komentar=@mysqli_fetch_row($result_get_komentar); ?>
+				$row_get_komentar=@mysql_fetch_row($result_get_komentar); ?>
         <tr>
-        	<td height="25"><?=$row_get_pelajaran_komentar['nama']?></td>
+        	<td height="25"><?=$row_get_pelajaran_komentar[nama]?></td>
         	<td height="25"><?=$row_get_komentar[0]?></td>
         </tr>
 	<?			$cntpel_komentar++;
@@ -174,7 +174,7 @@ function ShowRapor()
 			   AND n.idaturan = a.replid 	   
 			   AND a.dasarpenilaian = d.dasarpenilaian";
 	$res = QueryDb($sql);
-	$naspek = mysqli_num_rows($res); 
+	$naspek = mysql_num_rows($res); 
 	
 	if ($naspek > 2)
 		ShowRaporRow();
@@ -194,7 +194,7 @@ function ShowRaporColumn()
 			     AND a.dasarpenilaian = d.dasarpenilaian";
 	$res = QueryDb($sql);
 	$i = 0;
-	while($row = mysqli_fetch_row($res))
+	while($row = mysql_fetch_row($res))
 	{
 		$aspekarr[$i++] = array($row[0], $row[1]);
 	} ?>  
@@ -222,7 +222,7 @@ function ShowRaporColumn()
 				  AND sis.nis = '$nis' 
 			GROUP BY pel.nama";
 	$respel = QueryDb($sql);
-	while($rowpel = mysqli_fetch_row($respel))
+	while($rowpel = mysql_fetch_row($respel))
 	{
 		$idpel = $rowpel[0];
 		$nmpel = $rowpel[1];
@@ -233,7 +233,7 @@ function ShowRaporColumn()
 					  AND idsemester = '$semester'
 				     AND idkelas = '$kelas'";
 		$res = QueryDb($sql);
-		$row = mysqli_fetch_row($res);
+		$row = mysql_fetch_row($res);
 		$nilaimin = $row[0];
 				
 		echo "<tr>";
@@ -257,9 +257,9 @@ function ShowRaporColumn()
 						  AND n.idaturan = a.replid 	   
 						  AND a.dasarpenilaian = '$asp'";
 			$res = QueryDb($sql);
-			if (mysqli_num_rows($res) > 0)
+			if (mysql_num_rows($res) > 0)
 			{
-				$row = mysqli_fetch_row($res);
+				$row = mysql_fetch_row($res);
 				$na = $row[0];
 				$nh = $row[1];
 			}
@@ -275,9 +275,9 @@ function ShowRaporColumn()
 				   AND i.idsemester = '$semester' 
 				   AND i.idkelas = '$kelas'";
 		$res = QueryDb($sql);
-		if (mysqli_num_rows($res) > 0)
+		if (mysql_num_rows($res) > 0)
 		{
-			$row = mysqli_fetch_row($res);
+			$row = mysql_fetch_row($res);
 			$tmp = (int)$row[0];
 			
 			switch ($tmp)
@@ -325,7 +325,7 @@ function ShowRaporRow()
          GROUP BY pel.nama";    
     $res = QueryDb($sql);
     $i = 0;
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         $pelarr[$i++] = array($row[0], $row[1]);
     }
@@ -341,7 +341,7 @@ function ShowRaporRow()
                   AND idsemester = '$semester'
                   AND idkelas = '$kelas'";
         $res = QueryDb($sql);
-        $row = mysqli_fetch_row($res);
+        $row = mysql_fetch_row($res);
         $nilaimin = $row[0];
         
         $sql = "SELECT DISTINCT a.dasarpenilaian, d.keterangan 
@@ -355,7 +355,7 @@ function ShowRaporRow()
         $res = QueryDb($sql);				 
         $aspekarr = array();				 
         $j = 0;
-        while($row = mysqli_fetch_row($res))
+        while($row = mysql_fetch_row($res))
         {
             $na = "";
             $nh = "";
@@ -371,9 +371,9 @@ function ShowRaporRow()
                        AND n.idaturan = a.replid 	   
                        AND a.dasarpenilaian = '$asp'";
             $res2 = QueryDb($sql);
-            if (mysqli_num_rows($res2) > 0)
+            if (mysql_num_rows($res2) > 0)
             {
-                $row2 = mysqli_fetch_row($res2);
+                $row2 = mysql_fetch_row($res2);
                 $na = $row2[0];
                 $nh = $row2[1];
             }

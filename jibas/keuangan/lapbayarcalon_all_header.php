@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@ OpenDb();
 $sql = "SELECT day(now()), month(now()), year(now()), 
                day(date_sub(now(), INTERVAL 30 DAY)), month(date_sub(now(), INTERVAL 30 DAY)), year(date_sub(now(), INTERVAL 30 DAY))";		
 $result = QueryDb($sql);
-$row = mysqli_fetch_row($result);
+$row = mysql_fetch_row($result);
 $tgl2 = $row[0];
 $bln2 = $row[1];
 $thn2 = $row[2];
@@ -216,7 +216,7 @@ function panggil(elem){
         </select>&nbsp;
 <?	    $sql = "SELECT replid FROM tahunbuku WHERE departemen='$departemen' AND aktif=1";
 		$res = QueryDb($sql);
-		$row = @mysqli_fetch_row($res);
+		$row = @mysql_fetch_row($res);
 		$idtahunbuku = $row[0];
 		//$idtahunbuku = FetchSingle($sql);
 		 ?>

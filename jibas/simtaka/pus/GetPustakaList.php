@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,9 +35,9 @@ $filter="";
 if ($idperpustakaan != -1)
   $filter=" AND d.perpustakaan=".$idperpustakaan;
 			
-$idpustaka = $_REQUEST['idpustaka'];
-$from = $_REQUEST['from'];
-$to = $_REQUEST['to'];
+$idpustaka = $_REQUEST[idpustaka];
+$from = $_REQUEST[from];
+$to = $_REQUEST[to];
 $sql = "SELECT IF(p.nis IS NOT NULL, p.nis, IF(p.nip IS NOT NULL, p.nip, p.idmember)) AS idanggota, p.tglpinjam, p.info1
 	      FROM pinjam p, daftarpustaka d, pustaka pu
 		 WHERE p.tglpinjam BETWEEN '$from' AND '$to'
@@ -56,7 +56,7 @@ $result = QueryDb($sql);
 </tr>
 <?
 $cnt = 1;
-while ($row = @mysqli_fetch_row($result))
+while ($row = @mysql_fetch_row($result))
 { ?>
   <tr height="20">
 	<td align="center"><?=$cnt?></td>
@@ -94,7 +94,7 @@ function GetMemberName($idanggota, $jenisanggota)
 				 WHERE noregistrasi = '$idanggota'";
 	}
 	$res = QueryDb($sql);
-	$row = mysqli_fetch_row($res);
+	$row = mysql_fetch_row($res);
 	$namaanggota = $row[0];
 	
 	return $namaanggota;

@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@ $idtahunbuku = (int)$_REQUEST['idtahunbuku'];
 OpenDb();	
 $sql = "SELECT departemen FROM tahunbuku WHERE replid='$idtahunbuku'"; 	
 $result = QueryDb($sql);    
-$row = mysqli_fetch_row($result);	
+$row = mysql_fetch_row($result);	
 $departemen = $row[0];
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -66,7 +66,7 @@ $departemen = $row[0];
     <td><strong>: 
 <?	$sql = "SELECT departemen FROM tahunbuku WHERE replid='$idtahunbuku'"; 	
 	$result = QueryDb($sql);    
-	$row = mysqli_fetch_row($result);	
+	$row = mysql_fetch_row($result);	
 	echo  $row[0]; ?>
     </strong></td>
 </tr>
@@ -75,7 +75,7 @@ $departemen = $row[0];
     <td><strong>:
 <?	$sql = "SELECT tahunbuku FROM tahunbuku WHERE replid='$idtahunbuku'"; 	
 	$result = QueryDb($sql);    
-	$row = mysqli_fetch_row($result);
+	$row = mysql_fetch_row($result);
 	echo  $row[0]; ?>
     </strong></td>
 </tr>
@@ -85,7 +85,7 @@ $departemen = $row[0];
     <td><strong>:
 <?	$sql = "SELECT kategori FROM kategoripenerimaan WHERE kode='$idkategori' ORDER BY urutan";	
 	$result = QueryDb($sql);    
-	$row = mysqli_fetch_row($result);
+	$row = mysql_fetch_row($result);
 	echo  $row[0]; ?>
     </strong></td>
 </tr>
@@ -94,7 +94,7 @@ $departemen = $row[0];
     <td><strong>:
 <?	$sql = "SELECT nama FROM datapenerimaan WHERE replid = '$idpenerimaan'"; 			
 	$result = QueryDb($sql);    
-	$row = mysqli_fetch_row($result);
+	$row = mysql_fetch_row($result);
 	echo  $row[0]; ?>
     </strong></td>
 </tr>
@@ -107,14 +107,14 @@ $sql = "SELECT s.replid, nama, telponsiswa as telpon, hpsiswa as hp, kelas, alam
 		 WHERE s.idkelas = k.replid AND nis = '$nis' AND t.replid = k.idtingkat";
 
 $result = QueryDb($sql);
-if (mysqli_num_rows($result) == 0) 
+if (mysql_num_rows($result) == 0) 
 {
 	CloseDb();
 	exit();
 }
 else 
 {
-	$row = mysqli_fetch_array($result);
+	$row = mysql_fetch_array($result);
 	$replid = $row['replid'];
 	$nama = $row['nama'];
 	$telpon = $row['telpon'];
@@ -137,11 +137,11 @@ else
         $lunas = 0;
         $sql = "SELECT replid AS id, besar, keterangan, lunas FROM besarjtt WHERE nis = '$nis' AND idpenerimaan = '$idpenerimaan' AND info2='$idtahunbuku'";
         $result = QueryDb($sql);
-        $bayar = mysqli_num_rows($result);
+        $bayar = mysql_num_rows($result);
         
-        if (mysqli_num_rows($result) > 0) 
+        if (mysql_num_rows($result) > 0) 
 		{
-            $row = mysqli_fetch_array($result);
+            $row = mysql_fetch_array($result);
             $idbesarjtt = $row['id'];
             $lunas = $row['lunas'];
             $besar = $row['besar'];
@@ -169,7 +169,7 @@ else
             <td><strong>: 
 			<?	$sql = "SELECT nama FROM datapenerimaan WHERE replid = '$idpenerimaan'"; 			
                 $result = QueryDb($sql);    
-                $row = mysqli_fetch_row($result);
+                $row = mysql_fetch_row($result);
                 echo  $row[0]; ?>
 			</strong></td>
         </tr>
@@ -254,7 +254,7 @@ else
 <? 
     $sql = "SELECT count(*) FROM penerimaanjtt WHERE idbesarjtt = '$idbesarjtt'";
     $result = QueryDb($sql);
-    $row = mysqli_fetch_row($result);
+    $row = mysql_fetch_row($result);
     $nbayar = $row[0];
     
 	
@@ -275,7 +275,7 @@ else
     $result = QueryDb($sql);
    
     $info = "Pembayaran Pertama";
-	if (mysqli_num_rows($result) > 1) 
+	if (mysql_num_rows($result) > 1) 
 		$info = "Pembayaran Cicilan";
         
 ?> 
@@ -298,7 +298,7 @@ else
         $cnt = 0;
         $total = 0;
 		$total_diskon = 0;
-        while ($row = mysqli_fetch_array($result))
+        while ($row = mysql_fetch_array($result))
 		{
             $total += $row['jumlah'] + $row['diskon'];
 			$total_diskon += $row['diskon'];

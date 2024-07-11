@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -74,8 +74,8 @@ function IntIsSelected($String,$Comparer)
 function SDateFormat($string)
 {
 	global $LMonth;
-	$x = explode(' ',$string);
-	$y = explode('-',$x[0]);
+	$x = split(' ',$string);
+	$y = split('-',$x[0]);
 	//echo $y[2].' '.$LMonth[(int)$y[1]-1].' '.$y[0];
 	$m = ($y[1]-1);
 	echo $y[2].'-'.$y[1].'-'.$y[0];
@@ -84,8 +84,8 @@ function SDateFormat($string)
 function DateFormat($string)
 {
 	global $LMonth;
-	$x = explode(' ',$string);
-	$y = explode('-',$x[0]);
+	$x = split(' ',$string);
+	$y = split('-',$x[0]);
 	//echo $y[2].' '.$LMonth[(int)$y[1]-1].' '.$y[0];
 	$m = ($y[1]-1);
 	echo $y[2].' '.$LMonth[$m].' '.$y[0];
@@ -94,8 +94,8 @@ function DateFormat($string)
 function DateFormat2($string)
 {
 	global $LMonth;
-	$x = explode(' ',$string);
-	$y = explode('-',$x[0]);
+	$x = split(' ',$string);
+	$y = split('-',$x[0]);
 	$m = ($y[1]-1);
 
 	if ($y[2]=='1')
@@ -116,8 +116,8 @@ function FullDateFormat($string)
 {
 	global $LMonth;
 	
-	$x = explode(' ',$string);
-	$y = explode('-',$x[0]);
+	$x = split(' ',$string);
+	$y = split('-',$x[0]);
 	$m = ($y[1]-1);
 	
 	echo $y[2].' '.$LMonth[$m].' '.$y[0].' '.$x[1];
@@ -128,8 +128,8 @@ function FullDateFormat2($string)
 	global $LMonth;
 	global $SMonth;
 	
-	$x = explode(' ',$string);
-	$y = explode('-',$x[0]);
+	$x = split(' ',$string);
+	$y = split('-',$x[0]);
 
 	$m = ($y[1]-1);
 	if ($y[2]=='1')
@@ -148,7 +148,7 @@ function FullDateFormat2($string)
 
 function MysqlDateFormat($string)
 {
-	$y = explode('-',$string);
+	$y = split('-',$string);
 	return $y[2].'-'.$y[1].'-'.$y[0];
 }
 
@@ -156,8 +156,8 @@ function GetLastId($field,$table)
 {
 	$sql = "SELECT MAX($field) FROM $table";
 	$res = QueryDb($sql);
-	$num = @mysqli_num_rows($res);
-	$row = @mysqli_fetch_row($res);
+	$num = @mysql_num_rows($res);
+	$row = @mysql_fetch_row($res);
 	if ($num==0)
 		return '1';
 	else

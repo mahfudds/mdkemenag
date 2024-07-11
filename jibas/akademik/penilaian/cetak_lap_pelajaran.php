@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -60,7 +60,7 @@ if(isset($_POST["pelajaran"])){
 }elseif(isset($_GET["pelajaran"])){
 	$pelajaran = $_GET["pelajaran"];
 }
-$jenis_penilaian = $_GET['jenis_penilaian'];
+$jenis_penilaian = $_GET[jenis_penilaian];
 ?>
 
 <html>
@@ -105,8 +105,8 @@ OpenDb();
 	    <td width="330"><? 
 		$query_sem = "SELECT * FROM jbsakad.semester WHERE replid = '$semester'";
 		$result_sem = QueryDb($query_sem);
-		$row_sem = mysqli_fetch_array($result_sem);
-		echo $row_sem['semester'] ?></td>
+		$row_sem = mysql_fetch_array($result_sem);
+		echo $row_sem[semester] ?></td>
 	</tr>
 	<tr>
 		<td>Kelas</td>
@@ -115,8 +115,8 @@ OpenDb();
 		<? 
 		$query_kls = "SELECT * FROM jbsakad.kelas WHERE replid = '$kelas'";
 		$result_kls = QueryDb($query_kls);
-		$row_kls = mysqli_fetch_array($result_kls);
-		echo $row_kls['kelas'] ?></td>
+		$row_kls = mysql_fetch_array($result_kls);
+		echo $row_kls[kelas] ?></td>
 	    <td>NIS</td>
 	    <td>:</td>
 	    <td><?=$nis?></td>
@@ -130,8 +130,8 @@ OpenDb();
 			}elseif($pelajaran != "all"){
 				$query_pel = "SELECT nama FROM jbsakad.pelajaran WHERE replid = '$pelajaran'";
 				$result_pel = QueryDb($query_pel);
-				$row_pel = mysqli_fetch_array($result_pel);
-				$pel = $row_pel['nama'];
+				$row_pel = mysql_fetch_array($result_pel);
+				$pel = $row_pel[nama];
 			}
 		echo $pel ?></td>
 	    <td>Nama</td>
@@ -139,8 +139,8 @@ OpenDb();
 	    <td><? 
 		$query_nama = "SELECT * FROM jbsakad.siswa WHERE nis = '$nis'";
 		$result_nama = QueryDb($query_nama);
-		$row_nama = mysqli_fetch_array($result_nama);
-		echo $row_nama['nama'] ?></td>
+		$row_nama = mysql_fetch_array($result_nama);
+		echo $row_nama[nama] ?></td>
 	</tr>
 	
 	<tr>
@@ -158,7 +158,7 @@ $sql = "SELECT s.replid, s.semester, p.nama FROM semester s, pelajaran p WHERE s
 $result = QueryDb($sql);
 
 $i = 0;
-while ($row = @mysqli_fetch_row($result)) {
+while ($row = @mysql_fetch_row($result)) {
 	$sem[$i]= array($row[0],$row[1]);
 	$pel = $row[2];
 	$i++;
@@ -172,7 +172,7 @@ while ($row = @mysqli_fetch_row($result)) {
     
 	<?	$sql = "SELECT j.replid, j.jenisujian FROM jenisujian j WHERE j.idpelajaran = '$pelajaran' GROUP BY j.jenisujian";
 		$result = QueryDb($sql);
-		while($row = @mysqli_fetch_array($result)){			
+		while($row = @mysql_fetch_array($result)){			
 	?>
    	
 		<tr>
@@ -192,17 +192,17 @@ while ($row = @mysqli_fetch_row($result)) {
 			$result1 = QueryDb($sql1);
 			$sql2 = "SELECT AVG(n.nilaiujian) as rata FROM ujian u, pelajaran p, nilaiujian n WHERE u.idpelajaran = p.replid AND u.idkelas = $kelas AND u.idpelajaran = $pelajaran AND u.idsemester = ".$sem[0][0]." AND u.idjenis = $row[replid] AND u.replid = n.idujian AND n.nis = '$nis' ";
 			$result2 = QueryDb($sql2);
-			$row2 = @mysqli_fetch_array($result2);
-			$rata = $row2['rata'];
+			$row2 = @mysql_fetch_array($result2);
+			$rata = $row2[rata];
 			/*
 			$sql3 = "SELECT nau.nilaiAU as nilaiAU FROM ujian u, pelajaran p, nilaiujian n, nau nau WHERE u.idpelajaran = p.replid AND u.idkelas = $kelas AND u.idpelajaran = $pelajaran AND u.idsemester = ".$sem[0][0]." AND u.idjenis = $row[replid] AND u.replid = n.idujian AND n.nis = '$nis' AND nau.idjenis=$row[replid] AND nau.idpelajaran = $pelajaran AND nau.idsemester = ".$sem[0][0];
 			$result3 = QueryDb($sql3);
-			$row3 = @mysqli_fetch_array($result3);
+			$row3 = @mysql_fetch_array($result3);
 			$nilaiAU = $row3[nilaiAU];		
 			*/
 			$cnt = 0;
-			if (@mysqli_num_rows($result1)>0){
-			while($row1 = @mysqli_fetch_array($result1)){			
+			if (@mysql_num_rows($result1)>0){
+			while($row1 = @mysql_fetch_array($result1)){			
         ?>
         <tr>        			
 			<td height="25" align="center"><div align="center"><?=++$cnt?></div></td>

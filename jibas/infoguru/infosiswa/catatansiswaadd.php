@@ -4,9 +4,9 @@
  * Jaringan Informasi Bersama Antar Sekolah
  * 
  * @version: 2.6.0 (January 14, 2012)
- * @notes: 
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,28 +37,33 @@ if (isset($_REQUEST['simpan'])){
 	$tgl=explode("-",$_REQUEST['tanggal']);
 	$tanggal=$tgl[2]."-".$tgl[1]."-".$tgl[0];
 	$judul = $_REQUEST['judul'];
-	$nilai = $_REQUEST['nilai'];
-	$sifat = $_REQUEST['sifat'];
 	$catatan = $_REQUEST['catatan'];
-
+	//echo " NIS = ".$nis;
+	//echo " tanggal = ".$tanggal;
+	//echo " judul = ".$judul;
+	//echo " catatan = ".$catatan;
 	OpenDb();
 	$sql_get_idkelas = "SELECT idkelas FROM jbsakad.siswa WHERE nis='$nis'";
 	$res_get_idkelas = QueryDb($sql_get_idkelas);
-	$row_id = @mysqli_fetch_array($res_get_idkelas);
-	$idkelas = $row_id['idkelas'];
+	$row_id = @mysql_fetch_array($res_get_idkelas);
+	$idkelas = $row_id[idkelas];
+	CloseDb();
+	//echo " idkelas = ".$idkelas;
 	$nip = SI_USER_ID();
 	$idkategori = $_REQUEST['kategori'];
-
-	$sql = "INSERT INTO jbsvcr.catatansiswa 
-               SET idkategori='$idkategori',nis='$nis',idkelas='$idkelas',tanggal='$tanggal',
-                    judul='$judul',catatan='$catatan',nip='$nip',nilai='$nilai',sifat='$sifat'";
+	//echo " nip = ".$nip;
+	//echo " idkategori = ".$idkategori;
+	OpenDb();
+	$sql="INSERT INTO jbsvcr.catatansiswa SET idkategori='$idkategori',nis='$nis',idkelas='$idkelas',tanggal='$tanggal',judul='$judul',catatan='$catatan',nip='$nip'";
+	//echo $sql; exit;
 	$result = QueryDb($sql);
-	if ($result)
-	{
+	if ($result){
 	?>
 	<script language="javascript" type="text/javascript">
 		parent.catatansiswamenu.show('<?=$idkategori?>');
 		parent.catatansiswamenu.willshow('<?=$idkategori?>');
+	
+		//document.location.href="../blank.php";
 	</script>
 	<?
 	}
@@ -127,10 +132,10 @@ function validate(){
 	OpenDb();
 	$sql = "SELECT * FROM jbsvcr.catatankategori WHERE aktif=1 ORDER BY replid";
 	$result = QueryDb($sql);
-	if (@mysqli_num_rows($result) > 0){
+	if (@mysql_num_rows($result) > 0){
 	$cnt=1;
-	while ($row=@mysqli_fetch_array($result)){
-		echo "<option value='".$row['replid']."'>".$row['kategori']."</option>";
+	while ($row=@mysql_fetch_array($result)){
+		echo "<option value='".$row[replid]."'>".$row[kategori]."</option>";
 	}
 	} else {
 		echo "<option value=''>Tidak ada kategori</option>";
@@ -144,7 +149,7 @@ function validate(){
     <td><strong>Tanggal</strong></td>
     <td>
         <input title="Klik untuk membuka kalender !" type="text" name="tanggal" id="tanggal" size="10" readonly="readonly"
-               class="disabled" value="<?=date('d')."-".date('m')."-".date('Y'); ?>"
+               class="disabled" value="<?=date(d)."-".date(m)."-".date(Y); ?>"
                style="font-size: 14px; height: 24px; background-color: #eee" />&nbsp;
         <img title="Klik untuk membuka kalender !" src="../images/ico/calendar_1.png" name="btntanggal" width="16" height="16" border="0" id="btntanggal"/>
     </td>
@@ -155,27 +160,6 @@ function validate(){
         <input name="judul" type="text" id="judul" size="35" style="font-size: 14px; height: 24px; width: 550px" maxlength="255" />
     </td>
   </tr>
-    <tr>
-        <td><strong>Nilai </strong></td>
-        <td>
-            <select name="nilai" id="nilai" style="font-size: 14px; height: 24px; width: 40px;">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5" selected>5</option>
-            </select>&nbsp;dari 5
-        </td>
-    </tr>
-    <tr>
-        <td><strong>Sifat </strong></td>
-        <td>
-            <select name="sifat" id="sifat" style="font-size: 14px; height: 24px; width: 320px;">
-                <option value="0" selected>PUBLIC (bisa dilihat Guru lainnya)</option>
-                <option value="1">PRIVATE (hanya untuk sendiri)</option>
-            </select>
-        </td>
-    </tr>
   <tr>
     <td colspan="2" align="left"><strong>Catatan </strong>
       <div align="center"><br />

@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  *
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -96,7 +96,7 @@ function SelectPelajaran()
     $idpelajaran = 0;
 
     $select = "<select name='pelajaran' id='pelajaran' onchange='changePelajaran()' style='width: 200px; background-color: #f9ffc9;'>";
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         $selected = "";
         $idpel = $row[0];
@@ -140,7 +140,7 @@ function SelectAspek()
     $idaspek = "";
 
     $select = "<select name='aspek' id='aspek' onchange='changeAspek()' style='width: 200px; background-color: #f9ffc9;'>";
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         $selected = "";
         $idasp = $row[0];
@@ -175,7 +175,7 @@ function SelectJenisUjian()
     $res = QueryDb($sql);
 
     $select = "<select name='idaturan' id='idaturan' style='width: 200px; background-color: #f9ffc9;'>";
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         $selected = "";
 
@@ -206,7 +206,7 @@ function SelectRpp()
 
     $select = "<select name='idrpp' id='idrpp' style='width: 200px; background-color: #f9ffc9;'>";
     $select .= "<option value='-1' selected>(Tanpa RPP)</option>";
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         $idrpp = $row[0];
         $nmrpp = $row[1];

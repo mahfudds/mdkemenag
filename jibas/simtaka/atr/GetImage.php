@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,18 +25,18 @@ require_once("../inc/session.checker.php");
 require_once("../inc/config.php");
 require_once("../inc/db_functions.php");
 require_once("../inc/common.php");
-$op	= $_REQUEST['op'];
+$op	= $_REQUEST[op];
 OpenDb();
 if ($op=='Edit'){
-	$perpustakaan=$_REQUEST['perpustakaan'];
+	$perpustakaan=$_REQUEST[perpustakaan];
 	$sql = "SELECT replid FROM ".$db_name_umum.".identitas WHERE status='1' AND perpustakaan='$perpustakaan'";
 	$result = QueryDb($sql);
-	$row  =@mysqli_fetch_array($result);
+	$row  =@mysql_fetch_array($result);
 	?>
     <table width="300" border="0" cellspacing="2">
       <tr>
         <td valign="middle" align="center">
-        	<img src='../lib/gambar.php?replid=<?=$row['replid']?>&table=<?=$db_name_umum?>.identitas&field=foto'><br />Logo Lama
+        	<img src='../lib/gambar.php?replid=<?=$row[replid]?>&table=<?=$db_name_umum?>.identitas&field=foto'><br />Logo Lama
         </td>
         <td valign="middle"><img src='../img/Arrow-Left.png' /></td>
         <td valign="middle" align="center"><img src='temp.jpg' /><br />Logo Baru</td>

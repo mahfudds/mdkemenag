@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -127,7 +127,7 @@ if (isset($_REQUEST['simpan']))
 	
 	$query_cek = "SELECT * FROM jbssdm.pegawai WHERE nip = '$nip'";
 	$result_cek = QueryDb($query_cek);
-	$num_cek = @mysqli_num_rows($result_cek);
+	$num_cek = @mysql_num_rows($result_cek);
 	if($num_cek > 0) 
 	{
 		//CloseDb();
@@ -526,10 +526,10 @@ function cek() {
         <?
 			$sql_bagian="SELECT bagian FROM jbssdm.bagianpegawai ORDER BY urutan ASC";
 		  	$result_bagian=QueryDb($sql_bagian);
-		  	while ($row_bagian=@mysqli_fetch_array($result_bagian)){
+		  	while ($row_bagian=@mysql_fetch_array($result_bagian)){
 		?>
-          	<option value="<?=$row_bagian['bagian']?>" <?=StringIsSelected($row_bagian['bagian'],$bagian)?>>
-          <?=$row_bagian['bagian']?>
+          	<option value="<?=$row_bagian[bagian]?>" <?=StringIsSelected($row_bagian[bagian],$bagian)?>>
+          <?=$row_bagian[bagian]?>
             </option>
        	<?	}  ?>
         </select></td>
@@ -604,8 +604,8 @@ function cek() {
             <option value="">[Pilih Agama]</option>
         <?		 
 		  	$query_a="select agama from jbsumum.agama order by urutan asc " ;
-		  	$result_a=QueryDb($query_a) or (mysqli_error()) ;
-		  	while($row_a=mysqli_fetch_array($result_a)) 	{
+		  	$result_a=QueryDb($query_a) or (mysql_error()) ;
+		  	while($row_a=mysql_fetch_array($result_a)) 	{
 		?>		<option value="<?=$row_a['agama']?>"<?=StringIsSelected($row_a['agama'],$agama)?>><?=$row_a['agama']?></option>
 		<?  }   ?>
           	</select>
@@ -622,7 +622,7 @@ function cek() {
         	<? // Olah untuk combo suku
 			$sql_suku="SELECT suku,urutan,replid FROM jbsumum.suku ORDER BY urutan";
 			$result_suku=QueryDB($sql_suku);
-			while ($row_suku = mysqli_fetch_array($result_suku)) {
+			while ($row_suku = mysql_fetch_array($result_suku)) {
 				//if($suku == "")
 				//	$suku = $row_suku[suku] ;  
 			?>

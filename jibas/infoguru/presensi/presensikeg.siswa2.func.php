@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ function GetCbActivity($aktif)
              ORDER BY departemen, kegiatan";
     $res = QueryDb($sql);
     echo "<select id='cbKegiatan' style='width: 380px;' onchange='clearContent()'>";
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         echo "<option value=$row[0]>($row[2]) $row[1]</option>";
     }
@@ -47,7 +47,7 @@ function GetCbDepartemen($default, $elmName = "cbDepartemen")
              ORDER BY urutan";
     $res = QueryDb($sql);
     $selection = "<select id='$elmName' style='width: 140px;' onchange='changeCbDepartemen()'>\r\n";
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         if ($default == "")
             $default = $row[0];
@@ -80,7 +80,7 @@ function GetCbTingkat($departemen, $default)
              ORDER BY urutan";
     $res = QueryDb($sql);
     $selection = "<select id='cbTingkat' style='width: 140px;' onchange='changeCbTingkat()'>";
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         if ($default == 0)
             $default = $row[0];
@@ -114,7 +114,7 @@ function GetCbKelas($idtingkat, $default)
              ORDER BY kelas";
     $res = QueryDb($sql);
     $selection = "<select id='cbKelas' style='width: 140px;' onchange='changeCbKelas()'>";
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         if ($default == 0)
             $default = $row[0];
@@ -153,7 +153,7 @@ function GetSiswa($idkegiatan, $bulan, $tahun, $idkelas)
     $table .= "<td width='12%' class='header'>&nbsp;</td>\r\n";
     $table .= "</tr>\r\n";
     $cnt = 0;
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         $cnt += 1;
         $table .= "<tr>\r\n";
@@ -186,7 +186,7 @@ function SearchSiswa($idkegiatan, $bulan, $tahun, $filter, $keyword)
     $table .= "<td width='12%' class='header'>&nbsp;</td>\r\n";
     $table .= "</tr>\r\n";
     $cnt = 0;
-    while($row = mysqli_fetch_row($res))
+    while($row = mysql_fetch_row($res))
     {
         $cnt += 1;
         $table .= "<tr>\r\n";

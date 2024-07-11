@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,7 +45,7 @@ function GetNewBarcode()
                   FROM daftarpustaka
                  WHERE info1 = '$barcode'";
         $res = QueryDb($sql);
-        $row = mysqli_fetch_row($res);
+        $row = mysql_fetch_row($res);
         $ndata = (int)$row[0];		 
     }
     while($ndata != 0);
@@ -57,17 +57,17 @@ function GenKodePustaka($katalog, $penulis, $judul, $format, $counter)
 {
     $sql = "SELECT kode FROM katalog WHERE replid='$katalog'";
     $result = QueryDb($sql);
-    $ktlg = @mysqli_fetch_row($result);
+    $ktlg = @mysql_fetch_row($result);
 
     $sql = "SELECT kode FROM penulis WHERE replid='$penulis'";
     $result = QueryDb($sql);
-    $pnls = @mysqli_fetch_row($result);
+    $pnls = @mysql_fetch_row($result);
     
     $jdl = substr($judul, 0, 1);
 
     $sql = "SELECT kode FROM format WHERE replid='$format'";
     $result = QueryDb($sql);
-    $frmt = @mysqli_fetch_row($result);
+    $frmt = @mysql_fetch_row($result);
     
     $cnt = str_pad($counter, 5, "0", STR_PAD_LEFT);
 
@@ -79,7 +79,7 @@ function GenKodePustaka($katalog, $penulis, $judul, $format, $counter)
         
         $sql = "SELECT COUNT(replid) FROM daftarpustaka WHERE kodepustaka = '$kode'";
         $result = QueryDb($sql);
-        $row = mysqli_fetch_row($result);
+        $row = mysql_fetch_row($result);
         
         if ($row[0] > 0)
         {
@@ -111,7 +111,7 @@ function Save()
              WHERE replid = '$idpustaka'";
     //echo "$sql<br>";		          
     $res = QueryDb($sql);
-    $row = mysqli_fetch_row($res);
+    $row = mysql_fetch_row($res);
     $judul = $row[0];
     $idkatalog = $row[1];
     $idpenulis = $row[2];
@@ -122,7 +122,7 @@ function Save()
              WHERE replid = '$idkatalog'";
     //echo "$sql<br>";		          
     $result = QueryDbTrans($sql, $success);
-    $r = @mysqli_fetch_row($result);
+    $r = @mysql_fetch_row($result);
     $counter = $r[0];
     
     for ($i = 1; $success && $i <= $npus; $i++)

@@ -3,10 +3,10 @@
  * JIBAS Education Community
  * Jaringan Informasi Bersama Antar Sekolah
  * 
- * @version: 31.0 (Jun 21, 2024)
- * @notes: 
+ * @version: 29.0 (Sept 20, 2023)
+ * @notes: JIBAS Education Community will be managed by Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
- * Copyright (C) 2024 JIBAS (http://www.jibas.net)
+ * Copyright (C) 2009 Yayasan Indonesia Membaca (http://www.indonesiamembaca.net)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -77,11 +77,11 @@ if ($op == "x2378e23dkofh73n25ki9234") {
 	OpenDb();
 	$sql_cek_jumlah="SELECT COUNT(s.nis) FROM jbsakad.siswa s WHERE s.idkelas='$idkelastujuan' AND aktif = 1";	
 	$result_cek_jumlah=QueryDb($sql_cek_jumlah);
-	$row_cek_jumlah=@mysqli_fetch_row($result_cek_jumlah);
+	$row_cek_jumlah=@mysql_fetch_row($result_cek_jumlah);
 	
 	$sql_cek_kapasitas="SELECT kapasitas FROM jbsakad.kelas WHERE replid='$idkelastujuan'";
 	$result_cek_kapasitas=QueryDb($sql_cek_kapasitas);
-	$row_cek_kapasitas=@mysqli_fetch_row($result_cek_kapasitas);
+	$row_cek_kapasitas=@mysql_fetch_row($result_cek_kapasitas);
 		
 	if ((int)$row_cek_jumlah[0]<(int)$row_cek_kapasitas[0])
 		$bisapindah="bisa";
@@ -92,9 +92,9 @@ if ($op == "x2378e23dkofh73n25ki9234") {
 	
 	if ($bisapindah=="bisa"){
 		//Bisa Pindah
-		$datetgl=date('j');
-		$datebln=date('m');
-		$datethn=date('Y');
+		$datetgl=date(j);
+		$datebln=date(m);
+		$datethn=date(Y);
 		$tgl=$datethn."-".$datebln."-".$datetgl;
 		OpenDb();
 		BeginTrans();
@@ -256,15 +256,15 @@ function change_baris() {
 		$sql_tot = "SELECT s.nis,s.nama,s.idkelas,k.kelas,s.replid from jbsakad.siswa s, kelas k $string AND k.idtingkat = '$idtingkat' AND s.idkelas = k.replid AND k.idtahunajaran = '$idtahunajaran' AND s.aktif=1 ORDER BY $urut $urutan";  
 		
 		$result_tot = QueryDb($sql_tot);
-		$total=ceil(mysqli_num_rows($result_tot)/(int)$varbaris);
-		$jumlah = mysqli_num_rows($result_tot);
+		$total=ceil(mysql_num_rows($result_tot)/(int)$varbaris);
+		$jumlah = mysql_num_rows($result_tot);
 		$akhir = ceil($jumlah/5)*5;	
 		
 		$sql_siswa = "SELECT s.nis,s.nama,s.idkelas,k.kelas,s.replid from jbsakad.siswa s, kelas k $string AND k.idtingkat = '$idtingkat' AND s.idkelas = k.replid AND k.idtahunajaran = '$idtahunajaran' AND s.aktif=1 ORDER BY $urut $urutan LIMIT ".(int)$page*(int)$varbaris.",$varbaris";
 		//echo $sql_siswa;
 		$result_siswa = QueryDb($sql_siswa);
 		
-		if (@mysqli_num_rows($result_siswa)>0) {
+		if (@mysql_num_rows($result_siswa)>0) {
 ?>	
 <table border="0" width="100%" align="center">
 <!-- TABLE CENTER -->
@@ -284,7 +284,7 @@ function change_baris() {
 		else 
 			$cnt_siswa = (int)$page*(int)$varbaris;
 			
-		while ($row_siswa = @mysqli_fetch_array($result_siswa)) {
+		while ($row_siswa = @mysql_fetch_array($result_siswa)) {
 			$nis=$row_siswa['nis'];
 			$nama=$row_siswa['nama'];
 			$idkelas=$row_siswa['idkelas'];
